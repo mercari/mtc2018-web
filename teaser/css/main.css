@@ -16,6 +16,7 @@ body {
   background-color: #F9401C;
   color: #FFFFFF;
   font-size: 20px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,6 +25,10 @@ body {
   padding: 0 40px;
   box-sizing: border-box;
   border: none;
+}
+
+.Button__Icon {
+  margin-left: 8px;
 }
 
 .Main {
@@ -70,6 +75,7 @@ body {
 
 .Main__Follow {
   margin-bottom: 40px;
+  width: 300px;
 }
 
 .Main__Message {
