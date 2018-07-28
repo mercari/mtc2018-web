@@ -25,6 +25,7 @@ body {
   padding: 0 40px;
   box-sizing: border-box;
   border: none;
+  text-decoration: none;
 }
 
 .Button__Icon {
