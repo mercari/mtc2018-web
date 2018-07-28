@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="15px" viewBox="0 0 19 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_arrowright</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mtc_01_fix" transform="translate(-1171.000000, -1091.000000)" fill="#121C3B" fill-rule="nonzero">
+            <g id="footer" transform="translate(0.000000, 1060.000000)">
+                <g id="icon_arrowright" transform="translate(1180.500000, 38.500000) scale(-1, 1) translate(-1180.500000, -38.500000) translate(1171.000000, 31.000000)">
+                    <path d="M2.28571429,9 C1.57563389,9 1,8.32842712 1,7.5 C1,6.67157288 1.57563389,6 2.28571429,6 L17.7142857,6 C18.4243661,6 19,6.67157288 19,7.5 C19,8.32842712 18.4243661,9 17.7142857,9 L2.28571429,9 Z" id="Shape"></path>
+                    <path d="M3.25918831,7.5 L8.60459415,12.740594 C9.13180195,13.2574644 9.13180195,14.0954768 8.60459415,14.6123472 C8.07738636,15.1292176 7.22261364,15.1292176 6.69540585,14.6123472 L0.395405845,8.43587662 C-0.131801948,7.91900624 -0.131801948,7.08099376 0.395405845,6.56412338 L6.69540585,0.38765279 C7.22261364,-0.129217597 8.07738636,-0.129217597 8.60459415,0.38765279 C9.13180195,0.904523176 9.13180195,1.74253565 8.60459415,2.25940603 L3.25918831,7.5 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

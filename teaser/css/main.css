@@ -132,3 +132,7 @@ body {
   font-weight: bold;
   text-decoration: none;
 }
+
+.Footer__LinkArrow {
+  margin-left: 8px;
+}
