@@ -40,6 +40,10 @@ body {
   box-sizing: border-box;
 }
 
+.Main__Middle {
+  position: relative;
+}
+
 .Main__Title {
   margin-bottom: 28px;
 }
@@ -48,7 +52,20 @@ body {
   margin-bottom: 40px;
 }
 
-.Main__Date {
+.Main__Hashtag {
+  position: absolute;
+  top: 145px;
+  left: 741px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background-color: #121C3B;
+  color: #FFFFFF;
+  display: flex;
+  font-size: 24px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
 }
 
 .Main__Follow {
