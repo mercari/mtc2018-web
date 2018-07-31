@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "preserve",
+    "strict": true,
+    "experimentalDecorators": true,
+    "noImplicitUseStrict": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  }
+}
