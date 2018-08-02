@@ -22,7 +22,7 @@
     "cross-env": "^5.2.0",
     "fork-ts-checker-webpack-plugin": "^0.4.3",
     "next": "^6.1.1",
-    "react": "^16.4.1",
+    "react": "^16.4.2",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
