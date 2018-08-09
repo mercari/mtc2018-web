@@ -18,3 +18,22 @@
 * 適当にDocker image作っておけばgusuriさんが後はなんとかしてくれる
 * 適当にCircle CIとGoogle Container Registryにグッてする
 * 適当にSNSログインできるようにする
+
+
+## 動かし方
+
+```
+# before go 1.11 release
+$ go get golang.org/dl/go1.11beta3
+$ go1.11beta3 download
+$ alias go=go1.11beta3
+
+$ go run cmd/mtcserver/main.go
+$ open http://localhost:8080/
+```
+
+```
+$ docker build -t mtcserver .
+$ docker run -it -p 8080:8080 mtcserver
+$ open http://localhost:8080/
+```
