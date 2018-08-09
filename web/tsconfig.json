@@ -4,6 +4,7 @@
     "target": "esnext",
     "jsx": "preserve",
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "noImplicitUseStrict": true,
     "noImplicitReturns": true,

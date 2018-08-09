@@ -2,7 +2,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
-class MyDocument extends Document {
+export default class MyDocument extends Document {
   public static getInitialProps({ renderPage }: any) {
     // styled-componentsのSSRのための処理
     const sheet = new ServerStyleSheet();
@@ -43,5 +43,3 @@ const globalCSS: string = `
     padding: 0;
   }
 `;
-
-export default MyDocument;
