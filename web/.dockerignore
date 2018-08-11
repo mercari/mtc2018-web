@@ -1,12 +1,5 @@
 node_modules
 npm-debug.log
-.babelrc
 .gitignore
 .git
-.prettierrc
-next.config.js
-pages
-components
-containers
-tsconfig.json
-tslint.json
+.next
