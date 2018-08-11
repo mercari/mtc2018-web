@@ -1,10 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import Link from 'next/link';
 
-const Wrapper = styled.div`
-  background-color: blue;
-`;
-
-export const Sub = () => (
-  <Wrapper>遷移サンプル用のサブページです。不要なので後で消します。</Wrapper>
+const Sub = () => (
+  <>
+    <p>遷移サンプル用のサブページです。不要なので後で消します。</p>
+    <Link href="/">
+      <a>top</a>
+    </Link>
+  </>
 );
+
+export default Sub;
