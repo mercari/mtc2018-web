@@ -1,20 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import Link from 'next/link';
+import * as React from 'react';
+import Top from '../containers/Top';
 
-const Top = () => {
-  return (
-    <>
-      <Wrapper>Hello Mercari Tech Conf 2018!!</Wrapper>
-      <Link href="/sub">
-        <a>sub</a>
-      </Link>
-    </>
-  );
-};
+class TopPage extends React.PureComponent {
+  public render() {
+    return <Top />;
+  }
+}
 
-const Wrapper = styled.div`
-  background-color: yellow;
-`;
-
-export default Top;
+export default TopPage;
