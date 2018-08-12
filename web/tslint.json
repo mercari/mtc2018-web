@@ -12,6 +12,7 @@
         "singleQuote": true
       }
     ],
+    "interface-name": [true, "never-prefix"],
     "import-name": false,
     "no-use-before-declare": false,
     "jsx-no-multiline-js": false,
