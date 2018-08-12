@@ -9,6 +9,12 @@ const Button = styled.button`
   height: 64px;
   padding: 0 48px;
   border-radius: 32px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 export default Button;
