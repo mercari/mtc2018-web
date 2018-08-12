@@ -1,0 +1,46 @@
+version: 2
+
+jobs:
+  server:
+    working_directory: /go/src/github.com/mercari/mtc2018-web
+    docker:
+      - image: golang:1.11beta3-alpine
+    environment:
+      GO111MODULE: "on"
+    steps:
+      - checkout
+      - run:
+          name: build
+          command: |
+            cd server
+            go build -o mtcserver -a -tags netgo -installsuffix netgo github.com/mercari/mtc2018-web/server/cmd/mtcserver
+
+  web:
+    working_directory: /usr/src/app
+    docker:
+      - image: node:8
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: |
+            cd web
+            npm install
+            npm install tslint -g
+      - run:
+          name: lint
+          command: |
+            cd web
+            npm run lint
+      - run:
+          name: build
+          command: |
+            cd web
+            npm run build
+
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - server
+      - web
