@@ -16,11 +16,11 @@ const getTextStyle = (level: string) => {
   `;
 };
 
-interface IProps {
+interface Props {
   level?: string;
 }
 
-const Text: React.SFC<IProps> = ({ level, ...rest }) => (
+const Text: React.SFC<Props> = ({ level, ...rest }) => (
   <Wrapper level={level!} {...rest} />
 );
 
