@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { textStyles } from './styles';
 
-const getTextStyle = (level: string) => {
+export const getTextStyle = (level: string) => {
   let style = textStyles.find(textStyle => {
     return textStyle.level === level;
   });
