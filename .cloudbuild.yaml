@@ -1,0 +1,22 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  args:
+  - build
+  - -t
+  - $_API_IMAGE
+  - --build-arg
+  - VERSION=$_VERSION
+  - server
+
+- name: gcr.io/cloud-builders/docker
+  args:
+  - build
+  - -t
+  - $_WEB_IMAGE
+  - --build-arg
+  - VERSION=$_VERSION
+  - web
+
+images:
+  - $_API_IMAGE
+  - $_WEB_IMAGE
