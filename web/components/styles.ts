@@ -16,3 +16,7 @@ export const textStyles = [
   { level: 'caption', size: 14, weight: 'bold' },
   { level: 'body', size: 14, weight: 'normal' }
 ];
+
+export const borderRadius = {
+  level1: '10px'
+};

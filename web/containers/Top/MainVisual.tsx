@@ -11,7 +11,6 @@ const MainVisual = () => (
 );
 
 const Wrapper = styled.div`
-  background-color: ${colors.primary};
   height: 100vh;
   display: flex;
   flex-direction: column;
