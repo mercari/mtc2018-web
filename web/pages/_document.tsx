@@ -1,6 +1,7 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import { ServerStyleSheet } from 'styled-components';
+import { colors } from '../components/styles';
 
 export default class MyDocument extends Document {
   public static getInitialProps({ renderPage }: any) {
@@ -41,5 +42,9 @@ const globalCSS: string = `
   html, body {
     margin: 0;
     padding: 0;
+  }
+
+  body {
+    background-color: ${colors.primary};
   }
 `;

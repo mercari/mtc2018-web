@@ -5,7 +5,6 @@ import { colors } from '../../components/styles';
 const Footer = () => <Wrapper>Footer</Wrapper>;
 
 const Wrapper = styled.footer`
-  background-color: ${colors.primary};
   display: flex;
   flex-direction: column;
   align-items: center;
