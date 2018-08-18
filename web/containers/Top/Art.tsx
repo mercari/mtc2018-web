@@ -21,7 +21,7 @@ class Art extends React.PureComponent {
     return <Wrapper innerRef={this.setElement} {...this.props} />;
   }
 
-  private setElement = element => {
+  private setElement = (element: HTMLDivElement) => {
     this.element = element;
   };
 }
