@@ -13,7 +13,18 @@ class Art extends React.PureComponent {
       }
       const art: MtcArt = new ArtModule();
       this.element.appendChild(art.domElement);
+
+      // リサイズ
       art.resize(this.element.clientWidth, this.element.clientHeight);
+      // windowのリサイズ
+      window.onresize = () => {
+        // リサイズ
+        art.resize(this.element!.clientWidth, this.element!.clientHeight);
+      };
+
+      window.onscroll = () => {
+        art.explosion(window.scrollY);
+      };
     });
   }
 
