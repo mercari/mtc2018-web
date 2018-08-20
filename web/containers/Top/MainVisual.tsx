@@ -5,8 +5,8 @@ import { colors } from '../../components/styles';
 
 const MainVisual = () => (
   <Wrapper>
-    MainVisual
-    <Button>BUY TICKET</Button>
+    <EmptySpace />
+    <BuyButton>BUY TICKET</BuyButton>
   </Wrapper>
 );
 
@@ -17,6 +17,15 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   color: ${colors.yuki};
+  padding: 128px;
+
+  box-sizing: border-box;
 `;
+
+const EmptySpace = styled.div`
+  flex-grow: 1;
+`;
+
+const BuyButton = styled(Button)``;
 
 export default MainVisual;
