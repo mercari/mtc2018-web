@@ -13,8 +13,8 @@ export const getTextStyle = (level: string) => {
   return css`
     font-size: ${style.size}px;
     font-weight: ${style.weight};
-    font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Meiryo,
-      メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+    font-family: 'Montserrat', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3',
+      Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
   `;
 };
 

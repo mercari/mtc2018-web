@@ -6,14 +6,14 @@ export const colors = {
 };
 
 export const textStyles = [
-  { level: 'display7', size: 65, weight: 'bold' },
-  { level: 'display6', size: 45, weight: 'bold' },
-  { level: 'display5', size: 35, weight: 'bold' },
+  { level: 'display7', size: 65, weight: 'normal' },
+  { level: 'display6', size: 45, weight: 'normal' },
+  { level: 'display5', size: 35, weight: 'normal' },
   { level: 'display4', size: 24, weight: 'normal' },
-  { level: 'display3', size: 18, weight: 'bold' },
+  { level: 'display3', size: 18, weight: 'normal' },
   { level: 'display2', size: 18, weight: 'normal' },
-  { level: 'display1', size: 16, weight: 'bold' },
-  { level: 'caption', size: 14, weight: 'bold' },
+  { level: 'display1', size: 16, weight: 'normal' },
+  { level: 'caption', size: 14, weight: 'normal' },
   { level: 'body', size: 14, weight: 'normal' }
 ];
 
