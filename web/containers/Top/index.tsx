@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import Header from './Header';
 import MainVisual from './MainVisual';
 import Footer from './Footer';
-import { Section } from '../../components';
+import NewsSection from './NewsSection';
+import AboutSection from './AboutSection';
+import ContentSection from './ContentSection';
+import AccessSection from './AccessSection';
 import Art from './Art';
 
 const Top = () => (
@@ -12,18 +15,10 @@ const Top = () => (
     <Content>
       <StyledHeader />
       <MainVisual />
-      <StyledSection title="NEWS" id="news">
-        ここにニュースを入れます
-      </StyledSection>
-      <StyledSection title="ABOUT" id="about">
-        ここにSessionとかコンテンツ内容が入ります
-      </StyledSection>
-      <StyledSection title="CONTENTS" id="contents">
-        ここにSessionとかコンテンツ内容が入ります
-      </StyledSection>
-      <StyledSection title="ACCESS" id="access">
-        ここに地図とかが入ります
-      </StyledSection>
+      <NewsSection />
+      <AboutSection />
+      <ContentSection />
+      <AccessSection />
       <Footer />
     </Content>
   </Wrapper>
@@ -41,10 +36,6 @@ const Content = styled.div`
 const StyledHeader = styled(Header)`
   position: fixed;
   top: 0;
-`;
-
-const StyledSection = styled(Section)`
-  margin-bottom: 128px;
 `;
 
 const StyledArt = styled(Art)`
