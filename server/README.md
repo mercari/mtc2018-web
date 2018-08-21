@@ -24,9 +24,9 @@
 
 ```
 # before go 1.11 release
-$ go get golang.org/dl/go1.11beta3
-$ go1.11beta3 download
-$ alias go=go1.11beta3
+$ go get golang.org/dl/go1.11rc1
+$ go1.11rc1 download
+$ alias go=go1.11rc1
 
 $ go run cmd/mtcserver/main.go
 $ open http://localhost:8080/
