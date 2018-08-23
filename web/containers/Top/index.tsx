@@ -42,17 +42,17 @@ class Top extends React.Component {
   private onScroll = () => {
     const scrollY = window.scrollY;
     const windowH = window.innerHeight;
+    let overScroll = false;
 
     // 100vh以上スクロールしていたら
     // Headerの背景を変更
     if (windowH > scrollY) {
-      this.setState({
-        headerTransparent: true
-      });
-    } else {
-      this.setState({
-        headerTransparent: false
-      });
+      overScroll = true;
+    }
+
+    // 現状のステートと差分があれば更新
+    if (this.state.headerTransparent !== overScroll) {
+      this.setState({ headerTransparent: overScroll });
     }
   };
 }
