@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Text, Button, Section } from '../../../components';
+import { Text, Button, Card } from '../../../components';
 import { colors } from '../../../components/styles';
+import Section from '../Section';
 import NewsList from './NewsList';
 import { news } from '../../../store/news';
 
@@ -18,7 +19,7 @@ const NewsSection: React.SFC<{}> = props => (
   </Section>
 );
 
-const Wrapper = styled.div`
+const Wrapper = styled(Card)`
   display: flex;
   flex-direction: column;
   align-items: center;

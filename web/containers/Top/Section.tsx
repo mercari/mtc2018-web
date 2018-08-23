@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Text from './Text';
-import Card from './Card';
-import { colors } from './styles';
+import { Text } from '../../components';
+import { colors } from '../../components/styles';
 
 interface Props {
   title: string;
@@ -30,7 +29,7 @@ const Title = styled(Text).attrs({
   padding: 40px 0;
 `;
 
-const Body = styled(Card)`
+const Body = styled.div`
   width: 100%;
   max-width: 920px;
 `;
