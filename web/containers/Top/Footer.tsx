@@ -6,10 +6,11 @@ const Footer = () => <Wrapper>Footer</Wrapper>;
 
 const Wrapper = styled.footer`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   color: ${colors.yuki};
-  padding: 64px;
+  border-top: 1px solid ${colors.yuki};
+  height: 80px;
 `;
 
 export default Footer;

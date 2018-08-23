@@ -12,14 +12,15 @@ class Art extends React.PureComponent {
         return;
       }
       const art: MtcArt = new ArtModule();
-      this.element.appendChild(art.domElement);
+      // this.element.appendChild(art.domElement);
 
       // リサイズ
       art.resize(this.element.clientWidth, this.element.clientHeight);
       // windowのリサイズ
       window.onresize = () => {
         // リサイズ
-        art.resize(this.element!.clientWidth, this.element!.clientHeight);
+        // art.resize(this.element!.clientWidth, this.element!.clientHeight);
+        art.resize(1, 1);
       };
 
       window.onscroll = () => {
@@ -40,6 +41,7 @@ class Art extends React.PureComponent {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+  background: linear-gradient(135deg, #0f1528 0%, #121c3b 50%, #11172a 100%);
 `;
 
 export default Art;

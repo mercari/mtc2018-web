@@ -25,6 +25,10 @@ export default class MyDocument extends Document {
           />
           <meta name="format-detection" content="telephone=no" />
           <title>mercari Tech Conf 2018</title>
+          <link
+            href="https://fonts.googleapis.com/css?family=Montserrat"
+            rel="stylesheet"
+          />
           <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
           {this.props.styleTags}
         </Head>
