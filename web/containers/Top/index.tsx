@@ -57,7 +57,9 @@ class Top extends React.Component {
   };
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  position: relative;
+`;
 
 const Content = styled.div`
   position: absolute;
