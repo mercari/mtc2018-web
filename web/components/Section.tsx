@@ -17,10 +17,10 @@ const Section: React.SFC<Props> = ({ title, children, ...props }) => (
 );
 
 const Wrapper = styled.section`
-  padding: 64px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 80px;
 `;
 
 const Title = styled(Text).attrs({
