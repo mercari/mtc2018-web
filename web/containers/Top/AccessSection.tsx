@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Section } from '../../components';
+import { Card } from '../../components';
+import Section from './Section';
 
 const AccessSection: React.SFC<{}> = props => (
   <Section title="ACCESS" id="access" {...props}>
-    ここにコンテンツが入ります
+    <Card>ここにコンテンツが入ります</Card>
   </Section>
 );
 

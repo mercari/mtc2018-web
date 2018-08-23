@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Section } from '../../components';
+import Section from './Section';
 
 const ContentSection: React.SFC<{}> = props => (
-  <Section title="Contents" id="contents" {...props}>
-    ここにコンテンツが入ります
-  </Section>
+  <Section title="Contents" id="contents" {...props} />
 );
 
 export default ContentSection;
