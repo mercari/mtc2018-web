@@ -19,7 +19,8 @@ class Art extends React.PureComponent {
       // windowのリサイズ
       window.onresize = () => {
         // リサイズ
-        art.resize(this.element!.clientWidth, this.element!.clientHeight);
+        // art.resize(this.element!.clientWidth, this.element!.clientHeight);
+        art.resize(1, 1);
       };
 
       window.onscroll = () => {
