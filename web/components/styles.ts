@@ -13,7 +13,7 @@ export const textStyles = [
   { level: 'display3', size: 18, weight: 'normal' },
   { level: 'display2', size: 18, weight: 'normal' },
   { level: 'display1', size: 16, weight: 'normal' },
-  { level: 'caption', size: 14, weight: 'normal' },
+  { level: 'caption', size: 14, weight: 'bold' },
   { level: 'body', size: 14, weight: 'normal' }
 ];
 
