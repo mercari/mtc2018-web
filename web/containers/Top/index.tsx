@@ -66,14 +66,6 @@ const Content = styled.div`
   top: 0;
   left: 0;
   right: 0;
-
-  > * {
-    margin-bottom: 40px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
 `;
 
 const StyledHeader = styled(Header)`

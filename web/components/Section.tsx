@@ -27,7 +27,7 @@ const Title = styled(Text).attrs({
   level: 'display4'
 })`
   color: ${colors.yuki};
-  margin-bottom: 40px;
+  padding: 40px 0;
 `;
 
 const Body = styled(Card)`
