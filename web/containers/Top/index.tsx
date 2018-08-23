@@ -9,20 +9,53 @@ import ContentSection from './ContentSection';
 import AccessSection from './AccessSection';
 import Art from './Art';
 
-const Top = () => (
-  <Wrapper>
-    <StyledArt />
-    <Content>
-      <StyledHeader />
-      <MainVisual />
-      <NewsSection />
-      <AboutSection />
-      <ContentSection />
-      <AccessSection />
-      <Footer />
-    </Content>
-  </Wrapper>
-);
+class Top extends React.Component {
+  public state = {
+    headerTransparent: true
+  };
+
+  public componentDidMount() {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
+  public render() {
+    return (
+      <Wrapper>
+        <StyledArt />
+        <Content>
+          <StyledHeader transparent={this.state.headerTransparent} />
+          <MainVisual />
+          <NewsSection />
+          <AboutSection />
+          <ContentSection />
+          <AccessSection />
+          <Footer />
+        </Content>
+      </Wrapper>
+    );
+  }
+
+  private onScroll = () => {
+    const scrollY = window.scrollY;
+    const windowH = window.innerHeight;
+
+    // 100vh以上スクロールしていたら
+    // Headerの背景を変更
+    if (windowH > scrollY) {
+      this.setState({
+        headerTransparent: true
+      });
+    } else {
+      this.setState({
+        headerTransparent: false
+      });
+    }
+  };
+}
 
 const Wrapper = styled.div``;
 
@@ -31,6 +64,14 @@ const Content = styled.div`
   top: 0;
   left: 0;
   right: 0;
+
+  > * {
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 `;
 
 const StyledHeader = styled(Header)`
