@@ -36,6 +36,7 @@ const Wrapper = styled.div`
   padding: 0 40px;
   box-sizing: border-box;
   transition: 300ms;
+  z-index: 50;
 
   background-color: ${(props: { transparent: boolean }) =>
     props.transparent ? 'transparent' : 'rgba(18, 28, 59, 0.8)'};

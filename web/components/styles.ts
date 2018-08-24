@@ -2,7 +2,8 @@ export const colors = {
   primary: '#10172B',
   secondary: '#F6422A',
   yuki: '#FFFFFF',
-  kemuri: '#D8D8D8'
+  kemuri: '#D8D8D8',
+  sakura: '#EDE1E1'
 };
 
 export const textStyles = [
@@ -19,4 +20,8 @@ export const textStyles = [
 
 export const borderRadius = {
   level1: '10px'
+};
+
+export const boxShadow = {
+  level1: '0 4px 6px rgba(0, 0, 0, 0.7)'
 };
