@@ -1,21 +1,82 @@
 package main
 
-import "net/http"
+import (
+	"fmt"
+	"github.com/pkg/errors"
+	"net/http"
+	"os"
+	"strings"
+
+	"github.com/mercari/mtc2018-web/server/config"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	ddtracer "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
+)
+
+// newLogger creates a new zap logger with the given log level.
+func newLogger(level string) (*zap.Logger, error) {
+	level = strings.ToUpper(level)
+	var l zapcore.Level
+	switch level {
+	case "DEBUG":
+		l = zapcore.DebugLevel
+	case "INFO":
+		l = zapcore.InfoLevel
+	case "ERROR":
+		l = zapcore.ErrorLevel
+	default:
+		return nil, errors.Errorf("invalid loglevel: %s", level)
+	}
+
+	config := zap.NewProductionConfig()
+	config.Level = zap.NewAtomicLevelAt(l)
+	config.DisableStacktrace = true
+	config.OutputPaths = []string{"stdout"}
+	config.ErrorOutputPaths = []string{"stderr"}
+	return config.Build()
+}
 
 func main() {
+	// Read configurations from environmental variables.
+	env, err := config.ReadFromEnv()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[ERROR] Failed to read env vars: %s\n", err)
+		os.Exit(1)
+	}
+
+	// Setup new zap logger. This logger should be used for all logging in this service.
+	// The log level can be updated via environment variables.
+	logger, err := newLogger(env.LogLevel)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[ERROR] Failed to setup logger: %s\n", err)
+		os.Exit(1)
+	}
+
+	// Start DataDog trace client for sending tracing information(APM).
+	ddtracer.Start(
+		ddtracer.WithAgentAddr(fmt.Sprintf("%s:8126", env.DDAgentHostname)),
+		ddtracer.WithServiceName("mtc2018"),
+		ddtracer.WithGlobalTag("env", env.Env),
+	)
+	defer ddtracer.Stop()
+
+	runServer(env.Port, logger)
+}
+
+func runServer(port int, logger *zap.Logger) {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Hello, 世界"))
 	})
 
-	// for kubenretes readiness probe
+	// for kubernetes readiness probe
 	http.HandleFunc("/healthz/readiness", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	})
 
-	// for kubenretes liveness probe
+	// for kubernetes liveness probe
 	http.HandleFunc("/healthz/liveness", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	})
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
