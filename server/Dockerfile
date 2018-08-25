@@ -1,4 +1,4 @@
-FROM golang:1.11beta3-alpine AS build-env
+FROM golang:1.11rc1-alpine AS build-env
 
 WORKDIR /go/src/app
 COPY . .
