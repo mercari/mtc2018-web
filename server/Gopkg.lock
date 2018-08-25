@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  pruneopts = "UT"
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
+
+[[projects]]
   digest = "1:edbef42561faa44c19129b68d1e109fbc1647f63239250391eadc8d0e7c9f669"
   name = "github.com/kelseyhightower/envconfig"
   packages = ["."]
@@ -26,6 +34,25 @@
   version = "v0.8.0"
 
 [[projects]]
+  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  pruneopts = "UT"
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:c40d65817cdd41fac9aa7af8bed56927bb2d6d47e4fea566a74880f5c2b1c41e"
+  name = "github.com/stretchr/testify"
+  packages = [
+    "assert",
+    "require",
+  ]
+  pruneopts = "UT"
+  revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
+  version = "v1.2.2"
+
+[[projects]]
   digest = "1:eaa6698f44de8f2977e93c9b946e60a8af75f565058658aad2df8032b55c84e5"
   name = "github.com/tinylib/msgp"
   packages = ["msgp"]
@@ -34,12 +61,12 @@
   version = "1.0.2"
 
 [[projects]]
-  digest = "1:777e729b475d3895c7229552aa10076f0d177daf37c0a72258006d046d329960"
+  digest = "1:3c1a69cdae3501bf75e76d0d86dc6f2b0a7421bc205c0cb7b96b19eed464a34d"
   name = "go.uber.org/atomic"
   packages = ["."]
   pruneopts = "UT"
-  revision = "4e336646b2ef9fc6e47be8e21594178f98e5ebcf"
-  version = "v1.2.0"
+  revision = "1ea20fb1cbb1cc08cbd0d913a96dead89aa18289"
+  version = "v1.3.2"
 
 [[projects]]
   digest = "1:60bf2a5e347af463c42ed31a493d817f8a72f102543060ed992754e689805d1a"
@@ -73,12 +100,16 @@
   revision = "4910a1d54f876d7b22162a85f4d066d3ee649450"
 
 [[projects]]
-  digest = "1:9140d77545334e141366394f3bf9bbb4979e8ff2b71e82121fae6ecebede2271"
+  digest = "1:dcc8882abba6bf02274a2751d6f589845e36b78e7271606b1364463dc29c1dcf"
   name = "gopkg.in/DataDog/dd-trace-go.v1"
   packages = [
+    "contrib/internal/httputil",
+    "contrib/internal/lists",
+    "contrib/net/http",
     "ddtrace",
     "ddtrace/ext",
     "ddtrace/internal",
+    "ddtrace/mocktracer",
     "ddtrace/tracer",
   ]
   pruneopts = "UT"
@@ -91,8 +122,13 @@
   input-imports = [
     "github.com/kelseyhightower/envconfig",
     "github.com/pkg/errors",
+    "github.com/stretchr/testify/assert",
+    "github.com/stretchr/testify/require",
     "go.uber.org/zap",
     "go.uber.org/zap/zapcore",
+    "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http",
+    "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext",
+    "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/mocktracer",
     "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer",
   ]
   solver-name = "gps-cdcl"
