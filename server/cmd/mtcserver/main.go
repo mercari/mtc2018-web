@@ -10,6 +10,7 @@ import (
 	"github.com/mercari/mtc2018-web/server/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	ddnethttp "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
 	ddtracer "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
 
@@ -55,7 +56,7 @@ func main() {
 	// Start DataDog trace client for sending tracing information(APM).
 	ddtracer.Start(
 		ddtracer.WithAgentAddr(fmt.Sprintf("%s:8126", env.DDAgentHostname)),
-		ddtracer.WithServiceName("mtc2018"),
+		ddtracer.WithServiceName(config.ServiceName),
 		ddtracer.WithGlobalTag("env", env.Env),
 	)
 	defer ddtracer.Stop()
@@ -64,19 +65,21 @@ func main() {
 }
 
 func runServer(port int, logger *zap.Logger) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux := ddnethttp.NewServeMux(ddnethttp.WithServiceName(config.ServiceName))
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Hello, 世界"))
 	})
 
 	// for kubernetes readiness probe
-	http.HandleFunc("/healthz/readiness", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/healthz/readiness", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	})
 
 	// for kubernetes liveness probe
-	http.HandleFunc("/healthz/liveness", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/healthz/liveness", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	})
 
-	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	logger.Info("start http server")
+	http.ListenAndServe(fmt.Sprintf(":%d", port), mux)
 }

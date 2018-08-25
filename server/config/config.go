@@ -7,6 +7,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+const ServiceName = "mtc2018"
+
 const (
 	envDevelopment = "development"
 	envProduction  = "production"
