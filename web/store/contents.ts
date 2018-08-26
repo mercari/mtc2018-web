@@ -10,6 +10,7 @@ export interface Speaker {
   name: string;
   position: string;
   iconUrl: string;
+  body: string;
 }
 
 export interface Content {
@@ -53,6 +54,8 @@ export const contents: Content[] = duplicate<Content>(20)({
     id: '1',
     name: '名村 卓',
     position: 'CTO',
-    iconUrl: 'https://techconf.mercari.com/2017/img/snamura.jpg'
+    iconUrl: 'https://avatars1.githubusercontent.com/u/1390409?s=460&v=4',
+    body:
+      'テキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入ります'
   }
 });
