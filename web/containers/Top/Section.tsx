@@ -31,7 +31,10 @@ const Title = styled(Text).attrs({
 
 const Body = styled.div`
   width: 100%;
-  max-width: 920px;
+  max-width: 1120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export default Section;

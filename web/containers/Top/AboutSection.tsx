@@ -5,7 +5,7 @@ import Section from './Section';
 
 const AboutSection: React.SFC<{}> = props => (
   <Section title="ABOUT" id="about" {...props}>
-    <Card>
+    <StyledCard>
       <Message>
         メルカリテックカンフとはほげほげ
         <br />
@@ -13,9 +13,14 @@ const AboutSection: React.SFC<{}> = props => (
         テキストが入ります。テキストが入ります。
         テキストが入ります。テキストが入ります。テキストが入ります。
       </Message>
-    </Card>
+    </StyledCard>
   </Section>
 );
+
+const StyledCard = styled(Card)`
+  width: 100%;
+  max-width: 920px;
+`;
 
 const Message = styled(Text).attrs({
   level: 'display3'

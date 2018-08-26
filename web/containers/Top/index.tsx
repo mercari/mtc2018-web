@@ -15,6 +15,7 @@ class Top extends React.Component {
   };
 
   public componentDidMount() {
+    this.updateHeaderState();
     window.addEventListener('scroll', this.onScroll);
   }
 
@@ -40,6 +41,10 @@ class Top extends React.Component {
   }
 
   private onScroll = () => {
+    this.updateHeaderState();
+  };
+
+  private updateHeaderState = () => {
     const scrollY = window.scrollY;
     const windowH = window.innerHeight;
     let overScroll = false;
