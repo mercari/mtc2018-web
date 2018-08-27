@@ -22,7 +22,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: ${colors.yuki};
   padding: 7.8vh; /* 60 / 768 */
   box-sizing: border-box;
 `;
@@ -45,12 +44,14 @@ const Date = styled(Text).attrs({
   level: 'display5'
 })`
   margin-bottom: 2.6vh; /* 20 / 768 */
+  color: ${colors.yuki};
 `;
 
 const Place = styled(Text).attrs({
   level: 'display3'
 })`
   margin-bottom: 8.3vh; /* 64 / 768 */
+  color: ${colors.yuki};
 `;
 
 const BuyButton = styled(Button)`

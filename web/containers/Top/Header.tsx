@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { getTextStyle } from '../../components/Text';
-import { colors } from '../../components/styles';
+import { colors, getTextStyle } from '../../components/styles';
 
 interface Props {
   transparent: boolean;
