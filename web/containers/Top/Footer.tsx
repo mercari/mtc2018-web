@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { getTextStyle } from '../../components/Text';
-import { colors } from '../../components/styles';
+import { colors, getTextStyle } from '../../components/styles';
 
 const Footer = () => (
   <Wrapper>
@@ -17,7 +16,6 @@ const Footer = () => (
 const Wrapper = styled.footer`
   display: flex;
   justify-content: center;
-  color: ${colors.yuki};
   border-top: 1px solid ${colors.yuki};
 `;
 
@@ -38,6 +36,7 @@ const EmptySpace = styled.div`
 const Copy = styled.small`
   ${getTextStyle('display2')};
   font-weight: bold;
+  color: ${colors.yuki};
 `;
 
 const Link = styled.a`

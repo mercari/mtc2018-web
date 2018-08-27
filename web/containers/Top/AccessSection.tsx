@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Text, Card } from '../../components';
-import { getTextStyle } from '../../components/Text';
-import { colors } from '../../components/styles';
+import { colors, getTextStyle } from '../../components/styles';
 import Section from './Section';
 
 const AccessSection: React.SFC<{}> = props => (
@@ -107,6 +106,7 @@ const AccessBody = styled(Text).attrs({ level: 'body' })`
 const Link = styled.a`
   ${getTextStyle('display1')};
   color: ${colors.secondary};
+  text-decoration: none;
 `;
 
 export default AccessSection;

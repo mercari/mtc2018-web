@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { colors } from './styles';
-import { getTextStyle } from './Text';
+import { colors, getTextStyle } from './styles';
 
 const Button = styled.button`
-  ${getTextStyle('display2')}
+  ${getTextStyle('display2')};
   background-color: ${colors.secondary};
   color: ${colors.yuki};
   border: none;

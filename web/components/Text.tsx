@@ -1,22 +1,5 @@
-import styled, { css } from 'styled-components';
-import { textStyles } from './styles';
-
-export const getTextStyle = (level: string) => {
-  let style = textStyles.find(textStyle => {
-    return textStyle.level === level;
-  });
-
-  if (!style) {
-    style = textStyles[0];
-  }
-
-  return css`
-    font-size: ${style.size}px;
-    font-weight: ${style.weight};
-    font-family: 'Montserrat', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3',
-      Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
-  `;
-};
+import styled from 'styled-components';
+import { getTextStyle } from './styles';
 
 interface Props {
   level?: string;
