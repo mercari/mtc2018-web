@@ -41,10 +41,11 @@ const EmptySpace = styled.div`
   justify-content: center;
 `;
 
-const Logo = styled.div`
+const Logo = styled.img.attrs({
+  src: '../../static/images/logo.svg'
+})`
   width: 280px;
   height: 134px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
 
   @media screen and (max-width: 767px) {
     width: 200px;
