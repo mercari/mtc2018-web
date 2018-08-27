@@ -27,6 +27,12 @@ const Body = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 767px) {
+    padding: 24px 0;
+    height: auto;
+    flex-direction: column;
+  }
 `;
 
 const EmptySpace = styled.div`
@@ -44,6 +50,11 @@ const Link = styled.a`
   color: ${colors.yuki};
   text-decoration: none;
   margin-left: 60px;
+
+  @media screen and (max-width: 767px) {
+    margin-left: 0;
+    margin-top: 16px;
+  }
 `;
 
 export default Footer;

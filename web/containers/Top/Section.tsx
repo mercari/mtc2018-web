@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../components';
-import { colors } from '../../components/styles';
+import { colors, getTextStyle } from '../../components/styles';
 
 interface Props {
   title: string;
@@ -20,11 +20,14 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
   padding: 80px;
+
+  @media screen and (max-width: 767px) {
+    padding: 40px 8px;
+  }
 `;
 
-const Title = styled(Text).attrs({
-  level: 'display4'
-})`
+const Title = styled(Text)`
+  ${getTextStyle('display5')};
   color: ${colors.yuki};
   padding: 40px 0;
 `;

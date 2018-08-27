@@ -50,14 +50,23 @@ const Wrapper = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 8px;
+  padding: 8px;
   flex-shrink: 0;
+
+  @media screen and (max-width: 767px) {
+    padding: 0 8px 20px 0;
+  }
 `;
 
 const CloseButton = styled.img`
   width: 37px;
   height: 37px;
   cursor: pointer;
+
+  @media screen and (max-width: 767px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export default ContentModal;

@@ -87,6 +87,13 @@ const Body = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 767px) {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
 `;
 
 export default ContentModal;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Button, Text } from '../../components';
-import { colors } from '../../components/styles';
+import { colors, getTextStyle } from '../../components/styles';
 
 const MainVisual = () => (
   <Wrapper>
@@ -24,6 +24,13 @@ const Wrapper = styled.div`
   justify-content: center;
   padding: 7.8vh; /* 60 / 768 */
   box-sizing: border-box;
+
+  @media screen and (max-width: 767px) {
+    height: 520px;
+    min-height: 0;
+    padding: 16px;
+    margin-top: 60px;
+  }
 `;
 
 const EmptySpace = styled.div`
@@ -38,20 +45,28 @@ const Logo = styled.div`
   width: 280px;
   height: 134px;
   border: 1px solid rgba(255, 255, 255, 0.5);
+
+  @media screen and (max-width: 767px) {
+    width: 200px;
+    height: 96px;
+  }
 `;
 
-const Date = styled(Text).attrs({
-  level: 'display5'
-})`
+const Date = styled(Text)`
+  ${getTextStyle('display5')};
   margin-bottom: 2.6vh; /* 20 / 768 */
   color: ${colors.yuki};
 `;
 
-const Place = styled(Text).attrs({
-  level: 'display3'
-})`
+const Place = styled(Text)`
+  ${getTextStyle('display3')};
   margin-bottom: 8.3vh; /* 64 / 768 */
   color: ${colors.yuki};
+
+  @media screen and (max-width: 767px) {
+    ${getTextStyle('display1')};
+    color: ${colors.yuki};
+  }
 `;
 
 const BuyButton = styled(Button)`
@@ -60,6 +75,10 @@ const BuyButton = styled(Button)`
 
 const BottomArrow = styled.img.attrs({
   src: '../../static/images/arrow_bottom.svg'
-})``;
+})`
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
 
 export default MainVisual;

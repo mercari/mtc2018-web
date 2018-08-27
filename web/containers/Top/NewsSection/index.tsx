@@ -25,6 +25,11 @@ const Wrapper = styled(Card)`
   align-items: center;
   width: 100%;
   max-width: 920px;
+  padding: 60px;
+
+  @media screen and (max-width: 767px) {
+    padding: 40px 20px;
+  }
 `;
 
 const StyledNewsList = styled(NewsList)`
@@ -33,12 +38,17 @@ const StyledNewsList = styled(NewsList)`
 
 const FollowButton = styled(Button)`
   margin-bottom: 20px;
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const Message = styled(Text).attrs({
-  level: 'caption'
+  level: 'body'
 })`
   color: ${colors.secondary};
+  text-align: center;
 `;
 
 export default NewsSection;

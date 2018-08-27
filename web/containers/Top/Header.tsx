@@ -10,16 +10,18 @@ const Header: React.SFC<Props> = ({ transparent, ...props }) => (
   <Wrapper transparent={transparent} {...props}>
     <Logo />
     <EmptySpace />
-    <NavButton href="#news">NEWS</NavButton>
-    <NavButton href="#about">ABOUT</NavButton>
-    <NavButton href="#contents">CONTENTS</NavButton>
-    <NavButton href="#time_table">TIME TABLE</NavButton>
-    <NavButton href="#access">ACCESS</NavButton>
-    <SNS>
-      <CircleIcon />
-      <CircleIcon />
-    </SNS>
-    {/* <LangButton>ENGLISH</LangButton> */}
+    <Nav>
+      <NavButton href="#news">NEWS</NavButton>
+      <NavButton href="#about">ABOUT</NavButton>
+      <NavButton href="#contents">CONTENTS</NavButton>
+      <NavButton href="#time_table">TIME TABLE</NavButton>
+      <NavButton href="#access">ACCESS</NavButton>
+      <SNS>
+        <CircleIcon />
+        <CircleIcon />
+      </SNS>
+      {/* <LangButton>ENGLISH</LangButton> */}
+    </Nav>
   </Wrapper>
 );
 Header.defaultProps = {
@@ -39,14 +41,33 @@ const Wrapper = styled.div`
 
   background-color: ${(props: { transparent: boolean }) =>
     props.transparent ? 'transparent' : 'rgba(18, 28, 59, 0.8)'};
+
+  @media screen and (max-width: 767px) {
+    padding: 0 20px;
+    height: 60px;
+  }
 `;
 
 const Logo = styled.img.attrs({
   src: '../../static/images/logo.svg'
-})``;
+})`
+  @media screen and (max-width: 767px) {
+    width: 79px;
+    height: 27px;
+  }
+`;
 
 const EmptySpace = styled.div`
   flex-grow: 1;
+`;
+
+const Nav = styled.div`
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const NavButton = styled.a`
@@ -96,22 +117,5 @@ const CircleIcon = styled.button`
     margin-left: 0;
   }
 `;
-
-// const LangButton = styled.div`
-//   ${getTextStyle('display1')};
-//   height: 40px;
-//   background-color: transparent;
-//   border: none;
-//   border: 1px solid ${colors.yuki};
-//   box-sizing: border-box;
-//   border-radius: 20px;
-//   margin-left: 20px;
-//   cursor: pointer;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   padding: 0 24px;
-//   margin-left: 40px;
-// `;
 
 export default Header;

@@ -91,10 +91,11 @@ class MiniGrid extends React.Component<Props, State> {
     }
 
     const wrapperW = this.element.clientWidth;
-    const newColumnNum = Math.min(
+    let newColumnNum = Math.min(
       Math.floor(wrapperW / this.props.minColumnWidth),
       this.props.maxColumnNum
     );
+    newColumnNum = Math.max(newColumnNum, 1);
 
     // 同じカラム数であれば更新をかけない
     if (newColumnNum === this.state.columnNum) {
@@ -129,6 +130,10 @@ const Row = styled.div`
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 8px;
   }
 `;
 
