@@ -1,0 +1,85 @@
+version: 2
+
+jobs:
+  server:
+    working_directory: /go/src/github.com/mercari/mtc2018-web
+    docker:
+      - image: golang:1.11beta3-alpine
+    environment:
+      GO111MODULE: "on"
+    steps:
+      - checkout
+      - run:
+          name: build
+          command: |
+            cd server
+            go build -o mtcserver -a -tags netgo -installsuffix netgo github.com/mercari/mtc2018-web/server/cmd/mtcserver
+
+  web:
+    working_directory: /usr/src/app
+    docker:
+      - image: node:8
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: |
+            cd web
+            npm install
+            npm install tslint -g
+      - run:
+          name: lint
+          command: |
+            cd web
+            npm run lint
+      - run:
+          name: build
+          command: |
+            cd web
+            npm run build
+
+  deploy-dev:
+    working_directory: /go/src/github.com/mercari/mtc2018-web
+    docker:
+      - image: gcr.io/cloud-builders/gcloud
+        environment:
+          GOOGLE_APPLICATION_CREDENTIALS: /gcloud-service-key.json
+    steps:
+      - checkout
+      - run:
+          name: Install make
+          command: |
+            apt-get update -y -q && apt-get install -y make
+      - run:
+          name: Build docker image on Google CloudBuilder
+          command: |
+            echo "${GOOGLE_SERVICE_ACCOUNT_JSON}" > ${GOOGLE_APPLICATION_CREDENTIALS}
+            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS} >> .stdout 2>> .stderr
+
+            if [ -n "${CIRCLE_TAG}" ]; then
+                export VERSION=${CIRCLE_TAG}
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+                export VERSION=master-$(date +%Y%m%d%H%M%S)
+            elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+                export VERSION=develop-$(date +%Y%m%d%H%M%S)
+            elif [ "${CIRCLE_BRANCH}" == "deploy-ci" ]; then
+                export VERSION=develop-$(date +%Y%m%d%H%M%S)
+            fi
+
+            make cloudbuild >> .stdout 2>> .stderr
+
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - server
+      - web
+      - deploy-dev:
+          requires:
+            - server
+            - web
+          filters:
+            branches:
+              only:
+                - deploy-ci
+                - develop
