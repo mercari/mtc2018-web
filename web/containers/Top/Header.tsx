@@ -49,7 +49,7 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.img.attrs({
-  src: '../../static/images/logo.svg'
+  src: '../../static/images/header_logo.svg'
 })`
   @media screen and (max-width: 767px) {
     width: 79px;
