@@ -11,7 +11,7 @@ import Art from './Art';
 
 class Top extends React.Component {
   public state = {
-    headerTransparent: true
+    headerShowBg: false
   };
 
   public componentDidMount() {
@@ -28,7 +28,7 @@ class Top extends React.Component {
       <Wrapper>
         <StyledArt />
         <Content>
-          <StyledHeader transparent={this.state.headerTransparent} />
+          <StyledHeader showBg={this.state.headerShowBg} />
           <MainVisual />
           <NewsSection />
           <AboutSection />
@@ -56,8 +56,8 @@ class Top extends React.Component {
     }
 
     // 現状のステートと差分があれば更新
-    if (this.state.headerTransparent !== overScroll) {
-      this.setState({ headerTransparent: overScroll });
+    if (this.state.headerShowBg === overScroll) {
+      this.setState({ headerShowBg: !overScroll });
     }
   };
 }
