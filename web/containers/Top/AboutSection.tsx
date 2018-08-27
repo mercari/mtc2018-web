@@ -23,7 +23,7 @@ const StyledCard = styled(Card)`
 `;
 
 const Message = styled(Text).attrs({
-  level: 'display3'
+  level: 'display2'
 })`
   text-align: center;
   line-height: 36px;
