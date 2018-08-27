@@ -56,6 +56,7 @@ const StyledCard = styled(Card)`
   max-width: 920px;
   display: flex;
   flex-direction: column;
+  padding: 60px;
 
   > * {
     margin-bottom: 40px;
@@ -63,6 +64,10 @@ const StyledCard = styled(Card)`
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 40px 20px;
   }
 `;
 

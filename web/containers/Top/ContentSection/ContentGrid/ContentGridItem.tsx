@@ -31,7 +31,7 @@ class ContentGridItem extends React.PureComponent<Props> {
               </Text>
             ))}
           </Tags>
-          <Text level="body">{content.body}</Text>
+          <Body>{content.body}</Body>
         </ContentInfo>
         <SpeakerInfo>
           <Icon src={content.speaker.iconUrl} />
@@ -55,11 +55,13 @@ const Wrapper = styled.div`
   background-color: ${colors.yuki};
   padding: 16px;
   transition: 300ms;
+  cursor: pointer;
 
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.08);
-    box-shadow: ${boxShadow.level1};
+  @media screen and (min-width: 768px) {
+    &:hover {
+      transform: scale(1.08);
+      box-shadow: ${boxShadow.level1};
+    }
   }
 `;
 
@@ -94,6 +96,12 @@ const Tags = styled.div`
 
   > * {
     margin-right: 8px;
+  }
+`;
+
+const Body = styled(Text).attrs({ level: 'body' })`
+  @media screen and (max-width: 767px) {
+    display: none;
   }
 `;
 

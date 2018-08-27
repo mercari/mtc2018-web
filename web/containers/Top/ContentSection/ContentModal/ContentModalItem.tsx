@@ -1,7 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Text, Tip } from '../../../../components';
-import { colors, borderRadius } from '../../../../components/styles';
+import {
+  colors,
+  getTextStyle,
+  borderRadius
+} from '../../../../components/styles';
 import { Content } from '../../../../store/contents';
 import ContentModalSpeaker from './ContentModalSpeaker';
 
@@ -22,16 +26,16 @@ class ContentModalItem extends React.PureComponent<Props> {
             <Text level="display2">
               {content.startTime}-{content.endTime}
             </Text>
-            <Tags>
-              {content.tags.map(tag => (
-                <Text level="display1" key={tag.id}>
-                  #{tag.label}
-                </Text>
-              ))}
-            </Tags>
           </Header>
           <Title>{content.title}</Title>
-          <Text level="display1">{content.body}</Text>
+          <Tags>
+            {content.tags.map(tag => (
+              <Text level="display1" key={tag.id}>
+                #{tag.label}
+              </Text>
+            ))}
+          </Tags>
+          <Body>{content.body}</Body>
         </ContentInfo>
         <ContentModalSpeaker speaker={content.speaker} />
       </Wrapper>
@@ -46,10 +50,18 @@ const Wrapper = styled.div`
   padding: 60px;
   box-sizing: border-box;
   overflow: scroll;
+
+  @media screen and (max-width: 767px) {
+    padding: 20px;
+  }
 `;
 
 const ContentInfo = styled.div`
-  margin-bottom: 80px;
+  margin-bottom: 40px;
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Header = styled.div`
@@ -68,9 +80,17 @@ const Header = styled.div`
 
 const Tags = styled.div`
   display: flex;
+  margin-bottom: 16px;
 
   > * {
     margin-right: 8px;
+  }
+`;
+
+const Body = styled(Text)`
+  ${getTextStyle('display1')};
+  @media screen and (max-width: 767px) {
+    ${getTextStyle('body')};
   }
 `;
 
