@@ -42,7 +42,7 @@ class MiniGrid extends React.Component<Props, State> {
   public render() {
     const children = React.Children.toArray(this.props.children);
     const { columnNum } = this.state;
-    const rowNum = Math.ceil(children.length / 3);
+    const rowNum = Math.ceil(children.length / columnNum);
     const columns: React.ReactNode[] = [];
 
     // 列
