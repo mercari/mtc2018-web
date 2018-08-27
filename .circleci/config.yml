@@ -38,7 +38,7 @@ jobs:
             cd web
             npm run build
 
-  deploy-dev:
+  deploy:
     working_directory: /go/src/github.com/mercari/mtc2018-web
     docker:
       - image: gcr.io/cloud-builders/gcloud
@@ -74,12 +74,12 @@ workflows:
     jobs:
       - server
       - web
-      - deploy-dev:
+      - deploy:
           requires:
             - server
             - web
           filters:
             branches:
               only:
-                - deploy-ci
+                - master
                 - develop
