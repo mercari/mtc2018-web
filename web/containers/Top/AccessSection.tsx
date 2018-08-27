@@ -21,7 +21,6 @@ const AccessSection: React.SFC<{}> = props => (
         height="450"
         frameBorder="0"
         style={{ border: 0 }}
-        allowfullscreen={true}
       />
       <div>
         <AccessTitle>電車でお越しの場合</AccessTitle>
@@ -34,14 +33,14 @@ const AccessSection: React.SFC<{}> = props => (
       <div>
         <AccessTitle>バスでお越しの場合</AccessTitle>
         <AccessSubTite>渋谷駅より</AccessSubTite>
-        <AccessBody level="body">
+        <AccessBody>
           都バス都RH01系統【渋谷駅前⇔六本木ヒルズ】／「六本木ヒルズ」「六本木ヒルズけやき坂」下車（約15分）
           <br />
           都バス
           都01系統【渋谷駅前⇔新橋駅前】／「EXシアター六本木前」下車（約14分）
         </AccessBody>
         <AccessSubTite>新橋駅より</AccessSubTite>
-        <AccessBody level="body">
+        <AccessBody>
           都バス 都01系統【新橋駅前⇔渋谷駅前
           】／「EXシアター六本木前」下車（約16分）
         </AccessBody>
