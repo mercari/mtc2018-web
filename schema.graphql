@@ -2,27 +2,84 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
-}
-
-type User {
-  id: ID!
-  name: String!
-}
-
 type Query {
-  todos: [Todo!]!
-}
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
 
-input NewTodo {
-  text: String!
-  userId: String!
+  """
+  セッション一覧を取得します。
+  """
+  sessions(
+    first: Int!
+    after: String
+    req: SessionListInput
+  ): SessionConnection!
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  """
+  セッションに対していいね！することができます。
+  ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
+  """
+  createLike(input: CreateLikeInput!): Like!
+}
+
+interface Node {
+  id: ID!
+}
+
+interface Connection {
+  pageInfo: PageInfo
+  edges: [Edge]
+}
+
+interface Edge {
+  cursor: String
+  node: Node!
+}
+
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type SessionConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [SessionEdge]
+  nodes: [Session]
+}
+
+type SessionEdge implements Edge {
+  cursor: String
+  node: Session!
+}
+
+input SessionListInput {
+  tmp: String
+}
+
+"""
+セッション1つに関する情報。
+"""
+type Session implements Node {
+  id: ID!
+  title: String!
+}
+
+"""
+セッションに対していいね！する時の引数です。
+"""
+input CreateLikeInput {
+  clientMutationId: String
+  sessionID: ID!
+}
+
+"""
+セッションに対していいね！した情報です。
+"""
+type Like implements Node {
+  id: ID!
+  sessionID: ID!
 }

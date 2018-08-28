@@ -6,14 +6,14 @@ import (
 	"os"
 	"strings"
 
+	"github.com/99designs/gqlgen/handler"
 	"github.com/mercari/mtc2018-web/server/config"
+	"github.com/mercari/mtc2018-web/server/gqlapi"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	ddnethttp "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
 	ddtracer "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
-	"github.com/99designs/gqlgen/handler"
-	"github.com/mercari/mtc2018-web/server/gqlapi"
 )
 
 // newLogger creates a new zap logger with the given log level.
@@ -84,7 +84,7 @@ func runServer(port int, logger *zap.Logger) {
 	mux.Handle("/query", handler.GraphQL(
 		gqlapi.NewExecutableSchema(
 			gqlapi.Config{
-				Resolvers: &gqlapi.Resolver{},
+				Resolvers: gqlapi.NewResolver(),
 			},
 		),
 	))

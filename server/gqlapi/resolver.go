@@ -6,23 +6,37 @@ import (
 	"context"
 )
 
-type Resolver struct{}
+// NewResolver returns GraphQL root resolver.
+func NewResolver() ResolverRoot {
+	return &rootResolver{}
+}
 
-func (r *Resolver) Mutation() MutationResolver {
+type rootResolver struct{}
+
+func (r *rootResolver) Mutation() MutationResolver {
 	return &mutationResolver{r}
 }
-func (r *Resolver) Query() QueryResolver {
+
+func (r *rootResolver) Query() QueryResolver {
 	return &queryResolver{r}
 }
 
-type mutationResolver struct{ *Resolver }
+type mutationResolver struct{ *rootResolver }
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input NewTodo) (Todo, error) {
+func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput) (Like, error) {
 	panic("not implemented")
 }
 
-type queryResolver struct{ *Resolver }
+type queryResolver struct{ *rootResolver }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]Todo, error) {
+func (r *queryResolver) Node(ctx context.Context, id string) (Node, error) {
+	panic("not implemented")
+}
+
+func (r *queryResolver) Nodes(ctx context.Context, ids []string) ([]*Node, error) {
+	panic("not implemented")
+}
+
+func (r *queryResolver) Sessions(ctx context.Context, first int, after *string, req *SessionListInput) (SessionConnection, error) {
 	panic("not implemented")
 }

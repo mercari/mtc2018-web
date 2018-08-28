@@ -2,19 +2,48 @@
 
 package gqlapi
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+type Connection interface{}
+
+// セッションに対していいね！する時の引数です。
+type CreateLikeInput struct {
+	ClientMutationID *string `json:"clientMutationId"`
+	SessionID        string  `json:"sessionID"`
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User User   `json:"user"`
+type Edge interface{}
+
+// セッションに対していいね！した情報です。
+type Like struct {
+	ID        string `json:"id"`
+	SessionID string `json:"sessionID"`
 }
 
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+type Node interface{}
+
+type PageInfo struct {
+	StartCursor     *string `json:"startCursor"`
+	EndCursor       *string `json:"endCursor"`
+	HasNextPage     bool    `json:"hasNextPage"`
+	HasPreviousPage bool    `json:"hasPreviousPage"`
+}
+
+// セッション1つに関する情報。
+type Session struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+}
+
+type SessionConnection struct {
+	PageInfo PageInfo       `json:"pageInfo"`
+	Edges    []*SessionEdge `json:"edges"`
+	Nodes    []*Session     `json:"nodes"`
+}
+
+type SessionEdge struct {
+	Cursor *string `json:"cursor"`
+	Node   Session `json:"node"`
+}
+
+type SessionListInput struct {
+	Tmp *string `json:"tmp"`
 }
