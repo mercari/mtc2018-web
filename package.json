@@ -1,0 +1,24 @@
+{
+  "name": "mtc2018-web-root",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "fmt": "npm run fmt:graphql",
+    "fmt:graphql": "prettier --write '*.graphql' 'server/**/*.graphql'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mercari/mtc2018-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mercari/mtc2018-web/issues"
+  },
+  "homepage": "https://github.com/mercari/mtc2018-web#readme",
+  "devDependencies": {
+    "prettier": "^1.14.2"
+  }
+}
