@@ -4,11 +4,22 @@ jobs:
   server:
     working_directory: /go/src/github.com/mercari/mtc2018-web
     docker:
-      - image: golang:1.11beta3-alpine
-    environment:
-      GO111MODULE: "on"
+      - image: golang:1.11rc1
+    # environment:
+    #   GO111MODULE: "on"
     steps:
       - checkout
+      - run:
+          name: install dependencies
+          command: |
+            cd server
+            go get github.com/golang/dep/cmd/dep
+            dep ensure -v -vendor-only
+      - run:
+          name: test
+          command: |
+            cd server
+            go test -v -race ./...
       - run:
           name: build
           command: |
