@@ -23,17 +23,16 @@
 ## 動かし方
 
 ```
-# before go 1.11 release
-$ go get golang.org/dl/go1.11rc1
-$ go1.11rc1 download
-$ alias go=go1.11rc1
-
+$ go version
+go version go1.11 darwin/amd64
+$ export GO111MODULE=on
+$ export ENV=development
 $ go run cmd/mtcserver/main.go
 $ open http://localhost:8080/
 ```
 
 ```
 $ docker build -t mtcserver .
-$ docker run -it -p 8080:8080 mtcserver
+$ docker run -it --env ENV=development -p 8080:8080 mtcserver
 $ open http://localhost:8080/
 ```
