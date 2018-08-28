@@ -2,6 +2,7 @@
 
 mtcserver
 
+bin/
 vendor/
 
 .envrc
