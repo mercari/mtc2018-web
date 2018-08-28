@@ -23,7 +23,7 @@ func (r *rootResolver) Query() QueryResolver {
 
 type mutationResolver struct{ *rootResolver }
 
-func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput) (Like, error) {
+func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error) {
 	panic("not implemented")
 }
 

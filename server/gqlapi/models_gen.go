@@ -10,6 +10,11 @@ type CreateLikeInput struct {
 	SessionID        string  `json:"sessionID"`
 }
 
+type CreateLikePayload struct {
+	ClientMutationID *string `json:"clientMutationId"`
+	Like             Like    `json:"like"`
+}
+
 type Edge interface{}
 
 // セッションに対していいね！した情報です。

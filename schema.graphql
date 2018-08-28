@@ -21,7 +21,7 @@ type Mutation {
   セッションに対していいね！することができます。
   ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
   """
-  createLike(input: CreateLikeInput!): Like!
+  createLike(input: CreateLikeInput!): CreateLikePayload
 }
 
 interface Node {
@@ -74,6 +74,11 @@ type Session implements Node {
 input CreateLikeInput {
   clientMutationId: String
   sessionID: ID!
+}
+
+type CreateLikePayload {
+  clientMutationId: String
+  like: Like!
 }
 
 """

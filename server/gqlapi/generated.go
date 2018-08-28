@@ -36,7 +36,7 @@ type ResolverRoot interface {
 type DirectiveRoot struct {
 }
 type MutationResolver interface {
-	CreateLike(ctx context.Context, input CreateLikeInput) (Like, error)
+	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
 }
 type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
@@ -92,6 +92,84 @@ func (e *executableSchema) Subscription(ctx context.Context, op *ast.OperationDe
 type executionContext struct {
 	*graphql.RequestContext
 	*executableSchema
+}
+
+var createLikePayloadImplementors = []string{"CreateLikePayload"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _CreateLikePayload(ctx context.Context, sel ast.SelectionSet, obj *CreateLikePayload) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, createLikePayloadImplementors)
+
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CreateLikePayload")
+		case "clientMutationId":
+			out.Values[i] = ec._CreateLikePayload_clientMutationId(ctx, field, obj)
+		case "like":
+			out.Values[i] = ec._CreateLikePayload_like(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _CreateLikePayload_clientMutationId(ctx context.Context, field graphql.CollectedField, obj *CreateLikePayload) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "CreateLikePayload",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.ClientMutationID, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+
+	if res == nil {
+		return graphql.Null
+	}
+	return graphql.MarshalString(*res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _CreateLikePayload_like(ctx context.Context, field graphql.CollectedField, obj *CreateLikePayload) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "CreateLikePayload",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Like, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(Like)
+	rctx.Result = res
+
+	return ec._Like(ctx, field.Selections, &res)
 }
 
 var likeImplementors = []string{"Like", "Node"}
@@ -193,9 +271,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = graphql.MarshalString("Mutation")
 		case "createLike":
 			out.Values[i] = ec._Mutation_createLike(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -231,15 +306,16 @@ func (ec *executionContext) _Mutation_createLike(ctx context.Context, field grap
 		return ec.resolvers.Mutation().CreateLike(ctx, args["input"].(CreateLikeInput))
 	})
 	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(Like)
+	res := resTmp.(*CreateLikePayload)
 	rctx.Result = res
 
-	return ec._Like(ctx, field.Selections, &res)
+	if res == nil {
+		return graphql.Null
+	}
+
+	return ec._CreateLikePayload(ctx, field.Selections, res)
 }
 
 var pageInfoImplementors = []string{"PageInfo"}
@@ -2425,7 +2501,7 @@ type Mutation {
   セッションに対していいね！することができます。
   ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
   """
-  createLike(input: CreateLikeInput!): Like!
+  createLike(input: CreateLikeInput!): CreateLikePayload
 }
 
 interface Node {
@@ -2478,6 +2554,11 @@ type Session implements Node {
 input CreateLikeInput {
   clientMutationId: String
   sessionID: ID!
+}
+
+type CreateLikePayload {
+  clientMutationId: String
+  like: Like!
 }
 
 """
