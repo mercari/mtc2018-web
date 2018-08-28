@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV='production' node server",
+    "start": "NODE_ENV='production' node server.js",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged"
