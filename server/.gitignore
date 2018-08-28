@@ -1,4 +1,7 @@
-/mtcserver
 .idea/
 
+mtcserver
+
 vendor/
+
+.envrc
