@@ -12,6 +12,8 @@ import (
 	"go.uber.org/zap/zapcore"
 	ddnethttp "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
 	ddtracer "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
+	"github.com/99designs/gqlgen/handler"
+	"github.com/mercari/mtc2018-web/server/gqlapi"
 )
 
 // newLogger creates a new zap logger with the given log level.
@@ -66,9 +68,6 @@ func main() {
 
 func runServer(port int, logger *zap.Logger) {
 	mux := ddnethttp.NewServeMux(ddnethttp.WithServiceName(config.ServiceName))
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello, 世界"))
-	})
 
 	// for kubernetes readiness probe
 	mux.HandleFunc("/healthz/readiness", func(w http.ResponseWriter, r *http.Request) {
@@ -78,6 +77,21 @@ func runServer(port int, logger *zap.Logger) {
 	// for kubernetes liveness probe
 	mux.HandleFunc("/healthz/liveness", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
+	})
+
+	// GraphQL implementation
+	mux.Handle("/playground", handler.Playground("GraphQL playground", "/query"))
+	mux.Handle("/query", handler.GraphQL(
+		gqlapi.NewExecutableSchema(
+			gqlapi.Config{
+				Resolvers: &gqlapi.Resolver{},
+			},
+		),
+	))
+
+	// index
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello, 世界"))
 	})
 
 	logger.Info("start http server")
