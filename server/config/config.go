@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// ServiceName pass to other service.
 const ServiceName = "mtc2018"
 
 const (

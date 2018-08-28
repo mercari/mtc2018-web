@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/mercari/mtc2018-web/server/config"
+	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	ddnethttp "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
