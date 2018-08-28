@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "fmt": "npm run fmt:graphql",
-    "fmt:graphql": "prettier --write '*.graphql' 'server/**/*.graphql'"
+    "fmt:graphql": "prettier --write '*.graphql' 'server/**/*.graphql'",
+    "serve": "node mockServer.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,12 @@
     "url": "https://github.com/mercari/mtc2018-web/issues"
   },
   "homepage": "https://github.com/mercari/mtc2018-web#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.2",
+    "graphql-tools": "^3.1.1"
+  },
   "devDependencies": {
     "prettier": "^1.14.2"
   }
