@@ -34,7 +34,7 @@ class Top extends React.Component {
           <NewsSection />
           <AboutSection />
           <ContentSection />
-          <TimetableSection />
+          <StyledTimetableSection />
           <AccessSection />
           <Footer />
         </Content>
@@ -88,6 +88,12 @@ const StyledArt = styled(Art)`
   height: 100%;
   pointer-events: none;
   z-index: 0;
+`;
+
+const StyledTimetableSection = styled(TimetableSection)`
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export default Top;

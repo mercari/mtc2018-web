@@ -53,6 +53,7 @@ export default styled(TimetableSection)`
       tr {
         th {
           padding: 10px;
+          height: 48px;
           box-sizing: border-box;
           background-color: ${colors.nezumi};
           color: ${colors.yuki};
