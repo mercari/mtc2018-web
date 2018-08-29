@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Webpage for mercari Tech Conf 2018",
   "scripts": {
-    "dev": "next",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start -p 8080",
+    "start": "NODE_ENV='production' node server.js",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged"
@@ -20,6 +20,7 @@
   "dependencies": {
     "@zeit/next-typescript": "^1.1.0",
     "cross-env": "^5.2.0",
+    "express": "^4.16.3",
     "fork-ts-checker-webpack-plugin": "^0.4.3",
     "mtc-art": "0.0.9",
     "next": "^6.1.1",
