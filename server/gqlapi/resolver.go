@@ -4,11 +4,12 @@ package gqlapi
 
 import (
 	"context"
-	"github.com/mercari/mtc2018-web/server/config"
 	"encoding/base64"
 	"fmt"
 	"sync"
+
 	"github.com/google/uuid"
+	"github.com/mercari/mtc2018-web/server/config"
 )
 
 // NewResolver returns GraphQL root resolver.
@@ -19,7 +20,7 @@ func NewResolver() (ResolverRoot, error) {
 	}
 
 	r := &rootResolver{
-		speakers: make(map[string]Speaker),
+		speakers:      make(map[string]Speaker),
 		likeObservers: make(map[string]chan Like),
 	}
 
@@ -28,7 +29,7 @@ func NewResolver() (ResolverRoot, error) {
 		for _, speaker := range session.Speakers {
 			id := base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Speaker:%d", len(r.speakers)+1)))
 			// GitHubIDは必須入力でかつユニークっぽい(今のところ)
-			r.speakers[speaker.GithubID ] = Speaker{
+			r.speakers[speaker.GithubID] = Speaker{
 				ID:         id,
 				Name:       speaker.Name,
 				NameJa:     speaker.NameJa,
@@ -42,7 +43,7 @@ func NewResolver() (ResolverRoot, error) {
 				GithubID:   speaker.GithubID,
 				// Sessions will be calculate dynamically
 			}
-			speakers = append(speakers, r.speakers[speaker.GithubID ])
+			speakers = append(speakers, r.speakers[speaker.GithubID])
 		}
 
 		r.sessions = append(r.sessions, Session{
