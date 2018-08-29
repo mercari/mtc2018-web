@@ -6,12 +6,13 @@ import (
 	"os"
 	"strings"
 
+	"github.com/DataDog/opencensus-go-exporter-datadog"
 	"github.com/mercari/mtc2018-web/server/config"
 	"github.com/pkg/errors"
+	"go.opencensus.io/plugin/ochttp"
+	"go.opencensus.io/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	ddnethttp "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
-	ddtracer "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
 
 // newLogger creates a new zap logger with the given log level.
@@ -53,20 +54,29 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Start DataDog trace client for sending tracing information(APM).
-	ddtracer.Start(
-		ddtracer.WithAgentAddr(fmt.Sprintf("%s:8126", env.DDAgentHostname)),
-		ddtracer.WithServiceName(config.ServiceName),
-		ddtracer.WithGlobalTag("env", env.Env),
-	)
-	defer ddtracer.Stop()
+	dd := datadog.NewExporter(datadog.Options{
+		Service:   config.ServiceName,
+		TraceAddr: fmt.Sprintf("%s:8126", env.DDAgentHostname),
+		Tags:      []string{"env", env.Env},
+	})
+	defer dd.Stop()
+
+	trace.RegisterExporter(dd)
+
+	trace.ApplyConfig(trace.Config{
+		DefaultSampler: trace.AlwaysSample(),
+	})
 
 	runServer(env.Port, logger)
 }
 
 func runServer(port int, logger *zap.Logger) {
-	mux := ddnethttp.NewServeMux(ddnethttp.WithServiceName(config.ServiceName))
+	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		ctx, span := trace.StartSpan(r.Context(), "hello世界")
+		r = r.WithContext(ctx)
+		defer span.End()
+
 		w.Write([]byte("Hello, 世界"))
 	})
 
@@ -81,5 +91,10 @@ func runServer(port int, logger *zap.Logger) {
 	})
 
 	logger.Info("start http server")
-	http.ListenAndServe(fmt.Sprintf(":%d", port), mux)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", port), &ochttp.Handler{
+		Handler: mux,
+	})
+	if err != nil {
+		logger.Fatal(err.Error(), zap.Error(err))
+	}
 }
