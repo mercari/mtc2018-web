@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Modal } from '../../../../components';
 import ContentModalItem from './ContentModalItem';
-import { Content } from '../../../../store/contents';
+import { Content } from '../../../../types';
 
 interface Props {
   contents: Content[];

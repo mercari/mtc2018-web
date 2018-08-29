@@ -6,7 +6,7 @@ import {
   getTextStyle,
   borderRadius
 } from '../../../../components/styles';
-import { Speaker } from '../../../../store/contents';
+import { Speaker } from '../../../../types';
 
 interface Props {
   speaker: Speaker;
@@ -26,7 +26,7 @@ const ContentModalSpeaker: React.SFC<Props> = ({ speaker }) => (
           <Button />
         </Buttons>
       </Header>
-      <Body>{speaker.body}</Body>
+      <Body>{speaker.profile}</Body>
     </Profile>
   </Wrapper>
 );

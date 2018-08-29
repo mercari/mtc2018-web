@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components';
 import { getTextStyle } from '../../../components/styles';
-import { News } from '../../../store/news';
+import { News } from '../../../types';
 
 interface Props {
   news: News[];
