@@ -3,7 +3,9 @@ import { css } from 'styled-components';
 export const colors = {
   primary: '#10172B',
   secondary: '#F6422A',
+  orange: '#FB7A61',
   yuki: '#FFFFFF',
+  nezumi: '#9D9D9D',
   kemuri: '#D8D8D8',
   sakura: '#EDE1E1'
 };

@@ -6,6 +6,7 @@ import Footer from './Footer';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import ContentSection from './ContentSection';
+import TimetableSection from './TimetableSection';
 import AccessSection from './AccessSection';
 import Art from './Art';
 
@@ -33,6 +34,7 @@ class Top extends React.Component {
           <NewsSection />
           <AboutSection />
           <ContentSection />
+          <TimetableSection />
           <AccessSection />
           <Footer />
         </Content>
