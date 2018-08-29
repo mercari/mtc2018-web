@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { colors, getTextStyle } from '../../components/styles';
 import Section from './Section';
-import { rows, Slot } from '../../store/timetable';
+import { rows } from '../../store/timetable';
 
 const TimetableSection: React.SFC<{}> = props => (
   <Section title="TIMETABLE" id="timetable" {...props}>
@@ -15,13 +15,13 @@ const TimetableSection: React.SFC<{}> = props => (
         </tr>
       </thead>
       <tbody>
-        {rows.map(row => (
-          <tr>
+        {rows.map((row, rowIndex) => (
+          <tr key={`row_${rowIndex}`}>
             <td>{row.time}</td>
             {row.slots.map(
-              (slot: Slot) =>
+              (slot, slotIndex) =>
                 slot.type === 'content' ? (
-                  <td className="-content" colSpan={1}>
+                  <td key={`td_${slotIndex}`} className="-content" colSpan={1}>
                     <div className="title">#Go #Web #ʕ◔ϖ◔ʔ</div>
                     <div className="title">
                       Web アプリケーションにおける Go 言語のパッケージ構成
@@ -30,7 +30,7 @@ const TimetableSection: React.SFC<{}> = props => (
                     <div className="name">主森 理</div>
                   </td>
                 ) : (
-                  <td className="-other" colSpan={2}>
+                  <td key={`td_${slotIndex}`} className="-other" colSpan={2}>
                     {slot.label}
                   </td>
                 )
@@ -48,7 +48,7 @@ export default styled(TimetableSection)`
   table {
     width: 100%;
     max-width: 920px;
-    border-spacing: 1px 10px;
+    border-spacing: 1px;
     thead {
       tr {
         th {
@@ -72,6 +72,7 @@ export default styled(TimetableSection)`
           padding: 10px;
           box-sizing: border-box;
           background-color: ${colors.yuki};
+          border-bottom: 10px solid ${colors.primary};
 
           &:first-child {
             vertical-align: top;
