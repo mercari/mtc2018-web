@@ -36,3 +36,51 @@ $ docker build -t mtcserver .
 $ docker run -it --env ENV=development -p 8080:8080 mtcserver
 $ open http://localhost:8080/
 ```
+
+## クエリの叩き方
+
+stg環境のパスは内緒なので社のSlackで聞いてください。
+
+ローカルで動かして試すには次のパスから
+http://localhost:8080/2018/api/playground
+
+受け付けてくれるクエリの例は次の通り
+
+```
+query {
+  sessions(first: 100) {
+    nodes {
+      id
+      title
+      speakers {
+        id
+        name
+      }
+    }
+  }
+}
+```
+
+```
+subscription {
+  likeAdded {
+    id
+    sessionID
+  }
+}
+```
+
+```
+mutation {
+  createLike(input: {
+    clientMutationId: "qawesrdftgyhujiko" # 適当なUUIDとかでよい
+    sessionID: "U2Vzc2lvbjox"             # queryで得られたsessionのID
+  }) {
+    clientMutationId
+    like {
+      id
+      sessionID
+    }
+  }
+}
+```
