@@ -6,8 +6,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/99designs/gqlgen/handler"
 	"github.com/DataDog/opencensus-go-exporter-datadog"
+	"github.com/gorilla/websocket"
 	"github.com/mercari/mtc2018-web/server/config"
+	"github.com/mercari/mtc2018-web/server/gqlapi"
 	"github.com/pkg/errors"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/trace"
@@ -72,13 +75,6 @@ func main() {
 
 func runServer(port int, logger *zap.Logger) {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		ctx, span := trace.StartSpan(r.Context(), "hello世界")
-		r = r.WithContext(ctx)
-		defer span.End()
-
-		w.Write([]byte("Hello, 世界"))
-	})
 
 	// for kubernetes readiness probe
 	mux.HandleFunc("/healthz/readiness", func(w http.ResponseWriter, r *http.Request) {
@@ -88,6 +84,27 @@ func runServer(port int, logger *zap.Logger) {
 	// for kubernetes liveness probe
 	mux.HandleFunc("/healthz/liveness", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
+	})
+
+	// GraphQL implementation
+	// playgroundがapiの下にあるの微妙だけどGKEのIngress的にこのほうが楽なのでまぁこれでいいでしょ
+	mux.Handle("/2018/api/playground", handler.Playground("GraphQL playground", "/2018/api/query"))
+	mux.Handle("/2018/api/query", handler.GraphQL(
+		gqlapi.NewExecutableSchema(
+			gqlapi.Config{
+				Resolvers: gqlapi.NewResolver(),
+			},
+		),
+		handler.WebsocketUpgrader(websocket.Upgrader{}),
+	))
+
+	// index
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		ctx, span := trace.StartSpan(r.Context(), "hello世界")
+		r = r.WithContext(ctx)
+		defer span.End()
+
+		w.Write([]byte("Hello, 世界"))
 	})
 
 	logger.Info("start http server")

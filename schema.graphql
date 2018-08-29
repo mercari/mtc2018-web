@@ -1,0 +1,120 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
+
+  """
+  セッション一覧を取得します。
+  """
+  sessions(
+    first: Int!
+    after: String
+    req: SessionListInput
+  ): SessionConnection!
+}
+
+type Mutation {
+  """
+  セッションに対していいね！することができます。
+  ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
+  """
+  createLike(input: CreateLikeInput!): CreateLikePayload
+}
+
+type Subscription {
+  likeAdded: Like!
+}
+
+interface Node {
+  id: ID!
+}
+
+interface Connection {
+  pageInfo: PageInfo
+  edges: [Edge]
+}
+
+interface Edge {
+  cursor: String
+  node: Node!
+}
+
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type SessionConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [SessionEdge]
+  nodes: [Session]
+}
+
+type SessionEdge implements Edge {
+  cursor: String
+  node: Session!
+}
+
+input SessionListInput {
+  tmp: String
+}
+
+"""
+セッション1つに関する情報。
+"""
+type Session implements Node {
+  id: ID!
+  title: String!
+  titleJa: String!
+  startTime: String!
+  endTime: String!
+  outline: String!
+  outlineJa: String!
+  hashTags: [String!]
+  speakers: [Speaker!]
+}
+
+"""
+スピーカー1人に関する情報。
+"""
+type Speaker implements Node {
+  id: ID!
+  name: String!
+  nameJa: String!
+  company: String!
+  position: String!
+  positionJa: String!
+  profile: String!
+  profileJa: String!
+  iconUrl: String!
+  twitterId: String!
+  githubId: String!
+
+  sessions: [Session!]
+}
+
+"""
+セッションに対していいね！する時の引数です。
+"""
+input CreateLikeInput {
+  clientMutationId: String
+  sessionID: ID!
+}
+
+type CreateLikePayload {
+  clientMutationId: String
+  like: Like!
+}
+
+"""
+セッションに対していいね！した情報です。
+"""
+type Like implements Node {
+  id: ID!
+  sessionID: ID!
+}
