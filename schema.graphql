@@ -24,6 +24,10 @@ type Mutation {
   createLike(input: CreateLikeInput!): CreateLikePayload
 }
 
+type Subscription {
+  likeAdded(): Like!
+}
+
 interface Node {
   id: ID!
 }

@@ -8,6 +8,7 @@ import (
 
 	"github.com/99designs/gqlgen/handler"
 	"github.com/DataDog/opencensus-go-exporter-datadog"
+	"github.com/gorilla/websocket"
 	"github.com/mercari/mtc2018-web/server/config"
 	"github.com/mercari/mtc2018-web/server/gqlapi"
 	"github.com/pkg/errors"
@@ -94,6 +95,7 @@ func runServer(port int, logger *zap.Logger) {
 				Resolvers: gqlapi.NewResolver(),
 			},
 		),
+		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
 
 	// index

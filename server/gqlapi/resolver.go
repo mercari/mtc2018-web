@@ -21,6 +21,10 @@ func (r *rootResolver) Query() QueryResolver {
 	return &queryResolver{r}
 }
 
+func (r *rootResolver) Subscription() SubscriptionResolver {
+	return &subscriptionResolver{r}
+}
+
 type mutationResolver struct{ *rootResolver }
 
 func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error) {
@@ -38,5 +42,17 @@ func (r *queryResolver) Nodes(ctx context.Context, ids []string) ([]*Node, error
 }
 
 func (r *queryResolver) Sessions(ctx context.Context, first int, after *string, req *SessionListInput) (SessionConnection, error) {
+	panic("not implemented")
+}
+
+type subscriptionResolver struct{ *rootResolver }
+
+func (r *subscriptionResolver) LikeAdded(ctx context.Context) (<-chan Like, error) {
+
+	go func() {
+		<-ctx.Done()
+		// TODO remove subscription
+	}()
+
 	panic("not implemented")
 }
