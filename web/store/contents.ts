@@ -22,10 +22,10 @@ export interface Content {
   place: string;
   title: string;
   body: string;
-  startTime: string;
-  endTime: string;
   tags: Tag[];
   speaker: Speaker;
+  startTime: string;
+  endTime: string;
 }
 
 export const contents: Content[] = duplicate<Content>(20)({

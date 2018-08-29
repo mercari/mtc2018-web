@@ -6,6 +6,7 @@ import Footer from './Footer';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import ContentSection from './ContentSection';
+import TimetableSection from './TimetableSection';
 import AccessSection from './AccessSection';
 import Art from './Art';
 
@@ -33,6 +34,7 @@ class Top extends React.Component {
           <NewsSection />
           <AboutSection />
           <ContentSection />
+          <StyledTimetableSection />
           <AccessSection />
           <Footer />
         </Content>
@@ -86,6 +88,12 @@ const StyledArt = styled(Art)`
   height: 100%;
   pointer-events: none;
   z-index: 0;
+`;
+
+const StyledTimetableSection = styled(TimetableSection)`
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export default Top;
