@@ -2,174 +2,76 @@ import { Row } from '../types';
 
 export const rows: Row[] = [
   {
-    time: '9:00~',
-    slots: [
-      {
-        type: 'other',
-        label: '開場'
-      }
-    ]
-  },
-  {
+    type: 'other',
     time: '10:00 ~ 10:15',
-    slots: [
-      {
-        type: 'other',
-        label: 'オープニング'
-      }
-    ]
+    label: 'オープニング'
   },
   {
+    type: 'other',
     time: '10:15 ~ 11:45',
-    slots: [
-      {
-        type: 'other',
-        label: 'Keynote'
-      }
-    ]
+    label: 'Keynote( @suguru, @Mok, @sowawa )'
   },
   {
+    type: 'other',
     time: '11:45 ~ 13:00',
-    slots: [
-      {
-        type: 'other',
-        label: 'ランチブレイク'
-      }
-    ]
+    label: 'ランチブレイク'
   },
   {
+    type: 'content',
     time: '13:00 ~ 13:30',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [10],
+    trackB: [12]
   },
   {
+    type: 'content',
     time: '13:40 ~ 14:10',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [13],
+    trackB: [14]
   },
   {
+    type: 'content',
     time: '14:20 ~ 14:50',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [15],
+    trackB: [16]
   },
   {
+    type: 'content',
     time: '15:00 ~ 15:30',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [17],
+    trackB: [18, 19]
   },
   {
+    type: 'other',
     time: '15:30 ~ 16:00',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    label: '中休憩'
   },
   {
+    type: 'content',
     time: '16:00 ~ 16:30',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [20],
+    trackB: [22, 23]
   },
   {
+    type: 'content',
     time: '16:40 ~ 17:10',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [24],
+    trackB: [25]
   },
   {
+    type: 'content',
     time: '17:20 ~ 17:50',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [26],
+    trackB: [27]
   },
   {
+    type: 'content',
     time: '18:00 ~ 18:30',
-    slots: [
-      {
-        type: 'content',
-        data: {}
-      },
-      {
-        type: 'content',
-        data: {}
-      }
-    ]
+    trackA: [28],
+    trackB: [29]
   },
   {
-    time: '18:40 ~ 18:50',
-    slots: [
-      {
-        type: 'other',
-        label: 'クロージング'
-      }
-    ]
-  },
-  {
-    time: '19:10 ~ 20:30',
-    slots: [
-      {
-        type: 'other',
-        label: 'クローズ & 懇親会'
-      }
-    ]
+    type: 'other',
+    time: '18:30 ~ 18:50',
+    label: 'クロージング'
   }
 ];
