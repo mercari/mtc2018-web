@@ -40,8 +40,8 @@
           "company": "Mercari",
           "position": "Principal Software Engineer ",
           "positionJa": "Principal Software Engineer ",
-          "profile": "Taichi Nakashima (@deeeet) is a tech lead for the Microservices Platform at Mercari. Prior to Mercari, he was a software engineer at Japanese E-commerce company, working on building internal Platform-as-a-Service.  He is Gopher and co-authoer of  “みんなのGo言語” (Japanese Golang book).",
-          "profileJa": "Taichi Nakashima (@deeeet) is a tech lead for the Microservices Platform at Mercari. Prior to Mercari, he was a software engineer at Japanese E-commerce company, working on building internal Platform-as-a-Service.  He is Gopher and co-authoer of  “みんなのGo言語” (Japanese Golang book).",
+          "profile": "Taichi Nakashima (@deeeet) is a tech lead for the Microservices Platform at Mercari. Prior to Mercari, he was a software engineer at Japanese E-commerce company, working on building internal Platform-as-a-Service. He is Gopher and co-authoer of “みんなのGo言語” (Japanese Golang book).",
+          "profileJa": "Taichi Nakashima (@deeeet) is a tech lead for the Microservices Platform at Mercari. Prior to Mercari, he was a software engineer at Japanese E-commerce company, working on building internal Platform-as-a-Service. He is Gopher and co-authoer of “みんなのGo言語” (Japanese Golang book).",
           "iconUrl": "",
           "twitterId": "@deeeet",
           "githubId": "tcnksm"
@@ -66,7 +66,7 @@
       "speakers": [
         {
           "name": "Sotaro Karasawa",
-          "nameJa": "柄沢  聡太郎",
+          "nameJa": "柄沢 聡太郎",
           "company": "株式会社メルカリ",
           "position": "Software Engineer, Manager",
           "positionJa": "Software Engineer, Manager",

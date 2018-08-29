@@ -10,6 +10,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install tools
+          command: |
+            apt-get update -qq
+            apt-get install -y jq
+      - run:
+          name: sanity check
+          command: |
+            cd server
+            ./script/check_contents.sh
+      - run:
           name: test
           command: |
             cd server
