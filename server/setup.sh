@@ -13,3 +13,4 @@ export GOBIN=`pwd -P`/bin
 go install golang.org/x/tools/cmd/goimports
 go install golang.org/x/lint/golint
 go install github.com/99designs/gqlgen
+go install github.com/rakyll/statik

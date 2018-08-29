@@ -9,4 +9,5 @@ import (
 	_ "golang.org/x/tools"
 
 	_ "github.com/99designs/gqlgen"
+	_ "github.com/rakyll/statik"
 )

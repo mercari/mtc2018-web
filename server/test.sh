@@ -14,4 +14,4 @@ goimports -w $targets
 go tool vet $targets
 golint -min_confidence 0.6 -set_exit_status $packages
 
-go test -v -race ./... $@
+go test -race ./... $@

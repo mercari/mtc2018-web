@@ -31,6 +31,7 @@ type Config struct {
 type ResolverRoot interface {
 	Mutation() MutationResolver
 	Query() QueryResolver
+	Speaker() SpeakerResolver
 	Subscription() SubscriptionResolver
 }
 
@@ -43,6 +44,9 @@ type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
 	Sessions(ctx context.Context, first int, after *string, req *SessionListInput) (SessionConnection, error)
+}
+type SpeakerResolver interface {
+	Sessions(ctx context.Context, obj *Speaker) ([]Session, error)
 }
 type SubscriptionResolver interface {
 	LikeAdded(ctx context.Context) (<-chan Like, error)
@@ -1323,6 +1327,7 @@ var speakerImplementors = []string{"Speaker", "Node"}
 func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, obj *Speaker) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, speakerImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -1387,12 +1392,16 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 				invalid = true
 			}
 		case "sessions":
-			out.Values[i] = ec._Speaker_sessions(ctx, field, obj)
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Speaker_sessions(ctx, field, obj)
+				wg.Done()
+			}(i, field)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -1650,7 +1659,7 @@ func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.Sessions, nil
+		return ec.resolvers.Speaker().Sessions(ctx, obj)
 	})
 	if resTmp == nil {
 		return graphql.Null
