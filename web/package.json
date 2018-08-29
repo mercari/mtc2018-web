@@ -19,9 +19,11 @@
   "author": "sawa-zen",
   "dependencies": {
     "@zeit/next-typescript": "^1.1.0",
+    "axios": "^0.18.0",
     "cross-env": "^5.2.0",
     "express": "^4.16.3",
     "fork-ts-checker-webpack-plugin": "^0.4.3",
+    "moment": "^2.22.2",
     "mtc-art": "0.0.9",
     "next": "^6.1.1",
     "react": "^16.4.2",
