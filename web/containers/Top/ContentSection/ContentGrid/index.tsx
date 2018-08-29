@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MiniGrid } from '../../../../components';
-import { Content } from '../../../../store/contents';
+import { Content } from '../../../../types';
 import ContentGridItem from './ContentGridItem';
 
 interface Props {

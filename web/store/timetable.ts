@@ -1,19 +1,4 @@
-export interface Row {
-  time: string;
-  slots: Slot[];
-}
-
-export type Slot = ContentSlot | OtherSlot;
-
-export interface ContentSlot {
-  type: 'content';
-  data: any;
-}
-
-export interface OtherSlot {
-  type: 'other';
-  label: string;
-}
+import { Row } from '../types';
 
 export const rows: Row[] = [
   {

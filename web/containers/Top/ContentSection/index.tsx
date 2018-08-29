@@ -1,19 +1,24 @@
 import * as React from 'react';
 import Section from '../Section';
-import { contents } from '../../../store/contents';
+import { Content } from '../../../types';
 import ContentModal from './ContentModal';
 import ContentGrid from './ContentGrid';
+
+interface Props {
+  contents: Content[];
+}
 
 interface State {
   currentIndex?: number;
 }
 
-class ContentSection extends React.Component<{}, State> {
+class ContentSection extends React.Component<Props, State> {
   public state = {
     currentIndex: undefined
   };
 
   public render() {
+    const { contents } = this.props;
     const { currentIndex } = this.state;
     return (
       <Section title="Contents" id="contents" {...this.props}>

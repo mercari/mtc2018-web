@@ -1,12 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import {
   colors,
   getTextStyle,
   borderRadius
 } from '../../../../components/styles';
-import { Content } from '../../../../store/contents';
+import { Content } from '../../../../types';
 import ContentModalSpeaker from './ContentModalSpeaker';
 
 interface Props {
@@ -17,27 +18,29 @@ interface Props {
 class ContentModalItem extends React.PureComponent<Props> {
   public render() {
     const { content, ...props } = this.props;
+    const startTime = moment(content.startTime).format('HH:mm');
+    const endTime = moment(content.endTime).format('HH:mm');
     return (
       <Wrapper {...props}>
         <ContentInfo>
           <Header>
-            <Tip>{content.type.label}</Tip>
+            <Tip>SESSION</Tip>
             <Text level="display2">{content.place}</Text>
             <Text level="display2">
-              {content.startTime}-{content.endTime}
+              {startTime}-{endTime}
             </Text>
           </Header>
           <Title>{content.title}</Title>
           <Tags>
             {content.tags.map(tag => (
-              <Text level="display1" key={tag.id}>
-                #{tag.label}
+              <Text level="display1" key={tag}>
+                #{tag}
               </Text>
             ))}
           </Tags>
-          <Body>{content.body}</Body>
+          <Body>{content.outline}</Body>
         </ContentInfo>
-        <ContentModalSpeaker speaker={content.speaker} />
+        <ContentModalSpeaker speaker={content.speakers[0]} />
       </Wrapper>
     );
   }

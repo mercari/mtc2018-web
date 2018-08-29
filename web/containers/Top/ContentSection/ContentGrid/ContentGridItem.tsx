@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
-import { Content } from '../../../../store/contents';
+import { Content } from '../../../../types';
 
 interface Props {
   index: number;
@@ -13,31 +14,33 @@ interface Props {
 class ContentGridItem extends React.PureComponent<Props> {
   public render() {
     const { content, onClick, ...props } = this.props;
+    const startTime = moment(content.startTime).format('HH:mm');
+    const endTime = moment(content.endTime).format('HH:mm');
     return (
       <Wrapper onClick={this.onClick} {...props}>
         <ContentInfo>
           <Header>
-            <Tip>{content.type.label}</Tip>
+            <Tip>SESSION</Tip>
             <Text level="display2">{content.place}</Text>
             <Text level="display2">
-              {content.startTime}-{content.endTime}
+              {startTime}-{endTime}
             </Text>
           </Header>
           <Title>{content.title}</Title>
           <Tags>
             {content.tags.map(tag => (
-              <Text level="display1" key={tag.id}>
-                #{tag.label}
+              <Text level="display1" key={tag}>
+                #{tag}
               </Text>
             ))}
           </Tags>
-          <Body>{content.body}</Body>
+          <Body>{content.outline}</Body>
         </ContentInfo>
         <SpeakerInfo>
-          <Icon src={content.speaker.iconUrl} />
+          <Icon src={content.speakers[0].iconUrl} />
           <div>
-            <Text level="display1">{content.speaker.name}</Text>
-            <Text level="body">{content.speaker.position}</Text>
+            <Text level="display1">{content.speakers[0].name}</Text>
+            <Text level="body">{content.speakers[0].position}</Text>
           </div>
         </SpeakerInfo>
       </Wrapper>
@@ -54,6 +57,7 @@ const Wrapper = styled.div`
   border-radius: ${borderRadius.level1};
   background-color: ${colors.yuki};
   padding: 16px;
+  box-sizing: border-box;
   transition: 300ms;
   cursor: pointer;
 
@@ -92,6 +96,8 @@ const Title = styled(Text).attrs({
 
 const Tags = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   margin-bottom: 16px;
 
   > * {

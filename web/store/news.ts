@@ -1,9 +1,4 @@
-export interface News {
-  id: string;
-  date: string;
-  message: string;
-  link?: string;
-}
+import { News } from '../types';
 
 export const news: News[] = [
   {
