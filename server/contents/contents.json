@@ -1,6 +1,25 @@
 {
+  "tags": [
+    "Android",
+    "CRE",
+    "CSE",
+    "Frontend",
+    "Go Bold",
+    "Internship",
+    "Kando",
+    "ML",
+    "Merpay",
+    "Microservices",
+    "Platform",
+    "Quantum Internet",
+    "Rearchitecture",
+    "Search",
+    "Security",
+    "iOS"
+  ],
   "sessions": [
     {
+      "id": 1,
       "place": "TrackA",
       "startTime": "13:00",
       "endTime": "13:30",
@@ -10,6 +29,9 @@
       "outlineJa": "Mercariではサービスと組織の拡大に合わせてMonolithアーキテクチャからMicroservicesアーキテクチャへの移行を進めています．Microservices Platform TeamはこのMicroservicesのためのPlatformの構築を行っています．開発者のDeveloper Productivityを最大限に高め各チームがオーナーシップを持ち独立して高速にサービス開発サイクルを回せるようなPlatformを目指しています．本セッションではMicroservices Platform Teamの取り組みを紹介します",
       "hashTags": [
         "#mercari_microservices"
+      ],
+      "tags": [
+        "Microservices", "Platform"
       ],
       "speakers": [
         {
@@ -27,6 +49,7 @@
       ]
     },
     {
+      "id": 2,
       "place": "TrackB",
       "startTime": "13:00",
       "endTime": "13:30",
@@ -36,6 +59,9 @@
       "outlineJa": "メルカリには「経営課題を解決する」ための Corporate Solutions Engineering というチームがあります。このチームがどのような活動を通じてどのような課題を解決しているのか、また、そこでどのようなプロダクトを開発しているのか、その基礎となる考え方と活動についてご紹介します。",
       "hashTags": [
         "mercari_cse"
+      ],
+      "tags": [
+        "Microservices", "CSE"
       ],
       "speakers": [
         {
@@ -53,6 +79,7 @@
       ]
     },
     {
+      "id": 3,
       "place": "TrackA",
       "startTime": "13:40",
       "endTime": "14:10",
@@ -61,7 +88,10 @@
       "outline": "Mercari has evolved tremendously in the last 5 years, and so is our code base. As of 2018, the backend API is a monolithic repository of half-million lines of code, serving all the functions of the Mercari web and mobile applications. It is becoming a bottle neck of our growth, in terms of both the system and the organization. This talk will focus on how we migrate the monolithic backend API to a microservice architecture, the methodology we choose and the lessons we learned.",
       "outlineJa": "Mercari has evolved tremendously in the last 5 years, and so is our code base. As of 2018, the backend API is a monolithic repository of half-million lines of code, serving all the functions of the Mercari web and mobile applications. It is becoming a bottle neck of our growth, in terms of both the system and the organization. This talk will focus on how we migrate the monolithic backend API to a microservice architecture, the methodology we choose and the lessons we learned.",
       "hashTags": [
-          "microservices", "architecture"
+        "microservices", "architecture"
+      ],
+      "tags": [
+        "Microservices"
       ],
       "speakers": [
         {
@@ -79,6 +109,7 @@
       ]
     },
     {
+      "id": 4,
       "place": "TrackB",
       "startTime": "13:40",
       "endTime": "14:10",
@@ -87,7 +118,10 @@
       "outline": "メルカリでは多数の機械学習モデル(以下MLモデル)を運用しています。MLモデルは構築後も継続的な評価・再トレーニング・チューニングが必要で、高度に自動化された仕組み無しでは多数のMLモデルを運用できません。本セッションではそれらの基盤と自動化の仕組み等、現状と開発中の物について話します。",
       "outlineJa": "メルカリでは多数の機械学習モデル(以下MLモデル)を運用しています。MLモデルは構築後も継続的な評価・再トレーニング・チューニングが必要で、高度に自動化された仕組み無しでは多数のMLモデルを運用できません。本セッションではそれらの基盤と自動化の仕組み等、現状と開発中の物について話します。",
       "hashTags": [
-          "mlops", "sysml"
+        "mlops", "sysml"
+      ],
+      "tags": [
+        "ML", "Platform"
       ],
       "speakers": [
         {
@@ -105,6 +139,7 @@
       ]
     },
     {
+      "id": 5,
       "place": "TrackA",
       "startTime": "14:20",
       "endTime": "14:50",
@@ -114,6 +149,9 @@
       "outlineJa": "In this talk, Israel Ferrer Camacho will share what are the common pitfalls at developing applications with big teams and big codebases and how to solve them.",
       "hashTags": [
         "#AndroidDev"
+      ],
+      "tags": [
+        "Android", "Rearchitecture"
       ],
       "speakers": [
         {
@@ -131,6 +169,7 @@
       ]
     },
     {
+      "id": 6,
       "place": "TrackB",
       "startTime": "14:20",
       "endTime": "14:50",
@@ -139,6 +178,9 @@
       "outline": "メルカリの売上金も電子マネーとして使えるようになるメルペイ。もちろんメルカリでの買い物でも使える予定ですが、そこで問題となったのがメルカリ上での決済処理。増築に増築を重ねたモノリシックなプログラムが、新しい決済手段の導入の前に立ちはだかります。そこで、私達はGO BOLDにMicroservice化で解決しようとしていますが、その中で認められた問題点と解決策を示していきます。0) なぜMicroservices化に踏み切ったのか1) 複雑に絡み合ったswitch文となった業務フローを読み解く2) 分散トランザクションで発生するであろうエラーとの戦い3) 会計システムへの影響をいかに減らすか",
       "outlineJa": "メルカリの売上金も電子マネーとして使えるようになるメルペイ。もちろんメルカリでの買い物でも使える予定ですが、そこで問題となったのがメルカリ上での決済処理。増築に増築を重ねたモノリシックなプログラムが、新しい決済手段の導入の前に立ちはだかります。そこで、私達はGO BOLDにMicroservice化で解決しようとしていますが、その中で認められた問題点と解決策を示していきます。0) なぜMicroservices化に踏み切ったのか1) 複雑に絡み合ったswitch文となった業務フローを読み解く2) 分散トランザクションで発生するであろうエラーとの戦い3) 会計システムへの影響をいかに減らすか",
       "hashTags": [
+      ],
+      "tags": [
+        "Merpay", "Microservices"
       ],
       "speakers": [
         {
@@ -156,6 +198,7 @@
       ]
     },
     {
+      "id": 7,
       "place": "TrackA",
       "startTime": "15:00",
       "endTime": "15:30",
@@ -164,7 +207,10 @@
       "outline": "我々はiOSDCで発表したMicroViewControllerに加えてMicroFrameworksの考え方も導入してアプリケーションを開発しています。MicroFrameworksに付き物なのが循環依存の問題ですが、MicroViewControllerの型を導入することで、「ViewControllerに対してTypeErasureを実装する」ことが可能になりました。我々はこれをViewControllerRequestと名付けて利用しています。循環依存の問題を解決し、更にはリファクタリングの工数を大幅に縮めた虎の子「ViewControllerRequest」について、お話しします。",
       "outlineJa": "我々はiOSDCで発表したMicroViewControllerに加えてMicroFrameworksの考え方も導入してアプリケーションを開発しています。MicroFrameworksに付き物なのが循環依存の問題ですが、MicroViewControllerの型を導入することで、「ViewControllerに対してTypeErasureを実装する」ことが可能になりました。我々はこれをViewControllerRequestと名付けて利用しています。循環依存の問題を解決し、更にはリファクタリングの工数を大幅に縮めた虎の子「ViewControllerRequest」について、お話しします。",
       "hashTags": [
-          "#iOS", "#MicroViewController"
+        "#iOS", "#MicroViewController"
+      ],
+      "tags": [
+        "iOS", "Rearchitecture"
       ],
       "speakers": [
         {
@@ -182,6 +228,7 @@
       ]
     },
     {
+      "id": 8,
       "place": "TrackB",
       "startTime": "15:00",
       "endTime": "15:30",
@@ -191,13 +238,16 @@
       "outlineJa": "GO BOLD is one of our core values at Mercari.To put it in action, we dedicate special days to drop what we're working on and get out of our comfort zone by experimenting with new ideas and technologies. The results are always fascinating!",
       "hashTags": [
       ],
+      "tags": [
+        "Go Bold"
+      ],
       "speakers": [
         {
           "name": "Dani Arnaout",
-          "nameJa": "_",
+          "nameJa": "",
           "company": "Mercari, Inc. (US)",
-          "position": "(仮) Engineering Manager",
-          "positionJa": "(仮) Engineering Manager",
+          "position": "Engineering Manager",
+          "positionJa": "Engineering Manager",
           "profile": "Dani is an engineering manager at Mercari focusing on building a strong global engineering team.He is a renowned software engineer worldwide through his contributions at tech blogs, tech talks, and his mentorship at hackathons. His side venture Abstract Layer, the programming AI that automates software development, has landed him on Forbes’s 2018 30 under 30 list in Enterprise Technology.",
           "profileJa": "Dani is an engineering manager at Mercari focusing on building a strong global engineering team.He is a renowned software engineer worldwide through his contributions at tech blogs, tech talks, and his mentorship at hackathons. His side venture Abstract Layer, the programming AI that automates software development, has landed him on Forbes’s 2018 30 under 30 list in Enterprise Technology.",
           "iconUrl": "",
@@ -207,6 +257,7 @@
       ]
     },
     {
+      "id": 9,
       "place": "TrackB",
       "startTime": "15:00",
       "endTime": "15:30",
@@ -215,7 +266,10 @@
       "outline": "There are many obvious use-cases of Machine Learning like text and image analysis, but how about subtle AI solutions to everyday issues? At Mercari US, the ML team wants to change the way we solve problems, using a \"bottom-up\" data-driven approach. I would like to showcase our project that uses simple machine learning algorithms in a creative way and share a new paradigm for engineering solutions.",
       "outlineJa": "There are many obvious use-cases of Machine Learning like text and image analysis, but how about subtle AI solutions to everyday issues? At Mercari US, the ML team wants to change the way we solve problems, using a \"bottom-up\" data-driven approach. I would like to showcase our project that uses simple machine learning algorithms in a creative way and share a new paradigm for engineering solutions.",
       "hashTags": [
-          "#machinelearning", "#deeplearning", "#ML", "#AI"
+        "#machinelearning", "#deeplearning", "#ML", "#AI"
+      ],
+      "tags": [
+        "ML"
       ],
       "speakers": [
         {
@@ -233,6 +287,7 @@
       ]
     },
     {
+      "id": 10,
       "place": "TrackA",
       "startTime": "16:00",
       "endTime": "16:30",
@@ -241,7 +296,10 @@
       "outline": "メルカリで現在進められているマイクロサービス化の1つとして出品機能のマイクロサービス化があります。PHP & モノリスのコードを可能な限り互換性を保ちながらGo & マイクロサービスに移植するにあたり、どのように開発を進めているのかを紹介します。",
       "outlineJa": "メルカリで現在進められているマイクロサービス化の1つとして出品機能のマイクロサービス化があります。PHP & モノリスのコードを可能な限り互換性を保ちながらGo & マイクロサービスに移植するにあたり、どのように開発を進めているのかを紹介します。",
       "hashTags": [
-          "#go", "#microservice"
+        "#go", "#microservice"
+      ],
+      "tags": [
+        "Microservices"
       ],
       "speakers": [
         {
@@ -259,6 +317,7 @@
       ]
     },
     {
+      "id": 11,
       "place": "TrackA",
       "startTime": "16:00",
       "endTime": "16:30",
@@ -267,7 +326,10 @@
       "outline": "メルカリはCustomer Supportを特に重視しており、アプリケーションの成長と共にCustomer Supportチームも大きく成長しお客様の体験向上の為に日々尽力しています。社員数の半数以上にもなるCustomer Supportチームがどのようなシステムを使用しているのか、MAU:1,075万人から行われる出品や取り引きをどのようにモニタリングしているのか、そしてMicroservice化が進んでいく今Customer Supportのシステムをどのように進化をさせていくかについて話します。",
       "outlineJa": "メルカリはCustomer Supportを特に重視しており、アプリケーションの成長と共にCustomer Supportチームも大きく成長しお客様の体験向上の為に日々尽力しています。社員数の半数以上にもなるCustomer Supportチームがどのようなシステムを使用しているのか、MAU:1,075万人から行われる出品や取り引きをどのようにモニタリングしているのか、そしてMicroservice化が進んでいく今Customer Supportのシステムをどのように進化をさせていくかについて話します。",
       "hashTags": [
-          "#CX", "#microservice"
+        "#CX", "#microservice"
+      ],
+      "tags": [
+        "Microservices", "CRE"
       ],
       "speakers": [
         {
@@ -285,6 +347,7 @@
       ]
     },
     {
+      "id": 12,
       "place": "TrackB",
       "startTime": "16:00",
       "endTime": "16:40",
@@ -293,7 +356,10 @@
       "outline": "Finding the right balance for precision and recall is necessary in search systems. I’ll introduce our project of tuning search precision with query rewriting.検索では適合率と再現率のバランスが鍵となります。ここでは、メルカリで行っているクエリリライトによる適合率の調整についてご紹介します。",
       "outlineJa": "Finding the right balance for precision and recall is necessary in search systems. I’ll introduce our project of tuning search precision with query rewriting.検索では適合率と再現率のバランスが鍵となります。ここでは、メルカリで行っているクエリリライトによる適合率の調整についてご紹介します。",
       "hashTags": [
-          "search", "internship"
+        "search", "internship"
+      ],
+      "tags": [
+        "Search", "Internship"
       ],
       "speakers": [
         {
@@ -311,6 +377,7 @@
       ]
     },
     {
+      "id": 13,
       "place": "TrackB",
       "startTime": "16:00",
       "endTime": "16:30",
@@ -319,7 +386,10 @@
       "outline": "量子情報時代の通信について概説する。量子インターネットは今のインターネットとは異なる原理（量子力学）で動き、任意の2ノード間にエンタングルメントを生成する基盤である。当然、利点も異なる。例えば、「完全に安全な暗号通信」を実現するための基盤となる。また、量子コンピュータは、エンタングルメントと重ね合わせを用いて大量の状態を同時に扱う。この特性上、量子メモリサイズが重要である。量子コンピュータ同士を通信で繋げて分散量子計算を行うことで、より大きな計算力を得られる。また、エンタングルメントは量子力学の基本的な物理特性なので、様々な科学実験にも役立つ。この他、現在の量子インターネットの研究開発状況についても触れる。このセッションを通して、将来の通信の姿に少しでも想いを馳せてもらえたら幸いである。",
       "outlineJa": "量子情報時代の通信について概説する。量子インターネットは今のインターネットとは異なる原理（量子力学）で動き、任意の2ノード間にエンタングルメントを生成する基盤である。当然、利点も異なる。例えば、「完全に安全な暗号通信」を実現するための基盤となる。また、量子コンピュータは、エンタングルメントと重ね合わせを用いて大量の状態を同時に扱う。この特性上、量子メモリサイズが重要である。量子コンピュータ同士を通信で繋げて分散量子計算を行うことで、より大きな計算力を得られる。また、エンタングルメントは量子力学の基本的な物理特性なので、様々な科学実験にも役立つ。この他、現在の量子インターネットの研究開発状況についても触れる。このセッションを通して、将来の通信の姿に少しでも想いを馳せてもらえたら幸いである。",
       "hashTags": [
-          "Quantum Internet", "Quantum Network", "Quantum Computation"
+        "Quantum Internet", "Quantum Network", "Quantum Computation"
+      ],
+      "tags": [
+        "Quantum Internet"
       ],
       "speakers": [
         {
@@ -337,6 +407,7 @@
       ]
     },
     {
+      "id": 14,
       "place": "TrackA",
       "startTime": "16:40",
       "endTime": "17:10",
@@ -346,6 +417,9 @@
       "outlineJa": "メルカリWebはメルカリの成長を支える一角として開発され、約2年間メルカリと共に成長してきました。このメルカリWebをWebにまつわる技術の進化や拡大するフロントエンドチームといった変化に強くするためにJP Web Rearchitectチームが誕生しました。このトークではJP Web Rearchitectで実現する新たなアーキテクチャとその詳細、そしてそれを実現した先にある未来についてお話します。",
       "hashTags": [
           "Web", "Frontend", "Microservices"
+      ],
+      "tags": [
+        "Frontend", "Microservices"
       ],
       "speakers": [
         {
@@ -363,6 +437,7 @@
       ]
     },
     {
+      "id": 15,
       "place": "TrackB",
       "startTime": "16:40",
       "endTime": "17:10",
@@ -372,6 +447,9 @@
       "outlineJa": "As software development evolves, it is vital to shifting security “to the left” earlier in the software development life cycle (SDLC) to make application security move faster with lower cost. This session will discuss on why application security needs to shift left and how to build a modern security engineering organization with a shift-left approach.",
       "hashTags": [
           "#Security", "#ShiftLeft", "#DevSecOps", "#SecurityAsCode", "#Automation"
+      ],
+      "tags": [
+        "Security"
       ],
       "speakers": [
         {
@@ -389,6 +467,7 @@
       ]
     },
     {
+      "id": 16,
       "place": "TrackA",
       "startTime": "17:20",
       "endTime": "17:50",
@@ -398,6 +477,9 @@
       "outlineJa": "累計出品数が10億品を超え、近年の機械学習・ディープラーニング分野の目覚ましい発展と相まって、データ活用への注目と期待がますます高まっている。多様な商品データや行動データを利用した複数のプロジェクトが進行しており、出品時の画像認識や、不正の自動検知といった機能がすでにサービス内で稼働している。本セッションでは、それらのアルゴリズムと実行基盤の紹介、および、一部の開発中の機能について述べる。",
       "hashTags": [
           "#Kando", "#感動出品", "#機械学習"
+      ],
+      "tags": [
+        "ML", "Kando"
       ],
       "speakers": [
         {
@@ -415,6 +497,7 @@
       ]
     },
     {
+      "id": 17,
       "place": "TrackB",
       "startTime": "17:20",
       "endTime": "17:50",
@@ -424,6 +507,9 @@
       "outlineJa": "US版メルカリでは、一年前からお客様のカスタマーサポート満足度を計測するために、CSAT(Customer Satisfaction) Surveyを実施してスコアを算出しはじめました。このスコアリングは、サンフランシスコ(現パロアルト)/ポートランド/東京の3拠点で議論を重ねて育て続けられ、今ではCompany OKRへ組み込まれるようになり、社内で大切にしているモノサシへと進化しました。そんな私たちのモノサシが、この一年でどのように実装内容が変化していったか、プロダクト開発の意思決定に影響を与えていったかご紹介いたします。",
       "hashTags": [
           "GCP", "Zendesk", "Global"
+      ],
+      "tags": [
+        "CRE"
       ],
       "speakers": [
         {
@@ -441,6 +527,7 @@
       ]
     },
     {
+      "id": 18,
       "place": "TrackA",
       "startTime": "18:00",
       "endTime": "18:30",
@@ -450,6 +537,9 @@
       "outlineJa": "検索チームでは、昨年からサジェスト・関連ワード・おすすめタブなど、検索機能を開発・改善してきました。世界を目指すチームの紹介と具体的な各機能の開発についてご紹介します。",
       "hashTags": [
         "Microservice", "Search", "Algorithm"
+      ],
+      "tags": [
+         "Microservices", "Search"
       ],
       "speakers": [
         {
@@ -479,6 +569,7 @@
       ]
     },
     {
+      "id": 19,
       "place": "TrackB",
       "startTime": "18:00",
       "endTime": "18:30",
@@ -488,6 +579,9 @@
       "outlineJa": "メルカリでは今年からプラットフォームごとに技術ロードマップを策定し、技術的な観点からもプロダクトへ貢献できるような取り組みをしています。本セッションではUS版Mercari Androidチームにおいて、  - どのようにして技術ロードマップを策定したのか  - 技術ロードマップを推進するためのチームコミュニケーション  - ロードマップの成果をどう見える化するかということについて、テックリードの役割も交えつつ話します。",
       "hashTags": [
           "Team Development", "Android"
+      ],
+      "tags": [
+         "Android"
       ],
       "speakers": [
         {
