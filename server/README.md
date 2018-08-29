@@ -84,3 +84,10 @@ mutation {
   }
 }
 ```
+
+curlで叩く
+
+```
+$ curl http://localhost:8080/2018/api/query -X POST -H "Content-Type: application/json" -d '{"query":"{sessions(first: 100) { nodes { id title } } }"}'
+...
+```
