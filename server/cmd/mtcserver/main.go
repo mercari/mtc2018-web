@@ -86,8 +86,9 @@ func runServer(port int, logger *zap.Logger) {
 	})
 
 	// GraphQL implementation
-	mux.Handle("/playground", handler.Playground("GraphQL playground", "/query"))
-	mux.Handle("/query", handler.GraphQL(
+	// playgroundがapiの下にあるの微妙だけどGKEのIngress的にこのほうが楽なのでまぁこれでいいでしょ
+	mux.Handle("/2018/api/playground", handler.Playground("GraphQL playground", "/query"))
+	mux.Handle("/2018/api/query", handler.GraphQL(
 		gqlapi.NewExecutableSchema(
 			gqlapi.Config{
 				Resolvers: gqlapi.NewResolver(),
