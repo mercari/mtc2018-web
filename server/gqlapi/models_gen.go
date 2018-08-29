@@ -34,8 +34,15 @@ type PageInfo struct {
 
 // セッション1つに関する情報。
 type Session struct {
-	ID    string `json:"id"`
-	Title string `json:"title"`
+	ID        string    `json:"id"`
+	Title     string    `json:"title"`
+	TitleJa   string    `json:"titleJa"`
+	StartTime string    `json:"startTime"`
+	EndTime   string    `json:"endTime"`
+	Outline   string    `json:"outline"`
+	OutlineJa string    `json:"outlineJa"`
+	HashTags  []string  `json:"hashTags"`
+	Speakers  []Speaker `json:"speakers"`
 }
 
 type SessionConnection struct {
@@ -51,4 +58,20 @@ type SessionEdge struct {
 
 type SessionListInput struct {
 	Tmp *string `json:"tmp"`
+}
+
+// スピーカー1人に関する情報。
+type Speaker struct {
+	ID         string    `json:"id"`
+	Name       string    `json:"name"`
+	NameJa     string    `json:"nameJa"`
+	Company    string    `json:"company"`
+	Position   string    `json:"position"`
+	PositionJa string    `json:"positionJa"`
+	Profile    string    `json:"profile"`
+	ProfileJa  string    `json:"profileJa"`
+	IconURL    string    `json:"iconUrl"`
+	TwitterID  string    `json:"twitterId"`
+	GithubID   string    `json:"githubId"`
+	Sessions   []Session `json:"sessions"`
 }

@@ -25,7 +25,7 @@ type Mutation {
 }
 
 type Subscription {
-  likeAdded(): Like!
+  likeAdded: Like!
 }
 
 interface Node {
@@ -70,6 +70,32 @@ input SessionListInput {
 type Session implements Node {
   id: ID!
   title: String!
+  titleJa: String!
+  startTime: String!
+  endTime: String!
+  outline: String!
+  outlineJa: String!
+  hashTags: [String!]
+  speakers: [Speaker!]
+}
+
+"""
+スピーカー1人に関する情報。
+"""
+type Speaker implements Node {
+  id: ID!
+  name: String!
+  nameJa: String!
+  company: String!
+  position: String!
+  positionJa: String!
+  profile: String!
+  profileJa: String!
+  iconUrl: String!
+  twitterId: String!
+  githubId: String!
+
+  sessions: [Session!]
 }
 
 """
