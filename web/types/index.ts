@@ -16,7 +16,7 @@ export interface Speaker {
 }
 
 export interface Content {
-  id: string;
+  id: number;
   place: string;
   title: string;
   outline: string;
@@ -26,19 +26,17 @@ export interface Content {
   endTime: string;
 }
 
-export interface Row {
-  time: string;
-  slots: Slot[];
-}
+export type Row = ContentRow | OtherRow;
 
-export type Slot = ContentSlot | OtherSlot;
-
-export interface ContentSlot {
+export interface ContentRow {
   type: 'content';
-  data: any;
+  time: string;
+  trackA: number[];
+  trackB: number[];
 }
 
-export interface OtherSlot {
+export interface OtherRow {
   type: 'other';
+  time: string;
   label: string;
 }

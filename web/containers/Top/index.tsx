@@ -49,7 +49,7 @@ class Top extends React.Component<Props, State> {
           <NewsSection />
           <AboutSection />
           <ContentSection contents={contents} />
-          <StyledTimetableSection />
+          <StyledTimetableSection contents={contents} />
           <AccessSection />
           <Footer />
         </Body>
