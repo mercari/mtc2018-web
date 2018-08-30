@@ -32,26 +32,10 @@ const Body = styled.div`
   }
 `;
 
-const EmptySpace = styled.div`
-  flex-grow: 1;
-`;
-
 const Copy = styled.small`
   ${getTextStyle('display2')};
   font-weight: bold;
   color: ${colors.yuki};
-`;
-
-const Link = styled.a`
-  ${getTextStyle('display1')};
-  color: ${colors.yuki};
-  text-decoration: none;
-  margin-left: 60px;
-
-  @media screen and (max-width: 767px) {
-    margin-left: 0;
-    margin-top: 16px;
-  }
 `;
 
 export default Footer;
