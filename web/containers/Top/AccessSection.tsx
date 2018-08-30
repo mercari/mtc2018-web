@@ -89,7 +89,6 @@ const Address = styled(Text).attrs({ level: 'body' })`
 const Map = styled.iframe`
   width: 100%;
   height: 320px;
-  pointer-events: none;
 `;
 
 const AccessTitle = styled(Text).attrs({ level: 'display1' })`

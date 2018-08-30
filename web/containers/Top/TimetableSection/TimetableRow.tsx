@@ -45,10 +45,10 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
       // trackA
       tdList.push(
         <td>
-          {row.trackA.map((contentId, index) => (
+          {row.trackA.map(contentId => (
             <ContentSlot
+              key={`track_a_${contentId}`}
               content={getContentById(contentId, contents)}
-              key={index}
             />
           ))}
         </td>
@@ -58,8 +58,8 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
         <td>
           {row.trackB.map((contentId, index) => (
             <ContentSlot
+              key={`track_b_${contentId}`}
               content={getContentById(contentId, contents)}
-              key={index}
             />
           ))}
         </td>
@@ -67,7 +67,7 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
       break;
     case 'other':
       tdList.push(
-        <td colSpan={2}>
+        <td key="other" colSpan={2}>
           <OtherSlotWrapper>{row.label}</OtherSlotWrapper>
         </td>
       );

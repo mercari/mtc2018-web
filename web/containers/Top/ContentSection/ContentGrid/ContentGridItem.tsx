@@ -119,6 +119,7 @@ const SpeakerInfo = styled.div`
 const Icon = styled.img`
   width: 60px;
   height: 60px;
+  flex-shrink: 0;
   border-radius: 50%;
   background-color: ${colors.primary};
   margin-right: 20px;

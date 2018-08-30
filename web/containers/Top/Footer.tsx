@@ -6,9 +6,6 @@ const Footer = () => (
   <Wrapper>
     <Body>
       <Copy>© 2018 Mercari, Inc.</Copy>
-      <EmptySpace />
-      <Link href="#">mercari Tech Conf 2017</Link>
-      <Link href="#">お問い合わせ</Link>
     </Body>
   </Wrapper>
 );

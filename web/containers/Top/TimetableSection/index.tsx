@@ -12,7 +12,7 @@ interface Props {
 
 const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
   return (
-    <Section title="TIMETABLE" id="timetable" {...props}>
+    <Section title="TIME TABLE" id="timetable" {...props}>
       <TimelineTable>
         <thead>
           <tr>
@@ -36,6 +36,8 @@ const TimelineTable = styled.table`
   width: 100%;
   max-width: 920px;
   border-spacing: 1px;
+  table-layout: fixed;
+
   th {
     padding: 10px;
     height: 48px;
