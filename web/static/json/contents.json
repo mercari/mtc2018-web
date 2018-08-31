@@ -26,35 +26,6 @@
       "endTime": "2018-10-04T11:45:00+09:00",
       "title": "Keynote",
       "titleJa": "基調講演",
-      "outline": "I will be discussing technological challenges we're undertaking, what it's like working as a single team split across the US and Japan, the importance of focusing on the fundamentals while investing for the future.",
-      "outlineJa": "",
-      "lang": "en",
-      "tags": [
-        "Evolution"
-      ],
-      "speakers": [
-        {
-          "id": "mok_oh",
-          "name": "Mok Oh",
-          "nameJa": "",
-          "company": "mercari",
-          "position": "",
-          "positionJa": "",
-          "profile": "Dr. Mok Oh is the Chief Technology Officer of US Mercari.  He been in the tech industry for over 20 years with wide- and deep-ranging experiences – from initial research to execution, from startups to large enterprises. Previously, he was the Corporate Vice President at Samsung Electronics in Suwon, Korea; Chief Scientist at PayPal; Cofounder and CEO of Moju Labs; Entrepreneur in Residence at North Bridge Venture Capital; CIO at Where, Inc; and Founder of EveryScape.  Mok holds 12 patents, a Ph.D. from MIT, an M.S. from University of Pennsylvania, and two BA degrees (Computer Science and Art History) from Oberlin College.",
-          "profileJa": "",
-          "iconUrl": "",
-          "twitterId": "",
-          "githubId": "mok_oh"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "place": "TrackA",
-      "startTime": "2018-10-04T10:15:00+09:00",
-      "endTime": "2018-10-04T11:45:00+09:00",
-      "title": "Keynote",
-      "titleJa": "基調講演",
       "outline": "メルカリがテックカンパニーを宣言し、この1年で起きた変化や、これから目指していく方向、組織として技術にどう取り組んでいくか",
       "outlineJa": "",
       "lang": "jp",
@@ -67,13 +38,42 @@
           "name": "Suguru Namura",
           "nameJa": "名村 卓",
           "company": "mercari",
-          "position": "",
-          "positionJa": "",
-          "profile": "",
+          "position": "CTO, Mercari",
+          "positionJa": "CTO, Mercari",
+          "profile": "受託開発経験を経て、2004年株式会社サイバーエージェント入社。各種メディアやゲームなどの新規事業立ち上げの開発を担当。2016年に株式会社メルカリ入社。USに出向し、USのサービス開発を担当。2017年4月CTO就任。",
           "profileJa": "受託開発経験を経て、2004年株式会社サイバーエージェント入社。各種メディアやゲームなどの新規事業立ち上げの開発を担当。2016年に株式会社メルカリ入社。USに出向し、USのサービス開発を担当。2017年4月CTO就任。",
           "iconUrl": "",
           "twitterId": "snmaura",
           "githubId": "suguru"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "place": "TrackA",
+      "startTime": "2018-10-04T10:15:00+09:00",
+      "endTime": "2018-10-04T11:45:00+09:00",
+      "title": "Keynote",
+      "titleJa": "基調講演",
+      "outline": "I will be discussing technological challenges we're undertaking, what it's like working as a single team split across the US and Japan, the importance of focusing on the fundamentals while investing for the future.",
+      "outlineJa": "",
+      "lang": "en",
+      "tags": [
+        "Evolution"
+      ],
+      "speakers": [
+        {
+          "id": "mok_oh",
+          "name": "Mok Oh",
+          "nameJa": "Mok Oh",
+          "company": "mercari",
+          "position": "CTO, Mercari US",
+          "positionJa": "CTO, Mercari US",
+          "profile": "Dr. Mok Oh is the Chief Technology Officer of US Mercari.  He been in the tech industry for over 20 years with wide- and deep-ranging experiences – from initial research to execution, from startups to large enterprises. Previously, he was the Corporate Vice President at Samsung Electronics in Suwon, Korea; Chief Scientist at PayPal; Cofounder and CEO of Moju Labs; Entrepreneur in Residence at North Bridge Venture Capital; CIO at Where, Inc; and Founder of EveryScape.  Mok holds 12 patents, a Ph.D. from MIT, an M.S. from University of Pennsylvania, and two BA degrees (Computer Science and Art History) from Oberlin College.",
+          "profileJa": "",
+          "iconUrl": "",
+          "twitterId": "",
+          "githubId": "mok_oh"
         }
       ]
     },
@@ -96,9 +96,9 @@
           "name": "Keisuke Sogawa",
           "nameJa": "曾川 景介",
           "company": "merpay",
-          "position": "",
-          "positionJa": "",
-          "profile": "",
+          "position": "CTO, merpay",
+          "positionJa": "CTO, merpay",
+          "profile": "2010年度未踏ユース採択。2011年京都大学情報学研究科修了。2011年にシリコンバレーの FluxFlex社にてWebPayを立ち上げる。ウェブペイ株式会社の最高技術責任者（CTO）としてクレジットカード決済のサービス基盤の開発に従事、LINEグループに参画しLINE Pay事業を経験。2017年11月、株式会社メルペイ取締役に就任。",
           "profileJa": "2010年度未踏ユース採択。2011年京都大学情報学研究科修了。2011年にシリコンバレーの FluxFlex社にてWebPayを立ち上げる。ウェブペイ株式会社の最高技術責任者（CTO）としてクレジットカード決済のサービス基盤の開発に従事、LINEグループに参画しLINE Pay事業を経験。2017年11月、株式会社メルペイ取締役に就任。",
           "iconUrl": "",
           "twitterId": "",
@@ -181,7 +181,7 @@
         {
           "id": "tonghui_li",
           "name": "Tonghui Li",
-          "nameJa": "李同輝",
+          "nameJa": "李 同輝",
           "company": "mercari",
           "position": "Tech Lead",
           "positionJa": "Tech Lead",
@@ -529,7 +529,7 @@
         {
           "id": "yannarak_wannasai",
           "name": "Yannarak Wannasai",
-          "nameJa": "",
+          "nameJa": "Yannarak Wannasai",
           "company": "mercari",
           "position": "Engineering Manager of Security Team",
           "positionJa": "Engineering Manager of Security Team",
@@ -685,6 +685,19 @@
       ],
       "speakers": [
         {
+          "id": "matthew_vern",
+          "name": "Matthew Vern",
+          "nameJa": "Matthew Vern",
+          "company": "mercari",
+          "position": "Software Engineer",
+          "positionJa": "Software Engineer",
+          "profile": "Matthew is an Android Engineer working on the Mercari US product.",
+          "profileJa": "Matthew is an Android Engineer working on the Mercari US product.",
+          "iconUrl": "",
+          "twitterId": "@callipan",
+          "githubId": "panpanini"
+        },
+        {
           "id": "atsuko_fukui",
           "name": "Atsuko Fukui",
           "nameJa": "福井 敦子",
@@ -696,19 +709,6 @@
           "iconUrl": "",
           "twitterId": "@muumuumuumuu",
           "githubId": "atsuko-fukui"
-        },
-        {
-          "id": "matthew_vern",
-          "name": "Matthew Vern",
-          "nameJa": "",
-          "company": "mercari",
-          "position": "Software Engineer",
-          "positionJa": "Software Engineer",
-          "profile": "Matthew is an Android Engineer working on the Mercari US product.",
-          "profileJa": "Matthew is an Android Engineer working on the Mercari US product.",
-          "iconUrl": "",
-          "twitterId": "@callipan",
-          "githubId": "panpanini"
         }
       ]
     }
