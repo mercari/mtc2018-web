@@ -6,6 +6,7 @@ export interface News {
 }
 
 export interface Speaker {
+  id: string;
   name: string;
   company: string;
   position: string;
