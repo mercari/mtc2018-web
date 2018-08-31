@@ -8,7 +8,7 @@ import { Content } from '../../../../types';
 interface Props {
   index: number;
   content: Content;
-  onClick: (index: number) => void;
+  onClick: (content: Content) => void;
 }
 
 class ContentGridItem extends React.PureComponent<Props> {
@@ -37,7 +37,11 @@ class ContentGridItem extends React.PureComponent<Props> {
           <Body>{content.outline}</Body>
         </ContentInfo>
         <SpeakerInfo>
-          <Icon src={content.speakers[0].iconUrl} />
+          <Icon
+            src={`../../../../static/images/speakers/${
+              content.speakers[0].id
+            }_thumb.png`}
+          />
           <div>
             <Text level="display1">{content.speakers[0].name}</Text>
             <Text level="body">{content.speakers[0].position}</Text>
@@ -48,8 +52,8 @@ class ContentGridItem extends React.PureComponent<Props> {
   }
 
   private onClick = () => {
-    const { index, onClick } = this.props;
-    onClick(index);
+    const { content, onClick } = this.props;
+    onClick(content);
   };
 }
 
@@ -121,7 +125,6 @@ const Icon = styled.img`
   height: 60px;
   flex-shrink: 0;
   border-radius: 50%;
-  background-color: ${colors.primary};
   margin-right: 20px;
 `;
 

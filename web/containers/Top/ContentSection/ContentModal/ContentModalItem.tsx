@@ -11,7 +11,6 @@ import { Content } from '../../../../types';
 import ContentModalSpeaker from './ContentModalSpeaker';
 
 interface Props {
-  index: number;
   content: Content;
 }
 

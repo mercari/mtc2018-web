@@ -5,6 +5,7 @@ import { colors } from './styles';
 interface Props {
   src: string;
   alt: string;
+  onClick: () => void;
 }
 
 const IconButton: React.SFC<Props> = ({ src, alt, ...props }) => (
