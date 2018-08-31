@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { Text } from '../../../components';
 import { colors } from '../../../components/styles';
 import { Row, Content } from '../../../types';
 
@@ -17,21 +18,23 @@ const getContentById = (
   });
 };
 
-const ContentSlot: React.SFC<{ content?: Content }> = ({ content }) => {
+const ContentSlot: React.SFC<{ content?: Content }> = ({
+  content,
+  ...props
+}) => {
   if (!content) {
-    return <OtherSlotWrapper>未定</OtherSlotWrapper>;
+    return <OtherSlotWrapper {...props}>未定</OtherSlotWrapper>;
   }
 
   return (
-    <ContentSlotWrapper>
+    <ContentSlotWrapper {...props}>
       <div>{content.tags.map(tag => `#${tag} `)}</div>
       <div className="title">{content.title}</div>
-      <div>
+      <div className="speakers">
         {content.speakers.map(speaker => (
-          <>
+          <Text key={speaker.name} level="body">
             {speaker.name}
-            <br />
-          </>
+          </Text>
         ))}
       </div>
     </ContentSlotWrapper>
@@ -44,10 +47,10 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
     case 'content':
       // trackA
       tdList.push(
-        <td>
-          {row.trackA.map(contentId => (
+        <td key="track_a">
+          {row.trackA.map((contentId, index) => (
             <ContentSlot
-              key={`track_a_${contentId}`}
+              key={`track_a_${contentId}_${index}`}
               content={getContentById(contentId, contents)}
             />
           ))}
@@ -55,10 +58,10 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
       );
       // trackB
       tdList.push(
-        <td>
+        <td key="track_b">
           {row.trackB.map((contentId, index) => (
             <ContentSlot
-              key={`track_b_${contentId}`}
+              key={`track_b_${contentId}_${index}`}
               content={getContentById(contentId, contents)}
             />
           ))}
@@ -110,6 +113,11 @@ const ContentSlotWrapper = styled.div`
 
   .title {
     font-weight: bold;
+  }
+
+  .speakers {
+    display: flex;
+    flex-direction: column;
   }
 `;
 

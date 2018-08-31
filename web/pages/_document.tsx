@@ -25,7 +25,6 @@ export default class MyDocument extends Document {
             name="description"
             content="Mercari Tech Conf 2018は、メルカリグループの最新技術や、今後の展開を紹介するテックカンファレンスです。2018/10/04（Thu）に六本木アカデミーヒルズで開催します。"
           />
-          <meta name="keywords" content={true} />
           <meta property="og:title" content="Mercari Tech Conf 2018" />
           <meta
             property="og:description"
