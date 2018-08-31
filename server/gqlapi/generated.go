@@ -795,6 +795,11 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "place":
+			out.Values[i] = ec._Session_place(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "title":
 			out.Values[i] = ec._Session_title(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -825,8 +830,13 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "hashTags":
-			out.Values[i] = ec._Session_hashTags(ctx, field, obj)
+		case "lang":
+			out.Values[i] = ec._Session_lang(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "tags":
+			out.Values[i] = ec._Session_tags(ctx, field, obj)
 		case "speakers":
 			out.Values[i] = ec._Session_speakers(ctx, field, obj)
 		default:
@@ -860,6 +870,28 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 	res := resTmp.(string)
 	rctx.Result = res
 	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_place(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Place, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
@@ -995,7 +1027,7 @@ func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_hashTags(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -1003,7 +1035,29 @@ func (ec *executionContext) _Session_hashTags(ctx context.Context, field graphql
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.HashTags, nil
+		return obj.Lang, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Tags, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -3228,13 +3282,15 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  place: String!
   title: String!
   titleJa: String!
   startTime: String!
   endTime: String!
   outline: String!
   outlineJa: String!
-  hashTags: [String!]
+  lang: String!
+  tags: [String!]
   speakers: [Speaker!]
 }
 

@@ -12,7 +12,7 @@ import (
 )
 
 // Load from contents.json assets
-func Load() ([]Session, error) {
+func Load() (*Data, error) {
 	statikFS, err := fs.New()
 	if err != nil {
 		return nil, err
@@ -23,25 +23,33 @@ func Load() ([]Session, error) {
 		return nil, err
 	}
 
-	var data struct{ Sessions []Session }
+	var data Data
 	err = json.Unmarshal(b, &data)
 	if err != nil {
 		return nil, err
 	}
 
-	return data.Sessions, nil
+	return &data, nil
+}
+
+// Data provides content of contents.json.
+type Data struct {
+	Tags     []string  `json:"tags"`
+	Sessions []Session `json:"sessions"`
 }
 
 // Session information.
 type Session struct {
-	ID        string    `json:"id"`
+	// ID        string    `json:"id"`
+	Place     string    `json:"place"`
 	Title     string    `json:"title"`
 	TitleJa   string    `json:"titleJa"`
 	StartTime string    `json:"startTime"`
 	EndTime   string    `json:"endTime"`
 	Outline   string    `json:"outline"`
 	OutlineJa string    `json:"outlineJa"`
-	HashTags  []string  `json:"hashTags"`
+	Lang      string    `json:"lang"`
+	Tags      []string  `json:"tags"`
 	Speakers  []Speaker `json:"speakers"`
 }
 

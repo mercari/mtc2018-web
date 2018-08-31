@@ -69,13 +69,15 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  place: String!
   title: String!
   titleJa: String!
   startTime: String!
   endTime: String!
   outline: String!
   outlineJa: String!
-  hashTags: [String!]
+  lang: String!
+  tags: [String!]
   speakers: [Speaker!]
 }
 
