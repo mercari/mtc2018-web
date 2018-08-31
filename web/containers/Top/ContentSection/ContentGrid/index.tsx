@@ -5,7 +5,7 @@ import ContentGridItem from './ContentGridItem';
 
 interface Props {
   contents: Content[];
-  onClickItem: (index: number) => void;
+  onClickItem: (content: Content) => void;
 }
 
 const ContentGrid: React.SFC<Props> = ({ contents, onClickItem }) => (
