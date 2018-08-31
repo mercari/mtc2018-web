@@ -14,7 +14,7 @@ import (
 
 // NewResolver returns GraphQL root resolver.
 func NewResolver() (ResolverRoot, error) {
-	sessions, err := config.Load()
+	data, err := config.Load()
 	if err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func NewResolver() (ResolverRoot, error) {
 		likeObservers: make(map[string]chan Like),
 	}
 
-	for idx, session := range sessions {
+	for idx, session := range data.Sessions {
 		speakers := make([]Speaker, 0)
 		for _, speaker := range session.Speakers {
 			id := base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Speaker:%d", len(r.speakers)+1)))
@@ -54,7 +54,7 @@ func NewResolver() (ResolverRoot, error) {
 			EndTime:   session.EndTime,
 			Outline:   session.Outline,
 			OutlineJa: session.OutlineJa,
-			HashTags:  session.HashTags,
+			Tags:      session.Tags,
 			Speakers:  speakers,
 		})
 	}

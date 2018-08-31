@@ -35,13 +35,15 @@ type PageInfo struct {
 // セッション1つに関する情報。
 type Session struct {
 	ID        string    `json:"id"`
+	Place     string    `json:"place"`
 	Title     string    `json:"title"`
 	TitleJa   string    `json:"titleJa"`
 	StartTime string    `json:"startTime"`
 	EndTime   string    `json:"endTime"`
 	Outline   string    `json:"outline"`
 	OutlineJa string    `json:"outlineJa"`
-	HashTags  []string  `json:"hashTags"`
+	Lang      string    `json:"lang"`
+	Tags      []string  `json:"tags"`
 	Speakers  []Speaker `json:"speakers"`
 }
 
