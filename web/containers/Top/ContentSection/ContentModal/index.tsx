@@ -5,23 +5,31 @@ import ContentModalItem from './ContentModalItem';
 import { Content } from '../../../../types';
 
 interface Props {
-  content: Content;
+  content?: Content;
   onClickClose: () => void;
 }
 
-const ContentModal: React.SFC<Props> = ({ content, onClickClose }) => (
-  <Modal show={true} onClickClose={onClickClose}>
-    <Wrapper>
-      <Header>
-        <CloseButton
-          src="../../../../static/images/cross.svg"
-          onClick={onClickClose}
-        />
-      </Header>
-      <ContentModalItem content={content} />
-    </Wrapper>
-  </Modal>
-);
+const ContentModal: React.SFC<Props> = ({ content, onClickClose }) => {
+  return (
+    <Modal show={!!content} onClickClose={onClickClose}>
+      <Wrapper>
+        {content ? (
+          <>
+            <Header>
+              <CloseButton
+                src="../../../../static/images/cross.svg"
+                onClick={onClickClose}
+              />
+            </Header>
+            <ContentModalItem content={content} />
+          </>
+        ) : (
+          '該当のコンテンツがありません'
+        )}
+      </Wrapper>
+    </Modal>
+  );
+};
 
 const Wrapper = styled.div`
   display: flex;
