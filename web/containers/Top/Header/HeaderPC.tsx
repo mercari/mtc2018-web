@@ -16,8 +16,12 @@ const HeaderPC: React.SFC<Props> = ({ showBg, ...props }) => (
       <NavButton href="#contents">CONTENTS</NavButton>
       <NavButton href="#access">ACCESS</NavButton>
       <SNS>
-        <CircleIcon />
-        <CircleIcon />
+        <CircleIcon>
+          <img src="../../../static/images/twitter.svg" alt="twitter" />
+        </CircleIcon>
+        <CircleIcon>
+          <img src="../../../static/images/facebook.svg" alt="twitter" />
+        </CircleIcon>
       </SNS>
     </Nav>
   </Wrapper>
@@ -82,14 +86,11 @@ const SNS = styled.div`
   margin-left: 40px;
 `;
 
-const CircleIcon = styled.button`
+const CircleIcon = styled.a`
   width: 40px;
   height: 40px;
   background-color: transparent;
-  border: none;
-  border: 1px solid ${colors.yuki};
   box-sizing: border-box;
-  border-radius: 50%;
   margin-left: 20px;
   cursor: pointer;
 

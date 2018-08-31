@@ -6,9 +6,6 @@ const Footer = () => (
   <Wrapper>
     <Body>
       <Copy>© 2018 Mercari, Inc.</Copy>
-      <EmptySpace />
-      <Link href="#">mercari Tech Conf 2017</Link>
-      <Link href="#">お問い合わせ</Link>
     </Body>
   </Wrapper>
 );
@@ -35,26 +32,10 @@ const Body = styled.div`
   }
 `;
 
-const EmptySpace = styled.div`
-  flex-grow: 1;
-`;
-
 const Copy = styled.small`
   ${getTextStyle('display2')};
   font-weight: bold;
   color: ${colors.yuki};
-`;
-
-const Link = styled.a`
-  ${getTextStyle('display1')};
-  color: ${colors.yuki};
-  text-decoration: none;
-  margin-left: 60px;
-
-  @media screen and (max-width: 767px) {
-    margin-left: 0;
-    margin-top: 16px;
-  }
 `;
 
 export default Footer;
