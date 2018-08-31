@@ -44,7 +44,10 @@ const AccessSection: React.SFC<{}> = props => (
           】／「EXシアター六本木前」下車（約16分）
         </AccessBody>
       </div>
-      <Link href="#">
+      <Link
+        href="http://forum.academyhills.com/roppongi/access/"
+        target="_blank"
+      >
         アカデミーヒルズまでのアクセス（アカデミーヒルズ公式サイトへ）
       </Link>
     </StyledCard>

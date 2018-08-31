@@ -2,6 +2,8 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { colors, getTextStyle } from '../../../components/styles';
 import { HamburgerMenu } from '../../../components';
+import TwitterShareButton from './TwitterShareButton';
+import FacebookShareButton from './FacebookShareButton';
 
 interface Props {
   showBg: boolean;
@@ -44,6 +46,10 @@ class Header extends React.Component<Props, State> {
           <NavButton href="#access" onClick={this.onClickNav}>
             ACCESS
           </NavButton>
+          <SNS>
+            <TwitterShareButton />
+            <FacebookShareButton />
+          </SNS>
         </Menu>
       </Wrapper>
     );
@@ -105,6 +111,19 @@ const NavButton = styled.a`
   color: ${colors.yuki};
   position: relative;
   padding: 20px;
+`;
+
+const SNS = styled.div`
+  display: flex;
+  padding: 16px;
+
+  > * {
+    margin-right: 24px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 `;
 
 export default Header;

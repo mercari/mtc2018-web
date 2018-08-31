@@ -1,10 +1,14 @@
-<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="20px" viewBox="0 0 10 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>profile_icon_fb</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Desktop-HD" transform="translate(-1193.000000, -19.000000)">
+        <g id="Desktop-HD" transform="translate(-1209.000000, -30.000000)" fill="#FFFFFF">
             <g id="nav">
                 <g id="Group-7" transform="translate(1194.000000, 20.000000)">
-                    <path d="M21.8212824,30 L21.8212824,21 L24.5536932,21 L25,17 L21.8212824,17 L21.8212824,15.052 C21.8212824,14.022 21.8475931,13 23.2868836,13 L24.7446891,13 L24.7446891,10.14 C24.7446891,10.097 23.4924966,10 22.225687,10 C19.5800039,10 17.9234067,11.657 17.9234067,14.7 L17.9234067,17 L15,17 L15,21 L17.9234067,21 L17.9234067,30 L21.8212824,30 Z" id="profile_icon_fb" fill="#FFFFFF"></path>
-                    <circle id="Oval" stroke="#FFFFFF" cx="20" cy="20" r="20"></circle>
+                    <path d="M21.8212824,30 L21.8212824,21 L24.5536932,21 L25,17 L21.8212824,17 L21.8212824,15.052 C21.8212824,14.022 21.8475931,13 23.2868836,13 L24.7446891,13 L24.7446891,10.14 C24.7446891,10.097 23.4924966,10 22.225687,10 C19.5800039,10 17.9234067,11.657 17.9234067,14.7 L17.9234067,17 L15,17 L15,21 L17.9234067,21 L17.9234067,30 L21.8212824,30 Z" id="profile_icon_fb"></path>
                 </g>
             </g>
         </g>
