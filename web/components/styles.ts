@@ -33,6 +33,7 @@ export const getTextStyle = (level: string) => {
   }
 
   return css`
+    color: ${colors.primary};
     font-size: ${style.size};
     font-weight: ${style.weight};
     font-family: 'Montserrat', 'Hiragino Kaku Gothic ProN',
