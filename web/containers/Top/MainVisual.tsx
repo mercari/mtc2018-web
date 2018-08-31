@@ -10,7 +10,11 @@ const MainVisual = () => (
     </EmptySpace>
     <Date>Oct. 4th, 2018 thu</Date>
     <Place>@Roppongi Academy hills</Place>
-    <BuyButton href="https://mercari-tech-conf-2018.peatix.com" target="_black">
+    <BuyButton
+      type="primary"
+      href="https://mercari-tech-conf-2018.peatix.com"
+      target="_black"
+    >
       BUY TICKET
     </BuyButton>
     <BottomArrow />
