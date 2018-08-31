@@ -21,14 +21,12 @@ class ContentSection extends React.Component<Props, State> {
     const { contents } = this.props;
     const { currentContent } = this.state;
     return (
-      <Section title="Contents" id="contents" {...this.props}>
+      <Section title="CONTENTS" id="contents" {...this.props}>
         <ContentGrid contents={contents} onClickItem={this.onClickItem} />
-        {currentContent && (
-          <ContentModal
-            content={currentContent}
-            onClickClose={this.onClickClose}
-          />
-        )}
+        <ContentModal
+          content={currentContent}
+          onClickClose={this.onClickClose}
+        />
       </Section>
     );
   }

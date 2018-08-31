@@ -19,13 +19,11 @@ class MiniGrid extends React.Component<Props, State> {
     minColumnWidth: 300
   };
 
-  private element?: HTMLDivElement;
+  public state = {
+    columnNum: 1
+  };
 
-  public componentWillMount() {
-    this.setState({
-      columnNum: this.props.maxColumnNum
-    });
-  }
+  private element?: HTMLDivElement;
 
   public componentDidMount() {
     // マウントタイミングで一度カラム数更新
@@ -50,7 +48,7 @@ class MiniGrid extends React.Component<Props, State> {
       // 行
       const rows: React.ReactNode[] = [];
       times(rowNum)((rowIndex: number) => {
-        const index = rowNum * columnIndex + rowIndex;
+        const index = rowIndex * columnNum + columnIndex;
         const child = children[index];
 
         // 該当するchildが無ければ追加しない

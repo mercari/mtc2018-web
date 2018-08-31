@@ -36,17 +36,21 @@ class ContentGridItem extends React.PureComponent<Props> {
           </Tags>
           <Body>{content.outline}</Body>
         </ContentInfo>
-        <SpeakerInfo>
-          <Icon
-            src={`../../../../static/images/speakers/${
-              content.speakers[0].id
-            }_thumb.png`}
-          />
-          <div>
-            <Text level="display1">{content.speakers[0].name}</Text>
-            <Text level="body">{content.speakers[0].position}</Text>
-          </div>
-        </SpeakerInfo>
+        <div>
+          {content.speakers.map(speaker => (
+            <SpeakerInfo key={speaker.id}>
+              <Icon
+                src={`../../../../static/images/speakers/${
+                  speaker.id
+                }_thumb.png`}
+              />
+              <div>
+                <Text level="display1">{speaker.name}</Text>
+                <Text level="body">{speaker.position}</Text>
+              </div>
+            </SpeakerInfo>
+          ))}
+        </div>
       </Wrapper>
     );
   }
@@ -118,6 +122,11 @@ const Body = styled(Text).attrs({ level: 'body' })`
 const SpeakerInfo = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const Icon = styled.img`

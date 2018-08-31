@@ -8,8 +8,8 @@ interface Props {
   speaker: Speaker;
 }
 
-const ContentModalSpeaker: React.SFC<Props> = ({ speaker }) => (
-  <Wrapper>
+const ContentModalSpeaker: React.SFC<Props> = ({ speaker, ...props }) => (
+  <Wrapper {...props}>
     <Photo src={`../../../../static/images/speakers/${speaker.id}.png`} />
     <Profile>
       <Header>

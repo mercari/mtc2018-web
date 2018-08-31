@@ -39,7 +39,11 @@ class ContentModalItem extends React.PureComponent<Props> {
           </Tags>
           <Body>{content.outline}</Body>
         </ContentInfo>
-        <ContentModalSpeaker speaker={content.speakers[0]} />
+        <div>
+          {content.speakers.map(speaker => (
+            <Speaker key={speaker.id} speaker={speaker} />
+          ))}
+        </div>
       </Wrapper>
     );
   }
@@ -101,6 +105,14 @@ const Title = styled(Text).attrs({
 })`
   font-weight: bold;
   margin-bottom: 8px;
+`;
+
+const Speaker = styled(ContentModalSpeaker)`
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export default ContentModalItem;
