@@ -37,13 +37,13 @@ export default class MyDocument extends Document {
           />
           <meta
             property="og:image"
-            content="https://techconf.mercari.com/2018/images/ogp.png"
+            content="/static/images/ogp.png"
           />
           <meta property="og:site_name" content="" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta
             name="twitter:image"
-            content="https://techconf.mercari.com/2018/images/ogp.png"
+            content="/static/images/ogp.png"
           />
           <meta name="twitter:title" content="Mercari Tech Conf 2018" />
           <meta
