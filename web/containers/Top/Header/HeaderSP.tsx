@@ -29,11 +29,8 @@ class Header extends React.Component<Props, State> {
       <Wrapper showBg={showBg || showMenu} {...props}>
         <Logo />
         <EmptySpace />
-        <HamburgerMenu
-          active={this.state.showMenu}
-          onClick={this.onClickMenu}
-        />
-        <Menu show={this.state.showMenu}>
+        <HamburgerMenu active={this.state.showMenu} onClick={this.toggleMenu} />
+        <Menu show={this.state.showMenu} onClick={this.toggleMenu}>
           <NavButton href="#news" onClick={this.onClickNav}>
             NEWS
           </NavButton>
@@ -55,7 +52,7 @@ class Header extends React.Component<Props, State> {
     );
   }
 
-  private onClickMenu = () => {
+  private toggleMenu = () => {
     this.setState({
       showMenu: !this.state.showMenu
     });
