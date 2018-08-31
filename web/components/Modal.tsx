@@ -24,7 +24,7 @@ class ContentModal extends React.Component<Props> {
     return (
       <Wrapper show={show}>
         <Background />
-        <Body>{children}</Body>
+        <Body onClick={this.onBodyClick}>{children}</Body>
       </Wrapper>
     );
   }
@@ -37,6 +37,12 @@ class ContentModal extends React.Component<Props> {
 
     // ESCキーを押したら閉じる
     if (event.keyCode === 27) {
+      this.props.onClickClose();
+    }
+  };
+
+  private onBodyClick: React.MouseEventHandler<HTMLDivElement> = ev => {
+    if (ev.target === ev.currentTarget) {
       this.props.onClickClose();
     }
   };
