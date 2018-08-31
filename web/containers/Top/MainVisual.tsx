@@ -10,7 +10,9 @@ const MainVisual = () => (
     </EmptySpace>
     <Date>Oct. 4th, 2018 thu</Date>
     <Place>@Roppongi Academy hills</Place>
-    <BuyButton>BUY TICKET</BuyButton>
+    <BuyButton href="https://mercari-tech-conf-2018.peatix.com" target="_black">
+      BUY TICKET
+    </BuyButton>
     <BottomArrow />
   </Wrapper>
 );
@@ -70,7 +72,9 @@ const Place = styled(Text)`
   }
 `;
 
-const BuyButton = styled(Button)`
+const ButtonLink = Button.withComponent('a');
+const BuyButton = styled(ButtonLink)`
+  text-decoration: none;
   margin-bottom: 9.3vh; /* 72 / 768 */
 `;
 

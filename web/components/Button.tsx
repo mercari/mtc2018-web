@@ -11,6 +11,9 @@ const Button = styled.button`
   border-radius: 32px;
   cursor: pointer;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     opacity: 0.5;

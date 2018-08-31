@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { colors, getTextStyle } from '../../../components/styles';
+import TwitterShareButton from './TwitterShareButton';
+import FacebookShareButton from './FacebookShareButton';
 
 interface Props {
   showBg: boolean;
@@ -16,12 +18,8 @@ const HeaderPC: React.SFC<Props> = ({ showBg, ...props }) => (
       <NavButton href="#contents">CONTENTS</NavButton>
       <NavButton href="#access">ACCESS</NavButton>
       <SNS>
-        <CircleIcon>
-          <img src="../../../static/images/twitter.svg" alt="twitter" />
-        </CircleIcon>
-        <CircleIcon>
-          <img src="../../../static/images/facebook.svg" alt="twitter" />
-        </CircleIcon>
+        <TwitterShareButton />
+        <FacebookShareButton />
       </SNS>
     </Nav>
   </Wrapper>
@@ -84,18 +82,14 @@ const NavButton = styled.a`
 
 const SNS = styled.div`
   margin-left: 40px;
-`;
+  display: flex;
 
-const CircleIcon = styled.a`
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  box-sizing: border-box;
-  margin-left: 20px;
-  cursor: pointer;
+  > * {
+    margin-right: 20px;
 
-  &:first-child {
-    margin-left: 0;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 `;
 
