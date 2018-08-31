@@ -40,8 +40,7 @@ jobs:
           name: install
           command: |
             cd web
-            npm install
-            npm install tslint -g
+            npm ci
       - run:
           name: lint
           command: |
