@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/mercari/mtc2018-web/server/config"
 	"github.com/mercari/mtc2018-web/server/gqlapi"
+	"github.com/mercari/mtc2018-web/server/gqlapi/gqlopencensus"
 	"github.com/pkg/errors"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/trace"
@@ -99,6 +100,8 @@ func runServer(port int, logger *zap.Logger) {
 				Resolvers: resolver,
 			},
 		),
+		handler.RequestMiddleware(gqlopencensus.RequestMiddleware()),
+		handler.ResolverMiddleware(gqlopencensus.ResolverMiddleware()),
 		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
 
