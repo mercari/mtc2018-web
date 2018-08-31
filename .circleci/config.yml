@@ -16,19 +16,26 @@ jobs:
             apt-get install -y jq
       - run:
           name: sanity check
+          working_directory: server
           command: |
-            cd server
             ./script/check_contents.sh
+      - restore_cache:
+          key: go-mod-{{ checksum "server/go.sum" }}
       - run:
           name: test
+          working_directory: server
           command: |
-            cd server
-            go test -v -race ./...
+            ./setup.sh
+            ./test.sh -v
       - run:
           name: build
+          working_directory: server
           command: |
-            cd server
             go build -o mtcserver -a -tags netgo -installsuffix netgo github.com/mercari/mtc2018-web/server/cmd/mtcserver
+      - save_cache:
+          key: go-mod-{{ checksum "server/go.sum" }}
+          paths:
+            - /go/pkg/mod
 
   web:
     working_directory: /usr/src/app
