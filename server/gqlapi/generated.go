@@ -20,12 +20,14 @@ func NewExecutableSchema(cfg Config) graphql.ExecutableSchema {
 	return &executableSchema{
 		resolvers:  cfg.Resolvers,
 		directives: cfg.Directives,
+		complexity: cfg.Complexity,
 	}
 }
 
 type Config struct {
 	Resolvers  ResolverRoot
 	Directives DirectiveRoot
+	Complexity ComplexityRoot
 }
 
 type ResolverRoot interface {
@@ -37,6 +39,80 @@ type ResolverRoot interface {
 
 type DirectiveRoot struct {
 }
+
+type ComplexityRoot struct {
+	CreateLikePayload struct {
+		ClientMutationId func(childComplexity int) int
+		Like             func(childComplexity int) int
+	}
+
+	Like struct {
+		Id        func(childComplexity int) int
+		SessionId func(childComplexity int) int
+	}
+
+	Mutation struct {
+		CreateLike func(childComplexity int, input CreateLikeInput) int
+	}
+
+	PageInfo struct {
+		StartCursor     func(childComplexity int) int
+		EndCursor       func(childComplexity int) int
+		HasNextPage     func(childComplexity int) int
+		HasPreviousPage func(childComplexity int) int
+	}
+
+	Query struct {
+		Node     func(childComplexity int, id string) int
+		Nodes    func(childComplexity int, ids []string) int
+		Sessions func(childComplexity int, first int, after *string, req *SessionListInput) int
+	}
+
+	Session struct {
+		Id        func(childComplexity int) int
+		Place     func(childComplexity int) int
+		Title     func(childComplexity int) int
+		TitleJa   func(childComplexity int) int
+		StartTime func(childComplexity int) int
+		EndTime   func(childComplexity int) int
+		Outline   func(childComplexity int) int
+		OutlineJa func(childComplexity int) int
+		Lang      func(childComplexity int) int
+		Tags      func(childComplexity int) int
+		Speakers  func(childComplexity int) int
+	}
+
+	SessionConnection struct {
+		PageInfo func(childComplexity int) int
+		Edges    func(childComplexity int) int
+		Nodes    func(childComplexity int) int
+	}
+
+	SessionEdge struct {
+		Cursor func(childComplexity int) int
+		Node   func(childComplexity int) int
+	}
+
+	Speaker struct {
+		Id         func(childComplexity int) int
+		Name       func(childComplexity int) int
+		NameJa     func(childComplexity int) int
+		Company    func(childComplexity int) int
+		Position   func(childComplexity int) int
+		PositionJa func(childComplexity int) int
+		Profile    func(childComplexity int) int
+		ProfileJa  func(childComplexity int) int
+		IconUrl    func(childComplexity int) int
+		TwitterId  func(childComplexity int) int
+		GithubId   func(childComplexity int) int
+		Sessions   func(childComplexity int) int
+	}
+
+	Subscription struct {
+		LikeAdded func(childComplexity int) int
+	}
+}
+
 type MutationResolver interface {
 	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
 }
@@ -55,10 +131,390 @@ type SubscriptionResolver interface {
 type executableSchema struct {
 	resolvers  ResolverRoot
 	directives DirectiveRoot
+	complexity ComplexityRoot
 }
 
 func (e *executableSchema) Schema() *ast.Schema {
 	return parsedSchema
+}
+
+func (e *executableSchema) Complexity(typeName, field string, childComplexity int, rawArgs map[string]interface{}) (int, bool) {
+	switch typeName + "." + field {
+
+	case "CreateLikePayload.clientMutationId":
+		if e.complexity.CreateLikePayload.ClientMutationId == nil {
+			break
+		}
+
+		return e.complexity.CreateLikePayload.ClientMutationId(childComplexity), true
+
+	case "CreateLikePayload.like":
+		if e.complexity.CreateLikePayload.Like == nil {
+			break
+		}
+
+		return e.complexity.CreateLikePayload.Like(childComplexity), true
+
+	case "Like.id":
+		if e.complexity.Like.Id == nil {
+			break
+		}
+
+		return e.complexity.Like.Id(childComplexity), true
+
+	case "Like.sessionID":
+		if e.complexity.Like.SessionId == nil {
+			break
+		}
+
+		return e.complexity.Like.SessionId(childComplexity), true
+
+	case "Mutation.createLike":
+		if e.complexity.Mutation.CreateLike == nil {
+			break
+		}
+		args := map[string]interface{}{}
+
+		var arg0 CreateLikeInput
+		if tmp, ok := rawArgs["input"]; ok {
+			var err error
+			arg0, err = UnmarshalCreateLikeInput(tmp)
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["input"] = arg0
+
+		return e.complexity.Mutation.CreateLike(childComplexity, args["input"].(CreateLikeInput)), true
+
+	case "PageInfo.startCursor":
+		if e.complexity.PageInfo.StartCursor == nil {
+			break
+		}
+
+		return e.complexity.PageInfo.StartCursor(childComplexity), true
+
+	case "PageInfo.endCursor":
+		if e.complexity.PageInfo.EndCursor == nil {
+			break
+		}
+
+		return e.complexity.PageInfo.EndCursor(childComplexity), true
+
+	case "PageInfo.hasNextPage":
+		if e.complexity.PageInfo.HasNextPage == nil {
+			break
+		}
+
+		return e.complexity.PageInfo.HasNextPage(childComplexity), true
+
+	case "PageInfo.hasPreviousPage":
+		if e.complexity.PageInfo.HasPreviousPage == nil {
+			break
+		}
+
+		return e.complexity.PageInfo.HasPreviousPage(childComplexity), true
+
+	case "Query.node":
+		if e.complexity.Query.Node == nil {
+			break
+		}
+		args := map[string]interface{}{}
+
+		var arg0 string
+		if tmp, ok := rawArgs["id"]; ok {
+			var err error
+			arg0, err = graphql.UnmarshalID(tmp)
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["id"] = arg0
+
+		return e.complexity.Query.Node(childComplexity, args["id"].(string)), true
+
+	case "Query.nodes":
+		if e.complexity.Query.Nodes == nil {
+			break
+		}
+		args := map[string]interface{}{}
+
+		var arg0 []string
+		if tmp, ok := rawArgs["ids"]; ok {
+			var err error
+			var rawIf1 []interface{}
+			if tmp != nil {
+				if tmp1, ok := tmp.([]interface{}); ok {
+					rawIf1 = tmp1
+				} else {
+					rawIf1 = []interface{}{tmp}
+				}
+			}
+			arg0 = make([]string, len(rawIf1))
+			for idx1 := range rawIf1 {
+				arg0[idx1], err = graphql.UnmarshalID(rawIf1[idx1])
+			}
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["ids"] = arg0
+
+		return e.complexity.Query.Nodes(childComplexity, args["ids"].([]string)), true
+
+	case "Query.sessions":
+		if e.complexity.Query.Sessions == nil {
+			break
+		}
+		args := map[string]interface{}{}
+
+		var arg0 int
+		if tmp, ok := rawArgs["first"]; ok {
+			var err error
+			arg0, err = graphql.UnmarshalInt(tmp)
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["first"] = arg0
+
+		var arg1 *string
+		if tmp, ok := rawArgs["after"]; ok {
+			var err error
+			var ptr1 string
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalString(tmp)
+				arg1 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["after"] = arg1
+
+		var arg2 *SessionListInput
+		if tmp, ok := rawArgs["req"]; ok {
+			var err error
+			var ptr1 SessionListInput
+			if tmp != nil {
+				ptr1, err = UnmarshalSessionListInput(tmp)
+				arg2 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["req"] = arg2
+
+		return e.complexity.Query.Sessions(childComplexity, args["first"].(int), args["after"].(*string), args["req"].(*SessionListInput)), true
+
+	case "Session.id":
+		if e.complexity.Session.Id == nil {
+			break
+		}
+
+		return e.complexity.Session.Id(childComplexity), true
+
+	case "Session.place":
+		if e.complexity.Session.Place == nil {
+			break
+		}
+
+		return e.complexity.Session.Place(childComplexity), true
+
+	case "Session.title":
+		if e.complexity.Session.Title == nil {
+			break
+		}
+
+		return e.complexity.Session.Title(childComplexity), true
+
+	case "Session.titleJa":
+		if e.complexity.Session.TitleJa == nil {
+			break
+		}
+
+		return e.complexity.Session.TitleJa(childComplexity), true
+
+	case "Session.startTime":
+		if e.complexity.Session.StartTime == nil {
+			break
+		}
+
+		return e.complexity.Session.StartTime(childComplexity), true
+
+	case "Session.endTime":
+		if e.complexity.Session.EndTime == nil {
+			break
+		}
+
+		return e.complexity.Session.EndTime(childComplexity), true
+
+	case "Session.outline":
+		if e.complexity.Session.Outline == nil {
+			break
+		}
+
+		return e.complexity.Session.Outline(childComplexity), true
+
+	case "Session.outlineJa":
+		if e.complexity.Session.OutlineJa == nil {
+			break
+		}
+
+		return e.complexity.Session.OutlineJa(childComplexity), true
+
+	case "Session.lang":
+		if e.complexity.Session.Lang == nil {
+			break
+		}
+
+		return e.complexity.Session.Lang(childComplexity), true
+
+	case "Session.tags":
+		if e.complexity.Session.Tags == nil {
+			break
+		}
+
+		return e.complexity.Session.Tags(childComplexity), true
+
+	case "Session.speakers":
+		if e.complexity.Session.Speakers == nil {
+			break
+		}
+
+		return e.complexity.Session.Speakers(childComplexity), true
+
+	case "SessionConnection.pageInfo":
+		if e.complexity.SessionConnection.PageInfo == nil {
+			break
+		}
+
+		return e.complexity.SessionConnection.PageInfo(childComplexity), true
+
+	case "SessionConnection.edges":
+		if e.complexity.SessionConnection.Edges == nil {
+			break
+		}
+
+		return e.complexity.SessionConnection.Edges(childComplexity), true
+
+	case "SessionConnection.nodes":
+		if e.complexity.SessionConnection.Nodes == nil {
+			break
+		}
+
+		return e.complexity.SessionConnection.Nodes(childComplexity), true
+
+	case "SessionEdge.cursor":
+		if e.complexity.SessionEdge.Cursor == nil {
+			break
+		}
+
+		return e.complexity.SessionEdge.Cursor(childComplexity), true
+
+	case "SessionEdge.node":
+		if e.complexity.SessionEdge.Node == nil {
+			break
+		}
+
+		return e.complexity.SessionEdge.Node(childComplexity), true
+
+	case "Speaker.id":
+		if e.complexity.Speaker.Id == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Id(childComplexity), true
+
+	case "Speaker.name":
+		if e.complexity.Speaker.Name == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Name(childComplexity), true
+
+	case "Speaker.nameJa":
+		if e.complexity.Speaker.NameJa == nil {
+			break
+		}
+
+		return e.complexity.Speaker.NameJa(childComplexity), true
+
+	case "Speaker.company":
+		if e.complexity.Speaker.Company == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Company(childComplexity), true
+
+	case "Speaker.position":
+		if e.complexity.Speaker.Position == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Position(childComplexity), true
+
+	case "Speaker.positionJa":
+		if e.complexity.Speaker.PositionJa == nil {
+			break
+		}
+
+		return e.complexity.Speaker.PositionJa(childComplexity), true
+
+	case "Speaker.profile":
+		if e.complexity.Speaker.Profile == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Profile(childComplexity), true
+
+	case "Speaker.profileJa":
+		if e.complexity.Speaker.ProfileJa == nil {
+			break
+		}
+
+		return e.complexity.Speaker.ProfileJa(childComplexity), true
+
+	case "Speaker.iconUrl":
+		if e.complexity.Speaker.IconUrl == nil {
+			break
+		}
+
+		return e.complexity.Speaker.IconUrl(childComplexity), true
+
+	case "Speaker.twitterId":
+		if e.complexity.Speaker.TwitterId == nil {
+			break
+		}
+
+		return e.complexity.Speaker.TwitterId(childComplexity), true
+
+	case "Speaker.githubId":
+		if e.complexity.Speaker.GithubId == nil {
+			break
+		}
+
+		return e.complexity.Speaker.GithubId(childComplexity), true
+
+	case "Speaker.sessions":
+		if e.complexity.Speaker.Sessions == nil {
+			break
+		}
+
+		return e.complexity.Speaker.Sessions(childComplexity), true
+
+	case "Subscription.likeAdded":
+		if e.complexity.Subscription.LikeAdded == nil {
+			break
+		}
+
+		return e.complexity.Subscription.LikeAdded(childComplexity), true
+
+	}
+	return 0, false
 }
 
 func (e *executableSchema) Query(ctx context.Context, op *ast.OperationDefinition) *graphql.Response {
