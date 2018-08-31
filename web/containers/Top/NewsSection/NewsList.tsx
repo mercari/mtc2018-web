@@ -1,7 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Text } from '../../../components';
-import { getTextStyle } from '../../../components/styles';
+import { colors, getTextStyle } from '../../../components/styles';
 import { News } from '../../../types';
 
 interface Props {
@@ -13,7 +13,13 @@ const NewsList: React.SFC<Props> = ({ news, ...props }) => (
     {news.map(newsItem => (
       <ListItem key={newsItem.id}>
         <ListItemDate>{newsItem.date}</ListItemDate>
-        <ListItemMessage>{newsItem.message}</ListItemMessage>
+        {newsItem.link ? (
+          <ListItemMessageLink href={newsItem.link} target="_blank">
+            {newsItem.message}
+          </ListItemMessageLink>
+        ) : (
+          <ListItemMessage>{newsItem.message}</ListItemMessage>
+        )}
       </ListItem>
     ))}
   </Wrapper>
@@ -41,9 +47,7 @@ const ListItem = styled.li`
   }
 `;
 
-const ListItemDate = styled(Text).attrs({
-  level: 'display1'
-})`
+const ListItemDate = styled(Text).attrs({ level: 'display1' })`
   width: 128px;
   margin-right: 8px;
 
@@ -52,12 +56,22 @@ const ListItemDate = styled(Text).attrs({
   }
 `;
 
-const ListItemMessage = styled(Text)`
+const MessageStyle = css`
   ${getTextStyle('display2')};
+  color: ${colors.primary};
 
   @media screen and (max-width: 767px) {
     ${getTextStyle('body')};
   }
+`;
+
+const ListItemMessage = styled(Text)`
+  ${MessageStyle};
+`;
+
+const ListItemMessageLink = styled.a`
+  ${MessageStyle} text-decoration: none;
+  border-bottom: 1px solid ${colors.primary};
 `;
 
 export default NewsList;
