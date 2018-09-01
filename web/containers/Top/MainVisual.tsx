@@ -66,7 +66,7 @@ const Date = styled(Text)`
 `;
 
 const Place = styled(Text)`
-  ${getTextStyle('display3')};
+  ${getTextStyle('display2')};
   margin-bottom: 8.3vh; /* 64 / 768 */
   color: ${colors.yuki};
 

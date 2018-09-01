@@ -18,9 +18,9 @@ export const textStyles = [
   { level: 'display4', size: '20px', weight: 'normal' },
   { level: 'display3', size: '18px', weight: 'bold' },
   { level: 'display2', size: '18px', weight: 'normal' },
-  { level: 'display1', size: '16px', weight: 'normal' },
-  { level: 'caption', size: '14px', weight: 'bold' },
-  { level: 'body', size: '14px', weight: 'normal' }
+  { level: 'display1', size: '16px', lineHeight: '26px', weight: 'normal' },
+  { level: 'caption', size: '14px', lineHeight: '22px', weight: 'bold' },
+  { level: 'body', size: '14px', lineHeight: '22px', weight: 'normal' }
 ];
 
 export const getTextStyle = (level: string) => {
@@ -39,6 +39,7 @@ export const getTextStyle = (level: string) => {
     font-family: 'Montserrat', 'Hiragino Kaku Gothic ProN',
       'ヒラギノ角ゴ Pro W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial,
       helvetica, sans-serif;
+    line-height: ${style.lineHeight || 'auto'};
   `;
 };
 
