@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
 import { Content } from '../../../../types';
+import { omitText } from '../../../../utils';
 
 interface Props {
   index: number;
@@ -34,7 +35,7 @@ class ContentGridItem extends React.PureComponent<Props> {
               </Text>
             ))}
           </Tags>
-          <Body>{content.outline}</Body>
+          <Body>{omitText(content.outline, 100)}</Body>
         </ContentInfo>
         <div>
           {content.speakers.map(speaker => (
