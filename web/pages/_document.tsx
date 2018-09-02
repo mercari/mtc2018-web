@@ -52,7 +52,7 @@ export default class MyDocument extends Document {
           />
           <meta name="twitter:site" content="@mercari_inc" />
           <link rel="shortcut icon" href="./static/images/favicon.ico" />
-          <title>mercari Tech Conf 2018</title>
+          <title>Mercari Tech Conf 2018</title>
           <link
             href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
             rel="stylesheet"
