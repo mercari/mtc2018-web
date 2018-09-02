@@ -16,14 +16,14 @@ const Header: React.SFC<Props> = props => (
 
 const StyledHeaderPC = styled(HeaderPC)`
   display: flex;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 960px) {
     display: none;
   }
 `;
 
 const StyledHeaderSP = styled(HeaderSP)`
   display: none;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 960px) {
     display: flex;
   }
 `;
