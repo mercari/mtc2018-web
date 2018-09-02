@@ -18,6 +18,7 @@ export interface Speaker {
 
 export interface Content {
   id: number;
+  type: 'keynote' | 'session';
   place: string;
   title: string;
   outline: string;

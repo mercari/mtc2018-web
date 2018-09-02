@@ -21,7 +21,11 @@ class ContentGridItem extends React.PureComponent<Props> {
       <Wrapper onClick={this.onClick} {...props}>
         <ContentInfo>
           <Header>
-            <Tip>SESSION</Tip>
+            {content.type === 'keynote' ? (
+              <Tip type="important">KEYNOTE</Tip>
+            ) : (
+              <Tip type="normal">SESSION</Tip>
+            )}
             <Text level="display2">{content.place}</Text>
             <Text level="display2">
               {startTime}-{endTime}

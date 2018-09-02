@@ -23,7 +23,11 @@ class ContentModalItem extends React.PureComponent<Props> {
       <Wrapper {...props}>
         <ContentInfo>
           <Header>
-            <Tip>SESSION</Tip>
+            {content.type === 'keynote' ? (
+              <Tip type="important">KEYNOTE</Tip>
+            ) : (
+              <Tip type="normal">SESSION</Tip>
+            )}
             <Text level="display2">{content.place}</Text>
             <Text level="display2">
               {startTime}-{endTime}
