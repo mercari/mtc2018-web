@@ -70,8 +70,6 @@ const Name = styled(Text).attrs({
 
 const Body = styled(Text)`
   ${getTextStyle('display1')};
-  text-align: justify;
-  text-justify: inter-ideograph;
 
   @media screen and (max-width: 767px) {
     display: none;
