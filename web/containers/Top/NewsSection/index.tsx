@@ -16,6 +16,7 @@ const NewsSection: React.SFC<{}> = props => (
         target="_blank"
       >
         FOLLOW US ON
+        <ButtonIcon src="../static/images/twitter_orange.svg" alt="twitter" />
       </FollowButton>
       <Message>
         公式twitterアカウント( @mercaridevjp
@@ -50,6 +51,10 @@ const FollowButton = styled(ButtonLink)`
   @media screen and (max-width: 767px) {
     margin-bottom: 10px;
   }
+`;
+
+const ButtonIcon = styled.img`
+  margin-left: 8px;
 `;
 
 const Message = styled(Text).attrs({
