@@ -16,6 +16,7 @@ const HeaderPC: React.SFC<Props> = ({ showBg, ...props }) => (
       <NavButton href="#news">NEWS</NavButton>
       <NavButton href="#about">ABOUT</NavButton>
       <NavButton href="#contents">CONTENTS</NavButton>
+      <NavButton href="#timetable">TIME TABLE</NavButton>
       <NavButton href="#access">ACCESS</NavButton>
       <SNS>
         <TwitterShareButton />
