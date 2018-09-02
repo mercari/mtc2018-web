@@ -21,6 +21,7 @@ export interface Content {
   type: 'keynote' | 'session';
   place: string;
   title: string;
+  lang: 'jp' | 'en';
   outline: string;
   tags: string[];
   speakers: Speaker[];
