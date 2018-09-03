@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 import { colors, getTextStyle } from '../../components/styles';
 
 interface Props {
@@ -8,7 +9,9 @@ interface Props {
 
 const Header: React.SFC<Props> = ({ showBg, ...props }) => (
   <Wrapper showBg={showBg} {...props}>
-    <Logo />
+    <Link prefetch={true} href="/2018">
+      <Logo />
+    </Link>
     <EmptySpace />
   </Wrapper>
 );
@@ -21,64 +24,22 @@ const Wrapper = styled.div`
   color: ${colors.yuki};
   padding: 0 40px;
   box-sizing: border-box;
-  transition: 300ms;
-  z-index: 50;
-  background-color: ${(props: { showBg: boolean }) =>
-    props.showBg ? 'rgba(18, 28, 59, 0.8)' : 'transparent'};
+
+  @media screen and (max-width: 767px) {
+    height: 60px;
+    padding: 0 8px 0 20px;
+    z-index: 50;
+  }
 `;
 
 const Logo = styled.img.attrs({
   src: '../../static/images/header_logo.svg'
-})``;
+})`
+  cursor: pointer;
+`;
 
 const EmptySpace = styled.div`
   flex-grow: 1;
-`;
-
-const Nav = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const NavButton = styled.a`
-  ${getTextStyle('display1')};
-  margin-left: 24px;
-  text-decoration: none;
-  color: ${colors.yuki};
-  line-height: 36px;
-  position: relative;
-
-  &:before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    display: inline-block;
-    width: 0%;
-    height: 1px;
-    transform: translateX(-50%);
-    background-color: ${colors.yuki};
-    transition-duration: 300ms;
-  }
-
-  &:hover {
-    &:before {
-      width: 70%;
-    }
-  }
-`;
-
-const SNS = styled.div`
-  margin-left: 40px;
-  display: flex;
-
-  > * {
-    margin-right: 20px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
 `;
 
 export default Header;

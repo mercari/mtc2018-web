@@ -24,10 +24,12 @@ class ContentCardItem extends React.PureComponent<Props> {
             ) : (
               <Tip type="normal">SESSION</Tip>
             )}
-            <Text level="display2">{content.place}</Text>
-            <Text level="display2">
-              {startTime}-{endTime}
-            </Text>
+            <HeaderDetail>
+              <Text level="display2">{content.place}</Text>
+              <Text level="display2">
+                {startTime}-{endTime}
+              </Text>
+            </HeaderDetail>
           </Header>
           <Title>{content.title}</Title>
           <Tags>
@@ -73,7 +75,22 @@ const ContentInfo = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+
+  > * {
+    margin-right: 8px;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-righ: 0;
+    }
+  }
+`;
+
+const HeaderDetail = styled.div`
+  display: flex;
+  align-items: center;
 
   > * {
     margin-right: 16px;

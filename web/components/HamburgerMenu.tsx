@@ -8,23 +8,32 @@ interface Props {
 }
 
 const HamburgerMenu: React.SFC<Props> = ({ className, active, onClick }) => (
-  <div className={`${className} ${active ? '-active' : ''}`} onClick={onClick}>
-    <span />
-    <span />
-    <span />
-  </div>
+  <Wrapper className={className} onClick={onClick}>
+    <Icon className={active ? '-active' : ''}>
+      <span />
+      <span />
+      <span />
+    </Icon>
+  </Wrapper>
 );
 HamburgerMenu.defaultProps = {
   active: false
 };
 
-export default styled(HamburgerMenu)`
+const Wrapper = styled.div`
+  box-sizing: border-box;
+  padding: 10px 12px;
+  display: flex;
+  align-item: center;
+  justify: center;
+`;
+
+const Icon = styled.div`
   display: inline-block;
   transition: all 0.4s;
-  box-sizing: border-box;
-  position: relative;
   width: 20px;
   height: 18px;
+  position: relative;
 
   span {
     position: absolute;
@@ -68,3 +77,5 @@ export default styled(HamburgerMenu)`
     }
   }
 `;
+
+export default HamburgerMenu;

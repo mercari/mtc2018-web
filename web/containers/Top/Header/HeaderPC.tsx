@@ -5,11 +5,11 @@ import TwitterShareButton from './TwitterShareButton';
 import FacebookShareButton from './FacebookShareButton';
 
 interface Props {
-  showBg: boolean;
+  isTopY: boolean;
 }
 
-const HeaderPC: React.SFC<Props> = ({ showBg, ...props }) => (
-  <Wrapper showBg={showBg} {...props}>
+const HeaderPC: React.SFC<Props> = ({ isTopY, ...props }) => (
+  <Wrapper showBg={isTopY} {...props}>
     <Logo />
     <EmptySpace />
     <Nav>
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
   transition: 300ms;
   z-index: 50;
   background-color: ${(props: { showBg: boolean }) =>
-    props.showBg ? 'rgba(18, 28, 59, 0.8)' : 'transparent'};
+    props.showBg ? colors.primaryAlpha : 'transparent'};
 `;
 
 const Logo = styled.img.attrs({

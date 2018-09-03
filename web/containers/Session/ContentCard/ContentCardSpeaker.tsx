@@ -14,7 +14,7 @@ const ContentCardSpeaker: React.SFC<Props> = ({ speaker, ...props }) => (
     <Profile>
       <Header>
         <div>
-          <Name>{speaker.name}</Name>
+          <Name>{speaker.nameJa}</Name>
           <Text level="body">{speaker.position}</Text>
         </div>
       </Header>
@@ -70,10 +70,6 @@ const Name = styled(Text).attrs({
 
 const Body = styled(Text)`
   ${getTextStyle('display1')};
-
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
 `;
 
 export default ContentCardSpeaker;

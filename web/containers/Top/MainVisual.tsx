@@ -9,7 +9,7 @@ const MainVisual = () => (
       <Logo />
     </EmptySpace>
     <Date>Oct. 4th, 2018 thu</Date>
-    <Place>@Roppongi Academy hills</Place>
+    <Place>@ROPPONGI ACADEMYHILLS</Place>
     <BuyButton
       type="primary"
       href="https://mercari-tech-conf-2018.peatix.com"
@@ -63,6 +63,10 @@ const Date = styled(Text)`
   ${getTextStyle('display5')};
   margin-bottom: 2.6vh; /* 20 / 768 */
   color: ${colors.yuki};
+
+  @media screen and (max-width: 350px) {
+    font-size: 30px;
+  }
 `;
 
 const Place = styled(Text)`

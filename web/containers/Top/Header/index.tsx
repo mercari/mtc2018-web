@@ -4,7 +4,7 @@ import HeaderPC from './HeaderPC';
 import HeaderSP from './HeaderSP';
 
 interface Props {
-  showBg: boolean;
+  isTopY: boolean;
 }
 
 const Header: React.SFC<Props> = props => (

@@ -19,11 +19,6 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80px;
-
-  @media screen and (max-width: 767px) {
-    padding: 40px 8px;
-  }
 `;
 
 const Title = styled(Text)`

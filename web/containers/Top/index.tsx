@@ -16,7 +16,7 @@ interface Props {
 }
 
 interface State {
-  headerShowBg: boolean;
+  isTopY: boolean;
 }
 
 class Top extends React.Component<Props, State> {
@@ -26,7 +26,7 @@ class Top extends React.Component<Props, State> {
   }
 
   public state = {
-    headerShowBg: false
+    isTopY: false
   };
 
   public componentDidMount() {
@@ -40,16 +40,18 @@ class Top extends React.Component<Props, State> {
 
   public render() {
     const { contents } = this.props;
-    const { headerShowBg } = this.state;
+    const { isTopY } = this.state;
     return (
       <Default>
-        <StyledHeader showBg={headerShowBg} />
+        <StyledHeader isTopY={isTopY} />
         <MainVisual />
-        <NewsSection />
-        <AboutSection />
-        <ContentSection contents={contents} />
-        <StyledTimetableSection contents={contents} />
-        <AccessSection />
+        <Body>
+          <NewsSection />
+          <AboutSection />
+          <ContentSection contents={contents} />
+          <StyledTimetableSection contents={contents} />
+          <AccessSection />
+        </Body>
       </Default>
     );
   }
@@ -60,7 +62,7 @@ class Top extends React.Component<Props, State> {
 
   private updateHeaderState = () => {
     const scrollY = window.scrollY;
-    const windowH = window.innerHeight;
+    const windowH = 300;
     let overScroll = false;
 
     // 100vh以上スクロールしていたら
@@ -70,8 +72,8 @@ class Top extends React.Component<Props, State> {
     }
 
     // 現状のステートと差分があれば更新
-    if (this.state.headerShowBg === overScroll) {
-      this.setState({ headerShowBg: !overScroll });
+    if (this.state.isTopY === overScroll) {
+      this.setState({ isTopY: !overScroll });
     }
   };
 }
@@ -81,6 +83,31 @@ const StyledHeader = styled(Header)`
   top: 0;
   left: 0;
   right: 0;
+`;
+
+const Body = styled.div`
+  padding: 32px 64px 64px;
+  box-sizing: border-box;
+
+  > * {
+    margin-bottom: 160px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 32px 8px;
+
+    > * {
+      margin-bottom: 80px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const StyledTimetableSection = styled(TimetableSection)`

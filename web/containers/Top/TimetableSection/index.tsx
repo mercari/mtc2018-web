@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
 import { Section } from '../../../components';
 import { rows } from '../../../store/timetable';
@@ -13,6 +14,12 @@ interface Props {
 const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
   return (
     <Section title="TIME TABLE" id="timetable" {...props}>
+      <Lang>
+        <span>(JP)</span>
+        日本語講演
+        <span>(EN)</span>
+        英語講演
+      </Lang>
       <TimelineTable>
         <thead>
           <tr>
@@ -30,6 +37,21 @@ const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
     </Section>
   );
 };
+
+const Lang = styled(Text).attrs({
+  level: 'body'
+})`
+  width: 100%;
+  max-width: 920px;
+  color: ${colors.yuki};
+  text-align: right;
+  margin-bottom: 8px;
+
+  > span {
+    color: ${colors.secondary};
+    margin-left: 8px;
+  }
+`;
 
 const TimelineTable = styled.table`
   ${getTextStyle('body')};
