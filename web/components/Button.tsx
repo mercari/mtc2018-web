@@ -27,7 +27,7 @@ const Button = styled.button`
   ${getTextStyle('display2')} ${(props: Props) =>
     getStyle(props.type)}
   height: 60px;
-  padding: 0 48px;
+  padding: 0 32px;
   border-radius: 32px;
   box-sizing: border-box;
   cursor: pointer;
