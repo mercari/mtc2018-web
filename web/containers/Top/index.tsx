@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import axios from '../../utils/axios';
+import Default from '../../layout/Default';
 import Header from './Header';
 import MainVisual from './MainVisual';
-import Footer from './Footer';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import ContentSection from './ContentSection';
@@ -42,18 +42,15 @@ class Top extends React.Component<Props, State> {
     const { contents } = this.props;
     const { headerShowBg } = this.state;
     return (
-      <Wrapper>
-        <Body>
-          <StyledHeader showBg={headerShowBg} />
-          <MainVisual />
-          <NewsSection />
-          <AboutSection />
-          <ContentSection contents={contents} />
-          <StyledTimetableSection contents={contents} />
-          <AccessSection />
-          <Footer />
-        </Body>
-      </Wrapper>
+      <Default>
+        <StyledHeader showBg={headerShowBg} />
+        <MainVisual />
+        <NewsSection />
+        <AboutSection />
+        <ContentSection contents={contents} />
+        <StyledTimetableSection contents={contents} />
+        <AccessSection />
+      </Default>
     );
   }
 
@@ -79,20 +76,11 @@ class Top extends React.Component<Props, State> {
   };
 }
 
-const Wrapper = styled.div`
-  position: relative;
-`;
-
-const Body = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-`;
-
 const StyledHeader = styled(Header)`
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
 `;
 
 const StyledTimetableSection = styled(TimetableSection)`

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Router from 'next/router';
-import Section from '../Section';
+import { Section } from '../../../components';
 import { Content } from '../../../types';
 import ContentGrid from './ContentGrid';
 

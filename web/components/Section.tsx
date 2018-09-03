@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Text } from '../../components';
-import { colors, getTextStyle } from '../../components/styles';
+import Text from './Text';
+import { colors, getTextStyle } from './styles';
 
 interface Props {
   title: string;

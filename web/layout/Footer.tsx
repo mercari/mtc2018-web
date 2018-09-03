@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { colors, getTextStyle } from '../../components/styles';
+import { colors, getTextStyle } from '../components/styles';
 
 const Footer = () => (
   <Wrapper>

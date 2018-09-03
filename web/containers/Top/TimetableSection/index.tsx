@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { colors, getTextStyle } from '../../../components/styles';
-import Section from '../Section';
+import { Section } from '../../../components';
 import { rows } from '../../../store/timetable';
 import { Content, Row } from '../../../types';
 import TimetableRow from './TimetableRow';
