@@ -9,7 +9,7 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '10:15 ~ 11:45',
-    label: 'Keynote( @suguru, @Mok, @sowawa )'
+    label: 'Keynote( 名村 卓, Mok Oh, 曾川 景介 )'
   },
   {
     type: 'other',
