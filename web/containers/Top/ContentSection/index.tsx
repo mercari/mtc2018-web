@@ -19,9 +19,10 @@ class ContentSection extends React.PureComponent<Props> {
   }
 
   private onClickItem(content: Content) {
-    Router.push({
-      pathname: `/2018/session/${content.id}`
-    });
+    Router.push(
+      `/2018/session/detail?id=${content.id}`,
+      `/2018/session/${content.id}`
+    );
   }
 }
 

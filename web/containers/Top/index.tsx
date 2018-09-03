@@ -21,7 +21,9 @@ interface State {
 
 class Top extends React.Component<Props, State> {
   public static async getInitialProps() {
-    const { data } = await axios.get('/static/json/contents.json');
+    const { data } = await axios.get(
+      'http://localhost:8080/static/json/contents.json'
+    );
     return { contents: data.sessions };
   }
 

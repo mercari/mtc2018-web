@@ -46,7 +46,7 @@ class Session extends React.Component<Props> {
   }
 
   private onClickBackButton = () => {
-    Router.back();
+    Router.push('/2018');
   };
 }
 
