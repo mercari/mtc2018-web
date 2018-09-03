@@ -37,7 +37,7 @@ const ContentSlot: React.SFC<{ content?: Content }> = ({
       <div className="speakers">
         {content.speakers.map(speaker => (
           <Text key={speaker.name} level="body">
-            {speaker.name}
+            {speaker.nameJa}
           </Text>
         ))}
       </div>

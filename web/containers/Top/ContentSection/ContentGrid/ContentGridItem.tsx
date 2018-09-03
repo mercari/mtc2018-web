@@ -50,7 +50,7 @@ class ContentGridItem extends React.PureComponent<Props> {
                 }_thumb.png`}
               />
               <div>
-                <Text level="display1">{speaker.name}</Text>
+                <Text level="display1">{speaker.nameJa}</Text>
                 <Text level="body">{speaker.position}</Text>
               </div>
             </SpeakerInfo>
