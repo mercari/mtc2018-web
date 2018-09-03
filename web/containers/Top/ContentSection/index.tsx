@@ -22,7 +22,7 @@ class ContentSection extends React.PureComponent<Props> {
     Router.push(
       `/2018/session/detail?id=${content.id}`,
       `/2018/session/${content.id}`
-    );
+    ).then(() => window.scrollTo(0, 0));
   }
 }
 
