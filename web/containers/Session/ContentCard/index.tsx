@@ -1,20 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Text, Tip } from '../../../../components';
-import {
-  colors,
-  getTextStyle,
-  borderRadius
-} from '../../../../components/styles';
-import { Content } from '../../../../types';
-import ContentModalSpeaker from './ContentModalSpeaker';
+import { Text, Tip } from '../../../components';
+import { colors, getTextStyle, borderRadius } from '../../../components/styles';
+import { Content } from '../../../types';
+import ContentCardSpeaker from './ContentCardSpeaker';
 
 interface Props {
   content: Content;
 }
 
-class ContentModalItem extends React.PureComponent<Props> {
+class ContentCardItem extends React.PureComponent<Props> {
   public render() {
     const { content, ...props } = this.props;
     const startTime = moment(content.startTime).format('HH:mm');
@@ -111,7 +107,7 @@ const Title = styled(Text).attrs({
   margin-bottom: 8px;
 `;
 
-const Speaker = styled(ContentModalSpeaker)`
+const Speaker = styled(ContentCardSpeaker)`
   margin-bottom: 24px;
 
   &:last-child {
@@ -119,4 +115,4 @@ const Speaker = styled(ContentModalSpeaker)`
   }
 `;
 
-export default ContentModalItem;
+export default ContentCardItem;

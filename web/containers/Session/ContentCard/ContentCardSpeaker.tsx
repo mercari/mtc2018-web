@@ -1,16 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Text } from '../../../../components';
-import { getTextStyle, borderRadius } from '../../../../components/styles';
-import { Speaker } from '../../../../types';
+import { Text } from '../../../components';
+import { getTextStyle, borderRadius } from '../../../components/styles';
+import { Speaker } from '../../../types';
 
 interface Props {
   speaker: Speaker;
 }
 
-const ContentModalSpeaker: React.SFC<Props> = ({ speaker, ...props }) => (
+const ContentCardSpeaker: React.SFC<Props> = ({ speaker, ...props }) => (
   <Wrapper {...props}>
-    <Photo src={`../../../../static/images/speakers/${speaker.id}.png`} />
+    <Photo src={`../../../static/images/speakers/${speaker.id}.png`} />
     <Profile>
       <Header>
         <div>
@@ -76,4 +76,4 @@ const Body = styled(Text)`
   }
 `;
 
-export default ContentModalSpeaker;
+export default ContentCardSpeaker;

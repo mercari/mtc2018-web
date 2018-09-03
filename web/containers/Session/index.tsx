@@ -2,6 +2,7 @@ import * as React from 'react';
 import { withRouter } from 'next/router';
 import { Content } from '../../types';
 import axios from '../../utils/axios';
+import ContentCard from './ContentCard';
 
 class Session extends React.Component {
   public static async getInitialProps() {
@@ -20,7 +21,11 @@ class Session extends React.Component {
   }
 
   public render() {
-    return <div>{this.content.title}</div>;
+    return (
+      <div>
+        <ContentCard content={this.content} />
+      </div>
+    );
   }
 }
 
