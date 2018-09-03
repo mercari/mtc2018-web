@@ -5,7 +5,7 @@ import { colors, getTextStyle } from './styles';
 
 interface Props {
   title: string;
-  id: string;
+  id?: string;
 }
 
 const Section: React.SFC<Props> = ({ title, children, ...props }) => (

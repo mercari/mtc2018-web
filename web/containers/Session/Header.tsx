@@ -1,14 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { colors, getTextStyle } from '../../components/styles';
+import { colors } from '../../components/styles';
 
-interface Props {
-  showBg: boolean;
-}
-
-const Header: React.SFC<Props> = ({ showBg, ...props }) => (
-  <Wrapper showBg={showBg} {...props}>
+const Header: React.SFC<{}> = props => (
+  <Wrapper {...props}>
     <Link prefetch={true} href="/2018">
       <Logo />
     </Link>

@@ -30,8 +30,4 @@ const Body = styled.div`
   box-sizing: border-box;
 `;
 
-const styledFooter = styled(Footer)`
-  width: 100%;
-`;
-
 export default Default;

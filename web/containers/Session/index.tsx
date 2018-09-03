@@ -8,18 +8,23 @@ import ContentCard from './ContentCard';
 import Header from './Header';
 import { Button, Section } from '../../components';
 
-class Session extends React.Component {
+interface Props {
+  contents: Content[];
+  router: any; // TODO
+}
+
+class Session extends React.Component<Props> {
   public static async getInitialProps() {
     const { data } = await axios.get('/static/json/contents.json');
     return { contents: data.sessions };
   }
 
-  private content: Content;
+  private content?: Content;
 
   public componentWillMount() {
     // コンテンツ内容を取得
-    const contentId = Number(this.props.router.query.id);
-    this.content = this.props.contents.find(content => {
+    const contentId = Number(this.props.router!.query!.id);
+    this.content = this.props.contents.find((content: Content) => {
       return content.id === contentId;
     });
   }
@@ -30,8 +35,10 @@ class Session extends React.Component {
         <Header />
         <Body>
           <Section title="SESSION">
-            <ContentCard content={this.content} />
-            <BackButton onClick={this.onClickBackButton}>BACK</BackButton>
+            <ContentCard content={this.content!} />
+            <BackButton type="primary" onClick={this.onClickBackButton}>
+              BACK
+            </BackButton>
           </Section>
         </Body>
       </Default>
