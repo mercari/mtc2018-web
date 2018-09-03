@@ -63,6 +63,10 @@ const Date = styled(Text)`
   ${getTextStyle('display5')};
   margin-bottom: 2.6vh; /* 20 / 768 */
   color: ${colors.yuki};
+
+  @media screen and (max-width: 350px) {
+    font-size: 30px;
+  }
 `;
 
 const Place = styled(Text)`
