@@ -23,17 +23,71 @@
 ## 動かし方
 
 ```
-# before go 1.11 release
-$ go get golang.org/dl/go1.11rc1
-$ go1.11rc1 download
-$ alias go=go1.11rc1
-
+$ go version
+go version go1.11 darwin/amd64
+$ export GO111MODULE=on
+$ export ENV=development
 $ go run cmd/mtcserver/main.go
 $ open http://localhost:8080/
 ```
 
 ```
 $ docker build -t mtcserver .
-$ docker run -it -p 8080:8080 mtcserver
+$ docker run -it --env ENV=development -p 8080:8080 mtcserver
 $ open http://localhost:8080/
+```
+
+## クエリの叩き方
+
+stg環境のパスは内緒なので社のSlackで聞いてください。
+
+ローカルで動かして試すには次のパスから
+http://localhost:8080/2018/api/playground
+
+受け付けてくれるクエリの例は次の通り
+
+```
+query {
+  sessions(first: 100) {
+    nodes {
+      id
+      title
+      speakers {
+        id
+        name
+      }
+    }
+  }
+}
+```
+
+```
+subscription {
+  likeAdded {
+    id
+    sessionID
+  }
+}
+```
+
+```
+mutation {
+  createLike(input: {
+    clientMutationId: "qawesrdftgyhujiko" # 適当なUUIDとかでよい
+    sessionID: "U2Vzc2lvbjox"             # queryで得られたsessionのID
+  }) {
+    clientMutationId
+    like {
+      id
+      sessionID
+    }
+  }
+}
+```
+
+curlで叩く
+
+```
+$ curl http://localhost:8080/2018/api/query -X POST -H "Content-Type: application/json" -d '{"query":"{sessions(first: 100) { nodes { id title } } }"}'
+...
 ```

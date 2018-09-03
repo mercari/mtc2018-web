@@ -1,32 +1,24 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../../components';
-import {
-  colors,
-  getTextStyle,
-  borderRadius
-} from '../../../../components/styles';
-import { Speaker } from '../../../../store/contents';
+import { getTextStyle, borderRadius } from '../../../../components/styles';
+import { Speaker } from '../../../../types';
 
 interface Props {
   speaker: Speaker;
 }
 
-const ContentModalSpeaker: React.SFC<Props> = ({ speaker }) => (
-  <Wrapper>
-    <Photo src={speaker.iconUrl} />
+const ContentModalSpeaker: React.SFC<Props> = ({ speaker, ...props }) => (
+  <Wrapper {...props}>
+    <Photo src={`../../../../static/images/speakers/${speaker.id}.png`} />
     <Profile>
       <Header>
         <div>
-          <Name>{speaker.name}</Name>
+          <Name>{speaker.nameJa}</Name>
           <Text level="body">{speaker.position}</Text>
         </div>
-        <Buttons>
-          <Button />
-          <Button />
-        </Buttons>
       </Header>
-      <Body>{speaker.body}</Body>
+      <Body>{speaker.profile}</Body>
     </Profile>
   </Wrapper>
 );
@@ -44,8 +36,8 @@ const Wrapper = styled.div`
 const Photo = styled.img`
   width: 280px;
   height: 280px;
+  flex-shrink: 0;
   border-radius: ${borderRadius.level1};
-  background-color: ${colors.primary};
   margin-right: 40px;
 
   @media screen and (max-width: 767px) {
@@ -76,33 +68,8 @@ const Name = styled(Text).attrs({
   margin-bottom: 4px;
 `;
 
-const Buttons = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: right;
-
-  > * {
-    margin-left: 16px;
-
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-`;
-
-const Button = styled.div`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: ${colors.primary};
-`;
-
 const Body = styled(Text)`
   ${getTextStyle('display1')};
-  text-align: justify;
-  text-justify: inter-ideograph;
 
   @media screen and (max-width: 767px) {
     display: none;

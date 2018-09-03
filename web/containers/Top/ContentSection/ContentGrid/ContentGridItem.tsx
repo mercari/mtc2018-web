@@ -1,52 +1,68 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
-import { Content } from '../../../../store/contents';
+import { Content } from '../../../../types';
+import { omitText } from '../../../../utils';
 
 interface Props {
   index: number;
   content: Content;
-  onClick: (index: number) => void;
+  onClick: (content: Content) => void;
 }
 
 class ContentGridItem extends React.PureComponent<Props> {
   public render() {
     const { content, onClick, ...props } = this.props;
+    const startTime = moment(content.startTime).format('HH:mm');
+    const endTime = moment(content.endTime).format('HH:mm');
     return (
       <Wrapper onClick={this.onClick} {...props}>
         <ContentInfo>
           <Header>
-            <Tip>{content.type.label}</Tip>
+            {content.type === 'keynote' ? (
+              <Tip type="important">KEYNOTE</Tip>
+            ) : (
+              <Tip type="normal">SESSION</Tip>
+            )}
             <Text level="display2">{content.place}</Text>
             <Text level="display2">
-              {content.startTime}-{content.endTime}
+              {startTime}-{endTime}
             </Text>
           </Header>
           <Title>{content.title}</Title>
           <Tags>
             {content.tags.map(tag => (
-              <Text level="display1" key={tag.id}>
-                #{tag.label}
+              <Text level="display1" key={tag}>
+                #{tag}
               </Text>
             ))}
           </Tags>
-          <Body>{content.body}</Body>
+          <Body>{omitText(content.outline, 100)}</Body>
         </ContentInfo>
-        <SpeakerInfo>
-          <Icon src={content.speaker.iconUrl} />
-          <div>
-            <Text level="display1">{content.speaker.name}</Text>
-            <Text level="body">{content.speaker.position}</Text>
-          </div>
-        </SpeakerInfo>
+        <div>
+          {content.speakers.map(speaker => (
+            <SpeakerInfo key={speaker.id}>
+              <Icon
+                src={`../../../../static/images/speakers/${
+                  speaker.id
+                }_thumb.png`}
+              />
+              <div>
+                <Text level="display1">{speaker.nameJa}</Text>
+                <Text level="body">{speaker.position}</Text>
+              </div>
+            </SpeakerInfo>
+          ))}
+        </div>
       </Wrapper>
     );
   }
 
   private onClick = () => {
-    const { index, onClick } = this.props;
-    onClick(index);
+    const { content, onClick } = this.props;
+    onClick(content);
   };
 }
 
@@ -54,6 +70,7 @@ const Wrapper = styled.div`
   border-radius: ${borderRadius.level1};
   background-color: ${colors.yuki};
   padding: 16px;
+  box-sizing: border-box;
   transition: 300ms;
   cursor: pointer;
 
@@ -92,6 +109,8 @@ const Title = styled(Text).attrs({
 
 const Tags = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   margin-bottom: 16px;
 
   > * {
@@ -108,13 +127,18 @@ const Body = styled(Text).attrs({ level: 'body' })`
 const SpeakerInfo = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const Icon = styled.img`
   width: 60px;
   height: 60px;
+  flex-shrink: 0;
   border-radius: 50%;
-  background-color: ${colors.primary};
   margin-right: 20px;
 `;
 

@@ -6,16 +6,8 @@ interface Props {
   onClickClose: () => void;
 }
 
-interface State {
-  show: boolean;
-}
-
-class ContentModal extends React.Component<Props, State> {
+class ContentModal extends React.Component<Props> {
   public static defaultProps = {
-    show: false
-  };
-
-  public state = {
     show: false
   };
 
@@ -27,31 +19,30 @@ class ContentModal extends React.Component<Props, State> {
     window.removeEventListener('keydown', this.onKeyDown);
   }
 
-  public componentWillReceiveProps(nextProps: Props) {
-    this.setState({
-      show: nextProps.show
-    });
-  }
-
   public render() {
-    const { children } = this.props;
-    const { show } = this.state;
+    const { children, show } = this.props;
     return (
       <Wrapper show={show}>
         <Background />
-        <Body>{children}</Body>
+        <Body onClick={this.onBodyClick}>{children}</Body>
       </Wrapper>
     );
   }
 
   private onKeyDown = (event: KeyboardEvent) => {
     // 非表示であれば処理しない
-    if (!this.state.show) {
+    if (!this.props.show) {
       return;
     }
 
     // ESCキーを押したら閉じる
     if (event.keyCode === 27) {
+      this.props.onClickClose();
+    }
+  };
+
+  private onBodyClick: React.MouseEventHandler<HTMLDivElement> = ev => {
+    if (ev.target === ev.currentTarget) {
       this.props.onClickClose();
     }
   };

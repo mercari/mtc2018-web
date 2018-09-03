@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { MiniGrid } from '../../../../components';
-import { Content } from '../../../../store/contents';
+import { Content } from '../../../../types';
 import ContentGridItem from './ContentGridItem';
 
 interface Props {
   contents: Content[];
-  onClickItem: (index: number) => void;
+  onClickItem: (content: Content) => void;
 }
 
 const ContentGrid: React.SFC<Props> = ({ contents, onClickItem }) => (

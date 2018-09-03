@@ -1,11 +1,10 @@
-FROM golang:1.11rc1-alpine AS build-env
+FROM golang:1.11-alpine AS build-env
 
 WORKDIR /go/src/app
 COPY . .
 ENV GO111MODULE on
 
-# なんかビルドコケる https://github.com/golang/go/issues/26722 これ？
-# RUN go build -o mtcserver -a -tags netgo -installsuffix netgo cmd/mtcserver/main.go
+RUN apk --update add git
 RUN go build -o mtcserver -a -tags netgo -installsuffix netgo github.com/mercari/mtc2018-web/server/cmd/mtcserver
 
 

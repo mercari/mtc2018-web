@@ -19,14 +19,42 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-          />
           <meta name="format-detection" content="telephone=no" />
-          <title>mercari Tech Conf 2018</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta
+            name="description"
+            content="Mercari Tech Conf 2018は、メルカリグループの最新技術や、今後の展開を紹介するテックカンファレンスです。2018/10/04（Thu）に六本木アカデミーヒルズで開催します。"
+          />
+          <meta property="og:title" content="Mercari Tech Conf 2018" />
+          <meta
+            property="og:description"
+            content="Mercari Tech Conf 2018は、メルカリグループの最新技術や、今後の展開を紹介するテックカンファレンスです。2018/10/04（Thu）に六本木アカデミーヒルズで開催します。"
+          />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content="https://techconf.mercari.com/2018/"
+          />
+          <meta
+            property="og:image"
+            content="https://techconf.mercari.com/static/images/ogp.png"
+          />
+          <meta property="og:site_name" content="" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="twitter:image"
+            content="https://techconf.mercari.com/static/images/ogp.png"
+          />
+          <meta name="twitter:title" content="Mercari Tech Conf 2018" />
+          <meta
+            name="twitter:description"
+            content="Mercari Tech Conf 2018は、メルカリグループの最新技術や、今後の展開を紹介するテックカンファレンスです。2018/10/04（Thu）に六本木アカデミーヒルズで開催します。"
+          />
+          <meta name="twitter:site" content="@mercari_inc" />
+          <link rel="shortcut icon" href="./static/images/favicon.ico" />
+          <title>Mercari Tech Conf 2018</title>
           <link
-            href="https://fonts.googleapis.com/css?family=Montserrat"
+            href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
             rel="stylesheet"
           />
           <style dangerouslySetInnerHTML={{ __html: globalCSS }} />

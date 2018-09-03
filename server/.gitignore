@@ -1,3 +1,8 @@
 .idea/
 
+mtcserver
+
+bin/
 vendor/
+
+.envrc

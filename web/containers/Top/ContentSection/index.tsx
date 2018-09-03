@@ -1,42 +1,45 @@
 import * as React from 'react';
 import Section from '../Section';
-import { contents } from '../../../store/contents';
+import { Content } from '../../../types';
 import ContentModal from './ContentModal';
 import ContentGrid from './ContentGrid';
 
-interface State {
-  currentIndex?: number;
+interface Props {
+  contents: Content[];
 }
 
-class ContentSection extends React.Component<{}, State> {
+interface State {
+  currentContent?: Content;
+}
+
+class ContentSection extends React.Component<Props, State> {
   public state = {
-    currentIndex: undefined
+    currentContent: undefined
   };
 
   public render() {
-    const { currentIndex } = this.state;
+    const { contents } = this.props;
+    const { currentContent } = this.state;
     return (
-      <Section title="Contents" id="contents" {...this.props}>
+      <Section title="CONTENTS" id="contents" {...this.props}>
         <ContentGrid contents={contents} onClickItem={this.onClickItem} />
         <ContentModal
-          currentIndex={currentIndex}
-          contents={contents}
-          show={currentIndex !== undefined}
+          content={currentContent}
           onClickClose={this.onClickClose}
         />
       </Section>
     );
   }
 
-  private onClickItem = (index: number) => {
+  private onClickItem = (content: Content) => {
     this.setState({
-      currentIndex: index
+      currentContent: content
     });
   };
 
   private onClickClose = () => {
     this.setState({
-      currentIndex: undefined
+      currentContent: undefined
     });
   };
 }

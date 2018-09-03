@@ -1,32 +1,30 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { colors, getTextStyle } from '../../components/styles';
+import { colors, getTextStyle } from '../../../components/styles';
+import TwitterShareButton from './TwitterShareButton';
+import FacebookShareButton from './FacebookShareButton';
 
 interface Props {
-  transparent: boolean;
+  isTopY: boolean;
 }
 
-const Header: React.SFC<Props> = ({ transparent, ...props }) => (
-  <Wrapper transparent={transparent} {...props}>
+const HeaderPC: React.SFC<Props> = ({ isTopY, ...props }) => (
+  <Wrapper showBg={isTopY} {...props}>
     <Logo />
     <EmptySpace />
     <Nav>
       <NavButton href="#news">NEWS</NavButton>
       <NavButton href="#about">ABOUT</NavButton>
       <NavButton href="#contents">CONTENTS</NavButton>
-      <NavButton href="#time_table">TIME TABLE</NavButton>
+      <NavButton href="#timetable">TIME TABLE</NavButton>
       <NavButton href="#access">ACCESS</NavButton>
       <SNS>
-        <CircleIcon />
-        <CircleIcon />
+        <TwitterShareButton />
+        <FacebookShareButton />
       </SNS>
-      {/* <LangButton>ENGLISH</LangButton> */}
     </Nav>
   </Wrapper>
 );
-Header.defaultProps = {
-  transparent: false
-};
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,24 +36,13 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   transition: 300ms;
   z-index: 50;
-
-  background-color: ${(props: { transparent: boolean }) =>
-    props.transparent ? 'transparent' : 'rgba(18, 28, 59, 0.8)'};
-
-  @media screen and (max-width: 767px) {
-    padding: 0 20px;
-    height: 60px;
-  }
+  background-color: ${(props: { showBg: boolean }) =>
+    props.showBg ? colors.primaryAlpha : 'transparent'};
 `;
 
 const Logo = styled.img.attrs({
-  src: '../../static/images/logo.svg'
-})`
-  @media screen and (max-width: 767px) {
-    width: 79px;
-    height: 27px;
-  }
-`;
+  src: '../../static/images/header_logo.svg'
+})``;
 
 const EmptySpace = styled.div`
   flex-grow: 1;
@@ -64,10 +51,6 @@ const EmptySpace = styled.div`
 const Nav = styled.div`
   display: flex;
   align-items: center;
-
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
 `;
 
 const NavButton = styled.a`
@@ -100,22 +83,15 @@ const NavButton = styled.a`
 
 const SNS = styled.div`
   margin-left: 40px;
-`;
+  display: flex;
 
-const CircleIcon = styled.button`
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  border: 1px solid ${colors.yuki};
-  box-sizing: border-box;
-  border-radius: 50%;
-  margin-left: 20px;
-  cursor: pointer;
+  > * {
+    margin-right: 20px;
 
-  &:first-child {
-    margin-left: 0;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 `;
 
-export default Header;
+export default HeaderPC;

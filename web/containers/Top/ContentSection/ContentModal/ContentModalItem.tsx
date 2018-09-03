@@ -1,43 +1,53 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import {
   colors,
   getTextStyle,
   borderRadius
 } from '../../../../components/styles';
-import { Content } from '../../../../store/contents';
+import { Content } from '../../../../types';
 import ContentModalSpeaker from './ContentModalSpeaker';
 
 interface Props {
-  index: number;
   content: Content;
 }
 
 class ContentModalItem extends React.PureComponent<Props> {
   public render() {
     const { content, ...props } = this.props;
+    const startTime = moment(content.startTime).format('HH:mm');
+    const endTime = moment(content.endTime).format('HH:mm');
     return (
       <Wrapper {...props}>
         <ContentInfo>
           <Header>
-            <Tip>{content.type.label}</Tip>
+            {content.type === 'keynote' ? (
+              <Tip type="important">KEYNOTE</Tip>
+            ) : (
+              <Tip type="normal">SESSION</Tip>
+            )}
             <Text level="display2">{content.place}</Text>
             <Text level="display2">
-              {content.startTime}-{content.endTime}
+              {startTime}-{endTime}
             </Text>
           </Header>
           <Title>{content.title}</Title>
           <Tags>
             {content.tags.map(tag => (
-              <Text level="display1" key={tag.id}>
-                #{tag.label}
+              <Text level="display1" key={tag}>
+                #{tag}
               </Text>
             ))}
           </Tags>
-          <Body>{content.body}</Body>
+          <Body>{content.outline}</Body>
         </ContentInfo>
-        <ContentModalSpeaker speaker={content.speaker} />
+        <div>
+          {content.speakers.map(speaker => (
+            <Speaker key={speaker.id} speaker={speaker} />
+          ))}
+        </div>
       </Wrapper>
     );
   }
@@ -99,6 +109,14 @@ const Title = styled(Text).attrs({
 })`
   font-weight: bold;
   margin-bottom: 8px;
+`;
+
+const Speaker = styled(ContentModalSpeaker)`
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export default ContentModalItem;

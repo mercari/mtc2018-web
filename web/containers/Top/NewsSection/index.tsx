@@ -10,7 +10,14 @@ const NewsSection: React.SFC<{}> = props => (
   <Section title="NEWS" id="news" {...props}>
     <Wrapper>
       <StyledNewsList news={news} />
-      <FollowButton>FOLLOW US ON</FollowButton>
+      <FollowButton
+        type="secondary"
+        href="https://twitter.com/intent/follow?screen_name=mercaridevjp"
+        target="_blank"
+      >
+        FOLLOW US ON
+        <ButtonIcon src="../static/images/twitter_orange.svg" alt="twitter" />
+      </FollowButton>
       <Message>
         公式twitterアカウント( @mercaridevjp
         )にて情報を発信していきます。ぜひフォローをお願いします。
@@ -36,12 +43,18 @@ const StyledNewsList = styled(NewsList)`
   margin-bottom: 40px;
 `;
 
-const FollowButton = styled(Button)`
+const ButtonLink = Button.withComponent('a');
+const FollowButton = styled(ButtonLink)`
   margin-bottom: 20px;
+  text-decoration: none;
 
   @media screen and (max-width: 767px) {
     margin-bottom: 10px;
   }
+`;
+
+const ButtonIcon = styled.img`
+  margin-left: 8px;
 `;
 
 const Message = styled(Text).attrs({

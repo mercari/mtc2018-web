@@ -1,9 +1,13 @@
+import 'core-js/fn/array/find';
 import { css } from 'styled-components';
 
 export const colors = {
   primary: '#10172B',
+  primaryAlpha: 'rgba(18, 28, 59, 0.9)',
   secondary: '#F6422A',
+  orange: '#FB7A61',
   yuki: '#FFFFFF',
+  nezumi: '#9D9D9D',
   kemuri: '#D8D8D8',
   sakura: '#EDE1E1'
 };
@@ -13,11 +17,11 @@ export const textStyles = [
   { level: 'display6', size: '45px', weight: 'normal' },
   { level: 'display5', size: '35px', weight: 'normal' },
   { level: 'display4', size: '20px', weight: 'normal' },
-  { level: 'display3', size: '18px', weight: '600' },
-  { level: 'display2', size: '18px', weight: '300' },
-  { level: 'display1', size: '16px', weight: '300' },
-  { level: 'caption', size: '14px', weight: '600' },
-  { level: 'body', size: '14px', weight: '300' }
+  { level: 'display3', size: '18px', weight: 'bold' },
+  { level: 'display2', size: '18px', weight: 'normal' },
+  { level: 'display1', size: '16px', lineHeight: '26px', weight: 'normal' },
+  { level: 'caption', size: '14px', lineHeight: '22px', weight: 'bold' },
+  { level: 'body', size: '14px', lineHeight: '22px', weight: 'normal' }
 ];
 
 export const getTextStyle = (level: string) => {
@@ -30,10 +34,13 @@ export const getTextStyle = (level: string) => {
   }
 
   return css`
+    color: ${colors.primary};
     font-size: ${style.size};
     font-weight: ${style.weight};
-    font-family: 'Montserrat', 'Hiragino Sans', 'ヒラギノ角ゴ Pro W3', Meiryo,
-      メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+    font-family: 'Montserrat', 'Hiragino Kaku Gothic ProN',
+      'ヒラギノ角ゴ Pro W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial,
+      helvetica, sans-serif;
+    line-height: ${style.lineHeight || 'auto'};
   `;
 };
 

@@ -1,17 +1,32 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import axios from '../../utils/axios';
 import Header from './Header';
 import MainVisual from './MainVisual';
 import Footer from './Footer';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import ContentSection from './ContentSection';
+import TimetableSection from './TimetableSection';
 import AccessSection from './AccessSection';
-import Art from './Art';
+import { Content } from '../../types';
 
-class Top extends React.Component {
+interface Props {
+  contents: Content[];
+}
+
+interface State {
+  isTopY: boolean;
+}
+
+class Top extends React.Component<Props, State> {
+  public static async getInitialProps() {
+    const { data } = await axios.get('/static/json/contents.json');
+    return { contents: data.sessions };
+  }
+
   public state = {
-    headerTransparent: true
+    isTopY: false
   };
 
   public componentDidMount() {
@@ -24,18 +39,20 @@ class Top extends React.Component {
   }
 
   public render() {
+    const { contents } = this.props;
+    const { isTopY } = this.state;
     return (
       <Wrapper>
-        <StyledArt />
-        <Content>
-          <StyledHeader transparent={this.state.headerTransparent} />
+        <Body>
+          <StyledHeader isTopY={isTopY} />
           <MainVisual />
           <NewsSection />
           <AboutSection />
-          <ContentSection />
+          <ContentSection contents={contents} />
+          <StyledTimetableSection contents={contents} />
           <AccessSection />
           <Footer />
-        </Content>
+        </Body>
       </Wrapper>
     );
   }
@@ -46,7 +63,7 @@ class Top extends React.Component {
 
   private updateHeaderState = () => {
     const scrollY = window.scrollY;
-    const windowH = window.innerHeight;
+    const windowH = 300;
     let overScroll = false;
 
     // 100vh以上スクロールしていたら
@@ -56,8 +73,8 @@ class Top extends React.Component {
     }
 
     // 現状のステートと差分があれば更新
-    if (this.state.headerTransparent !== overScroll) {
-      this.setState({ headerTransparent: overScroll });
+    if (this.state.isTopY === overScroll) {
+      this.setState({ isTopY: !overScroll });
     }
   };
 }
@@ -66,7 +83,7 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const Content = styled.div`
+const Body = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -78,14 +95,10 @@ const StyledHeader = styled(Header)`
   top: 0;
 `;
 
-const StyledArt = styled(Art)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
+const StyledTimetableSection = styled(TimetableSection)`
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export default Top;
