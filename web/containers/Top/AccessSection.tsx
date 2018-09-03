@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Text, Card } from '../../components';
+import { Text, Card, Section } from '../../components';
 import { colors, getTextStyle } from '../../components/styles';
-import Section from './Section';
 
 const AccessSection: React.SFC<{}> = props => (
   <Section title="ACCESS" id="access" {...props}>

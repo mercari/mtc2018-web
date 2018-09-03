@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Text, Button, Card } from '../../../components';
+import { Text, Button, Card, Section } from '../../../components';
 import { colors } from '../../../components/styles';
-import Section from '../Section';
 import NewsList from './NewsList';
 import { news } from '../../../store/news';
 

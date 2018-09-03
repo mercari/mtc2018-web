@@ -1,11 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Text } from '../../components';
-import { colors, getTextStyle } from '../../components/styles';
+import Text from './Text';
+import { colors, getTextStyle } from './styles';
 
 interface Props {
   title: string;
-  id: string;
+  id?: string;
 }
 
 const Section: React.SFC<Props> = ({ title, children, ...props }) => (
@@ -19,11 +19,6 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80px;
-
-  @media screen and (max-width: 767px) {
-    padding: 40px 8px;
-  }
 `;
 
 const Title = styled(Text)`

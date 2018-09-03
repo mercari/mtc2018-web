@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import axios from '../../utils/axios';
+import Default from '../../layout/Default';
 import Header from './Header';
 import MainVisual from './MainVisual';
-import Footer from './Footer';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import ContentSection from './ContentSection';
@@ -21,7 +21,9 @@ interface State {
 
 class Top extends React.Component<Props, State> {
   public static async getInitialProps() {
-    const { data } = await axios.get('/static/json/contents.json');
+    const { data } = await axios.get(
+      'http://localhost:8080/static/json/contents.json'
+    );
     return { contents: data.sessions };
   }
 
@@ -42,18 +44,17 @@ class Top extends React.Component<Props, State> {
     const { contents } = this.props;
     const { isTopY } = this.state;
     return (
-      <Wrapper>
+      <Default>
+        <StyledHeader isTopY={isTopY} />
+        <MainVisual />
         <Body>
-          <StyledHeader isTopY={isTopY} />
-          <MainVisual />
           <NewsSection />
           <AboutSection />
           <ContentSection contents={contents} />
           <StyledTimetableSection contents={contents} />
           <AccessSection />
-          <Footer />
         </Body>
-      </Wrapper>
+      </Default>
     );
   }
 
@@ -79,20 +80,36 @@ class Top extends React.Component<Props, State> {
   };
 }
 
-const Wrapper = styled.div`
-  position: relative;
-`;
-
-const Body = styled.div`
-  position: absolute;
+const StyledHeader = styled(Header)`
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
 `;
 
-const StyledHeader = styled(Header)`
-  position: fixed;
-  top: 0;
+const Body = styled.div`
+  padding: 32px 64px 64px;
+  box-sizing: border-box;
+
+  > * {
+    margin-bottom: 160px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 32px 8px;
+
+    > * {
+      margin-bottom: 80px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const StyledTimetableSection = styled(TimetableSection)`
