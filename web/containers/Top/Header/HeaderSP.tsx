@@ -6,7 +6,7 @@ import TwitterShareButton from './TwitterShareButton';
 import FacebookShareButton from './FacebookShareButton';
 
 interface Props {
-  showBg: boolean;
+  isTopY: boolean;
 }
 
 interface State {
@@ -15,7 +15,7 @@ interface State {
 
 class Header extends React.Component<Props, State> {
   public static defaultProps = {
-    showBg: false
+    isTopY: false
   };
 
   public state = {
@@ -23,10 +23,10 @@ class Header extends React.Component<Props, State> {
   };
 
   public render() {
-    const { showBg, ...props } = this.props;
+    const { isTopY, ...props } = this.props;
     const { showMenu } = this.state;
     return (
-      <Wrapper showBg={showBg || showMenu} {...props}>
+      <Wrapper show={isTopY || showMenu} {...props}>
         <Logo />
         <EmptySpace />
         <HamburgerMenu active={this.state.showMenu} onClick={this.toggleMenu} />
@@ -70,12 +70,14 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 60px;
-  padding: 0 20px;
+  padding: 0 8px 0 20px;
   box-sizing: border-box;
   transition: 300ms;
   z-index: 50;
-  background-color: ${(props: { showBg: boolean }) =>
-    props.showBg ? 'rgba(18, 28, 59, 0.8)' : 'transparent'};
+  pointer-events: ${(props: { show: boolean }) =>
+    props.show ? 'auto' : 'none'};
+  opacity: ${(props: { show: boolean }) => (props.show ? '1' : '0')};
+  background-color: ${colors.primaryAlpha};
 `;
 
 const Logo = styled.img.attrs({
@@ -98,7 +100,7 @@ const Menu = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(18, 28, 59, 0.8);
+  background: ${colors.primaryAlpha};
   transition: 300ms;
 `;
 

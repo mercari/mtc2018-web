@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 
 export const colors = {
   primary: '#10172B',
+  primaryAlpha: 'rgba(18, 28, 59, 0.9)',
   secondary: '#F6422A',
   orange: '#FB7A61',
   yuki: '#FFFFFF',
