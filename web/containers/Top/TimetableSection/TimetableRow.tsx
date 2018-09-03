@@ -26,10 +26,14 @@ const ContentSlot: React.SFC<{ content?: Content }> = ({
     return <OtherSlotWrapper {...props}>未定</OtherSlotWrapper>;
   }
 
+  const lang = content.lang === 'en' ? 'EN' : 'JP';
   return (
     <ContentSlotWrapper {...props}>
       <div>{content.tags.map(tag => `#${tag} `)}</div>
-      <div className="title">{content.title}</div>
+      <div className="title">
+        {content.title}
+        <span>({lang})</span>
+      </div>
       <div className="speakers">
         {content.speakers.map(speaker => (
           <Text key={speaker.name} level="body">
@@ -113,6 +117,12 @@ const ContentSlotWrapper = styled.div`
 
   .title {
     font-weight: bold;
+
+    span {
+      color: ${colors.secondary};
+      font-weight: normal;
+      margin-left: 8px;
+    }
   }
 
   .speakers {
