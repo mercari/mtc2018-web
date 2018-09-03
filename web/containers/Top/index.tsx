@@ -16,7 +16,7 @@ interface Props {
 }
 
 interface State {
-  headerShowBg: boolean;
+  isTopY: boolean;
 }
 
 class Top extends React.Component<Props, State> {
@@ -26,7 +26,7 @@ class Top extends React.Component<Props, State> {
   }
 
   public state = {
-    headerShowBg: false
+    isTopY: false
   };
 
   public componentDidMount() {
@@ -40,11 +40,11 @@ class Top extends React.Component<Props, State> {
 
   public render() {
     const { contents } = this.props;
-    const { headerShowBg } = this.state;
+    const { isTopY } = this.state;
     return (
       <Wrapper>
         <Body>
-          <StyledHeader showBg={headerShowBg} />
+          <StyledHeader isTopY={isTopY} />
           <MainVisual />
           <NewsSection />
           <AboutSection />
@@ -63,7 +63,7 @@ class Top extends React.Component<Props, State> {
 
   private updateHeaderState = () => {
     const scrollY = window.scrollY;
-    const windowH = window.innerHeight;
+    const windowH = 300;
     let overScroll = false;
 
     // 100vh以上スクロールしていたら
@@ -73,8 +73,8 @@ class Top extends React.Component<Props, State> {
     }
 
     // 現状のステートと差分があれば更新
-    if (this.state.headerShowBg === overScroll) {
-      this.setState({ headerShowBg: !overScroll });
+    if (this.state.isTopY === overScroll) {
+      this.setState({ isTopY: !overScroll });
     }
   };
 }
