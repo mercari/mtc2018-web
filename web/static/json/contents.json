@@ -44,7 +44,7 @@
           "profile": "受託開発経験を経て、2004年株式会社サイバーエージェント入社。各種メディアやゲームなどの新規事業立ち上げの開発を担当。2016年に株式会社メルカリ入社。USに出向し、USのサービス開発を担当。2017年4月CTO就任。",
           "profileJa": "受託開発経験を経て、2004年株式会社サイバーエージェント入社。各種メディアやゲームなどの新規事業立ち上げの開発を担当。2016年に株式会社メルカリ入社。USに出向し、USのサービス開発を担当。2017年4月CTO就任。",
           "iconUrl": "",
-          "twitterId": "snmaura",
+          "twitterId": "",
           "githubId": "suguru"
         }
       ]
@@ -74,8 +74,8 @@
           "profile": "Dr. Mok Oh is the Chief Technology Officer of US Mercari.  He been in the tech industry for over 20 years with wide- and deep-ranging experiences – from initial research to execution, from startups to large enterprises. Previously, he was the Corporate Vice President at Samsung Electronics in Suwon, Korea; Chief Scientist at PayPal; Cofounder and CEO of Moju Labs; Entrepreneur in Residence at North Bridge Venture Capital; CIO at Where, Inc; and Founder of EveryScape.  Mok holds 12 patents, a Ph.D. from MIT, an M.S. from University of Pennsylvania, and two BA degrees (Computer Science and Art History) from Oberlin College.",
           "profileJa": "",
           "iconUrl": "",
-          "twitterId": "",
-          "githubId": "mok_oh"
+          "twitterId": "mok_oh",
+          "githubId": ""
         }
       ]
     },
@@ -104,8 +104,8 @@
           "profile": "2010年度未踏ユース採択。2011年京都大学情報学研究科修了。2011年にシリコンバレーの FluxFlex社にてWebPayを立ち上げる。ウェブペイ株式会社の最高技術責任者（CTO）としてクレジットカード決済のサービス基盤の開発に従事、LINEグループに参画しLINE Pay事業を経験。2017年11月、株式会社メルペイ取締役に就任。",
           "profileJa": "2010年度未踏ユース採択。2011年京都大学情報学研究科修了。2011年にシリコンバレーの FluxFlex社にてWebPayを立ち上げる。ウェブペイ株式会社の最高技術責任者（CTO）としてクレジットカード決済のサービス基盤の開発に従事、LINEグループに参画しLINE Pay事業を経験。2017年11月、株式会社メルペイ取締役に就任。",
           "iconUrl": "",
-          "twitterId": "",
-          "githubId": ""
+          "twitterId": "sowawa",
+          "githubId": "sowawa"
         }
       ]
     },
@@ -134,7 +134,7 @@
           "profile": "Taichi Nakashima (@deeeet) is a tech lead for the Microservices Platform at Mercari. Prior to Mercari, he was a software engineer at Japanese E-commerce company, working on building internal Platform-as-a-Service. He is Gopher and co-authoer of “みんなのGo言語” (Japanese Golang book).",
           "profileJa": "Taichi Nakashima (@deeeet) is a tech lead for the Microservices Platform at Mercari. Prior to Mercari, he was a software engineer at Japanese E-commerce company, working on building internal Platform-as-a-Service. He is Gopher and co-authoer of “みんなのGo言語” (Japanese Golang book).",
           "iconUrl": "",
-          "twitterId": "@deeeet",
+          "twitterId": "deeeet",
           "githubId": "tcnksm"
         }
       ]
@@ -164,7 +164,7 @@
           "profile": "2010年中央大学大学院卒業後、グリー株式会社入社。2011年2月株式会社クロコスを共同創業、CTO就任。2012年8月、クロコスをヤフー株式会社へ売却。ヤフーのグループ会社としてクロコスの事業成長と、ヤフー自身のソーシャルの展開を担当。2015年5月、株式会社メルカリに参画。CTO、VPoEを経て、現在は Corporate Solutions Engineering (CSE) マネージャー。",
           "profileJa": "2010年中央大学大学院卒業後、グリー株式会社入社。2011年2月株式会社クロコスを共同創業、CTO就任。2012年8月、クロコスをヤフー株式会社へ売却。ヤフーのグループ会社としてクロコスの事業成長と、ヤフー自身のソーシャルの展開を担当。2015年5月、株式会社メルカリに参画。CTO、VPoEを経て、現在は Corporate Solutions Engineering (CSE) マネージャー。",
           "iconUrl": "",
-          "twitterId": "@sotarok",
+          "twitterId": "sotarok",
           "githubId": "sotarok"
         }
       ]
@@ -194,7 +194,7 @@
           "profile": "Tonghui joined Mercari in April 2018 and is responsible for migrating the monolithic backend API to a microservice architecture. Prior to Mercari, he was a tech lead of Indeed, working on different components of the job search engine including Title Normalization, Location system, Job Search API, etc.",
           "profileJa": "Tonghui joined Mercari in April 2018 and is responsible for migrating the monolithic backend API to a microservice architecture. Prior to Mercari, he was a tech lead of Indeed, working on different components of the job search engine including Title Normalization, Location system, Job Search API, etc.",
           "iconUrl": "",
-          "twitterId": "@ummterry",
+          "twitterId": "ummterry",
           "githubId": "ummterry"
         }
       ]
@@ -254,7 +254,7 @@
           "profile": "Israel Ferrer Camacho is an Android engineer working at Mercari. Passionate about Android, object-oriented design principles, testing and agile methodologies. Previously, Israel worked at Twitter in San Francisco.",
           "profileJa": "Israel Ferrer Camacho is an Android engineer working at Mercari. Passionate about Android, object-oriented design principles, testing and agile methodologies. Previously, Israel worked at Twitter in San Francisco.",
           "iconUrl": "",
-          "twitterId": "@rallat",
+          "twitterId": "rallat",
           "githubId": "rallat"
         }
       ]
@@ -284,7 +284,7 @@
           "profile": "1981年、大阪府生まれ。筑波大学大学院 ビジネス科学研究科 経営システム科学専攻 博士前期課程修了。大手SIerでプログラマを担当し、その後各種Webサービス運営会社でソフトウェアエンジニア・プロダクトマネジャを歴任。メルカリではバックエンドソフトウェアエンジニアとして、US、JPプロダクトの出品・決済・配送・不正対策の開発担当者を経て、現在、メルペイの決済システム開発担当者として従事。著書に「Webアプリエンジニア養成読本」(共著, 技術評論社, 2014年)と「ITインフラ監視[実践]入門」(単著, 技術評論社, 2016年)がある。",
           "profileJa": "1981年、大阪府生まれ。筑波大学大学院 ビジネス科学研究科 経営システム科学専攻 博士前期課程修了。大手SIerでプログラマを担当し、その後各種Webサービス運営会社でソフトウェアエンジニア・プロダクトマネジャを歴任。メルカリではバックエンドソフトウェアエンジニアとして、US、JPプロダクトの出品・決済・配送・不正対策の開発担当者を経て、現在、メルペイの決済システム開発担当者として従事。著書に「Webアプリエンジニア養成読本」(共著, 技術評論社, 2014年)と「ITインフラ監視[実践]入門」(単著, 技術評論社, 2016年)がある。",
           "iconUrl": "",
-          "twitterId": "@koemu",
+          "twitterId": "koemu",
           "githubId": "koemu"
         }
       ]
@@ -314,7 +314,7 @@
           "profile": "tarunonです。型と料理とゲームが好き。",
           "profileJa": "tarunonです。型と料理とゲームが好き。",
           "iconUrl": "",
-          "twitterId": "@tarunon",
+          "twitterId": "tarunon",
           "githubId": "tarunon"
         }
       ]
@@ -614,7 +614,7 @@
           "profile": "セキュリティ・キャンプ/未踏ソフトウェア創造事業で技術に濃い学生時代を過ごし、2012年に株式会社サイバーエージェント新卒入社。同年、渡米して複数のアドテクプロダクト開発に従事する。2014年にIoTで米国最大級のハッカソンで全米優勝。2017年2月にUSのMercari,Inc.へ入社し、CXIチームでCS Toolをはじめとするツール周りの開発を担当。今年5月よりUSで新設されたMachine Learningチームへ参加し、現在はUSプロダクトのデータパイプラインの向上に注力している。",
           "profileJa": "セキュリティ・キャンプ/未踏ソフトウェア創造事業で技術に濃い学生時代を過ごし、2012年に株式会社サイバーエージェント新卒入社。同年、渡米して複数のアドテクプロダクト開発に従事する。2014年にIoTで米国最大級のハッカソンで全米優勝。2017年2月にUSのMercari,Inc.へ入社し、CXIチームでCS Toolをはじめとするツール周りの開発を担当。今年5月よりUSで新設されたMachine Learningチームへ参加し、現在はUSプロダクトのデータパイプラインの向上に注力している。",
           "iconUrl": "",
-          "twitterId": "@hatone",
+          "twitterId": "hatone",
           "githubId": "hatone"
         }
       ]
@@ -670,8 +670,8 @@
       "endTime": "2018-10-04T18:30:00+09:00",
       "title": "Building Elastic Team しなやかなチームをつくる",
       "titleJa": "Building Elastic Team しなやかなチームをつくる",
-      "outline": "メルカリでは今年からプラットフォームごとに技術ロードマップを策定し、技術的な観点からもプロダクトへ貢献できるような取り組みをしています。本セッションではUS版Mercari Androidチームにおいて、  - どのようにして技術ロードマップを策定したのか  - 技術ロードマップを推進するためのチームコミュニケーション  - ロードマップの成果をどう見える化するかということについて、テックリードの役割も交えつつ話します。",
-      "outlineJa": "メルカリでは今年からプラットフォームごとに技術ロードマップを策定し、技術的な観点からもプロダクトへ貢献できるような取り組みをしています。本セッションではUS版Mercari Androidチームにおいて、  - どのようにして技術ロードマップを策定したのか  - 技術ロードマップを推進するためのチームコミュニケーション  - ロードマップの成果をどう見える化するかということについて、テックリードの役割も交えつつ話します。",
+      "outline": "メルカリでは今年からプラットフォームごとに技術ロードマップを策定し、技術的な観点からもプロダクトへ貢献できるような取り組みをしています。US版Mercari Androidチームはスケールしても機動力の高いしなやかなチームを作ることを目指し、技術ロードマップを策定しました。本セッションではどのように技術ロードマップが策定され推進されてきたのかをテックリードの役割も交えてお話します。",
+      "outlineJa": "メルカリでは今年からプラットフォームごとに技術ロードマップを策定し、技術的な観点からもプロダクトへ貢献できるような取り組みをしています。US版Mercari Androidチームはスケールしても機動力の高いしなやかなチームを作ることを目指し、技術ロードマップを策定しました。本セッションではどのように技術ロードマップが策定され推進されてきたのかをテックリードの役割も交えてお話します。",
       "lang": "jp",
       "tags": [
          "Android"
@@ -717,7 +717,7 @@
           "profile": "Matthew is an Android Engineer working on the Mercari US product.",
           "profileJa": "Matthew is an Android Engineer working on the Mercari US product.",
           "iconUrl": "",
-          "twitterId": "@callipan",
+          "twitterId": "callipan",
           "githubId": "panpanini"
         },
         {
@@ -730,7 +730,7 @@
           "profile": "Android組み込み開発、Webサービス開発の経験を経て2018年3月メルカリにジョイン。現在はUS向けのプロダクト開発に従事。ビールとKotlinが好きです。",
           "profileJa": "Android組み込み開発、Webサービス開発の経験を経て2018年3月メルカリにジョイン。現在はUS向けのプロダクト開発に従事。ビールとKotlinが好きです。",
           "iconUrl": "",
-          "twitterId": "@muumuumuumuu",
+          "twitterId": "muumuumuumuu",
           "githubId": "atsuko-fukui"
         }
       ]
