@@ -9,7 +9,7 @@ const MainVisual = () => (
       <Logo />
     </EmptySpace>
     <Date>Oct. 4th, 2018 thu</Date>
-    <Place>@Roppongi Academy hills</Place>
+    <Place>@ROPPONGI ACADEMYHILLS</Place>
     <BuyButton
       type="primary"
       href="https://mercari-tech-conf-2018.peatix.com"
