@@ -27,7 +27,7 @@
       "endTime": "2018-10-04T11:45:00+09:00",
       "title": "Keynote",
       "titleJa": "基調講演",
-      "outline": "メルカリがテックカンパニーを宣言し、この1年で起きた変化や、これから目指していく方向、組織として技術にどう取り組んでいくか",
+      "outline": "株式会社メルカリCTO 名村 卓、株式会社メルペイ取締役 曾川景介、Mercari, Inc. CTO Mok Ohの3名から、各社でここ1年間に起こったこと、これから目指す方向、技術的な取り組みについてご紹介します。",
       "outlineJa": "",
       "lang": "jp",
       "tags": [
@@ -46,24 +46,7 @@
           "iconUrl": "",
           "twitterId": "",
           "githubId": "suguru"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "type": "keynote",
-      "place": "TrackA",
-      "startTime": "2018-10-04T10:15:00+09:00",
-      "endTime": "2018-10-04T11:45:00+09:00",
-      "title": "Keynote",
-      "titleJa": "基調講演",
-      "outline": "I will be discussing technological challenges we're undertaking, what it's like working as a single team split across the US and Japan, the importance of focusing on the fundamentals while investing for the future.",
-      "outlineJa": "",
-      "lang": "en",
-      "tags": [
-        "Evolution"
-      ],
-      "speakers": [
+        },
         {
           "id": "mok_oh",
           "name": "Mok Oh",
@@ -74,26 +57,9 @@
           "profile": "Dr. Mok Oh is the Chief Technology Officer of US Mercari.  He been in the tech industry for over 20 years with wide- and deep-ranging experiences – from initial research to execution, from startups to large enterprises. Previously, he was the Corporate Vice President at Samsung Electronics in Suwon, Korea; Chief Scientist at PayPal; Cofounder and CEO of Moju Labs; Entrepreneur in Residence at North Bridge Venture Capital; CIO at Where, Inc; and Founder of EveryScape.  Mok holds 12 patents, a Ph.D. from MIT, an M.S. from University of Pennsylvania, and two BA degrees (Computer Science and Art History) from Oberlin College.",
           "profileJa": "",
           "iconUrl": "",
-          "twitterId": "mok_oh",
-          "githubId": ""
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "type": "keynote",
-      "place": "TrackA",
-      "startTime": "2018-10-04T10:15:00+09:00",
-      "endTime": "2018-10-04T11:45:00+09:00",
-      "title": "Keynote",
-      "titleJa": "基調講演",
-      "outline": "メルカリグループの新たな事業領域の説明、技術領域や技術的にチャレンジしていることなど",
-      "outlineJa": "",
-      "lang": "jp",
-      "tags": [
-        "Evolution"
-      ],
-      "speakers": [
+          "twitterId": "",
+          "githubId": "mok_oh"
+        },
         {
           "id": "keisuke_sogawa",
           "name": "Keisuke Sogawa",
