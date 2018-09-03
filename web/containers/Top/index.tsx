@@ -84,6 +84,7 @@ const StyledHeader = styled(Header)`
 `;
 
 const Body = styled.div`
+  width: 100%;
   padding: 32px 64px 64px;
   box-sizing: border-box;
 

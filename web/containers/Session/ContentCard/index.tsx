@@ -10,7 +10,7 @@ interface Props {
   content: Content;
 }
 
-class ContentCardItem extends React.PureComponent<Props> {
+class ContentCard extends React.PureComponent<Props> {
   public render() {
     const { content, ...props } = this.props;
     const startTime = moment(content.startTime).format('HH:mm');
@@ -52,12 +52,12 @@ class ContentCardItem extends React.PureComponent<Props> {
 }
 
 const Wrapper = styled.div`
+  width: 100%;
   max-width: 800px;
   border-radius: ${borderRadius.level1};
   background-color: ${colors.yuki};
   padding: 60px;
   box-sizing: border-box;
-  overflow: scroll;
 
   @media screen and (max-width: 767px) {
     padding: 20px;
@@ -132,4 +132,4 @@ const Speaker = styled(ContentCardSpeaker)`
   }
 `;
 
-export default ContentCardItem;
+export default ContentCard;

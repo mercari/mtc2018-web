@@ -16,6 +16,7 @@ const Section: React.SFC<Props> = ({ title, children, ...props }) => (
 );
 
 const Wrapper = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
