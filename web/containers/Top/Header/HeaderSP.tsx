@@ -70,10 +70,12 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 60px;
-  padding: 0 20px;
+  padding: 0 8px 0 20px;
   box-sizing: border-box;
   transition: 300ms;
   z-index: 50;
+  pointer-events: ${(props: { show: boolean }) =>
+    props.show ? 'auto' : 'none'};
   opacity: ${(props: { show: boolean }) => (props.show ? '1' : '0')};
   background-color: ${colors.primaryAlpha};
 `;
