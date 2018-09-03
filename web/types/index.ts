@@ -8,6 +8,7 @@ export interface News {
 export interface Speaker {
   id: string;
   name: string;
+  nameJa: string;
   company: string;
   position: string;
   profile: string;

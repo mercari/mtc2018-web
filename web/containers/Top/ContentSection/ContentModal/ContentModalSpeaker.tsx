@@ -14,7 +14,7 @@ const ContentModalSpeaker: React.SFC<Props> = ({ speaker, ...props }) => (
     <Profile>
       <Header>
         <div>
-          <Name>{speaker.name}</Name>
+          <Name>{speaker.nameJa}</Name>
           <Text level="body">{speaker.position}</Text>
         </div>
       </Header>
