@@ -3,28 +3,24 @@ import styled from 'styled-components';
 import Router, { withRouter } from 'next/router';
 import Default from '../../layout/Default';
 import { Content } from '../../types';
-import axios from '../../utils/axios';
 import ContentCard from './ContentCard';
 import Header from './Header';
 import { Button, Section } from '../../components';
 
+/* tslint:disable-next-line:no-var-requires */
+const contentsData = require('../../static/json/contents.json');
+
 interface Props {
-  contents: Content[];
   router: any; // TODO
 }
 
 class Session extends React.Component<Props> {
-  public static async getInitialProps() {
-    const { data } = await axios.get('/static/json/contents.json');
-    return { contents: data.sessions };
-  }
-
   private content?: Content;
 
   public componentWillMount() {
     // コンテンツ内容を取得
     const contentId = Number(this.props.router!.query!.id);
-    this.content = this.props.contents.find((content: Content) => {
+    this.content = contentsData.sessions.find((content: Content) => {
       return content.id === contentId;
     });
   }
@@ -46,7 +42,7 @@ class Session extends React.Component<Props> {
   }
 
   private onClickBackButton = () => {
-    Router.push('/2018');
+    Router.push('/2018').then(() => window.scrollTo(0, 0));
   };
 }
 
