@@ -1,5 +1,4 @@
 import React from 'react';
-
 export default class Error extends React.Component {
   public static getInitialProps({ res = {}, err = {} }: any) {
     const statusCode = res.statusCode || err.statusCode || null;
@@ -9,7 +8,6 @@ export default class Error extends React.Component {
     }
     return { statusCode };
   }
-
   public render() {
     return <div>error</div>;
   }

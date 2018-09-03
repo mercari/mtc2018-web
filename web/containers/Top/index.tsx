@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import axios from '../../utils/axios';
 import Default from '../../layout/Default';
 import Header from './Header';
 import MainVisual from './MainVisual';
@@ -11,23 +10,23 @@ import TimetableSection from './TimetableSection';
 import AccessSection from './AccessSection';
 import { Content } from '../../types';
 
-interface Props {
-  contents: Content[];
-}
+/* tslint:disable-next-line:no-var-requires */
+const contentsData = require('../../static/json/contents.json');
 
 interface State {
   isTopY: boolean;
 }
 
-class Top extends React.Component<Props, State> {
-  public static async getInitialProps() {
-    const { data } = await axios.get('/static/json/contents.json');
-    return { contents: data.sessions };
-  }
-
+class Top extends React.Component<{}, State> {
   public state = {
     isTopY: false
   };
+
+  private contents?: Content[];
+
+  public componentWillMount() {
+    this.contents = contentsData.sessions;
+  }
 
   public componentDidMount() {
     this.updateHeaderState();
@@ -39,7 +38,6 @@ class Top extends React.Component<Props, State> {
   }
 
   public render() {
-    const { contents } = this.props;
     const { isTopY } = this.state;
     return (
       <Default>
@@ -48,8 +46,8 @@ class Top extends React.Component<Props, State> {
         <Body>
           <NewsSection />
           <AboutSection />
-          <ContentSection contents={contents} />
-          <StyledTimetableSection contents={contents} />
+          <ContentSection contents={this.contents!} />
+          <StyledTimetableSection contents={this.contents!} />
           <AccessSection />
         </Body>
       </Default>
