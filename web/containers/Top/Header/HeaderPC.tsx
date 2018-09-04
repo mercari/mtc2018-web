@@ -8,23 +8,32 @@ interface Props {
   isTopY: boolean;
 }
 
-const HeaderPC: React.SFC<Props> = ({ isTopY, ...props }) => (
-  <Wrapper showBg={isTopY} {...props}>
-    <Logo />
-    <EmptySpace />
-    <Nav>
-      <NavButton href="#news">NEWS</NavButton>
-      <NavButton href="#about">ABOUT</NavButton>
-      <NavButton href="#contents">CONTENTS</NavButton>
-      <NavButton href="#timetable">TIME TABLE</NavButton>
-      <NavButton href="#access">ACCESS</NavButton>
-      <SNS>
-        <TwitterShareButton />
-        <FacebookShareButton />
-      </SNS>
-    </Nav>
-  </Wrapper>
-);
+class HeaderPC extends React.Component<Props> {
+  public render() {
+    const { isTopY, ...props } = this.props;
+    return (
+      <Wrapper showBg={isTopY} {...props}>
+        <Logo onClick={this.onClickLogo} />
+        <EmptySpace />
+        <Nav>
+          <NavButton href="#news">NEWS</NavButton>
+          <NavButton href="#about">ABOUT</NavButton>
+          <NavButton href="#contents">CONTENTS</NavButton>
+          <NavButton href="#timetable">TIME TABLE</NavButton>
+          <NavButton href="#access">ACCESS</NavButton>
+          <SNS>
+            <TwitterShareButton />
+            <FacebookShareButton />
+          </SNS>
+        </Nav>
+      </Wrapper>
+    );
+  }
+
+  private onClickLogo = () => {
+    window.scrollTo(0, 0);
+  };
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,7 +51,14 @@ const Wrapper = styled.div`
 
 const Logo = styled.img.attrs({
   src: '../../static/images/header_logo.svg'
-})``;
+})`
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 
 const EmptySpace = styled.div`
   flex-grow: 1;

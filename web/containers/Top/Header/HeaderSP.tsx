@@ -27,7 +27,7 @@ class Header extends React.Component<Props, State> {
     const { showMenu } = this.state;
     return (
       <Wrapper show={isTopY || showMenu} {...props}>
-        <Logo />
+        <Logo onClick={this.onClickLogo} />
         <EmptySpace />
         <HamburgerMenu active={this.state.showMenu} onClick={this.toggleMenu} />
         <Menu show={this.state.showMenu} onClick={this.toggleMenu}>
@@ -51,6 +51,10 @@ class Header extends React.Component<Props, State> {
       </Wrapper>
     );
   }
+
+  private onClickLogo = () => {
+    window.scrollTo(0, 0);
+  };
 
   private toggleMenu = () => {
     this.setState({
