@@ -34,8 +34,8 @@ const Wrapper = styled.div`
 `;
 
 const Photo = styled.img`
-  width: 280px;
-  height: 280px;
+  width: 200px;
+  height: 200px;
   flex-shrink: 0;
   border-radius: ${borderRadius.level1};
   margin-right: 40px;
@@ -69,7 +69,7 @@ const Name = styled(Text).attrs({
 `;
 
 const Body = styled(Text)`
-  ${getTextStyle('display1')};
+  ${getTextStyle('body')};
 `;
 
 export default ContentCardSpeaker;
