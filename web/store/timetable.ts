@@ -48,7 +48,7 @@ export const rows: Row[] = [
   {
     type: 'content',
     time: '16:00 ~ 16:30',
-    trackA: [20],
+    trackA: [20, 21],
     trackB: [22, 23]
   },
   {
