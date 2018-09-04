@@ -73,5 +73,10 @@ export const rows: Row[] = [
     type: 'other',
     time: '18:30 ~ 18:50',
     label: 'クロージング'
+  },
+  {
+    type: 'other',
+    time: '19:10 ~ 20:30',
+    label: 'アフターパーティー'
   }
 ];

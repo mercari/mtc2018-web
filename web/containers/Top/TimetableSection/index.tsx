@@ -24,8 +24,8 @@ const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
         <thead>
           <tr>
             <th />
-            <th>TRACK A(Tower Hall)</th>
-            <th>TRACK B(Auditorium)</th>
+            <th>TRACK A</th>
+            <th>TRACK B</th>
           </tr>
         </thead>
         <tbody>
