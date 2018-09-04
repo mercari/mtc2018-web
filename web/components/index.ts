@@ -6,3 +6,4 @@ export { default as Modal } from './Modal';
 export { default as Tip } from './Tip';
 export { default as HamburgerMenu } from './HamburgerMenu';
 export { default as IconButton } from './IconButton';
+export { default as Section } from './Section';

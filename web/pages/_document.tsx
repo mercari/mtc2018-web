@@ -51,7 +51,7 @@ export default class MyDocument extends Document {
             content="Mercari Tech Conf 2018は、メルカリグループの最新技術や、今後の展開を紹介するテックカンファレンスです。2018/10/04（Thu）に六本木アカデミーヒルズで開催します。"
           />
           <meta name="twitter:site" content="@mercari_inc" />
-          <link rel="shortcut icon" href="./static/images/favicon.ico" />
+          <link rel="shortcut icon" href="/static/images/favicon.ico" />
           <title>Mercari Tech Conf 2018</title>
           <link
             href="https://fonts.googleapis.com/css?family=Montserrat:400,700"

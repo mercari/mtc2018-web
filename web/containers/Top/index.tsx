@@ -1,9 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import axios from '../../utils/axios';
+import Default from '../../layout/Default';
 import Header from './Header';
 import MainVisual from './MainVisual';
-import Footer from './Footer';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import ContentSection from './ContentSection';
@@ -11,23 +10,23 @@ import TimetableSection from './TimetableSection';
 import AccessSection from './AccessSection';
 import { Content } from '../../types';
 
-interface Props {
-  contents: Content[];
-}
+/* tslint:disable-next-line:no-var-requires */
+const contentsData = require('../../static/json/contents.json');
 
 interface State {
   isTopY: boolean;
 }
 
-class Top extends React.Component<Props, State> {
-  public static async getInitialProps() {
-    const { data } = await axios.get('/static/json/contents.json');
-    return { contents: data.sessions };
-  }
-
+class Top extends React.Component<{}, State> {
   public state = {
     isTopY: false
   };
+
+  private contents?: Content[];
+
+  public componentWillMount() {
+    this.contents = contentsData.sessions;
+  }
 
   public componentDidMount() {
     this.updateHeaderState();
@@ -39,21 +38,19 @@ class Top extends React.Component<Props, State> {
   }
 
   public render() {
-    const { contents } = this.props;
     const { isTopY } = this.state;
     return (
-      <Wrapper>
+      <Default>
+        <StyledHeader isTopY={isTopY} />
+        <MainVisual />
         <Body>
-          <StyledHeader isTopY={isTopY} />
-          <MainVisual />
           <NewsSection />
           <AboutSection />
-          <ContentSection contents={contents} />
-          <StyledTimetableSection contents={contents} />
+          <ContentSection contents={this.contents!} />
+          <StyledTimetableSection contents={this.contents!} />
           <AccessSection />
-          <Footer />
         </Body>
-      </Wrapper>
+      </Default>
     );
   }
 
@@ -79,20 +76,37 @@ class Top extends React.Component<Props, State> {
   };
 }
 
-const Wrapper = styled.div`
-  position: relative;
-`;
-
-const Body = styled.div`
-  position: absolute;
+const StyledHeader = styled(Header)`
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
 `;
 
-const StyledHeader = styled(Header)`
-  position: fixed;
-  top: 0;
+const Body = styled.div`
+  width: 100%;
+  padding: 32px 64px 64px;
+  box-sizing: border-box;
+
+  > * {
+    margin-bottom: 160px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 32px 8px;
+
+    > * {
+      margin-bottom: 80px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const StyledTimetableSection = styled(TimetableSection)`

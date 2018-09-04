@@ -1,20 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Text, Tip } from '../../../../components';
-import {
-  colors,
-  getTextStyle,
-  borderRadius
-} from '../../../../components/styles';
-import { Content } from '../../../../types';
-import ContentModalSpeaker from './ContentModalSpeaker';
+import { Text, Tip } from '../../../components';
+import { colors, getTextStyle, borderRadius } from '../../../components/styles';
+import { Content } from '../../../types';
+import ContentCardSpeaker from './ContentCardSpeaker';
 
 interface Props {
   content: Content;
 }
 
-class ContentModalItem extends React.PureComponent<Props> {
+class ContentCard extends React.PureComponent<Props> {
   public render() {
     const { content, ...props } = this.props;
     const startTime = moment(content.startTime).format('HH:mm');
@@ -28,10 +24,12 @@ class ContentModalItem extends React.PureComponent<Props> {
             ) : (
               <Tip type="normal">SESSION</Tip>
             )}
-            <Text level="display2">{content.place}</Text>
-            <Text level="display2">
-              {startTime}-{endTime}
-            </Text>
+            <HeaderDetail>
+              <Text level="display2">{content.place}</Text>
+              <Text level="display2">
+                {startTime}-{endTime}
+              </Text>
+            </HeaderDetail>
           </Header>
           <Title>{content.title}</Title>
           <Tags>
@@ -54,12 +52,12 @@ class ContentModalItem extends React.PureComponent<Props> {
 }
 
 const Wrapper = styled.div`
+  width: 100%;
   max-width: 800px;
   border-radius: ${borderRadius.level1};
   background-color: ${colors.yuki};
   padding: 60px;
   box-sizing: border-box;
-  overflow: scroll;
 
   @media screen and (max-width: 767px) {
     padding: 20px;
@@ -77,7 +75,22 @@ const ContentInfo = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+
+  > * {
+    margin-right: 8px;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-righ: 0;
+    }
+  }
+`;
+
+const HeaderDetail = styled.div`
+  display: flex;
+  align-items: center;
 
   > * {
     margin-right: 16px;
@@ -111,7 +124,7 @@ const Title = styled(Text).attrs({
   margin-bottom: 8px;
 `;
 
-const Speaker = styled(ContentModalSpeaker)`
+const Speaker = styled(ContentCardSpeaker)`
   margin-bottom: 24px;
 
   &:last-child {
@@ -119,4 +132,4 @@ const Speaker = styled(ContentModalSpeaker)`
   }
 `;
 
-export default ContentModalItem;
+export default ContentCard;
