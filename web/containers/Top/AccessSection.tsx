@@ -10,7 +10,7 @@ const AccessSection: React.SFC<{}> = props => (
         <Title>六本木アカデミーヒルズ</Title>
         <Url>academyhills.com</Url>
         <Address>
-          〒106-0032 東京都港区六本木６丁目１０ 六本木6−10−1 森タワー49階
+          〒106-6149 東京都港区六本木６丁目１０番１号 六本木ヒルズ森タワー49F
         </Address>
       </div>
       <Map
