@@ -26,7 +26,7 @@ const ContentSlot: React.SFC<{ content?: Content }> = ({
     return <OtherSlotWrapper {...props}>未定</OtherSlotWrapper>;
   }
 
-  const lang = content.lang === 'en' ? 'EN' : 'JP';
+  const lang = content.lang === 'en' ? 'EN' : 'JA';
   return (
     <ContentSlotWrapper {...props}>
       <div>{content.tags.map(tag => `#${tag} `)}</div>

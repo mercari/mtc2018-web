@@ -15,7 +15,7 @@ const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
   return (
     <Section title="TIME TABLE" id="timetable" {...props}>
       <Lang>
-        <span>(JP)</span>
+        <span>(JA)</span>
         日本語講演
         <span>(EN)</span>
         英語講演

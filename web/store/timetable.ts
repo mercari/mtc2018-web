@@ -4,7 +4,7 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '10:00 ~ 10:15',
-    label: 'オープニング'
+    label: 'オープニング( 山田 進太郎 )'
   },
   {
     type: 'other',
@@ -72,7 +72,7 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '18:30 ~ 18:50',
-    label: 'クロージング'
+    label: 'クロージング（ 濱田 優貴 ）'
   },
   {
     type: 'other',
