@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Head from 'next/head';
 import styled from 'styled-components';
 import Router, { withRouter } from 'next/router';
 import Default from '../../layout/Default';
@@ -28,6 +29,9 @@ class Session extends React.Component<Props> {
   public render() {
     return (
       <Default>
+        <Head>
+          <title>Mercari Tech Conf 2018 - {this.content!.title}</title>
+        </Head>
         <Header />
         <Body>
           <Section title="SESSION">

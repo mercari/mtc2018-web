@@ -56,6 +56,7 @@ class Top extends React.Component<{}, State> {
           `
             }}
           />
+          <title>Mercari Tech Conf 2018</title>
         </Head>
         <StyledHeader isTopY={isTopY} />
         <MainVisual />
