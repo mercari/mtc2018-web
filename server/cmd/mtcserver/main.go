@@ -71,10 +71,10 @@ func main() {
 		DefaultSampler: trace.AlwaysSample(),
 	})
 
-	runServer(env.Port, logger)
+	runServer(env.Port, env, logger)
 }
 
-func runServer(port int, logger *zap.Logger) {
+func runServer(port int, env *config.Env, logger *zap.Logger) {
 	mux := http.NewServeMux()
 
 	// for kubernetes readiness probe
@@ -115,9 +115,11 @@ func runServer(port int, logger *zap.Logger) {
 	})
 
 	logger.Info("start http server")
-	err = http.ListenAndServe(fmt.Sprintf(":%d", port), &ochttp.Handler{
-		Handler: mux,
-	})
+
+	var handler http.Handler = mux
+	handler = &ochttp.Handler{Handler: mux}
+	handler = WithCORSHandler(env, handler)
+	err = http.ListenAndServe(fmt.Sprintf(":%d", port), handler)
 	if err != nil {
 		logger.Fatal(err.Error(), zap.Error(err))
 	}
