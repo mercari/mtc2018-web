@@ -23,6 +23,15 @@ type Like struct {
 	SessionID string `json:"sessionID"`
 }
 
+// お知らせです。
+type News struct {
+	ID        string  `json:"id"`
+	Date      string  `json:"date"`
+	Message   string  `json:"message"`
+	MessageJa string  `json:"messageJa"`
+	Link      *string `json:"link"`
+}
+
 type Node interface{}
 
 type PageInfo struct {

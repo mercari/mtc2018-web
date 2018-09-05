@@ -36,6 +36,7 @@ func Load() (*Data, error) {
 type Data struct {
 	Tags     []string  `json:"tags"`
 	Sessions []Session `json:"sessions"`
+	News     []News    `json:"news"`
 }
 
 // Session information.
@@ -66,4 +67,13 @@ type Speaker struct {
 	IconURL    string `json:"iconUrl"`
 	TwitterID  string `json:"twitterId"`
 	GithubID   string `json:"githubId"`
+}
+
+// News information
+type News struct {
+	ID        string `json:"id"`
+	Date      string `json:"date"`
+	Message   string `json:"message"`
+	MessageJa string `json:"messageJa"`
+	Link      string `json:"link"`
 }
