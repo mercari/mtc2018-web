@@ -14,6 +14,11 @@ type Query {
     after: String
     req: SessionListInput
   ): SessionConnection!
+
+  """
+  お知らせ一覧を取得します
+  """
+  news: [News!]!
 }
 
 type Mutation {
@@ -119,4 +124,15 @@ type CreateLikePayload {
 type Like implements Node {
   id: ID!
   sessionID: ID!
+}
+
+"""
+お知らせです。
+"""
+type News implements Node {
+  id: ID!
+  date: String!
+  message: String!
+  messageJa: String!
+  link: String
 }

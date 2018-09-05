@@ -62,6 +62,7 @@ golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/tools v0.0.0-20180830214440-4bc20fc7916b h1:3IVR/5kQ+E0RFgfWhLaLA5LkTE8fF9EWQ+poI/8UDxc=
 golang.org/x/tools v0.0.0-20180830214440-4bc20fc7916b/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20180831211245-7ca132754999 h1:mf2VYfMpSMTlp0I/UXrX13w5LejDx34QeUUHH4TrUA8=
+golang.org/x/tools v0.0.0-20180904205237-0aa4b8830f48 h1:PIz+xUHW4G/jqfFWeKhQ96ZV/t2HDsXfWj923rV0bZY=
 gopkg.in/DataDog/dd-trace-go.v1 v1.2.2 h1:MQsoZbp6tIhrr2vwv61v4+wPfWNX8xp9zJlivWNONIQ=
 gopkg.in/DataDog/dd-trace-go.v1 v1.2.2/go.mod h1:DVp8HmDh8PuTu2Z0fVVlBsyWaC++fzwVCaGWylTe3tg=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=

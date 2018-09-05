@@ -22,6 +22,7 @@ func NewResolver() (ResolverRoot, error) {
 	r := &rootResolver{
 		speakers:      make(map[string]Speaker),
 		likeObservers: make(map[string]chan Like),
+		news:          make([]News, 0),
 	}
 
 	for idx, session := range data.Sessions {
@@ -59,6 +60,16 @@ func NewResolver() (ResolverRoot, error) {
 		})
 	}
 
+	for _, news := range data.News {
+		r.news = append(r.news, News{
+			ID:        news.ID,
+			Date:      news.Date,
+			Message:   news.Message,
+			MessageJa: news.MessageJa,
+			Link:      &news.Link,
+		})
+	}
+
 	return r, nil
 }
 
@@ -66,6 +77,7 @@ type rootResolver struct {
 	sessions []Session
 	speakers map[string]Speaker
 	likes    []Like
+	news     []News
 
 	mu            sync.Mutex
 	likeObservers map[string]chan Like
@@ -131,6 +143,10 @@ func (r *queryResolver) Sessions(ctx context.Context, first int, after *string, 
 	}
 
 	return conn, nil
+}
+
+func (r *queryResolver) News(ctx context.Context) ([]News, error) {
+	return r.news, nil
 }
 
 type speakerQueryResolver struct{ *rootResolver }
