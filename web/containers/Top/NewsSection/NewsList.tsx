@@ -15,7 +15,7 @@ const NewsList: React.SFC<Props> = ({ news, ...props }) => (
       {(_, { i18n }) => {
         return news.map(newsItem => {
           const message =
-            i18n.language === 'en' ? newsItem.message : newsItem.messageJa;
+            i18n.language === 'ja-JP' ? newsItem.messageJa : newsItem.message;
           return (
             <ListItem key={newsItem.id}>
               <ListItemDate>{newsItem.date}</ListItemDate>

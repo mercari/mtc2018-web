@@ -12,7 +12,9 @@ export interface Speaker {
   nameJa: string;
   company: string;
   position: string;
+  positionJa: string;
   profile: string;
+  profileJa: string;
   iconUrl: string;
   twitterId: string;
   githubId: string;
@@ -23,8 +25,10 @@ export interface Content {
   type: 'keynote' | 'session';
   place: string;
   title: string;
+  titleJa: string;
   lang: 'jp' | 'en';
   outline: string;
+  outlineJa: string;
   tags: string[];
   speakers: Speaker[];
   startTime: string;
