@@ -9,7 +9,7 @@ import AboutSection from './AboutSection';
 import ContentSection from './ContentSection';
 import TimetableSection from './TimetableSection';
 import AccessSection from './AccessSection';
-import { Content } from '../../types';
+import { Content, News } from '../../types';
 import { withI18next } from '../../lib/with-i18next';
 
 /* tslint:disable-next-line:no-var-requires */
@@ -24,10 +24,12 @@ class Top extends React.Component<{}, State> {
     isTopY: false
   };
 
-  private contents?: Content[];
+  private sessions!: Content[];
+  private news!: News[];
 
   public componentWillMount() {
-    this.contents = contentsData.sessions;
+    this.sessions = contentsData.sessions;
+    this.news = contentsData.news;
   }
 
   public componentDidMount() {
@@ -62,10 +64,10 @@ class Top extends React.Component<{}, State> {
         <StyledHeader isTopY={isTopY} />
         <MainVisual />
         <Body>
-          <NewsSection />
+          <NewsSection news={this.news} />
           <AboutSection />
-          <ContentSection contents={this.contents!} />
-          <StyledTimetableSection contents={this.contents!} />
+          <ContentSection contents={this.sessions} />
+          <StyledTimetableSection contents={this.sessions} />
           <AccessSection />
         </Body>
       </Default>
