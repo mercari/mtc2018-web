@@ -1,27 +1,21 @@
 import * as React from 'react';
 import Router from 'next/router';
 import { Section } from '../../../components';
-import { Content } from '../../../types';
 import ContentGrid from './ContentGrid';
 
-interface Props {
-  contents: Content[];
-}
-
-class ContentSection extends React.PureComponent<Props> {
+class ContentSection extends React.PureComponent {
   public render() {
-    const { contents } = this.props;
     return (
       <Section title="CONTENTS" id="contents" {...this.props}>
-        <ContentGrid contents={contents} onClickItem={this.onClickItem} />
+        <ContentGrid onClickItem={this.onClickItem} />
       </Section>
     );
   }
 
-  private onClickItem(content: Content) {
+  private onClickItem(sessionId: string) {
     Router.push(
-      `/2018/session/detail?id=${content.id}`,
-      `/2018/session/${content.id}`
+      `/2018/session/detail?id=${sessionId}`,
+      `/2018/session/${sessionId}`
     ).then(() => window.scrollTo(0, 0));
   }
 }

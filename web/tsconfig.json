@@ -14,6 +14,9 @@
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": [
+      "types/*.d.ts"
+    ]
   }
 }

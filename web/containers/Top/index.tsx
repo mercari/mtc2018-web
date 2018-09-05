@@ -66,7 +66,7 @@ class Top extends React.Component<{}, State> {
         <Body>
           <NewsSection news={this.news} />
           <AboutSection />
-          <ContentSection contents={this.sessions} />
+          <ContentSection />
           <StyledTimetableSection contents={this.sessions} />
           <AccessSection />
         </Body>

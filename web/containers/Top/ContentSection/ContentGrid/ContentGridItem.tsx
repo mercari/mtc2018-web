@@ -4,20 +4,20 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
-import { Content } from '../../../../types';
 import { omitText } from '../../../../utils';
+import { AllSessions_sessions_nodes } from '../../../../graphql/generated/AllSessions';
 
 interface Props {
   index: number;
-  content: Content;
-  onClick: (content: Content) => void;
+  session: AllSessions_sessions_nodes;
+  onClick: (sessionId: string) => void;
 }
 
 class ContentGridItem extends React.PureComponent<Props> {
   public render() {
-    const { content, onClick, ...props } = this.props;
-    const startTime = moment(content.startTime).format('HH:mm');
-    const endTime = moment(content.endTime).format('HH:mm');
+    const { session, onClick, ...props } = this.props;
+    const startTime = moment(session.startTime).format('HH:mm');
+    const endTime = moment(session.endTime).format('HH:mm');
     return (
       <Wrapper onClick={this.onClick} {...props}>
         <I18n>
@@ -27,35 +27,37 @@ class ContentGridItem extends React.PureComponent<Props> {
               <>
                 <ContentInfo>
                   <Header>
-                    {content.type === 'keynote' ? (
+                    {session.type === 'keynote' ? (
                       <Tip type="important">KEYNOTE</Tip>
                     ) : (
                       <Tip type="normal">SESSION</Tip>
                     )}
                     <HeaderDetail>
-                      <Text level="display2">{content.place}</Text>
+                      <Text level="display2">{session.place}</Text>
                       <Text level="display2">
                         {startTime}-{endTime}
                       </Text>
                     </HeaderDetail>
                   </Header>
-                  <Title>{isJa ? content.titleJa : content.title}</Title>
+                  <Title>{isJa ? session.titleJa : session.title}</Title>
                   <Tags>
-                    {content.tags.map(tag => (
+                    {session.tags!.map(tag => (
                       <Text level="display1" key={tag}>
                         #{tag}
                       </Text>
                     ))}
                   </Tags>
                   <Body>
-                    {omitText(isJa ? content.outlineJa : content.outline, 100)}
+                    {omitText(isJa ? session.outlineJa : session.outline, 100)}
                   </Body>
                 </ContentInfo>
                 <div>
-                  {content.speakers.map(speaker => (
+                  {session.speakers!.map(speaker => (
                     <SpeakerInfo key={speaker.id}>
                       <Icon
-                        src={`/static/images/speakers/${speaker.id}_thumb.png`}
+                        src={`/static/images/speakers/${
+                          speaker.speakerId
+                        }_thumb.png`}
                       />
                       <div>
                         <Text level="display1">
@@ -77,8 +79,8 @@ class ContentGridItem extends React.PureComponent<Props> {
   }
 
   private onClick = () => {
-    const { content, onClick } = this.props;
-    onClick(content);
+    const { session, onClick } = this.props;
+    onClick(session.id);
   };
 }
 

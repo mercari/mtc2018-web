@@ -88,6 +88,12 @@ jobs:
                 export VERSION=develop-$(date +%Y%m%d%H%M%S)
             fi
 
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                echo 'export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_PRODUCTION"' >> $BASH_ENV
+            eles
+                echo 'export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_DEVELOPMENT"' >> $BASH_ENV
+            fi
+
             make cloudbuild >> .stdout 2>> .stderr
 
 workflows:

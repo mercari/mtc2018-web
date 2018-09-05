@@ -13,4 +13,4 @@ cloudbuild:
 		--project=$(PROJECT) \
 		--config=.cloudbuild.yaml \
 		--gcs-log-dir="$(GCS_LOG_DIR)" \
-		--substitutions="_API_IMAGE=$(API_IMAGE),_WEB_IMAGE=$(WEB_IMAGE),_VERSION=$(VERSION)"
+		--substitutions="_API_IMAGE=$(API_IMAGE),_WEB_IMAGE=$(WEB_IMAGE),_VERSION=$(VERSION),_GRAPHQL_ENDPOINT=${GRAPHQL_ENDPOINT}"
