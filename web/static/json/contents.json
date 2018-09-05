@@ -27,7 +27,7 @@
       "endTime": "2018-10-04T11:45:00+09:00",
       "title": "Keynote",
       "titleJa": "基調講演",
-      "outline": "株式会社メルカリCTO 名村 卓、株式会社メルペイ取締役 曾川景介、Mercari, Inc. CTO Mok Ohの3名から、各社でここ1年間に起こったこと、これから目指す方向、技術的な取り組みについてご紹介します。",
+      "outline": "株式会社メルカリCTO 名村 卓、株式会社メルペイ取締役 曾川景介、Mercari, Inc. CTO Dr. Mok Ohの3名から、各社でここ1年間に起こったこと、これから目指す方向、技術的な取り組みについてご紹介します。",
       "outlineJa": "",
       "lang": "jp",
       "tags": [
@@ -49,8 +49,8 @@
         },
         {
           "id": "mok_oh",
-          "name": "Mok Oh",
-          "nameJa": "Mok Oh",
+          "name": "Dr. Mok Oh",
+          "nameJa": "Dr. Mok Oh",
           "company": "mercari",
           "position": "CTO, Mercari US",
           "positionJa": "CTO, Mercari US",
