@@ -12,6 +12,7 @@ const MainVisual = () => (
     <Place>@ROPPONGI ACADEMYHILLS</Place>
     <BuyButton
       type="primary"
+      size="large"
       href="https://mercari-tech-conf-2018.peatix.com"
       target="_black"
     >
