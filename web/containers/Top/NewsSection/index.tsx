@@ -11,12 +11,13 @@ const NewsSection: React.SFC<{}> = props => (
     <Wrapper>
       <StyledNewsList news={news} />
       <FollowButton
-        type="secondary"
+        type="primary"
+        size="medium"
         href="https://twitter.com/intent/follow?screen_name=mercaridevjp"
         target="_blank"
       >
         FOLLOW US ON
-        <ButtonIcon src="../static/images/twitter_orange.svg" alt="twitter" />
+        <ButtonIcon src="../static/images/twitter.svg" alt="twitter" />
       </FollowButton>
       <Message>
         <I18n>{t => t('follow_us_on_twitter')}</I18n>
@@ -53,6 +54,8 @@ const FollowButton = styled(ButtonLink)`
 `;
 
 const ButtonIcon = styled.img`
+  width: 24px;
+  height: 20px;
   margin-left: 8px;
 `;
 

@@ -46,7 +46,11 @@ class Session extends React.Component<Props> {
                 <Body>
                   <Section title="SESSION">
                     <ContentCard content={this.content} isJa={isJa} />
-                    <BackButton type="primary" onClick={this.onClickBackButton}>
+                    <BackButton
+                      type="primary"
+                      size="large"
+                      onClick={this.onClickBackButton}
+                    >
                       BACK
                     </BackButton>
                   </Section>
