@@ -16,7 +16,7 @@ i18n
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
   .init({
-    fallbackLng: 'ja',
+    fallbackLng: 'en',
     preload: ['en', 'ja'], // preload all langages
     ns: ['common'], // need to preload all the namespaces
     backend: {
