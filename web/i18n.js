@@ -3,7 +3,7 @@ const XHR = require('i18next-xhr-backend')
 const LanguageDetector = require('i18next-browser-languagedetector')
 
 const options = {
-  fallbackLng: 'ja',
+  fallbackLng: 'en',
   load: 'languageOnly', // we only provide en, ja -> no region specific locals like en-US, ja-JP
 
   // have a common namespace used around the full app
