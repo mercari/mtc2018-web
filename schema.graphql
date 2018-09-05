@@ -74,6 +74,7 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  type: String!
   place: String!
   title: String!
   titleJa: String!
@@ -91,6 +92,7 @@ type Session implements Node {
 """
 type Speaker implements Node {
   id: ID!
+  speakerId: String!
   name: String!
   nameJa: String!
   company: String!

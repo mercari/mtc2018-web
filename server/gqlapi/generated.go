@@ -79,6 +79,7 @@ type ComplexityRoot struct {
 
 	Session struct {
 		Id        func(childComplexity int) int
+		Type      func(childComplexity int) int
 		Place     func(childComplexity int) int
 		Title     func(childComplexity int) int
 		TitleJa   func(childComplexity int) int
@@ -104,6 +105,7 @@ type ComplexityRoot struct {
 
 	Speaker struct {
 		Id         func(childComplexity int) int
+		SpeakerId  func(childComplexity int) int
 		Name       func(childComplexity int) int
 		NameJa     func(childComplexity int) int
 		Company    func(childComplexity int) int
@@ -369,6 +371,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Session.Id(childComplexity), true
 
+	case "Session.type":
+		if e.complexity.Session.Type == nil {
+			break
+		}
+
+		return e.complexity.Session.Type(childComplexity), true
+
 	case "Session.place":
 		if e.complexity.Session.Place == nil {
 			break
@@ -480,6 +489,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Speaker.Id(childComplexity), true
+
+	case "Speaker.speakerId":
+		if e.complexity.Speaker.SpeakerId == nil {
+			break
+		}
+
+		return e.complexity.Speaker.SpeakerId(childComplexity), true
 
 	case "Speaker.name":
 		if e.complexity.Speaker.Name == nil {
@@ -1525,6 +1541,11 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "type":
+			out.Values[i] = ec._Session_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "place":
 			out.Values[i] = ec._Session_place(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -1600,6 +1621,28 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 	res := resTmp.(string)
 	rctx.Result = res
 	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_type(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Type, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
@@ -2125,6 +2168,11 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "speakerId":
+			out.Values[i] = ec._Speaker_speakerId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "name":
 			out.Values[i] = ec._Speaker_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2212,6 +2260,28 @@ func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.Colle
 	res := resTmp.(string)
 	rctx.Result = res
 	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Speaker_speakerId(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Speaker",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.SpeakerID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
@@ -4021,6 +4091,7 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  type: String!
   place: String!
   title: String!
   titleJa: String!
@@ -4038,6 +4109,7 @@ type Session implements Node {
 """
 type Speaker implements Node {
   id: ID!
+  speakerId: String!
   name: String!
   nameJa: String!
   company: String!
