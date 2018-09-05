@@ -8,11 +8,12 @@ import ContentCardSpeaker from './ContentCardSpeaker';
 
 interface Props {
   content: Content;
+  isJa: boolean;
 }
 
 class ContentCard extends React.PureComponent<Props> {
   public render() {
-    const { content, ...props } = this.props;
+    const { content, isJa, ...props } = this.props;
     const startTime = moment(content.startTime).format('HH:mm');
     const endTime = moment(content.endTime).format('HH:mm');
     return (
@@ -31,7 +32,7 @@ class ContentCard extends React.PureComponent<Props> {
               </Text>
             </HeaderDetail>
           </Header>
-          <Title>{content.title}</Title>
+          <Title>{isJa ? content.titleJa : content.title}</Title>
           <Tags>
             {content.tags.map(tag => (
               <Text level="display1" key={tag}>
@@ -39,11 +40,11 @@ class ContentCard extends React.PureComponent<Props> {
               </Text>
             ))}
           </Tags>
-          <Body>{content.outline}</Body>
+          <Body>{isJa ? content.outlineJa : content.outline}</Body>
         </ContentInfo>
         <div>
           {content.speakers.map(speaker => (
-            <Speaker key={speaker.id} speaker={speaker} />
+            <Speaker key={speaker.id} speaker={speaker} isJa={isJa} />
           ))}
         </div>
       </Wrapper>

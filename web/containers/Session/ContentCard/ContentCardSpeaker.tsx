@@ -6,19 +6,22 @@ import { Speaker } from '../../../types';
 
 interface Props {
   speaker: Speaker;
+  isJa: boolean;
 }
 
-const ContentCardSpeaker: React.SFC<Props> = ({ speaker, ...props }) => (
+const ContentCardSpeaker: React.SFC<Props> = ({ speaker, isJa, ...props }) => (
   <Wrapper {...props}>
-    <Photo src={`../../../static/images/speakers/${speaker.id}.png`} />
+    <Photo src={`/static/images/speakers/${speaker.id}.png`} />
     <Profile>
       <Header>
         <div>
-          <Name>{speaker.nameJa}</Name>
-          <Text level="body">{speaker.position}</Text>
+          <Name>{isJa ? speaker.nameJa : speaker.name}</Name>
+          <Text level="body">
+            {isJa ? speaker.positionJa : speaker.position}
+          </Text>
         </div>
       </Header>
-      <Body>{speaker.profile}</Body>
+      <Body>{isJa ? speaker.profileJa : speaker.profile}</Body>
     </Profile>
   </Wrapper>
 );
