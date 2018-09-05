@@ -48,4 +48,5 @@ export interface OtherRow {
   type: 'other';
   time: string;
   label: string;
+  labelJa: string;
 }

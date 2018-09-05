@@ -7,6 +7,7 @@ import { Row, Content } from '../../../types';
 interface Props {
   row: Row;
   contents: Content[];
+  isJa: boolean;
 }
 
 const getContentById = (
@@ -18,12 +19,15 @@ const getContentById = (
   });
 };
 
-const ContentSlot: React.SFC<{ content?: Content }> = ({
+const ContentSlot: React.SFC<{ content?: Content; isJa: boolean }> = ({
   content,
+  isJa,
   ...props
 }) => {
   if (!content) {
-    return <OtherSlotWrapper {...props}>未定</OtherSlotWrapper>;
+    return (
+      <OtherSlotWrapper {...props}>{isJa ? '未定' : 'TBD'}</OtherSlotWrapper>
+    );
   }
 
   const lang = content.lang === 'en' ? 'EN' : 'JA';
@@ -31,13 +35,13 @@ const ContentSlot: React.SFC<{ content?: Content }> = ({
     <ContentSlotWrapper {...props}>
       <div>{content.tags.map(tag => `#${tag} `)}</div>
       <div className="title">
-        {content.title}
+        {isJa ? content.titleJa : content.title}
         <span>({lang})</span>
       </div>
       <div className="speakers">
         {content.speakers.map(speaker => (
           <Text key={speaker.name} level="body">
-            {speaker.nameJa}
+            {isJa ? speaker.nameJa : speaker.name}
           </Text>
         ))}
       </div>
@@ -45,7 +49,7 @@ const ContentSlot: React.SFC<{ content?: Content }> = ({
   );
 };
 
-const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
+const TimetableRow: React.SFC<Props> = ({ row, contents, isJa }) => {
   const tdList: React.ReactNode[] = [];
   switch (row.type) {
     case 'content':
@@ -56,6 +60,7 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
             <ContentSlot
               key={`track_a_${contentId}_${index}`}
               content={getContentById(contentId, contents)}
+              isJa={isJa}
             />
           ))}
         </td>
@@ -67,6 +72,7 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
             <ContentSlot
               key={`track_b_${contentId}_${index}`}
               content={getContentById(contentId, contents)}
+              isJa={isJa}
             />
           ))}
         </td>
@@ -75,7 +81,7 @@ const TimetableRow: React.SFC<Props> = ({ row, contents }) => {
     case 'other':
       tdList.push(
         <td key="other" colSpan={2}>
-          <OtherSlotWrapper>{row.label}</OtherSlotWrapper>
+          <OtherSlotWrapper>{isJa ? row.labelJa : row.label}</OtherSlotWrapper>
         </td>
       );
       break;
