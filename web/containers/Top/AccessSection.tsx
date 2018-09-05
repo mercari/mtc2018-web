@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Text, Card, Section } from '../../components';
 import { colors, getTextStyle } from '../../components/styles';
 import { I18n } from 'react-i18next';
+import { joinWithBr } from '../../utils';
 
 const AccessSection: React.SFC<{}> = props => (
   <Section title="ACCESS" id="access" {...props}>
@@ -24,20 +25,20 @@ const AccessSection: React.SFC<{}> = props => (
           <div>
             <AccessTitle>{t('access.train.title')}</AccessTitle>
             <Text level="body">
-              {textsWithBr(t('access.train.texts', { returnObjects: true }))}
+              {joinWithBr(t('access.train.texts', { returnObjects: true }))}
             </Text>
           </div>
           <div>
             <AccessTitle>{t('access.bus.title')}</AccessTitle>
             <AccessSubTite>{t('access.bus.fromShibuya.title')}</AccessSubTite>
             <AccessBody>
-              {textsWithBr(
+              {joinWithBr(
                 t('access.bus.fromShibuya.texts', { returnObjects: true })
               )}
             </AccessBody>
             <AccessSubTite>{t('access.bus.fromShimbashi.title')}</AccessSubTite>
             <AccessBody>
-              {textsWithBr(
+              {joinWithBr(
                 t('access.bus.fromShimbashi.texts', { returnObjects: true })
               )}
             </AccessBody>
@@ -53,17 +54,6 @@ const AccessSection: React.SFC<{}> = props => (
     </I18n>
   </Section>
 );
-
-function textsWithBr(texts: string[]): React.ReactNode[] {
-  const result: React.ReactNode[] = [];
-  for (let i = 0; i < texts.length; i++) {
-    result.push(texts[i]);
-    result.push(<br key={i} />);
-  }
-
-  result.splice(result.length - 1, 1);
-  return result;
-}
 
 const StyledCard = styled(Card)`
   width: 100%;
