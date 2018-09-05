@@ -2,6 +2,7 @@ export interface News {
   id: string;
   date: string;
   message: string;
+  messageJa: string;
   link?: string;
 }
 

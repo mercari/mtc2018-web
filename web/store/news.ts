@@ -4,7 +4,8 @@ export const news: News[] = [
   {
     id: '1',
     date: '2018-09-04',
-    message: 'チケット販売をオープンしました',
+    messageJa: 'チケット販売をオープンしました',
+    message: 'Tickets are now on sale',
     link: 'https://mercari-tech-conf-2018.peatix.com'
   }
 ];

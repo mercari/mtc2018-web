@@ -10,6 +10,7 @@ import ContentSection from './ContentSection';
 import TimetableSection from './TimetableSection';
 import AccessSection from './AccessSection';
 import { Content } from '../../types';
+import { withI18next } from '../../lib/with-i18next';
 
 /* tslint:disable-next-line:no-var-requires */
 const contentsData = require('../../static/json/contents.json');
@@ -132,4 +133,4 @@ const StyledTimetableSection = styled(TimetableSection)`
   }
 `;
 
-export default Top;
+export default withI18next()(Top);
