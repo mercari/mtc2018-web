@@ -1,3 +1,10 @@
 {
-  "follow_us_on_twitter": "follow us on twitter"
+  "follow_us_on_twitter": "follow us on twitter",
+  "about": {
+    "note": "p1-4はGoogle翻訳です",
+    "p1": "Mercari Tech Conf (MTC) is a technical conference for engineers that introduces Mercari Co., Ltd. and other Mercari Group companies, and the technical challenges that we are going to pursue.",
+    "p2": "Mercari Tech Conf 2018 introduces the changes that have occurred or are occurring within the Mercari Group over the past year, with the theme \"Evolution (Change)\".",
+    "p3": "In addition to each session, there is also an exhibition booth by each engineering team that was popular last year, as well as After Party (social gathering) where we prepare meals and drinks, so please make use of it as a place to interact among engineers.",
+    "p4": "Simultaneous interpretation of Japanese and English is available for each session."
+  }
 }

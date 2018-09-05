@@ -10,7 +10,7 @@ const options = {
   ns: ['common'],
   defaultNS: 'common',
 
-  debug: process.env.NODE_ENV !== 'production',
+  debug: false, // process.env.NODE_ENV !== 'production',
   saveMissing: true,
 
   interpolation: {
