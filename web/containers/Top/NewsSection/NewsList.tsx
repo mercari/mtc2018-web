@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { I18n } from 'react-i18next';
 import styled, { css } from 'styled-components';
 import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
@@ -10,18 +11,26 @@ interface Props {
 
 const NewsList: React.SFC<Props> = ({ news, ...props }) => (
   <Wrapper {...props}>
-    {news.map(newsItem => (
-      <ListItem key={newsItem.id}>
-        <ListItemDate>{newsItem.date}</ListItemDate>
-        {newsItem.link ? (
-          <ListItemMessageLink href={newsItem.link} target="_blank">
-            {newsItem.message}
-          </ListItemMessageLink>
-        ) : (
-          <ListItemMessage>{newsItem.message}</ListItemMessage>
-        )}
-      </ListItem>
-    ))}
+    <I18n>
+      {(_, { i18n }) => {
+        return news.map(newsItem => {
+          const message =
+            i18n.language === 'ja-JP' ? newsItem.messageJa : newsItem.message;
+          return (
+            <ListItem key={newsItem.id}>
+              <ListItemDate>{newsItem.date}</ListItemDate>
+              {newsItem.link ? (
+                <ListItemMessageLink href={newsItem.link} target="_blank">
+                  {message}
+                </ListItemMessageLink>
+              ) : (
+                <ListItemMessage>{message}</ListItemMessage>
+              )}
+            </ListItem>
+          );
+        });
+      }}
+    </I18n>
   </Wrapper>
 );
 

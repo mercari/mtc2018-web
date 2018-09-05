@@ -4,17 +4,20 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '10:00 ~ 10:15',
-    label: 'オープニング( 山田 進太郎 )'
+    label: 'オープニング( 山田 進太郎 )',
+    labelJa: 'オープニング( 山田 進太郎 )'
   },
   {
     type: 'other',
     time: '10:15 ~ 11:45',
-    label: 'Keynote( 名村 卓, Dr. Mok Oh, 曾川 景介 )'
+    label: 'Keynote( 名村 卓, Dr. Mok Oh, 曾川 景介 )',
+    labelJa: 'Keynote( 名村 卓, Dr. Mok Oh, 曾川 景介 )'
   },
   {
     type: 'other',
     time: '11:45 ~ 13:00',
-    label: 'ランチブレイク'
+    label: 'ランチブレイク',
+    labelJa: 'ランチブレイク'
   },
   {
     type: 'content',
@@ -43,7 +46,8 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '15:30 ~ 16:00',
-    label: '中休憩'
+    label: '中休憩',
+    labelJa: '中休憩'
   },
   {
     type: 'content',
@@ -72,11 +76,13 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '18:30 ~ 18:50',
-    label: 'クロージング（ 濱田 優貴 ）'
+    label: 'クロージング（ 濱田 優貴 ）',
+    labelJa: 'クロージング（ 濱田 優貴 ）'
   },
   {
     type: 'other',
     time: '19:10 ~ 20:30',
-    label: 'アフターパーティー'
+    label: 'アフターパーティー',
+    labelJa: 'アフターパーティー'
   }
 ];

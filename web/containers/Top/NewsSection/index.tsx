@@ -1,11 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { I18n } from 'react-i18next';
 import { Text, Button, Card, Section } from '../../../components';
 import { colors } from '../../../components/styles';
 import NewsList from './NewsList';
-import { news } from '../../../store/news';
+import { News } from '../../../types';
 
-const NewsSection: React.SFC<{}> = props => (
+const NewsSection: React.SFC<{ news: News[] }> = ({ news, ...props }) => (
   <Section title="NEWS" id="news" {...props}>
     <Wrapper>
       <StyledNewsList news={news} />
@@ -19,8 +20,7 @@ const NewsSection: React.SFC<{}> = props => (
         <ButtonIcon src="../static/images/twitter.svg" alt="twitter" />
       </FollowButton>
       <Message>
-        公式twitterアカウント( @mercaridevjp
-        )にて情報を発信していきます。ぜひフォローをお願いします。
+        <I18n>{t => t('follow_us_on_twitter')}</I18n>
       </Message>
     </Wrapper>
   </Section>

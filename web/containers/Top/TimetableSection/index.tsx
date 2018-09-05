@@ -6,6 +6,7 @@ import { Section } from '../../../components';
 import { rows } from '../../../store/timetable';
 import { Content, Row } from '../../../types';
 import TimetableRow from './TimetableRow';
+import { I18n } from 'react-i18next';
 
 interface Props {
   contents: Content[];
@@ -29,9 +30,19 @@ const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row: Row, rowIndex) => (
-            <TimetableRow row={row} contents={contents} key={rowIndex} />
-          ))}
+          <I18n>
+            {(_, { i18n }) => {
+              const isJa = i18n.language === 'ja-JP';
+              return rows.map((row: Row, rowIndex) => (
+                <TimetableRow
+                  row={row}
+                  contents={contents}
+                  isJa={isJa}
+                  key={rowIndex}
+                />
+              ));
+            }}
+          </I18n>
         </tbody>
       </TimelineTable>
     </Section>

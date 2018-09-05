@@ -7,6 +7,8 @@ import { Content } from '../../types';
 import ContentCard from './ContentCard';
 import Header from './Header';
 import { Button, Section } from '../../components';
+import { withI18next } from '../../lib/with-i18next';
+import { I18n } from 'react-i18next';
 
 /* tslint:disable-next-line:no-var-requires */
 const contentsData = require('../../static/json/contents.json');
@@ -16,35 +18,47 @@ interface Props {
 }
 
 class Session extends React.Component<Props> {
-  private content?: Content;
+  private content!: Content;
 
   public componentWillMount() {
     // コンテンツ内容を取得
     const contentId = Number(this.props.router!.query!.id);
     this.content = contentsData.sessions.find((content: Content) => {
       return content.id === contentId;
-    });
+    })!;
   }
 
   public render() {
     return (
       <Default>
-        <Head>
-          <title>Mercari Tech Conf 2018 - {this.content!.title}</title>
-        </Head>
-        <Header />
-        <Body>
-          <Section title="SESSION">
-            <ContentCard content={this.content!} />
-            <BackButton
-              type="primary"
-              size="large"
-              onClick={this.onClickBackButton}
-            >
-              BACK
-            </BackButton>
-          </Section>
-        </Body>
+        <I18n>
+          {(_, { i18n }) => {
+            const isJa = i18n.language === 'ja-JP';
+            return (
+              <>
+                <Head>
+                  <title>
+                    Mercari Tech Conf 2018 -{' '}
+                    {isJa ? this.content.titleJa : this.content.title}
+                  </title>
+                </Head>
+                <Header />
+                <Body>
+                  <Section title="SESSION">
+                    <ContentCard content={this.content} isJa={isJa} />
+                    <BackButton
+                      type="primary"
+                      size="large"
+                      onClick={this.onClickBackButton}
+                    >
+                      BACK
+                    </BackButton>
+                  </Section>
+                </Body>
+              </>
+            );
+          }}
+        </I18n>
       </Default>
     );
   }
@@ -85,4 +99,4 @@ const BackButton = styled(Button)`
   margin-top: 60px;
 `;
 
-export default withRouter(Session);
+export default withI18next()(withRouter(Session));

@@ -20,6 +20,9 @@
     "ordered-imports": false
   },
   "linterOptions": {
-    "typeCheck": true
+    "typeCheck": true,
+    "exclude": [
+      "**/*.js"
+    ]
   }
 }

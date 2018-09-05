@@ -2,54 +2,56 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Text, Card, Section } from '../../components';
 import { colors, getTextStyle } from '../../components/styles';
+import { I18n } from 'react-i18next';
+import { joinWithBr } from '../../utils';
 
 const AccessSection: React.SFC<{}> = props => (
   <Section title="ACCESS" id="access" {...props}>
-    <StyledCard>
-      <div>
-        <Title>六本木アカデミーヒルズ</Title>
-        <Url>academyhills.com</Url>
-        <Address>
-          〒106-6149 東京都港区六本木６丁目１０番１号 六本木ヒルズ森タワー49F
-        </Address>
-      </div>
-      <Map
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.6932250736577!2d139.7268930153612!3d35.659929180199256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b7708e8d3bb%3A0x3b88edeca0e1ff0e!2z44Ki44Kr44OH44Of44O844OS44Or44K6!5e0!3m2!1sja!2sjp!4v1535306139896"
-        width="600"
-        height="450"
-        frameBorder="0"
-        style={{ border: 0 }}
-      />
-      <div>
-        <AccessTitle>電車でお越しの場合</AccessTitle>
-        <Text level="body">
-          東京メトロ 日比谷線「六本木」駅1C出口より徒歩3分（コンコースにて直結）
-          <br />
-          都営地下鉄 大江戸線「六本木」駅3出口より徒歩6分
-        </Text>
-      </div>
-      <div>
-        <AccessTitle>バスでお越しの場合</AccessTitle>
-        <AccessSubTite>渋谷駅より</AccessSubTite>
-        <AccessBody>
-          都バス都RH01系統【渋谷駅前⇔六本木ヒルズ】／「六本木ヒルズ」「六本木ヒルズけやき坂」下車（約15分）
-          <br />
-          都バス
-          都01系統【渋谷駅前⇔新橋駅前】／「EXシアター六本木前」下車（約14分）
-        </AccessBody>
-        <AccessSubTite>新橋駅より</AccessSubTite>
-        <AccessBody>
-          都バス 都01系統【新橋駅前⇔渋谷駅前
-          】／「EXシアター六本木前」下車（約16分）
-        </AccessBody>
-      </div>
-      <Link
-        href="http://forum.academyhills.com/roppongi/access/"
-        target="_blank"
-      >
-        アカデミーヒルズまでのアクセス（アカデミーヒルズ公式サイトへ）
-      </Link>
-    </StyledCard>
+    <I18n>
+      {t => (
+        <StyledCard>
+          <div>
+            <Title>{t('access.title')}</Title>
+            <Url>academyhills.com</Url>
+            <Address>{t('access.address')}</Address>
+          </div>
+          <Map
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.6932250736577!2d139.7268930153612!3d35.659929180199256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b7708e8d3bb%3A0x3b88edeca0e1ff0e!2z44Ki44Kr44OH44Of44O844OS44Or44K6!5e0!3m2!1sja!2sjp!4v1535306139896"
+            width="600"
+            height="450"
+            frameBorder="0"
+            style={{ border: 0 }}
+          />
+          <div>
+            <AccessTitle>{t('access.train.title')}</AccessTitle>
+            <Text level="body">
+              {joinWithBr(t('access.train.texts', { returnObjects: true }))}
+            </Text>
+          </div>
+          <div>
+            <AccessTitle>{t('access.bus.title')}</AccessTitle>
+            <AccessSubTite>{t('access.bus.fromShibuya.title')}</AccessSubTite>
+            <AccessBody>
+              {joinWithBr(
+                t('access.bus.fromShibuya.texts', { returnObjects: true })
+              )}
+            </AccessBody>
+            <AccessSubTite>{t('access.bus.fromShimbashi.title')}</AccessSubTite>
+            <AccessBody>
+              {joinWithBr(
+                t('access.bus.fromShimbashi.texts', { returnObjects: true })
+              )}
+            </AccessBody>
+          </div>
+          <Link
+            href="http://forum.academyhills.com/roppongi/access/"
+            target="_blank"
+          >
+            {t('access.linkToAcademyHills')}
+          </Link>
+        </StyledCard>
+      )}
+    </I18n>
   </Section>
 );
 
