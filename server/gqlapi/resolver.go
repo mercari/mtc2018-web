@@ -22,7 +22,7 @@ func NewResolver() (ResolverRoot, error) {
 	r := &rootResolver{
 		speakers:      make(map[string]Speaker),
 		likeObservers: make(map[string]chan Like),
-		news:          make([]News, 0),
+		news:          []News{},
 	}
 
 	for idx, session := range data.Sessions {
