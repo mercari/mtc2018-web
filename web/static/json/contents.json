@@ -18,6 +18,15 @@
     "Security",
     "iOS"
   ],
+  "news": [
+    {
+      "id": "1",
+      "date": "2018-09-04",
+      "message": "チケット販売をオープンしました",
+      "messageJa": "チケット販売をオープンしました",
+      "link": "https://mercari-tech-conf-2018.peatix.com"
+    }
+  ],
   "sessions": [
     {
       "id": 1,
