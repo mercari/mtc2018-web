@@ -12,8 +12,8 @@ interface Props {
 const NewsList: React.SFC<Props> = ({ news, ...props }) => (
   <Wrapper {...props}>
     <I18n>
-      {(_, { i18n }) =>
-        news.map(newsItem => {
+      {(_, { i18n }) => {
+        return news.map(newsItem => {
           const message =
             i18n.language === 'en' ? newsItem.message : newsItem.messageJa;
           return (
@@ -28,7 +28,8 @@ const NewsList: React.SFC<Props> = ({ news, ...props }) => (
               )}
             </ListItem>
           );
-        })}
+        });
+      }}
     </I18n>
   </Wrapper>
 );
