@@ -41,7 +41,7 @@ type Data struct {
 
 // Session information.
 type Session struct {
-	// ID        string    `json:"id"`
+	SessionID int       `json:"id"` // Relay Global Object ID SpecのIDではない
 	Type      string    `json:"type"`
 	Place     string    `json:"place"`
 	Title     string    `json:"title"`

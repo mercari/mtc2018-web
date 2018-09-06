@@ -50,6 +50,7 @@ func NewResolver() (ResolverRoot, error) {
 
 		r.sessions = append(r.sessions, Session{
 			ID:        base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Session:%d", idx+1))),
+			SessionID: session.SessionID,
 			Type:      session.Type,
 			Title:     session.Title,
 			TitleJa:   session.TitleJa,
@@ -145,6 +146,15 @@ func (r *queryResolver) Sessions(ctx context.Context, first int, after *string, 
 	}
 
 	return conn, nil
+}
+
+func (r *queryResolver) Session(ctx context.Context, sessionID int) (*Session, error) {
+	for _, session := range r.sessions {
+		if session.SessionID == sessionID {
+			return &session, nil
+		}
+	}
+	return nil, nil
 }
 
 func (r *queryResolver) News(ctx context.Context) ([]News, error) {

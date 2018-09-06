@@ -44,6 +44,7 @@ type PageInfo struct {
 // セッション1つに関する情報。
 type Session struct {
 	ID        string    `json:"id"`
+	SessionID int       `json:"sessionId"`
 	Type      string    `json:"type"`
 	Place     string    `json:"place"`
 	Title     string    `json:"title"`

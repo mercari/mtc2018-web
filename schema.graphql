@@ -16,6 +16,11 @@ type Query {
   ): SessionConnection!
 
   """
+  セッションを取得します。
+  """
+  session(sessionId: Int!): Session
+
+  """
   お知らせ一覧を取得します
   """
   news: [News!]!
@@ -74,6 +79,7 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  sessionId: Int!
   type: String!
   place: String!
   title: String!
