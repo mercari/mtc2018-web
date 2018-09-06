@@ -9,11 +9,12 @@ import AboutSection from '../containers/Top/AboutSection';
 import ContentSection from '../containers/Top/ContentSection';
 import TimetableSection from '../containers/Top/TimetableSection';
 import AccessSection from '../containers/Top/AccessSection';
-import { Content } from '../types';
 import { withI18next } from '../lib/with-i18next';
+import { Query } from 'react-apollo';
+import { AllSessions } from '../graphql/generated/AllSessions';
+import { SESSIONS_QUERY } from '../graphql/query';
 
-/* tslint:disable-next-line:no-var-requires */
-const contentsData = require('../static/json/contents.json');
+class AllSessionsQuery extends Query<AllSessions> {}
 
 interface State {
   isTopY: boolean;
@@ -23,12 +24,6 @@ class Top extends React.Component<{}, State> {
   public state = {
     isTopY: false
   };
-
-  private sessions!: Content[];
-
-  public componentWillMount() {
-    this.sessions = contentsData.sessions;
-  }
 
   public componentDidMount() {
     this.updateHeaderState();
@@ -64,8 +59,23 @@ class Top extends React.Component<{}, State> {
         <Body>
           <NewsSection />
           <AboutSection />
-          <ContentSection />
-          <StyledTimetableSection contents={this.sessions} />
+          <AllSessionsQuery query={SESSIONS_QUERY}>
+            {({ loading, error, data }) => {
+              if (error) {
+                return null;
+              }
+              if (loading || !data) {
+                return null;
+              }
+
+              return (
+                <>
+                  <ContentSection sessions={data.sessions} />
+                  <StyledTimetableSection sessions={data.sessions} />
+                </>
+              );
+            }}
+          </AllSessionsQuery>
           <AccessSection />
         </Body>
       </Default>

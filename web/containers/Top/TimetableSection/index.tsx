@@ -4,15 +4,16 @@ import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
 import { Section } from '../../../components';
 import { rows } from '../../../store/timetable';
-import { Content, Row } from '../../../types';
+import { Row } from '../../../types';
 import TimetableRow from './TimetableRow';
 import { I18n } from 'react-i18next';
+import { AllSessions_sessions } from '../../../graphql/generated/AllSessions';
 
 interface Props {
-  contents: Content[];
+  sessions: AllSessions_sessions;
 }
 
-const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
+const TimetableSection: React.SFC<Props> = ({ sessions, ...props }) => {
   return (
     <Section title="TIME TABLE" id="timetable" {...props}>
       <Lang>
@@ -36,7 +37,7 @@ const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
               return rows.map((row: Row, rowIndex) => (
                 <TimetableRow
                   row={row}
-                  contents={contents}
+                  sessions={sessions.nodes}
                   isJa={isJa}
                   key={rowIndex}
                 />

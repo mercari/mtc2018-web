@@ -34,7 +34,7 @@ export interface AllSessions_sessions_nodes {
 
 export interface AllSessions_sessions {
   __typename: "SessionConnection";
-  nodes: (AllSessions_sessions_nodes | null)[] | null;
+  nodes: AllSessions_sessions_nodes[];
 }
 
 export interface AllSessions {
