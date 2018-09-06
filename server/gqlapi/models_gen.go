@@ -44,6 +44,7 @@ type PageInfo struct {
 // セッション1つに関する情報。
 type Session struct {
 	ID        string    `json:"id"`
+	Type      string    `json:"type"`
 	Place     string    `json:"place"`
 	Title     string    `json:"title"`
 	TitleJa   string    `json:"titleJa"`
@@ -74,6 +75,7 @@ type SessionListInput struct {
 // スピーカー1人に関する情報。
 type Speaker struct {
 	ID         string    `json:"id"`
+	SpeakerID  string    `json:"speakerId"`
 	Name       string    `json:"name"`
 	NameJa     string    `json:"nameJa"`
 	Company    string    `json:"company"`

@@ -32,6 +32,7 @@ func NewResolver() (ResolverRoot, error) {
 			// GitHubIDは必須入力でかつユニークっぽい(今のところ)
 			r.speakers[speaker.GithubID] = Speaker{
 				ID:         id,
+				SpeakerID:  speaker.SpeakerID,
 				Name:       speaker.Name,
 				NameJa:     speaker.NameJa,
 				Company:    speaker.Company,
@@ -49,6 +50,7 @@ func NewResolver() (ResolverRoot, error) {
 
 		r.sessions = append(r.sessions, Session{
 			ID:        base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Session:%d", idx+1))),
+			Type:      session.Type,
 			Title:     session.Title,
 			TitleJa:   session.TitleJa,
 			StartTime: session.StartTime,
