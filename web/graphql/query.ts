@@ -28,3 +28,15 @@ export const SESSIONS_QUERY = gql`
     }
   }
 `;
+
+export const NEWS_QUERY = gql`
+  query NewsQuery {
+    news {
+      id
+      date
+      message
+      messageJa
+      link
+    }
+  }
+`;
