@@ -74,6 +74,7 @@ type ComplexityRoot struct {
 		Node     func(childComplexity int, id string) int
 		Nodes    func(childComplexity int, ids []string) int
 		Sessions func(childComplexity int, first int, after *string, req *SessionListInput) int
+		Session  func(childComplexity int, sessionId int) int
 		News     func(childComplexity int) int
 	}
 
@@ -132,6 +133,7 @@ type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
 	Sessions(ctx context.Context, first int, after *string, req *SessionListInput) (SessionConnection, error)
+	Session(ctx context.Context, sessionId int) (*Session, error)
 	News(ctx context.Context) ([]News, error)
 }
 type SpeakerResolver interface {
@@ -357,6 +359,24 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		args["req"] = arg2
 
 		return e.complexity.Query.Sessions(childComplexity, args["first"].(int), args["after"].(*string), args["req"].(*SessionListInput)), true
+
+	case "Query.session":
+		if e.complexity.Query.Session == nil {
+			break
+		}
+		args := map[string]interface{}{}
+
+		var arg0 int
+		if tmp, ok := rawArgs["sessionId"]; ok {
+			var err error
+			arg0, err = graphql.UnmarshalInt(tmp)
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["sessionId"] = arg0
+
+		return e.complexity.Query.Session(childComplexity, args["sessionId"].(int)), true
 
 	case "Query.news":
 		if e.complexity.Query.News == nil {
@@ -1212,6 +1232,12 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				}
 				wg.Done()
 			}(i, field)
+		case "session":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Query_session(ctx, field)
+				wg.Done()
+			}(i, field)
 		case "news":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
@@ -1413,6 +1439,42 @@ func (ec *executionContext) _Query_sessions(ctx context.Context, field graphql.C
 	rctx.Result = res
 
 	return ec._SessionConnection(ctx, field.Selections, &res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Query_session(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["sessionId"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalInt(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["sessionId"] = arg0
+	rctx := &graphql.ResolverContext{
+		Object: "Query",
+		Args:   args,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, nil, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Query().Session(ctx, args["sessionId"].(int))
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*Session)
+	rctx.Result = res
+
+	if res == nil {
+		return graphql.Null
+	}
+
+	return ec._Session(ctx, field.Selections, res)
 }
 
 // nolint: vetshadow
@@ -4066,6 +4128,11 @@ type Query {
     after: String
     req: SessionListInput
   ): SessionConnection!
+
+  """
+  セッションを取得します。
+  """
+  session(sessionId: Int!): Session
 
   """
   お知らせ一覧を取得します

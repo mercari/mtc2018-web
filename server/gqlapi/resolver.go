@@ -148,6 +148,15 @@ func (r *queryResolver) Sessions(ctx context.Context, first int, after *string, 
 	return conn, nil
 }
 
+func (r *queryResolver) Session(ctx context.Context, sessionID int) (*Session, error) {
+	for _, session := range r.sessions {
+		if session.SessionID == sessionID {
+			return &session, nil
+		}
+	}
+	return nil, nil
+}
+
 func (r *queryResolver) News(ctx context.Context) ([]News, error) {
 	return r.news, nil
 }
