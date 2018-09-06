@@ -2,24 +2,28 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components';
 import { colors } from '../../../components/styles';
-import { Row, Content } from '../../../types';
+import { Row } from '../../../types';
+import { TimeTableSessionFragment } from '../../../graphql/generated/TimeTableSessionFragment';
+import { TimeTableSpeakerFragment } from '../../../graphql/generated/TimeTableSpeakerFragment';
 
 interface Props {
   row: Row;
-  contents: Content[];
+  sessions: Array<ContentSlotProps['content']>;
   isJa: boolean;
 }
 
 const getContentById = (
   id: number,
-  contents: Content[] = []
-): Content | undefined => {
-  return contents.find(content => {
-    return content.id === id;
-  });
-};
+  contents: Array<ContentSlotProps['content']> = []
+): ContentSlotProps['content'] | undefined =>
+  contents.find(content => content.sessionId === id);
 
-const ContentSlot: React.SFC<{ content?: Content; isJa: boolean }> = ({
+interface ContentSlotProps {
+  content: TimeTableSessionFragment & { speakers: TimeTableSpeakerFragment[] };
+  isJa: boolean;
+}
+
+const ContentSlot: React.SFC<ContentSlotProps> = ({
   content,
   isJa,
   ...props
@@ -33,13 +37,13 @@ const ContentSlot: React.SFC<{ content?: Content; isJa: boolean }> = ({
   const lang = content.lang === 'en' ? 'EN' : 'JA';
   return (
     <ContentSlotWrapper {...props}>
-      <div>{content.tags.map(tag => `#${tag} `)}</div>
+      <div>{content.tags!.map(tag => `#${tag} `)}</div>
       <div className="title">
         {isJa ? content.titleJa : content.title}
         <span>({lang})</span>
       </div>
       <div className="speakers">
-        {content.speakers.map(speaker => (
+        {content.speakers!.map(speaker => (
           <Text key={speaker.name} level="body">
             {isJa ? speaker.nameJa : speaker.name}
           </Text>
@@ -49,7 +53,7 @@ const ContentSlot: React.SFC<{ content?: Content; isJa: boolean }> = ({
   );
 };
 
-const TimetableRow: React.SFC<Props> = ({ row, contents, isJa }) => {
+const TimetableRow: React.SFC<Props> = ({ row, sessions, isJa }) => {
   const tdList: React.ReactNode[] = [];
   switch (row.type) {
     case 'content':
@@ -59,7 +63,7 @@ const TimetableRow: React.SFC<Props> = ({ row, contents, isJa }) => {
           {row.trackA.map((contentId, index) => (
             <ContentSlot
               key={`track_a_${contentId}_${index}`}
-              content={getContentById(contentId, contents)}
+              content={getContentById(contentId, sessions)!}
               isJa={isJa}
             />
           ))}
@@ -71,7 +75,7 @@ const TimetableRow: React.SFC<Props> = ({ row, contents, isJa }) => {
           {row.trackB.map((contentId, index) => (
             <ContentSlot
               key={`track_b_${contentId}_${index}`}
-              content={getContentById(contentId, contents)}
+              content={getContentById(contentId, sessions)!}
               isJa={isJa}
             />
           ))}

@@ -3,47 +3,47 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip } from '../../../components';
 import { colors, getTextStyle, borderRadius } from '../../../components/styles';
-import { Content } from '../../../types';
 import ContentCardSpeaker from './ContentCardSpeaker';
+import { SessionFragment } from '../../../graphql/generated/SessionFragment';
 
 interface Props {
-  content: Content;
+  session: SessionFragment;
   isJa: boolean;
 }
 
 class ContentCard extends React.PureComponent<Props> {
   public render() {
-    const { content, isJa, ...props } = this.props;
-    const startTime = moment(content.startTime).format('HH:mm');
-    const endTime = moment(content.endTime).format('HH:mm');
+    const { session, isJa, ...props } = this.props;
+    const startTime = moment(session.startTime).format('HH:mm');
+    const endTime = moment(session.endTime).format('HH:mm');
     return (
       <Wrapper {...props}>
         <ContentInfo>
           <Header>
-            {content.type === 'keynote' ? (
+            {session.type === 'keynote' ? (
               <Tip type="important">KEYNOTE</Tip>
             ) : (
               <Tip type="normal">SESSION</Tip>
             )}
             <HeaderDetail>
-              <Text level="display2">{content.place}</Text>
+              <Text level="display2">{session.place}</Text>
               <Text level="display2">
                 {startTime}-{endTime}
               </Text>
             </HeaderDetail>
           </Header>
-          <Title>{isJa ? content.titleJa : content.title}</Title>
+          <Title>{isJa ? session.titleJa : session.title}</Title>
           <Tags>
-            {content.tags.map(tag => (
+            {session.tags!.map(tag => (
               <Text level="display1" key={tag}>
                 #{tag}
               </Text>
             ))}
           </Tags>
-          <Body>{isJa ? content.outlineJa : content.outline}</Body>
+          <Body>{isJa ? session.outlineJa : session.outline}</Body>
         </ContentInfo>
         <div>
-          {content.speakers.map(speaker => (
+          {session.speakers!.map(speaker => (
             <Speaker key={speaker.id} speaker={speaker} isJa={isJa} />
           ))}
         </div>

@@ -61,8 +61,8 @@ type PageInfo {
 
 type SessionConnection implements Connection {
   pageInfo: PageInfo!
-  edges: [SessionEdge]
-  nodes: [Session]
+  edges: [SessionEdge!]!
+  nodes: [Session!]!
 }
 
 type SessionEdge implements Edge {
@@ -89,8 +89,8 @@ type Session implements Node {
   outline: String!
   outlineJa: String!
   lang: String!
-  tags: [String!]
-  speakers: [Speaker!]
+  tags: [String!]!
+  speakers: [Speaker!]!
 }
 
 """

@@ -1,27 +1,29 @@
 import * as React from 'react';
 import Router from 'next/router';
 import { Section } from '../../../components';
-import { Content } from '../../../types';
 import ContentGrid from './ContentGrid';
+import { AllSessions_sessions } from '../../../graphql/generated/AllSessions';
 
 interface Props {
-  contents: Content[];
+  sessions: AllSessions_sessions;
 }
 
 class ContentSection extends React.PureComponent<Props> {
   public render() {
-    const { contents } = this.props;
     return (
       <Section title="CONTENTS" id="contents" {...this.props}>
-        <ContentGrid contents={contents} onClickItem={this.onClickItem} />
+        <ContentGrid
+          sessions={this.props.sessions}
+          onClickItem={this.onClickItem}
+        />
       </Section>
     );
   }
 
-  private onClickItem(content: Content) {
+  private onClickItem(sessionId: number) {
     Router.push(
-      `/2018/session/detail?id=${content.id}`,
-      `/2018/session/${content.id}`
+      `/2018/session/detail?id=${sessionId}`,
+      `/2018/session/${sessionId}`
     ).then(() => window.scrollTo(0, 0));
   }
 }

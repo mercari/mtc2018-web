@@ -59,9 +59,9 @@ type Session struct {
 }
 
 type SessionConnection struct {
-	PageInfo PageInfo       `json:"pageInfo"`
-	Edges    []*SessionEdge `json:"edges"`
-	Nodes    []*Session     `json:"nodes"`
+	PageInfo PageInfo      `json:"pageInfo"`
+	Edges    []SessionEdge `json:"edges"`
+	Nodes    []Session     `json:"nodes"`
 }
 
 type SessionEdge struct {

@@ -15,6 +15,7 @@ steps:
   - $_WEB_IMAGE
   - --build-arg
   - VERSION=$_VERSION
+  - GRAPHQL_ENDPOINT=$_GRAPHQL_ENDPOINT
   - web
 
 images:

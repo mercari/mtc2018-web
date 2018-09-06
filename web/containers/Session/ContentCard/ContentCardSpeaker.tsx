@@ -2,16 +2,16 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components';
 import { getTextStyle, borderRadius } from '../../../components/styles';
-import { Speaker } from '../../../types';
+import { SpeakerFragment } from '../../../graphql/generated/SpeakerFragment';
 
 interface Props {
-  speaker: Speaker;
+  speaker: SpeakerFragment;
   isJa: boolean;
 }
 
 const ContentCardSpeaker: React.SFC<Props> = ({ speaker, isJa, ...props }) => (
   <Wrapper {...props}>
-    <Photo src={`/static/images/speakers/${speaker.id}.png`} />
+    <Photo src={`/static/images/speakers/${speaker.speakerId}.png`} />
     <Profile>
       <Header>
         <div>
