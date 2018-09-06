@@ -1,64 +1,65 @@
 import * as React from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
-import Router, { withRouter } from 'next/router';
+import Router, { withRouter, WithRouterProps } from 'next/router';
 import Default from '../../../layout/Default';
-import { Content } from '../../../types';
 import ContentCard from '../../../containers/Session/ContentCard';
 import Header from '../../../containers/Session/Header';
 import { Button, Section } from '../../../components';
 import { withI18next } from '../../../lib/with-i18next';
 import { I18n } from 'react-i18next';
+import { Query } from 'react-apollo';
+import {
+  Session as SessionQuery,
+  SessionVariables
+} from '../../../graphql/generated/Session';
+import { SESSION_QUERY } from '../../../graphql/query';
 
-/* tslint:disable-next-line:no-var-requires */
-const contentsData = require('../../../static/json/contents.json');
+class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
 
-interface Props {
-  router: any; // TODO
-}
-
-class Session extends React.Component<Props> {
-  private content!: Content;
-
-  public componentWillMount() {
-    // コンテンツ内容を取得
-    const contentId = parseInt(this.props.router!.query!.id, 10);
-    this.content = contentsData.sessions.find((content: Content) => {
-      return content.id === contentId;
-    })!;
-  }
-
+class Session extends React.Component<WithRouterProps> {
   public render() {
+    const sessionId = parseInt(this.props.router!.query!.id as string, 10);
     return (
       <Default>
-        <I18n>
-          {(_, { i18n }) => {
-            const isJa = i18n.language === 'ja-JP';
+        <SessionQueryComponent query={SESSION_QUERY} variables={{ sessionId }}>
+          {({ data, error, loading }) => {
+            if (error || loading || !data || !data.session) {
+              return null;
+            }
+
             return (
-              <>
-                <Head>
-                  <title>
-                    Mercari Tech Conf 2018 -{' '}
-                    {isJa ? this.content.titleJa : this.content.title}
-                  </title>
-                </Head>
-                <Header />
-                <Body>
-                  <Section title="SESSION">
-                    <ContentCard content={this.content} isJa={isJa} />
-                    <BackButton
-                      type="primary"
-                      size="large"
-                      onClick={this.onClickBackButton}
-                    >
-                      BACK
-                    </BackButton>
-                  </Section>
-                </Body>
-              </>
+              <I18n>
+                {(_, { i18n }) => {
+                  const isJa = i18n.language === 'ja-JP';
+                  return (
+                    <>
+                      <Head>
+                        <title>
+                          Mercari Tech Conf 2018 -{' '}
+                          {isJa ? data.session!.titleJa : data.session!.title}
+                        </title>
+                      </Head>
+                      <Header />
+                      <Body>
+                        <Section title="SESSION">
+                          <ContentCard session={data.session!} isJa={isJa} />
+                          <BackButton
+                            type="primary"
+                            size="large"
+                            onClick={this.onClickBackButton}
+                          >
+                            BACK
+                          </BackButton>
+                        </Section>
+                      </Body>
+                    </>
+                  );
+                }}
+              </I18n>
             );
           }}
-        </I18n>
+        </SessionQueryComponent>
       </Default>
     );
   }

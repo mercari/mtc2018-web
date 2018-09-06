@@ -6,7 +6,7 @@ import { SESSIONS_QUERY } from '../../../../graphql/query';
 import { AllSessions } from '../../../../graphql/generated/AllSessions';
 
 interface Props {
-  onClickItem: (sessionId: string) => void;
+  onClickItem: (sessionId: number) => void;
 }
 
 class AllSessionsQuery extends Query<AllSessions> {}

@@ -2,10 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: AllSessions
+// GraphQL query operation: Session
 // ====================================================
 
-export interface AllSessions_sessions_nodes_speakers {
+export interface Session_session_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
@@ -13,33 +13,33 @@ export interface AllSessions_sessions_nodes_speakers {
   nameJa: string;
   position: string;
   positionJa: string;
+  profile: string;
+  profileJa: string;
 }
 
-export interface AllSessions_sessions_nodes {
+export interface Session_session {
   __typename: "Session";
   id: string;
   sessionId: number;
+  startTime: string;
+  endTime: string;
+  type: string;
   place: string;
   title: string;
   titleJa: string;
-  type: string;
   tags: string[] | null;
-  startTime: string;
-  endTime: string;
   outline: string;
   outlineJa: string;
-  lang: string;
-  speakers: AllSessions_sessions_nodes_speakers[] | null;
+  speakers: Session_session_speakers[] | null;
 }
 
-export interface AllSessions_sessions {
-  __typename: "SessionConnection";
-  nodes: (AllSessions_sessions_nodes | null)[] | null;
-}
-
-export interface AllSessions {
+export interface Session {
   /**
-   * セッション一覧を取得します。
+   * セッションを取得します。
    */
-  sessions: AllSessions_sessions;
+  session: Session_session | null;
+}
+
+export interface SessionVariables {
+  sessionId: number;
 }

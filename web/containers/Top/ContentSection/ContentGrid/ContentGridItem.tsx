@@ -10,7 +10,7 @@ import { AllSessions_sessions_nodes } from '../../../../graphql/generated/AllSes
 interface Props {
   index: number;
   session: AllSessions_sessions_nodes;
-  onClick: (sessionId: string) => void;
+  onClick: (sessionId: number) => void;
 }
 
 class ContentGridItem extends React.PureComponent<Props> {
@@ -80,7 +80,7 @@ class ContentGridItem extends React.PureComponent<Props> {
 
   private onClick = () => {
     const { session, onClick } = this.props;
-    onClick(session.id);
+    onClick(session.sessionId);
   };
 }
 

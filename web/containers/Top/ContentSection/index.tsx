@@ -12,7 +12,7 @@ class ContentSection extends React.PureComponent {
     );
   }
 
-  private onClickItem(sessionId: string) {
+  private onClickItem(sessionId: number) {
     Router.push(
       `/2018/session/detail?id=${sessionId}`,
       `/2018/session/${sessionId}`
