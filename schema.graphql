@@ -89,8 +89,8 @@ type Session implements Node {
   outline: String!
   outlineJa: String!
   lang: String!
-  tags: [String!]
-  speakers: [Speaker!]
+  tags: [String!]!
+  speakers: [Speaker!]!
 }
 
 """

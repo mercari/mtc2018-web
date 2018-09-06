@@ -25,8 +25,8 @@ export interface SessionFragment {
   place: string;
   title: string;
   titleJa: string;
-  tags: string[] | null;
+  tags: string[];
   outline: string;
   outlineJa: string;
-  speakers: SessionFragment_speakers[] | null;
+  speakers: SessionFragment_speakers[];
 }

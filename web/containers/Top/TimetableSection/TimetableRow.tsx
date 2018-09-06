@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Text } from '../../../components';
 import { colors } from '../../../components/styles';
 import { Row } from '../../../types';
+import { TimeTableSessionFragment } from '../../../graphql/generated/TimeTableSessionFragment';
+import { TimeTableSpeakerFragment } from '../../../graphql/generated/TimeTableSpeakerFragment';
 
 interface Props {
   row: Row;
@@ -16,20 +18,8 @@ const getContentById = (
 ): ContentSlotProps['content'] | undefined =>
   contents.find(content => content.sessionId === id);
 
-// TODO: fragmentを使う
 interface ContentSlotProps {
-  content: {
-    id: string;
-    sessionId: number;
-    lang: string; // 'ja' | 'en'
-    tags: string[] | null;
-    title: string;
-    titleJa: string;
-    speakers: Array<{
-      name: string;
-      nameJa: string;
-    }> | null;
-  };
+  content: TimeTableSessionFragment & { speakers: TimeTableSpeakerFragment[] };
   isJa: boolean;
 }
 

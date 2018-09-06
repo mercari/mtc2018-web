@@ -1,33 +1,62 @@
 import gql from 'graphql-tag';
 
+export const CONTENT_GRID_SESSION_FRAGMENT = gql`
+  fragment ContentGridSessionFragment on Session {
+    startTime
+    endTime
+    type
+    place
+    outline
+    outlineJa
+  }
+`;
+
+export const TIMETABLE_SESSION_FRAGMENT = gql`
+  fragment TimeTableSessionFragment on Session {
+    id
+    sessionId
+    lang
+    tags
+    title
+    titleJa
+  }
+`;
+
+export const CONTENT_GRID_SPEAKER_FRAGMENT = gql`
+  fragment ContentGridSpeakerFragment on Speaker {
+    id
+    speakerId
+    position
+    positionJa
+  }
+`;
+
+export const TIMETABLE_SPEAKER_FRAGMENT = gql`
+  fragment TimeTableSpeakerFragment on Speaker {
+    name
+    nameJa
+  }
+`;
+
 export const SESSIONS_QUERY = gql`
   query AllSessions {
     sessions(first: 0) {
       nodes {
         id
         sessionId
-        place
-        title
-        titleJa
-        type
-        tags
-        startTime
-        endTime
-        outline
-        outlineJa
-        lang
-        tags
+        ...ContentGridSessionFragment
+        ...TimeTableSessionFragment
         speakers {
-          id
-          speakerId
-          name
-          nameJa
-          position
-          positionJa
+          ...ContentGridSpeakerFragment
+          ...TimeTableSpeakerFragment
         }
       }
     }
   }
+  ${CONTENT_GRID_SESSION_FRAGMENT}
+  ${TIMETABLE_SESSION_FRAGMENT}
+  ${CONTENT_GRID_SPEAKER_FRAGMENT}
+  ${TIMETABLE_SPEAKER_FRAGMENT}
 `;
 
 export const NEWS_QUERY = gql`

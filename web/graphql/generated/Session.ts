@@ -27,10 +27,10 @@ export interface Session_session {
   place: string;
   title: string;
   titleJa: string;
-  tags: string[] | null;
+  tags: string[];
   outline: string;
   outlineJa: string;
-  speakers: Session_session_speakers[] | null;
+  speakers: Session_session_speakers[];
 }
 
 export interface Session {
