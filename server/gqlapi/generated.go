@@ -1663,8 +1663,14 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "tags":
 			out.Values[i] = ec._Session_tags(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "speakers":
 			out.Values[i] = ec._Session_speakers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -1930,6 +1936,9 @@ func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.Col
 		return obj.Tags, nil
 	})
 	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]string)
@@ -1958,6 +1967,9 @@ func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql
 		return obj.Speakers, nil
 	})
 	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]Speaker)
@@ -2019,8 +2031,14 @@ func (ec *executionContext) _SessionConnection(ctx context.Context, sel ast.Sele
 			}
 		case "edges":
 			out.Values[i] = ec._SessionConnection_edges(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "nodes":
 			out.Values[i] = ec._SessionConnection_nodes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -2067,9 +2085,12 @@ func (ec *executionContext) _SessionConnection_edges(ctx context.Context, field 
 		return obj.Edges, nil
 	})
 	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.([]*SessionEdge)
+	res := resTmp.([]SessionEdge)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -2084,7 +2105,7 @@ func (ec *executionContext) _SessionConnection_edges(ctx context.Context, field 
 		idx1 := idx1
 		rctx := &graphql.ResolverContext{
 			Index:  &idx1,
-			Result: res[idx1],
+			Result: &res[idx1],
 		}
 		ctx := graphql.WithResolverContext(ctx, rctx)
 		f := func(idx1 int) {
@@ -2093,11 +2114,7 @@ func (ec *executionContext) _SessionConnection_edges(ctx context.Context, field 
 			}
 			arr1[idx1] = func() graphql.Marshaler {
 
-				if res[idx1] == nil {
-					return graphql.Null
-				}
-
-				return ec._SessionEdge(ctx, field.Selections, res[idx1])
+				return ec._SessionEdge(ctx, field.Selections, &res[idx1])
 			}()
 		}
 		if isLen1 {
@@ -2123,9 +2140,12 @@ func (ec *executionContext) _SessionConnection_nodes(ctx context.Context, field 
 		return obj.Nodes, nil
 	})
 	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.([]*Session)
+	res := resTmp.([]Session)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -2140,7 +2160,7 @@ func (ec *executionContext) _SessionConnection_nodes(ctx context.Context, field 
 		idx1 := idx1
 		rctx := &graphql.ResolverContext{
 			Index:  &idx1,
-			Result: res[idx1],
+			Result: &res[idx1],
 		}
 		ctx := graphql.WithResolverContext(ctx, rctx)
 		f := func(idx1 int) {
@@ -2149,11 +2169,7 @@ func (ec *executionContext) _SessionConnection_nodes(ctx context.Context, field 
 			}
 			arr1[idx1] = func() graphql.Marshaler {
 
-				if res[idx1] == nil {
-					return graphql.Null
-				}
-
-				return ec._Session(ctx, field.Selections, res[idx1])
+				return ec._Session(ctx, field.Selections, &res[idx1])
 			}()
 		}
 		if isLen1 {
@@ -4175,8 +4191,8 @@ type PageInfo {
 
 type SessionConnection implements Connection {
   pageInfo: PageInfo!
-  edges: [SessionEdge]
-  nodes: [Session]
+  edges: [SessionEdge!]!
+  nodes: [Session!]!
 }
 
 type SessionEdge implements Edge {
@@ -4203,8 +4219,8 @@ type Session implements Node {
   outline: String!
   outlineJa: String!
   lang: String!
-  tags: [String!]
-  speakers: [Speaker!]
+  tags: [String!]!
+  speakers: [Speaker!]!
 }
 
 """

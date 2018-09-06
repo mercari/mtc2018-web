@@ -141,8 +141,8 @@ func (r *queryResolver) Sessions(ctx context.Context, first int, after *string, 
 
 	for _, session := range r.sessions {
 		session := session
-		conn.Edges = append(conn.Edges, &SessionEdge{Node: session})
-		conn.Nodes = append(conn.Nodes, &session)
+		conn.Edges = append(conn.Edges, SessionEdge{Node: session})
+		conn.Nodes = append(conn.Nodes, session)
 	}
 
 	return conn, nil
