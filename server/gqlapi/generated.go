@@ -79,6 +79,7 @@ type ComplexityRoot struct {
 
 	Session struct {
 		Id        func(childComplexity int) int
+		SessionId func(childComplexity int) int
 		Type      func(childComplexity int) int
 		Place     func(childComplexity int) int
 		Title     func(childComplexity int) int
@@ -370,6 +371,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Session.Id(childComplexity), true
+
+	case "Session.sessionId":
+		if e.complexity.Session.SessionId == nil {
+			break
+		}
+
+		return e.complexity.Session.SessionId(childComplexity), true
 
 	case "Session.type":
 		if e.complexity.Session.Type == nil {
@@ -1541,6 +1549,11 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "sessionId":
+			out.Values[i] = ec._Session_sessionId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "type":
 			out.Values[i] = ec._Session_type(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -1621,6 +1634,28 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 	res := resTmp.(string)
 	rctx.Result = res
 	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_sessionId(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.SessionID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	return graphql.MarshalInt(res)
 }
 
 // nolint: vetshadow
@@ -4091,6 +4126,7 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  sessionId: Int!
   type: String!
   place: String!
   title: String!

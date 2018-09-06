@@ -50,6 +50,7 @@ func NewResolver() (ResolverRoot, error) {
 
 		r.sessions = append(r.sessions, Session{
 			ID:        base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Session:%d", idx+1))),
+			SessionID: session.SessionID,
 			Type:      session.Type,
 			Title:     session.Title,
 			TitleJa:   session.TitleJa,

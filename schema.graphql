@@ -74,6 +74,7 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  sessionId: Int!
   type: String!
   place: String!
   title: String!
