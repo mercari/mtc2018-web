@@ -46,7 +46,7 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '15:30 ~ 16:00',
-    label: 'break',
+    label: 'Break',
     labelJa: '中休憩'
   },
   {
