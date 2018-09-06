@@ -1,2 +1,2 @@
-import TopPage from '../../containers/Top';
+import TopPage from '..';
 export default TopPage;
