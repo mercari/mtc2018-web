@@ -29,6 +29,9 @@ i18n
       .then(() => {
         const server = express()
 
+        // mercari tech conf 2017
+        server.use('/2017', express.static(path.join(__dirname+'/static/2017')));
+
         // enable middleware for i18next
         server.use(i18nextMiddleware.handle(i18n))
 
