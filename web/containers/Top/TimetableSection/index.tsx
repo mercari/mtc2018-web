@@ -69,8 +69,8 @@ const TimelineTable = styled.table`
   ${getTextStyle('body')};
   width: 100%;
   max-width: 920px;
-  border-spacing: 1px;
   table-layout: fixed;
+  border-spacing: 1px;
 
   th {
     padding: 10px;
