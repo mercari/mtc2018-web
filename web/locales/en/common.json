@@ -1,35 +1,35 @@
 {
-  "follow_us_on_twitter": "公式twitterアカウント( @mercaridevjp )にて情報を発信していきます。ぜひフォローをお願いします。",
+  "follow_us_on_twitter": "Please follow the official Twitter account (@mercaridevjp) for all announcements and information!",
   "about": {
-    "p1": "Mercari Tech Conf（MTC）は、株式会社メルカリをはじめとするメルカリグループ各社が、これから目指す方向や、これから取り組む技術的なチャレンジについてご紹介するエンジニア向けの技術カンファレンスです。",
-    "p2": "今年で第2回となる「Mercari Tech Conf 2018」では、テーマを「Evolution（変化）」として、この1年間でメルカリグループ内に起こった、もしくは起こりつつある変化をご紹介します。",
-    "p3": "各セッションに加え、昨年好評だった各エンジニアチームによる展示ブース、そしてお食事やお飲み物をご用意したAfter Party（懇親会）もございますので、是非エンジニア同士の交流の場としてもご活用ください。",
-    "p4": "なお、各セッションには日本語・英語の同時通訳をご用意しております。"
+    "p1": "Mercari Tech Conf (MTC) is a technology conference introducing the future business direction and the technological challenges of the companies of the Mercari Group to fellow engineers.",
+    "p2": "The theme of Mercari Tech Conf 2018 is Evolution. At this second annual conference we will introduce how the Mercari Group has evolved over the past year, and the changes yet to come.",
+    "p3": "In addition to various talk sessions, there will also be exhibition booths run by our various engineering teams as well as an after party with food and drinks provided. We hope all attendees can take advantage of this opportunity to socialize and network with your fellow engineers.",
+    "p4": "Simultaneous interpretation into English and Japanese will be provided for all sessions."
   },
   "access": {
-    "title": "六本木アカデミーヒルズ",
-    "address": "〒106-6149 東京都港区六本木６丁目１０番１号 六本木ヒルズ森タワー49F",
-    "linkToAcademyHills": "アカデミーヒルズまでのアクセス（アカデミーヒルズ公式サイトへ）",
+    "title": "Roppongi Academyhills",
+    "address": "Mori Tower 49th Floor 6-10-1 Roppongi, Minato-ku, Tokyo 106-0032",
+    "linkToAcademyHills": "Access to the Academyhills",
     "train": {
-      "title": "電車でお越しの場合",
+      "title": "Access by Subway",
       "texts": [
-        "東京メトロ 日比谷線「六本木」駅1C出口より徒歩3分（コンコースにて直結）",
-        "都営地下鉄 大江戸線「六本木」駅3出口より徒歩6分"
+        "Tokyo Metro Hibiya Line Roppongi Station / 3 min. walk from Exit 1C (Direct link to concourse)",
+        "Toei Subway Oedo Line Roppongi Station / 6 min. walk from Exit 3"
       ]
     },
     "bus": {
-      "title": "バスでお越しの場合",
+      "title": "Access by Bus",
       "fromShibuya": {
-        "title": "渋谷駅より",
+        "title": "From Shibuya Station",
         "texts": [
-          "都バス都RH01系統【渋谷駅前⇔六本木ヒルズ】／「六本木ヒルズ」「六本木ヒルズけやき坂」下車（約15分）",
-          "都バス 都01系統【渋谷駅前⇔新橋駅前】／「EXシアター六本木前」下車（約14分）"
+          "Toei Route RH01 bus (Shibuya Station ⇔ Roppongi Hills): Get off at “Roppongi Hills” or “Roppongi Hills Keyakizaka” (Approx. 15 min.)",
+          "Toei Route 01 bus (Shibuya Station ⇔ Shimbashi Station): Get off at “EX-THEATER-ROPPONGI-MAE” (Approx. 14 min.)"
         ]
       },
       "fromShimbashi": {
-        "title": "新橋駅より",
+        "title": "From Shimbashi Station",
         "texts": [
-          "都バス 都01系統【新橋駅前⇔渋谷駅前】／「EXシアター六本木前」下車（約16分）"
+          "Toei Route 01 bus (Shimbashi Station ⇔ Shibuya Station) : Exit at “EX-THEATER-ROPPONGI-MAE” (Approx. 16 min.)"
         ]
       }
     }
