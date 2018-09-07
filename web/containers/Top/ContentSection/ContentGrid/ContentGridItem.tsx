@@ -6,6 +6,7 @@ import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
 import { omitText } from '../../../../utils';
 import { AllSessions_sessionList_nodes } from '../../../../graphql/generated/AllSessions';
+import { LazyImage } from '../../../../components/LazyImage';
 
 interface Props {
   index: number;
@@ -167,7 +168,7 @@ const SpeakerInfo = styled.div`
   }
 `;
 
-const Icon = styled.img`
+const Icon = styled(LazyImage)`
   width: 60px;
   height: 60px;
   flex-shrink: 0;
