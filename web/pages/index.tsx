@@ -70,8 +70,8 @@ class Top extends React.Component<{}, State> {
 
               return (
                 <>
-                  <ContentSection sessions={data.sessions} />
-                  <StyledTimetableSection sessions={data.sessions} />
+                  <ContentSection sessions={data.sessionList} />
+                  <StyledTimetableSection sessions={data.sessionList} />
                 </>
               );
             }}

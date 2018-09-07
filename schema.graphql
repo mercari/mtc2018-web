@@ -9,7 +9,11 @@ type Query {
   """
   セッション一覧を取得します。
   """
-  sessions(first: Int, after: String, req: SessionListInput): SessionConnection!
+  sessionList(
+    first: Int
+    after: String
+    req: SessionListInput
+  ): SessionConnection!
 
   """
   セッションを取得します。
@@ -19,7 +23,7 @@ type Query {
   """
   お知らせ一覧を取得します
   """
-  news: [News!]!
+  newsList(first: Int, after: String): NewsConnection!
 }
 
 type Mutation {
@@ -118,6 +122,17 @@ type CreateLikePayload {
 type Like implements Node {
   id: ID!
   sessionID: ID!
+}
+
+type NewsConnection {
+  pageInfo: PageInfo!
+  edges: [NewsEdge!]!
+  nodes: [News!]!
+}
+
+type NewsEdge {
+  cursor: String
+  node: News!
 }
 
 """

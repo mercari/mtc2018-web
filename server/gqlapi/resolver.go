@@ -22,7 +22,6 @@ func NewResolver() (ResolverRoot, error) {
 	r := &rootResolver{
 		speakers:      make(map[string]Speaker),
 		likeObservers: make(map[string]chan Like),
-		news:          []News{},
 	}
 
 	for idx, session := range data.Sessions {
@@ -134,7 +133,7 @@ func (r *queryResolver) Nodes(ctx context.Context, ids []string) ([]*Node, error
 	panic("not implemented")
 }
 
-func (r *queryResolver) Sessions(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error) {
+func (r *queryResolver) SessionList(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error) {
 	// TODO first, afterちゃんと参照する
 
 	conn := SessionConnection{}
@@ -157,8 +156,18 @@ func (r *queryResolver) Session(ctx context.Context, sessionID int) (*Session, e
 	return nil, nil
 }
 
-func (r *queryResolver) News(ctx context.Context) ([]News, error) {
-	return r.news, nil
+func (r *queryResolver) NewsList(ctx context.Context, first *int, after *string) (NewsConnection, error) {
+	// TODO first, afterちゃんと参照する
+
+	conn := NewsConnection{}
+
+	for _, news := range r.news {
+		news := news
+		conn.Edges = append(conn.Edges, NewsEdge{Node: news})
+		conn.Nodes = append(conn.Nodes, news)
+	}
+
+	return conn, nil
 }
 
 type speakerQueryResolver struct{ *rootResolver }

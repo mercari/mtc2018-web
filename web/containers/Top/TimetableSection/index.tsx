@@ -7,10 +7,10 @@ import { rows } from '../../../store/timetable';
 import { Row } from '../../../types';
 import TimetableRow from './TimetableRow';
 import { I18n } from 'react-i18next';
-import { AllSessions_sessions } from '../../../graphql/generated/AllSessions';
+import { AllSessions_sessionList } from '../../../graphql/generated/AllSessions';
 
 interface Props {
-  sessions: AllSessions_sessions;
+  sessions: AllSessions_sessionList;
 }
 
 const TimetableSection: React.SFC<Props> = ({ sessions, ...props }) => {

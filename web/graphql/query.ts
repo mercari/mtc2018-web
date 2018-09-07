@@ -40,7 +40,7 @@ export const TIMETABLE_SPEAKER_FRAGMENT = gql`
 
 export const SESSIONS_QUERY = gql`
   query AllSessions {
-    sessions(first: 0) {
+    sessionList {
       nodes {
         id
         sessionId
@@ -61,12 +61,14 @@ export const SESSIONS_QUERY = gql`
 
 export const NEWS_QUERY = gql`
   query NewsQuery {
-    news {
-      id
-      date
-      message
-      messageJa
-      link
+    newsList {
+      nodes {
+        id
+        date
+        message
+        messageJa
+        link
+      }
     }
   }
 `;

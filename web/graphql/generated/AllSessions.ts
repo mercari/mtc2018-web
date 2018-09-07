@@ -5,7 +5,7 @@
 // GraphQL query operation: AllSessions
 // ====================================================
 
-export interface AllSessions_sessions_nodes_speakers {
+export interface AllSessions_sessionList_nodes_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
@@ -15,7 +15,7 @@ export interface AllSessions_sessions_nodes_speakers {
   nameJa: string;
 }
 
-export interface AllSessions_sessions_nodes {
+export interface AllSessions_sessionList_nodes {
   __typename: "Session";
   id: string;
   sessionId: number;
@@ -29,17 +29,17 @@ export interface AllSessions_sessions_nodes {
   tags: string[];
   title: string;
   titleJa: string;
-  speakers: AllSessions_sessions_nodes_speakers[];
+  speakers: AllSessions_sessionList_nodes_speakers[];
 }
 
-export interface AllSessions_sessions {
+export interface AllSessions_sessionList {
   __typename: "SessionConnection";
-  nodes: AllSessions_sessions_nodes[];
+  nodes: AllSessions_sessionList_nodes[];
 }
 
 export interface AllSessions {
   /**
    * セッション一覧を取得します。
    */
-  sessions: AllSessions_sessions;
+  sessionList: AllSessions_sessionList;
 }
