@@ -108,6 +108,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger) {
 	// index
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		ctx, span := trace.StartSpan(r.Context(), "hello世界")
+		span.AddAttributes(trace.StringAttribute("env", env.Env))
 		r = r.WithContext(ctx)
 		defer span.End()
 
