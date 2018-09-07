@@ -60,6 +60,27 @@ jobs:
             cd web
             npm run build
 
+  graphql:
+    working_directory: /usr/src/app
+    docker:
+      - image: node:10
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: |
+            npm install
+      - run:
+          name: lint
+          command: |
+            npm run check
+            npm run fmt
+            if [[ $(git --no-pager diff) ]] ; then
+              echo "you need to run npm run fmt && npm run check"
+              git --no-pager diff
+              exit 1
+            fi
+
   deploy:
     working_directory: /go/src/github.com/mercari/mtc2018-web
     docker:
@@ -102,10 +123,12 @@ workflows:
     jobs:
       - server
       - web
+      - graphql
       - deploy:
           requires:
             - server
             - web
+            - graphql
           filters:
             branches:
               only:
