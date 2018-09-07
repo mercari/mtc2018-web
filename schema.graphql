@@ -9,11 +9,7 @@ type Query {
   """
   セッション一覧を取得します。
   """
-  sessions(
-    first: Int!
-    after: String
-    req: SessionListInput
-  ): SessionConnection!
+  sessions(first: Int, after: String, req: SessionListInput): SessionConnection!
 
   """
   セッションを取得します。
@@ -42,16 +38,6 @@ interface Node {
   id: ID!
 }
 
-interface Connection {
-  pageInfo: PageInfo
-  edges: [Edge]
-}
-
-interface Edge {
-  cursor: String
-  node: Node!
-}
-
 type PageInfo {
   startCursor: String
   endCursor: String
@@ -59,13 +45,13 @@ type PageInfo {
   hasPreviousPage: Boolean!
 }
 
-type SessionConnection implements Connection {
+type SessionConnection {
   pageInfo: PageInfo!
   edges: [SessionEdge!]!
   nodes: [Session!]!
 }
 
-type SessionEdge implements Edge {
+type SessionEdge {
   cursor: String
   node: Session!
 }

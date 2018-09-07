@@ -73,7 +73,7 @@ type ComplexityRoot struct {
 	Query struct {
 		Node     func(childComplexity int, id string) int
 		Nodes    func(childComplexity int, ids []string) int
-		Sessions func(childComplexity int, first int, after *string, req *SessionListInput) int
+		Sessions func(childComplexity int, first *int, after *string, req *SessionListInput) int
 		Session  func(childComplexity int, sessionId int) int
 		News     func(childComplexity int) int
 	}
@@ -132,7 +132,7 @@ type MutationResolver interface {
 type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
-	Sessions(ctx context.Context, first int, after *string, req *SessionListInput) (SessionConnection, error)
+	Sessions(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error)
 	Session(ctx context.Context, sessionId int) (*Session, error)
 	News(ctx context.Context) ([]News, error)
 }
@@ -318,10 +318,15 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 		args := map[string]interface{}{}
 
-		var arg0 int
+		var arg0 *int
 		if tmp, ok := rawArgs["first"]; ok {
 			var err error
-			arg0, err = graphql.UnmarshalInt(tmp)
+			var ptr1 int
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalInt(tmp)
+				arg0 = &ptr1
+			}
+
 			if err != nil {
 				return 0, false
 			}
@@ -358,7 +363,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 		args["req"] = arg2
 
-		return e.complexity.Query.Sessions(childComplexity, args["first"].(int), args["after"].(*string), args["req"].(*SessionListInput)), true
+		return e.complexity.Query.Sessions(childComplexity, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput)), true
 
 	case "Query.session":
 		if e.complexity.Query.Session == nil {
@@ -1380,10 +1385,15 @@ func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.Coll
 func (ec *executionContext) _Query_sessions(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args := map[string]interface{}{}
-	var arg0 int
+	var arg0 *int
 	if tmp, ok := rawArgs["first"]; ok {
 		var err error
-		arg0, err = graphql.UnmarshalInt(tmp)
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
 		if err != nil {
 			ec.Error(ctx, err)
 			return graphql.Null
@@ -1427,7 +1437,7 @@ func (ec *executionContext) _Query_sessions(ctx context.Context, field graphql.C
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, nil, func(ctx context.Context) (interface{}, error) {
-		return ec.resolvers.Query().Sessions(ctx, args["first"].(int), args["after"].(*string), args["req"].(*SessionListInput))
+		return ec.resolvers.Query().Sessions(ctx, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput))
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2010,7 +2020,7 @@ func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql
 	return arr1
 }
 
-var sessionConnectionImplementors = []string{"SessionConnection", "Connection"}
+var sessionConnectionImplementors = []string{"SessionConnection"}
 
 // nolint: gocyclo, errcheck, gas, goconst
 func (ec *executionContext) _SessionConnection(ctx context.Context, sel ast.SelectionSet, obj *SessionConnection) graphql.Marshaler {
@@ -2183,7 +2193,7 @@ func (ec *executionContext) _SessionConnection_nodes(ctx context.Context, field 
 	return arr1
 }
 
-var sessionEdgeImplementors = []string{"SessionEdge", "Edge"}
+var sessionEdgeImplementors = []string{"SessionEdge"}
 
 // nolint: gocyclo, errcheck, gas, goconst
 func (ec *executionContext) _SessionEdge(ctx context.Context, sel ast.SelectionSet, obj *SessionEdge) graphql.Marshaler {
@@ -4001,32 +4011,6 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 	return ec.___Type(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Connection(ctx context.Context, sel ast.SelectionSet, obj *Connection) graphql.Marshaler {
-	switch obj := (*obj).(type) {
-	case nil:
-		return graphql.Null
-	case SessionConnection:
-		return ec._SessionConnection(ctx, sel, &obj)
-	case *SessionConnection:
-		return ec._SessionConnection(ctx, sel, obj)
-	default:
-		panic(fmt.Errorf("unexpected type %T", obj))
-	}
-}
-
-func (ec *executionContext) _Edge(ctx context.Context, sel ast.SelectionSet, obj *Edge) graphql.Marshaler {
-	switch obj := (*obj).(type) {
-	case nil:
-		return graphql.Null
-	case SessionEdge:
-		return ec._SessionEdge(ctx, sel, &obj)
-	case *SessionEdge:
-		return ec._SessionEdge(ctx, sel, obj)
-	default:
-		panic(fmt.Errorf("unexpected type %T", obj))
-	}
-}
-
 func (ec *executionContext) _Node(ctx context.Context, sel ast.SelectionSet, obj *Node) graphql.Marshaler {
 	switch obj := (*obj).(type) {
 	case nil:
@@ -4139,11 +4123,7 @@ type Query {
   """
   セッション一覧を取得します。
   """
-  sessions(
-    first: Int!
-    after: String
-    req: SessionListInput
-  ): SessionConnection!
+  sessions(first: Int, after: String, req: SessionListInput): SessionConnection!
 
   """
   セッションを取得します。
@@ -4172,16 +4152,6 @@ interface Node {
   id: ID!
 }
 
-interface Connection {
-  pageInfo: PageInfo
-  edges: [Edge]
-}
-
-interface Edge {
-  cursor: String
-  node: Node!
-}
-
 type PageInfo {
   startCursor: String
   endCursor: String
@@ -4189,13 +4159,13 @@ type PageInfo {
   hasPreviousPage: Boolean!
 }
 
-type SessionConnection implements Connection {
+type SessionConnection {
   pageInfo: PageInfo!
   edges: [SessionEdge!]!
   nodes: [Session!]!
 }
 
-type SessionEdge implements Edge {
+type SessionEdge {
   cursor: String
   node: Session!
 }
