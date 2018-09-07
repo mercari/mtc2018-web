@@ -1,7 +1,8 @@
 import * as React from 'react';
+import Router from 'next/router';
 import styled from 'styled-components';
 import { Text } from '../../../components';
-import { colors } from '../../../components/styles';
+import { colors, boxShadow } from '../../../components/styles';
 import { TimeTableSessionFragment } from '../../../graphql/generated/TimeTableSessionFragment';
 import { TimeTableSpeakerFragment } from '../../../graphql/generated/TimeTableSpeakerFragment';
 
@@ -14,30 +15,37 @@ interface Props {
   isJa: boolean;
 }
 
-const TimetableContentSlot: React.SFC<Props> = ({
-  content,
-  isJa,
-  ...props
-}) => {
-  const lang = content.lang === 'en' ? 'EN' : 'JA';
+class TimetableContentSlot extends React.PureComponent<Props> {
+  public render() {
+    const { content, isJa, ...props } = this.props;
+    const lang = content.lang === 'en' ? 'EN' : 'JA';
 
-  return (
-    <ContentSlotWrapper {...props}>
-      <div>{content.tags!.map(tag => `#${tag} `)}</div>
-      <Title>
-        {isJa ? content.titleJa : content.title}
-        <span>({lang})</span>
-      </Title>
-      <Speakers className="speakers">
-        {content.speakers!.map(speaker => (
-          <Text key={speaker.name} level="body">
-            {isJa ? speaker.nameJa : speaker.name}
-          </Text>
-        ))}
-      </Speakers>
-    </ContentSlotWrapper>
-  );
-};
+    return (
+      <ContentSlotWrapper onClick={this.onClick} {...props}>
+        <div>{content.tags!.map(tag => `#${tag} `)}</div>
+        <Title>
+          {isJa ? content.titleJa : content.title}
+          <span>({lang})</span>
+        </Title>
+        <Speakers className="speakers">
+          {content.speakers!.map(speaker => (
+            <Text key={speaker.name} level="body">
+              {isJa ? speaker.nameJa : speaker.name}
+            </Text>
+          ))}
+        </Speakers>
+      </ContentSlotWrapper>
+    );
+  }
+
+  private onClick = () => {
+    const sessionId = this.props.content.sessionId;
+    Router.push(
+      `/2018/session/detail?id=${sessionId}`,
+      `/2018/session/${sessionId}`
+    ).then(() => window.scrollTo(0, 0));
+  };
+}
 
 const ContentSlotWrapper = styled.div`
   width: 100%;
@@ -45,6 +53,16 @@ const ContentSlotWrapper = styled.div`
   border-bottom: 1px solid ${colors.primary};
   padding: 10px;
   box-sizing: border-box;
+  transition: 300ms;
+  cursor: pointer;
+  background-color: ${colors.yuki};
+
+  &:hover {
+    transform: scale(1.08);
+    box-shadow: ${boxShadow.level1};
+    background-color: ${colors.sakura};
+    border-bottom: 1px solid transparent;
+  }
 
   &:last-child {
     border-bottom: none;
