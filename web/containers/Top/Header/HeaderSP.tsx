@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { I18n } from 'react-i18next';
 import { colors, getTextStyle } from '../../../components/styles';
 import { HamburgerMenu } from '../../../components';
 import TwitterShareButton from './TwitterShareButton';
@@ -47,6 +48,20 @@ class Header extends React.Component<Props, State> {
             <TwitterShareButton />
             <FacebookShareButton />
           </SNS>
+          <I18n>
+            {(_, { i18n }) => {
+              const isJa = i18n.language === 'ja-JP';
+              const onClick = () => {
+                i18n.changeLanguage(isJa ? 'en-US' : 'ja-JP');
+                this.onClickNav();
+              };
+              return (
+                <NavButton onClick={onClick}>
+                  {isJa ? 'ENGLISH' : 'JAPANESE'}
+                </NavButton>
+              );
+            }}
+          </I18n>
         </Menu>
       </Wrapper>
     );
