@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { colors, getTextStyle } from '../../../components/styles';
 import TwitterShareButton from './TwitterShareButton';
 import FacebookShareButton from './FacebookShareButton';
+import LanguageToggleButton from './LanguageToggleButton';
 
 interface Props {
   isTopY: boolean;
@@ -25,6 +26,7 @@ class HeaderPC extends React.Component<Props> {
             <TwitterShareButton />
             <FacebookShareButton />
           </SNS>
+          <LanguageToggleButton />
         </Nav>
       </Wrapper>
     );
