@@ -13,15 +13,16 @@ import { withI18next } from '../lib/with-i18next';
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { AllSessions } from '../graphql/generated/AllSessions';
+import { Top as TopQueryTypes } from '../graphql/generated/Top';
 import { CONTENT_GRID_SESSION_FRAGMENT } from '../containers/Top/ContentSection/ContentGrid/ContentGridItem';
 import {
   TIMETABLE_SESSION_FRAGMENT,
   TIMETABLE_SPEAKER_FRAGMENT
 } from '../containers/Top/TimetableSection/TimetableContentSlot';
+import { NEWS_LIST_FRAGMENT } from '../containers/Top/NewsSection/NewsList';
 
-export const SESSIONS_QUERY = gql`
-  query AllSessions {
+export const TOP_QUERY = gql`
+  query Top {
     sessionList {
       nodes {
         id
@@ -33,13 +34,16 @@ export const SESSIONS_QUERY = gql`
         }
       }
     }
+
+    ...NewsListFragment
   }
   ${CONTENT_GRID_SESSION_FRAGMENT}
   ${TIMETABLE_SESSION_FRAGMENT}
   ${TIMETABLE_SPEAKER_FRAGMENT}
+  ${NEWS_LIST_FRAGMENT}
 `;
 
-class AllSessionsQuery extends Query<AllSessions> {}
+class TopQuery extends Query<TopQueryTypes> {}
 
 interface State {
   isTopY: boolean;
@@ -82,9 +86,7 @@ class Top extends React.Component<{}, State> {
         <StyledHeader isTopY={isTopY} />
         <MainVisual />
         <Body>
-          <NewsSection />
-          <AboutSection />
-          <AllSessionsQuery query={SESSIONS_QUERY}>
+          <TopQuery query={TOP_QUERY}>
             {({ loading, error, data }) => {
               if (error) {
                 return null;
@@ -95,12 +97,14 @@ class Top extends React.Component<{}, State> {
 
               return (
                 <>
-                  <ContentSection sessions={data.sessionList} />
+                  <NewsSection data={data} />
+                  <AboutSection />
+                  <ContentSection sessionList={data.sessionList} />
                   <StyledTimetableSection sessions={data.sessionList} />
                 </>
               );
             }}
-          </AllSessionsQuery>
+          </TopQuery>
           <AccessSection />
         </Body>
       </Default>

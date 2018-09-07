@@ -2,10 +2,10 @@ import * as React from 'react';
 import Router from 'next/router';
 import { Section } from '../../../components';
 import ContentGrid from './ContentGrid';
-import { AllSessions_sessionList } from '../../../graphql/generated/AllSessions';
+import { Top_sessionList } from '../../../graphql/generated/Top';
 
 interface Props {
-  sessions: AllSessions_sessionList;
+  sessionList: Top_sessionList;
 }
 
 class ContentSection extends React.PureComponent<Props> {
@@ -13,7 +13,7 @@ class ContentSection extends React.PureComponent<Props> {
     return (
       <Section title="CONTENTS" id="contents" {...this.props}>
         <ContentGrid
-          sessions={this.props.sessions}
+          sessionList={this.props.sessionList}
           onClickItem={this.onClickItem}
         />
       </Section>

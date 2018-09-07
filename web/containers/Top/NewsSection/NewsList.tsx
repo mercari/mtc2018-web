@@ -5,11 +5,14 @@ import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
 
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
-import { NewsQuery } from '../../../graphql/generated/NewsQuery';
+import { NewsListFragment } from '../../../graphql/generated/NewsListFragment';
 
-export const NEWS_QUERY = gql`
-  query NewsQuery {
+interface Props {
+  data: NewsListFragment;
+}
+
+export const NEWS_LIST_FRAGMENT = gql`
+  fragment NewsListFragment on Query {
     newsList {
       nodes {
         id
@@ -22,42 +25,29 @@ export const NEWS_QUERY = gql`
   }
 `;
 
-class News extends Query<NewsQuery> {}
-
-const NewsList: React.SFC = ({ ...props }) => (
+const NewsList: React.SFC<Props> = ({ ...props }) => (
   <Wrapper {...props}>
-    <News query={NEWS_QUERY}>
-      {({ data, error, loading }) => {
-        if (error || loading || !data) {
-          return null;
-        }
-
-        return (
-          <I18n>
-            {(_, { i18n }) => {
-              return data.newsList.nodes.map(newsItem => {
-                const message =
-                  i18n.language === 'ja-JP'
-                    ? newsItem.messageJa
-                    : newsItem.message;
-                return (
-                  <ListItem key={newsItem.id}>
-                    <ListItemDate>{newsItem.date}</ListItemDate>
-                    {newsItem.link ? (
-                      <ListItemMessageLink href={newsItem.link} target="_blank">
-                        {message}
-                      </ListItemMessageLink>
-                    ) : (
-                      <ListItemMessage>{message}</ListItemMessage>
-                    )}
-                  </ListItem>
-                );
-              });
-            }}
-          </I18n>
-        );
+    <I18n>
+      {(_, { i18n }) => {
+        const { data } = props;
+        return data.newsList.nodes.map(newsItem => {
+          const message =
+            i18n.language === 'ja-JP' ? newsItem.messageJa : newsItem.message;
+          return (
+            <ListItem key={newsItem.id}>
+              <ListItemDate>{newsItem.date}</ListItemDate>
+              {newsItem.link ? (
+                <ListItemMessageLink href={newsItem.link} target="_blank">
+                  {message}
+                </ListItemMessageLink>
+              ) : (
+                <ListItemMessage>{message}</ListItemMessage>
+              )}
+            </ListItem>
+          );
+        });
       }}
-    </News>
+    </I18n>
   </Wrapper>
 );
 

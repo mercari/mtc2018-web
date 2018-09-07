@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { MiniGrid } from '../../../../components';
 import ContentGridItem from './ContentGridItem';
-import { AllSessions_sessionList } from '../../../../graphql/generated/AllSessions';
+import { Top_sessionList } from '../../../../graphql/generated/Top';
 
 interface Props {
-  sessions: AllSessions_sessionList;
+  sessionList: Top_sessionList;
   onClickItem: (sessionId: number) => void;
 }
 
 class ContentGrid extends React.Component<Props> {
   public render() {
-    const { sessions, onClickItem } = this.props;
+    const { sessionList, onClickItem } = this.props;
     return (
       <MiniGrid minColumnWidth={360}>
-        {sessions.nodes!.map((session, index) => (
+        {sessionList.nodes!.map((session, index) => (
           <ContentGridItem
             key={`${session!.id}_${index}`}
             session={session!}

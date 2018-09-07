@@ -2,10 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: AllSessions
+// GraphQL query operation: Top
 // ====================================================
 
-export interface AllSessions_sessionList_nodes_speakers {
+export interface Top_sessionList_nodes_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
@@ -15,7 +15,7 @@ export interface AllSessions_sessionList_nodes_speakers {
   positionJa: string;
 }
 
-export interface AllSessions_sessionList_nodes {
+export interface Top_sessionList_nodes {
   __typename: "Session";
   id: string;
   sessionId: number;
@@ -28,18 +28,37 @@ export interface AllSessions_sessionList_nodes {
   outline: string;
   outlineJa: string;
   tags: string[];
-  speakers: AllSessions_sessionList_nodes_speakers[];
+  speakers: Top_sessionList_nodes_speakers[];
   lang: string;
 }
 
-export interface AllSessions_sessionList {
+export interface Top_sessionList {
   __typename: "SessionConnection";
-  nodes: AllSessions_sessionList_nodes[];
+  nodes: Top_sessionList_nodes[];
 }
 
-export interface AllSessions {
+export interface Top_newsList_nodes {
+  __typename: "News";
+  id: string;
+  date: string;
+  message: string;
+  messageJa: string;
+  link: string | null;
+}
+
+export interface Top_newsList {
+  __typename: "NewsConnection";
+  nodes: Top_newsList_nodes[];
+}
+
+export interface Top {
   /**
    * セッション一覧を取得します。
    */
-  sessionList: AllSessions_sessionList;
+  sessionList: Top_sessionList;
+  __typename: "Query";
+  /**
+   * お知らせ一覧を取得します
+   */
+  newsList: Top_newsList;
 }
