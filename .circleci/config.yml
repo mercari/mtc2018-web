@@ -40,15 +40,14 @@ jobs:
   web:
     working_directory: /usr/src/app
     docker:
-      - image: node:8
+      - image: node:10
     steps:
       - checkout
       - run:
           name: install
           command: |
             cd web
-            npm install
-            npm install tslint -g
+            npm ci
       - run:
           name: lint
           command: |
