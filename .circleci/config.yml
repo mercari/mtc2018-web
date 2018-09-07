@@ -110,9 +110,9 @@ jobs:
             fi
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-                echo 'export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_PRODUCTION"' >> $BASH_ENV
+                export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_PRODUCTION"
             eles
-                echo 'export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_DEVELOPMENT"' >> $BASH_ENV
+                export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_DEVELOPMENT"
             fi
 
             make cloudbuild >> .stdout 2>> .stderr
