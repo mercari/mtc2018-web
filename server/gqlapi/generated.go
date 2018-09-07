@@ -63,6 +63,17 @@ type ComplexityRoot struct {
 		Link      func(childComplexity int) int
 	}
 
+	NewsConnection struct {
+		PageInfo func(childComplexity int) int
+		Edges    func(childComplexity int) int
+		Nodes    func(childComplexity int) int
+	}
+
+	NewsEdge struct {
+		Cursor func(childComplexity int) int
+		Node   func(childComplexity int) int
+	}
+
 	PageInfo struct {
 		StartCursor     func(childComplexity int) int
 		EndCursor       func(childComplexity int) int
@@ -71,11 +82,11 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Node     func(childComplexity int, id string) int
-		Nodes    func(childComplexity int, ids []string) int
-		Sessions func(childComplexity int, first *int, after *string, req *SessionListInput) int
-		Session  func(childComplexity int, sessionId int) int
-		News     func(childComplexity int) int
+		Node        func(childComplexity int, id string) int
+		Nodes       func(childComplexity int, ids []string) int
+		SessionList func(childComplexity int, first *int, after *string, req *SessionListInput) int
+		Session     func(childComplexity int, sessionId int) int
+		NewsList    func(childComplexity int, first *int, after *string) int
 	}
 
 	Session struct {
@@ -132,9 +143,9 @@ type MutationResolver interface {
 type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
-	Sessions(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error)
+	SessionList(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error)
 	Session(ctx context.Context, sessionId int) (*Session, error)
-	News(ctx context.Context) ([]News, error)
+	NewsList(ctx context.Context, first *int, after *string) (NewsConnection, error)
 }
 type SpeakerResolver interface {
 	Sessions(ctx context.Context, obj *Speaker) ([]Session, error)
@@ -237,6 +248,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.News.Link(childComplexity), true
 
+	case "NewsConnection.pageInfo":
+		if e.complexity.NewsConnection.PageInfo == nil {
+			break
+		}
+
+		return e.complexity.NewsConnection.PageInfo(childComplexity), true
+
+	case "NewsConnection.edges":
+		if e.complexity.NewsConnection.Edges == nil {
+			break
+		}
+
+		return e.complexity.NewsConnection.Edges(childComplexity), true
+
+	case "NewsConnection.nodes":
+		if e.complexity.NewsConnection.Nodes == nil {
+			break
+		}
+
+		return e.complexity.NewsConnection.Nodes(childComplexity), true
+
+	case "NewsEdge.cursor":
+		if e.complexity.NewsEdge.Cursor == nil {
+			break
+		}
+
+		return e.complexity.NewsEdge.Cursor(childComplexity), true
+
+	case "NewsEdge.node":
+		if e.complexity.NewsEdge.Node == nil {
+			break
+		}
+
+		return e.complexity.NewsEdge.Node(childComplexity), true
+
 	case "PageInfo.startCursor":
 		if e.complexity.PageInfo.StartCursor == nil {
 			break
@@ -312,8 +358,8 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Nodes(childComplexity, args["ids"].([]string)), true
 
-	case "Query.sessions":
-		if e.complexity.Query.Sessions == nil {
+	case "Query.sessionList":
+		if e.complexity.Query.SessionList == nil {
 			break
 		}
 		args := map[string]interface{}{}
@@ -363,7 +409,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 		args["req"] = arg2
 
-		return e.complexity.Query.Sessions(childComplexity, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput)), true
+		return e.complexity.Query.SessionList(childComplexity, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput)), true
 
 	case "Query.session":
 		if e.complexity.Query.Session == nil {
@@ -383,12 +429,43 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Session(childComplexity, args["sessionId"].(int)), true
 
-	case "Query.news":
-		if e.complexity.Query.News == nil {
+	case "Query.newsList":
+		if e.complexity.Query.NewsList == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		return e.complexity.Query.News(childComplexity), true
+		var arg0 *int
+		if tmp, ok := rawArgs["first"]; ok {
+			var err error
+			var ptr1 int
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalInt(tmp)
+				arg0 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["first"] = arg0
+
+		var arg1 *string
+		if tmp, ok := rawArgs["after"]; ok {
+			var err error
+			var ptr1 string
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalString(tmp)
+				arg1 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["after"] = arg1
+
+		return e.complexity.Query.NewsList(childComplexity, args["first"].(*int), args["after"].(*string)), true
 
 	case "Session.id":
 		if e.complexity.Session.Id == nil {
@@ -1065,6 +1142,257 @@ func (ec *executionContext) _News_link(ctx context.Context, field graphql.Collec
 	return graphql.MarshalString(*res)
 }
 
+var newsConnectionImplementors = []string{"NewsConnection"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _NewsConnection(ctx context.Context, sel ast.SelectionSet, obj *NewsConnection) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, newsConnectionImplementors)
+
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("NewsConnection")
+		case "pageInfo":
+			out.Values[i] = ec._NewsConnection_pageInfo(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "edges":
+			out.Values[i] = ec._NewsConnection_edges(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "nodes":
+			out.Values[i] = ec._NewsConnection_nodes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _NewsConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *NewsConnection) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "NewsConnection",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.PageInfo, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(PageInfo)
+	rctx.Result = res
+
+	return ec._PageInfo(ctx, field.Selections, &res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _NewsConnection_edges(ctx context.Context, field graphql.CollectedField, obj *NewsConnection) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "NewsConnection",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Edges, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]NewsEdge)
+	rctx.Result = res
+
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._NewsEdge(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _NewsConnection_nodes(ctx context.Context, field graphql.CollectedField, obj *NewsConnection) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "NewsConnection",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Nodes, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]News)
+	rctx.Result = res
+
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._News(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
+}
+
+var newsEdgeImplementors = []string{"NewsEdge"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _NewsEdge(ctx context.Context, sel ast.SelectionSet, obj *NewsEdge) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, newsEdgeImplementors)
+
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("NewsEdge")
+		case "cursor":
+			out.Values[i] = ec._NewsEdge_cursor(ctx, field, obj)
+		case "node":
+			out.Values[i] = ec._NewsEdge_node(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _NewsEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *NewsEdge) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "NewsEdge",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Cursor, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+
+	if res == nil {
+		return graphql.Null
+	}
+	return graphql.MarshalString(*res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _NewsEdge_node(ctx context.Context, field graphql.CollectedField, obj *NewsEdge) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "NewsEdge",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Node, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(News)
+	rctx.Result = res
+
+	return ec._News(ctx, field.Selections, &res)
+}
+
 var pageInfoImplementors = []string{"PageInfo"}
 
 // nolint: gocyclo, errcheck, gas, goconst
@@ -1228,10 +1556,10 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				}
 				wg.Done()
 			}(i, field)
-		case "sessions":
+		case "sessionList":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Query_sessions(ctx, field)
+				out.Values[i] = ec._Query_sessionList(ctx, field)
 				if out.Values[i] == graphql.Null {
 					invalid = true
 				}
@@ -1243,10 +1571,10 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				out.Values[i] = ec._Query_session(ctx, field)
 				wg.Done()
 			}(i, field)
-		case "news":
+		case "newsList":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Query_news(ctx, field)
+				out.Values[i] = ec._Query_newsList(ctx, field)
 				if out.Values[i] == graphql.Null {
 					invalid = true
 				}
@@ -1382,7 +1710,7 @@ func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.Coll
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Query_sessions(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+func (ec *executionContext) _Query_sessionList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args := map[string]interface{}{}
 	var arg0 *int
@@ -1437,7 +1765,7 @@ func (ec *executionContext) _Query_sessions(ctx context.Context, field graphql.C
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, nil, func(ctx context.Context) (interface{}, error) {
-		return ec.resolvers.Query().Sessions(ctx, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput))
+		return ec.resolvers.Query().SessionList(ctx, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput))
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -1488,15 +1816,47 @@ func (ec *executionContext) _Query_session(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Query_news(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+func (ec *executionContext) _Query_newsList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["first"]; ok {
+		var err error
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["first"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["after"]; ok {
+		var err error
+		var ptr1 string
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalString(tmp)
+			arg1 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["after"] = arg1
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
-		Args:   nil,
+		Args:   args,
 		Field:  field,
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, nil, func(ctx context.Context) (interface{}, error) {
-		return ec.resolvers.Query().News(ctx)
+		return ec.resolvers.Query().NewsList(ctx, args["first"].(*int), args["after"].(*string))
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -1504,42 +1864,10 @@ func (ec *executionContext) _Query_news(ctx context.Context, field graphql.Colle
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]News)
+	res := resTmp.(NewsConnection)
 	rctx.Result = res
 
-	arr1 := make(graphql.Array, len(res))
-	var wg sync.WaitGroup
-
-	isLen1 := len(res) == 1
-	if !isLen1 {
-		wg.Add(len(res))
-	}
-
-	for idx1 := range res {
-		idx1 := idx1
-		rctx := &graphql.ResolverContext{
-			Index:  &idx1,
-			Result: &res[idx1],
-		}
-		ctx := graphql.WithResolverContext(ctx, rctx)
-		f := func(idx1 int) {
-			if !isLen1 {
-				defer wg.Done()
-			}
-			arr1[idx1] = func() graphql.Marshaler {
-
-				return ec._News(ctx, field.Selections, &res[idx1])
-			}()
-		}
-		if isLen1 {
-			f(idx1)
-		} else {
-			go f(idx1)
-		}
-
-	}
-	wg.Wait()
-	return arr1
+	return ec._NewsConnection(ctx, field.Selections, &res)
 }
 
 // nolint: vetshadow
@@ -4123,7 +4451,11 @@ type Query {
   """
   セッション一覧を取得します。
   """
-  sessions(first: Int, after: String, req: SessionListInput): SessionConnection!
+  sessionList(
+    first: Int
+    after: String
+    req: SessionListInput
+  ): SessionConnection!
 
   """
   セッションを取得します。
@@ -4133,7 +4465,7 @@ type Query {
   """
   お知らせ一覧を取得します
   """
-  news: [News!]!
+  newsList(first: Int, after: String): NewsConnection!
 }
 
 type Mutation {
@@ -4232,6 +4564,17 @@ type CreateLikePayload {
 type Like implements Node {
   id: ID!
   sessionID: ID!
+}
+
+type NewsConnection {
+  pageInfo: PageInfo!
+  edges: [NewsEdge!]!
+  nodes: [News!]!
+}
+
+type NewsEdge {
+  cursor: String
+  node: News!
 }
 
 """

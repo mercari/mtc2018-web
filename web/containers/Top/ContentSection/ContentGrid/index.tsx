@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { MiniGrid } from '../../../../components';
 import ContentGridItem from './ContentGridItem';
-import { AllSessions_sessions } from '../../../../graphql/generated/AllSessions';
+import { AllSessions_sessionList } from '../../../../graphql/generated/AllSessions';
 
 interface Props {
-  sessions: AllSessions_sessions;
+  sessions: AllSessions_sessionList;
   onClickItem: (sessionId: number) => void;
 }
 

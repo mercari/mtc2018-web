@@ -5,11 +5,11 @@ import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
 import { omitText } from '../../../../utils';
-import { AllSessions_sessions_nodes } from '../../../../graphql/generated/AllSessions';
+import { AllSessions_sessionList_nodes } from '../../../../graphql/generated/AllSessions';
 
 interface Props {
   index: number;
-  session: AllSessions_sessions_nodes;
+  session: AllSessions_sessionList_nodes;
   onClick: (sessionId: number) => void;
 }
 

@@ -20,7 +20,7 @@ const NewsList: React.SFC = ({ ...props }) => (
         return (
           <I18n>
             {(_, { i18n }) => {
-              return data.news.map(newsItem => {
+              return data.newsList.nodes.map(newsItem => {
                 const message =
                   i18n.language === 'ja-JP'
                     ? newsItem.messageJa

@@ -5,7 +5,7 @@
 // GraphQL query operation: NewsQuery
 // ====================================================
 
-export interface NewsQuery_news {
+export interface NewsQuery_newsList_nodes {
   __typename: "News";
   id: string;
   date: string;
@@ -14,9 +14,14 @@ export interface NewsQuery_news {
   link: string | null;
 }
 
+export interface NewsQuery_newsList {
+  __typename: "NewsConnection";
+  nodes: NewsQuery_newsList_nodes[];
+}
+
 export interface NewsQuery {
   /**
    * お知らせ一覧を取得します
    */
-  news: NewsQuery_news[];
+  newsList: NewsQuery_newsList;
 }

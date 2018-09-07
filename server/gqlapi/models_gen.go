@@ -28,6 +28,17 @@ type News struct {
 	Link      *string `json:"link"`
 }
 
+type NewsConnection struct {
+	PageInfo PageInfo   `json:"pageInfo"`
+	Edges    []NewsEdge `json:"edges"`
+	Nodes    []News     `json:"nodes"`
+}
+
+type NewsEdge struct {
+	Cursor *string `json:"cursor"`
+	Node   News    `json:"node"`
+}
+
 type Node interface{}
 
 type PageInfo struct {
