@@ -3,8 +3,28 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import { Text } from '../../../components';
 import { colors, boxShadow } from '../../../components/styles';
+
+import gql from 'graphql-tag';
 import { TimeTableSessionFragment } from '../../../graphql/generated/TimeTableSessionFragment';
 import { TimeTableSpeakerFragment } from '../../../graphql/generated/TimeTableSpeakerFragment';
+
+export const TIMETABLE_SESSION_FRAGMENT = gql`
+  fragment TimeTableSessionFragment on Session {
+    id
+    sessionId
+    lang
+    tags
+    title
+    titleJa
+  }
+`;
+
+export const TIMETABLE_SPEAKER_FRAGMENT = gql`
+  fragment TimeTableSpeakerFragment on Speaker {
+    name
+    nameJa
+  }
+`;
 
 export type TimetableSession = TimeTableSessionFragment & {
   speakers: TimeTableSpeakerFragment[];

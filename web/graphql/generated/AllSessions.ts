@@ -9,27 +9,27 @@ export interface AllSessions_sessionList_nodes_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
-  position: string;
-  positionJa: string;
   name: string;
   nameJa: string;
+  position: string;
+  positionJa: string;
 }
 
 export interface AllSessions_sessionList_nodes {
   __typename: "Session";
   id: string;
   sessionId: number;
+  title: string;
+  titleJa: string;
   startTime: string;
   endTime: string;
   type: string;
   place: string;
   outline: string;
   outlineJa: string;
-  lang: string;
   tags: string[];
-  title: string;
-  titleJa: string;
   speakers: AllSessions_sessionList_nodes_speakers[];
+  lang: string;
 }
 
 export interface AllSessions_sessionList {

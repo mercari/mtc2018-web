@@ -10,9 +10,34 @@ import ContentSection from '../containers/Top/ContentSection';
 import TimetableSection from '../containers/Top/TimetableSection';
 import AccessSection from '../containers/Top/AccessSection';
 import { withI18next } from '../lib/with-i18next';
+
+import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { AllSessions } from '../graphql/generated/AllSessions';
-import { SESSIONS_QUERY } from '../graphql/query';
+import { CONTENT_GRID_SESSION_FRAGMENT } from '../containers/Top/ContentSection/ContentGrid/ContentGridItem';
+import {
+  TIMETABLE_SESSION_FRAGMENT,
+  TIMETABLE_SPEAKER_FRAGMENT
+} from '../containers/Top/TimetableSection/TimetableContentSlot';
+
+export const SESSIONS_QUERY = gql`
+  query AllSessions {
+    sessionList {
+      nodes {
+        id
+        sessionId
+        ...ContentGridSessionFragment
+        ...TimeTableSessionFragment
+        speakers {
+          ...TimeTableSpeakerFragment
+        }
+      }
+    }
+  }
+  ${CONTENT_GRID_SESSION_FRAGMENT}
+  ${TIMETABLE_SESSION_FRAGMENT}
+  ${TIMETABLE_SPEAKER_FRAGMENT}
+`;
 
 class AllSessionsQuery extends Query<AllSessions> {}
 

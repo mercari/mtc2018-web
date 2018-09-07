@@ -3,9 +3,24 @@ import { I18n } from 'react-i18next';
 import styled, { css } from 'styled-components';
 import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
+
+import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { NewsQuery } from '../../../graphql/generated/NewsQuery';
-import { NEWS_QUERY } from '../../../graphql/query';
+
+export const NEWS_QUERY = gql`
+  query NewsQuery {
+    newsList {
+      nodes {
+        id
+        date
+        message
+        messageJa
+        link
+      }
+    }
+  }
+`;
 
 class News extends Query<NewsQuery> {}
 
