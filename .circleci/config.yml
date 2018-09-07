@@ -110,7 +110,7 @@ jobs:
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
                 export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_PRODUCTION"
-            eles
+            else
                 export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_DEVELOPMENT"
             fi
 
