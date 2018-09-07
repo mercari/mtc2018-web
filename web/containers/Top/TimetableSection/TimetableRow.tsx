@@ -18,7 +18,7 @@ const getContentById = (
   contents.find(content => content.sessionId === id);
 
 const getContentSlot = (
-  contentId: string,
+  contentId: number,
   sessions: TimetableSession[],
   isJa: boolean
 ) => {
@@ -40,7 +40,7 @@ const TimetableRow: React.SFC<Props> = ({ row, sessions, isJa }) => {
       // trackA
       tdList.push(
         <td key="track_a">
-          {row.trackA.map((contentId, index) =>
+          {row.trackA.map(contentId =>
             getContentSlot(contentId, sessions, isJa)
           )}
         </td>
@@ -48,7 +48,7 @@ const TimetableRow: React.SFC<Props> = ({ row, sessions, isJa }) => {
       // trackB
       tdList.push(
         <td key="track_b">
-          {row.trackB.map((contentId, index) =>
+          {row.trackB.map(contentId =>
             getContentSlot(contentId, sessions, isJa)
           )}
         </td>
