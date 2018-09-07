@@ -2,24 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Top
+// GraphQL fragment: ContentGridFragment
 // ====================================================
 
-export interface Top_newsList_nodes {
-  __typename: "News";
-  id: string;
-  date: string;
-  message: string;
-  messageJa: string;
-  link: string | null;
-}
-
-export interface Top_newsList {
-  __typename: "NewsConnection";
-  nodes: Top_newsList_nodes[];
-}
-
-export interface Top_sessionList_nodes_speakers {
+export interface ContentGridFragment_sessionList_nodes_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
@@ -29,7 +15,7 @@ export interface Top_sessionList_nodes_speakers {
   positionJa: string;
 }
 
-export interface Top_sessionList_nodes {
+export interface ContentGridFragment_sessionList_nodes {
   __typename: "Session";
   id: string;
   sessionId: number;
@@ -42,23 +28,18 @@ export interface Top_sessionList_nodes {
   outline: string;
   outlineJa: string;
   tags: string[];
-  speakers: Top_sessionList_nodes_speakers[];
-  lang: string;
+  speakers: ContentGridFragment_sessionList_nodes_speakers[];
 }
 
-export interface Top_sessionList {
+export interface ContentGridFragment_sessionList {
   __typename: "SessionConnection";
-  nodes: Top_sessionList_nodes[];
+  nodes: ContentGridFragment_sessionList_nodes[];
 }
 
-export interface Top {
+export interface ContentGridFragment {
   __typename: "Query";
-  /**
-   * お知らせ一覧を取得します
-   */
-  newsList: Top_newsList;
   /**
    * セッション一覧を取得します。
    */
-  sessionList: Top_sessionList;
+  sessionList: ContentGridFragment_sessionList;
 }

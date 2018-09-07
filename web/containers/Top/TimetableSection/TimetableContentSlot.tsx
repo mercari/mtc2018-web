@@ -5,33 +5,25 @@ import { Text } from '../../../components';
 import { colors, boxShadow } from '../../../components/styles';
 
 import gql from 'graphql-tag';
-import { TimeTableSessionFragment } from '../../../graphql/generated/TimeTableSessionFragment';
-import { TimeTableSpeakerFragment } from '../../../graphql/generated/TimeTableSpeakerFragment';
+import { TimetableContentSlotFragment } from '../../../graphql/generated/TimetableContentSlotFragment';
 
-export const TIMETABLE_SESSION_FRAGMENT = gql`
-  fragment TimeTableSessionFragment on Session {
+export const TIMETABLE_CONTENT_SLOT_FRAGMENT = gql`
+  fragment TimetableContentSlotFragment on Session {
     id
     sessionId
     lang
     tags
     title
     titleJa
+    speakers {
+      name
+      nameJa
+    }
   }
 `;
-
-export const TIMETABLE_SPEAKER_FRAGMENT = gql`
-  fragment TimeTableSpeakerFragment on Speaker {
-    name
-    nameJa
-  }
-`;
-
-export type TimetableSession = TimeTableSessionFragment & {
-  speakers: TimeTableSpeakerFragment[];
-};
 
 interface Props {
-  content: TimetableSession;
+  content: TimetableContentSlotFragment;
   isJa: boolean;
 }
 

@@ -11,6 +11,7 @@ import { ContentGridSessionFragment } from '../../../../graphql/generated/Conten
 
 export const CONTENT_GRID_SESSION_FRAGMENT = gql`
   fragment ContentGridSessionFragment on Session {
+    id
     sessionId
     title
     titleJa

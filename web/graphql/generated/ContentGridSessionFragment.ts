@@ -17,6 +17,7 @@ export interface ContentGridSessionFragment_speakers {
 
 export interface ContentGridSessionFragment {
   __typename: "Session";
+  id: string;
   sessionId: number;
   title: string;
   titleJa: string;

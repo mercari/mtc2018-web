@@ -7,40 +7,27 @@ import MainVisual from '../containers/Top/MainVisual';
 import NewsSection from '../containers/Top/NewsSection';
 import AboutSection from '../containers/Top/AboutSection';
 import ContentSection from '../containers/Top/ContentSection';
-import TimetableSection from '../containers/Top/TimetableSection';
+import TimetableSection, {
+  TIMETABLE_SECTION_FRAGMENT
+} from '../containers/Top/TimetableSection';
 import AccessSection from '../containers/Top/AccessSection';
 import { withI18next } from '../lib/with-i18next';
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { Top as TopQueryTypes } from '../graphql/generated/Top';
-import { CONTENT_GRID_SESSION_FRAGMENT } from '../containers/Top/ContentSection/ContentGrid/ContentGridItem';
-import {
-  TIMETABLE_SESSION_FRAGMENT,
-  TIMETABLE_SPEAKER_FRAGMENT
-} from '../containers/Top/TimetableSection/TimetableContentSlot';
 import { NEWS_LIST_FRAGMENT } from '../containers/Top/NewsSection/NewsList';
+import { CONTENT_GRID_FRAGMENT } from '../containers/Top/ContentSection/ContentGrid';
 
 export const TOP_QUERY = gql`
   query Top {
-    sessionList {
-      nodes {
-        id
-        sessionId
-        ...ContentGridSessionFragment
-        ...TimeTableSessionFragment
-        speakers {
-          ...TimeTableSpeakerFragment
-        }
-      }
-    }
-
     ...NewsListFragment
+    ...ContentGridFragment
+    ...TimetableSectionFragment
   }
-  ${CONTENT_GRID_SESSION_FRAGMENT}
-  ${TIMETABLE_SESSION_FRAGMENT}
-  ${TIMETABLE_SPEAKER_FRAGMENT}
   ${NEWS_LIST_FRAGMENT}
+  ${CONTENT_GRID_FRAGMENT}
+  ${TIMETABLE_SECTION_FRAGMENT}
 `;
 
 class TopQuery extends Query<TopQueryTypes> {}
@@ -99,8 +86,8 @@ class Top extends React.Component<{}, State> {
                 <>
                   <NewsSection data={data} />
                   <AboutSection />
-                  <ContentSection sessionList={data.sessionList} />
-                  <StyledTimetableSection sessions={data.sessionList} />
+                  <ContentSection data={data} />
+                  <StyledTimetableSection data={data} />
                 </>
               );
             }}

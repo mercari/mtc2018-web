@@ -2,20 +2,17 @@ import * as React from 'react';
 import Router from 'next/router';
 import { Section } from '../../../components';
 import ContentGrid from './ContentGrid';
-import { Top_sessionList } from '../../../graphql/generated/Top';
+import { ContentGridFragment } from '../../../graphql/generated/ContentGridFragment';
 
 interface Props {
-  sessionList: Top_sessionList;
+  data: ContentGridFragment;
 }
 
 class ContentSection extends React.PureComponent<Props> {
   public render() {
     return (
       <Section title="CONTENTS" id="contents" {...this.props}>
-        <ContentGrid
-          sessionList={this.props.sessionList}
-          onClickItem={this.onClickItem}
-        />
+        <ContentGrid data={this.props.data} onClickItem={this.onClickItem} />
       </Section>
     );
   }
