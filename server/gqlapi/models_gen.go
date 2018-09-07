@@ -2,8 +2,6 @@
 
 package gqlapi
 
-type Connection interface{}
-
 // セッションに対していいね！する時の引数です。
 type CreateLikeInput struct {
 	ClientMutationID *string `json:"clientMutationId"`
@@ -14,8 +12,6 @@ type CreateLikePayload struct {
 	ClientMutationID *string `json:"clientMutationId"`
 	Like             Like    `json:"like"`
 }
-
-type Edge interface{}
 
 // セッションに対していいね！した情報です。
 type Like struct {

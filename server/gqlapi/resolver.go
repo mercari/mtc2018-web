@@ -134,7 +134,7 @@ func (r *queryResolver) Nodes(ctx context.Context, ids []string) ([]*Node, error
 	panic("not implemented")
 }
 
-func (r *queryResolver) Sessions(ctx context.Context, first int, after *string, req *SessionListInput) (SessionConnection, error) {
+func (r *queryResolver) Sessions(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error) {
 	// TODO first, afterちゃんと参照する
 
 	conn := SessionConnection{}
