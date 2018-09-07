@@ -108,7 +108,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger) {
 	// index
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		ctx, span := trace.StartSpan(r.Context(), "hello世界")
-		span.AddAttributes(trace.StringAttribute("env", env.Env))
+
 		r = r.WithContext(ctx)
 		defer span.End()
 
@@ -117,8 +117,16 @@ func runServer(port int, env *config.Env, logger *zap.Logger) {
 
 	logger.Info("start http server")
 
-	var handler http.Handler = mux
-	handler = &ochttp.Handler{Handler: mux}
+	var handler http.Handler
+	handler = &ochttp.Handler{
+		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if span := trace.FromContext(r.Context()); span != nil {
+				span.AddAttributes(trace.StringAttribute("env", env.Env))
+			}
+			mux.ServeHTTP(w, r)
+		}),
+		IsPublicEndpoint: true,
+	}
 	handler = WithCORSHandler(env, handler)
 	err = http.ListenAndServe(fmt.Sprintf(":%d", port), handler)
 	if err != nil {
