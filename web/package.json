@@ -9,7 +9,7 @@
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged",
-    "codegen": "apollo codegen:generate graphql/generated --schema ../schema.graphql --addTypename --target typescript --outputFlat"
+    "codegen": "rm -rf graphql/generated && apollo codegen:generate graphql/generated --schema ../schema.graphql --addTypename --target typescript --outputFlat"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
