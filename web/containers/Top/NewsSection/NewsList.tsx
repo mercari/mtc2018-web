@@ -6,6 +6,7 @@ import { colors, getTextStyle } from '../../../components/styles';
 import { Query } from 'react-apollo';
 import { NewsQuery } from '../../../graphql/generated/NewsQuery';
 import { NEWS_QUERY } from '../../../graphql/query';
+import { isJapan } from '../../../utils';
 
 class News extends Query<NewsQuery> {}
 
@@ -21,10 +22,9 @@ const NewsList: React.SFC = ({ ...props }) => (
           <I18n>
             {(_, { i18n }) => {
               return data.newsList.nodes.map(newsItem => {
-                const message =
-                  i18n.language === 'ja-JP'
-                    ? newsItem.messageJa
-                    : newsItem.message;
+                const message = isJapan(i18n.language)
+                  ? newsItem.messageJa
+                  : newsItem.message;
                 return (
                   <ListItem key={newsItem.id}>
                     <ListItemDate>{newsItem.date}</ListItemDate>

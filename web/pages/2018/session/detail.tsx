@@ -14,6 +14,7 @@ import {
   SessionVariables
 } from '../../../graphql/generated/Session';
 import { SESSION_QUERY } from '../../../graphql/query';
+import { isJapan } from '../../../utils';
 
 class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
 
@@ -31,7 +32,7 @@ class Session extends React.Component<WithRouterProps> {
             return (
               <I18n>
                 {(_, { i18n }) => {
-                  const isJa = i18n.language === 'ja-JP';
+                  const isJa = isJapan(i18n.language);
                   return (
                     <>
                       <Head>
