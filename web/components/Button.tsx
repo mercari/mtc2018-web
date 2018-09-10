@@ -2,13 +2,20 @@ import styled, { css, InterpolationValue } from 'styled-components';
 import { colors, getTextStyle } from './styles';
 
 interface Props {
-  type?: 'primary' | 'secondary';
-  size?: 'large' | 'medium';
+  type?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'large' | 'medium' | 'small';
 }
 
-const getStyle = (type: 'primary' | 'secondary', size: 'large' | 'medium') => {
+const getStyle = (type?: string, size?: string) => {
   let typeStyle: InterpolationValue[];
   switch (type) {
+    case 'primary':
+      typeStyle = css`
+        background-color: ${colors.secondary};
+        border: none;
+        color: ${colors.yuki};
+      `;
+      break;
     case 'secondary':
       typeStyle = css`
         background-color: transparent;
@@ -16,11 +23,11 @@ const getStyle = (type: 'primary' | 'secondary', size: 'large' | 'medium') => {
         color: ${colors.secondary};
       `;
       break;
-    case 'primary':
+    case 'tertiary':
     default:
       typeStyle = css`
-        background-color: ${colors.secondary};
-        border: none;
+        background-color: transparent;
+        border: 1px solid ${colors.yuki};
         color: ${colors.yuki};
       `;
       break;
@@ -31,14 +38,23 @@ const getStyle = (type: 'primary' | 'secondary', size: 'large' | 'medium') => {
     case 'large':
       sizeStyle = css`
         height: 60px;
+        border-radius: 30px;
         ${getTextStyle('display2')};
       `;
       break;
     case 'medium':
-    default:
       sizeStyle = css`
         height: 48px;
+        border-radius: 24px;
         ${getTextStyle('display2')};
+      `;
+      break;
+    case 'small':
+    default:
+      sizeStyle = css`
+        height: 40px;
+        border-radius: 20px;
+        ${getTextStyle('display1')};
       `;
       break;
   }
@@ -49,9 +65,7 @@ const getStyle = (type: 'primary' | 'secondary', size: 'large' | 'medium') => {
 };
 
 const Button = styled.button`
-  ${({ type = 'primary', size = 'medium' }: Props) =>
-    getStyle(type, size)} padding: 0 32px;
-  border-radius: 32px;
+  ${({ type, size }: Props) => getStyle(type, size)} padding: 0 32px;
   box-sizing: border-box;
   cursor: pointer;
   transition: 0.3s;
