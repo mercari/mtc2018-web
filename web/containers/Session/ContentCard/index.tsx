@@ -3,28 +3,8 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip } from '../../../components';
 import { colors, getTextStyle, borderRadius } from '../../../components/styles';
-import ContentCardSpeaker, { SPEAKER_FRAGMENT } from './ContentCardSpeaker';
-
-import gql from 'graphql-tag';
+import ContentCardSpeaker from './ContentCardSpeaker';
 import { SessionFragment } from '../../../graphql/generated/SessionFragment';
-
-export const SESSION_FRAGMENT = gql`
-  fragment SessionFragment on Session {
-    startTime
-    endTime
-    type
-    place
-    title
-    titleJa
-    tags
-    outline
-    outlineJa
-    speakers {
-      ...SpeakerFragment
-    }
-  }
-  ${SPEAKER_FRAGMENT}
-`;
 
 interface Props {
   session: SessionFragment;
