@@ -1,27 +1,48 @@
 import * as React from 'react';
+import { I18n } from 'react-i18next';
 import styled, { css } from 'styled-components';
 import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
-import { News } from '../../../types';
+import { Query } from 'react-apollo';
+import { NewsQuery } from '../../../graphql/generated/NewsQuery';
+import { NEWS_QUERY } from '../../../graphql/query';
+import { isJapan } from '../../../utils';
 
-interface Props {
-  news: News[];
-}
+class News extends Query<NewsQuery> {}
 
-const NewsList: React.SFC<Props> = ({ news, ...props }) => (
+const NewsList: React.SFC = ({ ...props }) => (
   <Wrapper {...props}>
-    {news.map(newsItem => (
-      <ListItem key={newsItem.id}>
-        <ListItemDate>{newsItem.date}</ListItemDate>
-        {newsItem.link ? (
-          <ListItemMessageLink href={newsItem.link} target="_blank">
-            {newsItem.message}
-          </ListItemMessageLink>
-        ) : (
-          <ListItemMessage>{newsItem.message}</ListItemMessage>
-        )}
-      </ListItem>
-    ))}
+    <News query={NEWS_QUERY}>
+      {({ data, error, loading }) => {
+        if (error || loading || !data) {
+          return null;
+        }
+
+        return (
+          <I18n>
+            {(_, { i18n }) => {
+              return data.newsList.nodes.map(newsItem => {
+                const message = isJapan(i18n.language)
+                  ? newsItem.messageJa
+                  : newsItem.message;
+                return (
+                  <ListItem key={newsItem.id}>
+                    <ListItemDate>{newsItem.date}</ListItemDate>
+                    {newsItem.link ? (
+                      <ListItemMessageLink href={newsItem.link} target="_blank">
+                        {message}
+                      </ListItemMessageLink>
+                    ) : (
+                      <ListItemMessage>{message}</ListItemMessage>
+                    )}
+                  </ListItem>
+                );
+              });
+            }}
+          </I18n>
+        );
+      }}
+    </News>
   </Wrapper>
 );
 

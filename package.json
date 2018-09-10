@@ -7,6 +7,8 @@
   "scripts": {
     "fmt": "npm run fmt:graphql",
     "fmt:graphql": "prettier --write '*.graphql' 'server/**/*.graphql'",
+    "check": "npm run check:graphql",
+    "check:graphql": "graphql-schema-linter --config-direction ./graphql-schema-linter.config.js schema.graphql",
     "serve": "node mockServer.js"
   },
   "repository": {
@@ -26,6 +28,7 @@
     "graphql-tools": "^3.1.1"
   },
   "devDependencies": {
+    "graphql-schema-linter": "^0.1.6",
     "prettier": "^1.14.2"
   }
 }

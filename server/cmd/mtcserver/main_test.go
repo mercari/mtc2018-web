@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/mercari/mtc2018-web/server/config"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
@@ -24,7 +25,14 @@ func TestTrace(t *testing.T) {
 	port := 10000
 	logger := zap.NewNop()
 
-	go runServer(port, logger) // never stop
+	env := &config.Env{
+		LogLevel:        "DEBUG",
+		Env:             "develop",
+		DDAgentHostname: "localhost",
+		Port:            port,
+	}
+
+	go runServer(port, env, logger) // never stop
 
 	time.Sleep(100 * time.Millisecond)
 

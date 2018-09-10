@@ -2,8 +2,6 @@
 
 package gqlapi
 
-type Connection interface{}
-
 // セッションに対していいね！する時の引数です。
 type CreateLikeInput struct {
 	ClientMutationID *string `json:"clientMutationId"`
@@ -15,12 +13,30 @@ type CreateLikePayload struct {
 	Like             Like    `json:"like"`
 }
 
-type Edge interface{}
-
 // セッションに対していいね！した情報です。
 type Like struct {
 	ID        string `json:"id"`
 	SessionID string `json:"sessionID"`
+}
+
+// お知らせです。
+type News struct {
+	ID        string  `json:"id"`
+	Date      string  `json:"date"`
+	Message   string  `json:"message"`
+	MessageJa string  `json:"messageJa"`
+	Link      *string `json:"link"`
+}
+
+type NewsConnection struct {
+	PageInfo PageInfo   `json:"pageInfo"`
+	Edges    []NewsEdge `json:"edges"`
+	Nodes    []News     `json:"nodes"`
+}
+
+type NewsEdge struct {
+	Cursor *string `json:"cursor"`
+	Node   News    `json:"node"`
 }
 
 type Node interface{}
@@ -35,6 +51,8 @@ type PageInfo struct {
 // セッション1つに関する情報。
 type Session struct {
 	ID        string    `json:"id"`
+	SessionID int       `json:"sessionId"`
+	Type      string    `json:"type"`
 	Place     string    `json:"place"`
 	Title     string    `json:"title"`
 	TitleJa   string    `json:"titleJa"`
@@ -48,9 +66,9 @@ type Session struct {
 }
 
 type SessionConnection struct {
-	PageInfo PageInfo       `json:"pageInfo"`
-	Edges    []*SessionEdge `json:"edges"`
-	Nodes    []*Session     `json:"nodes"`
+	PageInfo PageInfo      `json:"pageInfo"`
+	Edges    []SessionEdge `json:"edges"`
+	Nodes    []Session     `json:"nodes"`
 }
 
 type SessionEdge struct {
@@ -65,6 +83,7 @@ type SessionListInput struct {
 // スピーカー1人に関する情報。
 type Speaker struct {
 	ID         string    `json:"id"`
+	SpeakerID  string    `json:"speakerId"`
 	Name       string    `json:"name"`
 	NameJa     string    `json:"nameJa"`
 	Company    string    `json:"company"`

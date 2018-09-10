@@ -26,6 +26,7 @@ jobs:
           working_directory: server
           command: |
             ./setup.sh
+            ./generate.sh
             ./test.sh -v
       - run:
           name: build
@@ -40,15 +41,14 @@ jobs:
   web:
     working_directory: /usr/src/app
     docker:
-      - image: node:8
+      - image: node:10
     steps:
       - checkout
       - run:
           name: install
           command: |
             cd web
-            npm install
-            npm install tslint -g
+            npm ci
       - run:
           name: lint
           command: |
@@ -59,6 +59,27 @@ jobs:
           command: |
             cd web
             npm run build
+
+  graphql:
+    working_directory: /usr/src/app
+    docker:
+      - image: node:10
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: |
+            npm install
+      - run:
+          name: lint
+          command: |
+            npm run check
+            npm run fmt
+            if [[ $(git --no-pager diff) ]] ; then
+              echo "you need to run npm run fmt && npm run check"
+              git --no-pager diff
+              exit 1
+            fi
 
   deploy:
     working_directory: /go/src/github.com/mercari/mtc2018-web
@@ -88,6 +109,12 @@ jobs:
                 export VERSION=develop-$(date +%Y%m%d%H%M%S)
             fi
 
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_PRODUCTION"
+            else
+                export GRAPHQL_ENDPOINT="$GRAPHQL_ENDPOINT_DEVELOPMENT"
+            fi
+
             make cloudbuild >> .stdout 2>> .stderr
 
 workflows:
@@ -96,10 +123,12 @@ workflows:
     jobs:
       - server
       - web
+      - graphql
       - deploy:
           requires:
             - server
             - web
+            - graphql
           filters:
             branches:
               only:

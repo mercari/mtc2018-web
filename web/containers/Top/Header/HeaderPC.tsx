@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { colors, getTextStyle } from '../../../components/styles';
 import TwitterShareButton from './TwitterShareButton';
 import FacebookShareButton from './FacebookShareButton';
+import LanguageToggleButton from './LanguageToggleButton';
 
 interface Props {
   isTopY: boolean;
@@ -16,15 +17,16 @@ class HeaderPC extends React.Component<Props> {
         <Logo onClick={this.onClickLogo} />
         <EmptySpace />
         <Nav>
-          <NavButton href="#news">NEWS</NavButton>
-          <NavButton href="#about">ABOUT</NavButton>
-          <NavButton href="#contents">CONTENTS</NavButton>
-          <NavButton href="#timetable">TIME TABLE</NavButton>
-          <NavButton href="#access">ACCESS</NavButton>
+          <NavButton href="/2018#news">NEWS</NavButton>
+          <NavButton href="/2018#about">ABOUT</NavButton>
+          <NavButton href="/2018#contents">CONTENTS</NavButton>
+          <NavButton href="/2018#timetable">TIME TABLE</NavButton>
+          <NavButton href="/2018#access">ACCESS</NavButton>
           <SNS>
             <TwitterShareButton />
             <FacebookShareButton />
           </SNS>
+          <StyledLangButton />
         </Nav>
       </Wrapper>
     );
@@ -108,6 +110,10 @@ const SNS = styled.div`
       margin-right: 0;
     }
   }
+`;
+
+const StyledLangButton = styled(LanguageToggleButton)`
+  margin-left: 36px;
 `;
 
 export default HeaderPC;

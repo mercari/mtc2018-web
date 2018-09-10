@@ -4,14 +4,17 @@ import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
 import { Section } from '../../../components';
 import { rows } from '../../../store/timetable';
-import { Content, Row } from '../../../types';
+import { Row } from '../../../types';
 import TimetableRow from './TimetableRow';
+import { I18n } from 'react-i18next';
+import { AllSessions_sessionList } from '../../../graphql/generated/AllSessions';
+import { isJapan } from '../../../utils';
 
 interface Props {
-  contents: Content[];
+  sessions: AllSessions_sessionList;
 }
 
-const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
+const TimetableSection: React.SFC<Props> = ({ sessions, ...props }) => {
   return (
     <Section title="TIME TABLE" id="timetable" {...props}>
       <Lang>
@@ -29,9 +32,19 @@ const TimetableSection: React.SFC<Props> = ({ contents, ...props }) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row: Row, rowIndex) => (
-            <TimetableRow row={row} contents={contents} key={rowIndex} />
-          ))}
+          <I18n>
+            {(_, { i18n }) => {
+              const isJa = isJapan(i18n.language);
+              return rows.map((row: Row, rowIndex) => (
+                <TimetableRow
+                  row={row}
+                  sessions={sessions.nodes}
+                  isJa={isJa}
+                  key={rowIndex}
+                />
+              ));
+            }}
+          </I18n>
         </tbody>
       </TimelineTable>
     </Section>
@@ -57,8 +70,8 @@ const TimelineTable = styled.table`
   ${getTextStyle('body')};
   width: 100%;
   max-width: 920px;
-  border-spacing: 1px;
   table-layout: fixed;
+  border-spacing: 1px;
 
   th {
     padding: 10px;

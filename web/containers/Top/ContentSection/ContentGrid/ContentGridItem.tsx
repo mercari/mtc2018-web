@@ -1,70 +1,86 @@
 import * as React from 'react';
+import { I18n } from 'react-i18next';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
-import { Content } from '../../../../types';
-import { omitText } from '../../../../utils';
+import { omitText, isJapan } from '../../../../utils';
+import { AllSessions_sessionList_nodes } from '../../../../graphql/generated/AllSessions';
 
 interface Props {
   index: number;
-  content: Content;
-  onClick: (content: Content) => void;
+  session: AllSessions_sessionList_nodes;
+  onClick: (sessionId: number) => void;
 }
 
 class ContentGridItem extends React.PureComponent<Props> {
   public render() {
-    const { content, onClick, ...props } = this.props;
-    const startTime = moment(content.startTime).format('HH:mm');
-    const endTime = moment(content.endTime).format('HH:mm');
+    const { session, onClick, ...props } = this.props;
+    const startTime = moment(session.startTime).format('HH:mm');
+    const endTime = moment(session.endTime).format('HH:mm');
     return (
       <Wrapper onClick={this.onClick} {...props}>
-        <ContentInfo>
-          <Header>
-            {content.type === 'keynote' ? (
-              <Tip type="important">KEYNOTE</Tip>
-            ) : (
-              <Tip type="normal">SESSION</Tip>
-            )}
-            <HeaderDetail>
-              <Text level="display2">{content.place}</Text>
-              <Text level="display2">
-                {startTime}-{endTime}
-              </Text>
-            </HeaderDetail>
-          </Header>
-          <Title>{content.title}</Title>
-          <Tags>
-            {content.tags.map(tag => (
-              <Text level="display1" key={tag}>
-                #{tag}
-              </Text>
-            ))}
-          </Tags>
-          <Body>{omitText(content.outline, 100)}</Body>
-        </ContentInfo>
-        <div>
-          {content.speakers.map(speaker => (
-            <SpeakerInfo key={speaker.id}>
-              <Icon
-                src={`../../../../static/images/speakers/${
-                  speaker.id
-                }_thumb.png`}
-              />
-              <div>
-                <Text level="display1">{speaker.nameJa}</Text>
-                <Text level="body">{speaker.position}</Text>
-              </div>
-            </SpeakerInfo>
-          ))}
-        </div>
+        <I18n>
+          {(_, { i18n }) => {
+            const isJa = isJapan(i18n.language);
+            return (
+              <>
+                <ContentInfo>
+                  <Header>
+                    {session.type === 'keynote' ? (
+                      <Tip type="important">KEYNOTE</Tip>
+                    ) : (
+                      <Tip type="normal">SESSION</Tip>
+                    )}
+                    <HeaderDetail>
+                      <Text level="display2">{session.place}</Text>
+                      <Text level="display2">
+                        {startTime}-{endTime}
+                      </Text>
+                    </HeaderDetail>
+                  </Header>
+                  <Title>{isJa ? session.titleJa : session.title}</Title>
+                  <Tags>
+                    {session.tags!.map(tag => (
+                      <Text level="display1" key={tag}>
+                        #{tag}
+                      </Text>
+                    ))}
+                  </Tags>
+                  <Body>
+                    {omitText(isJa ? session.outlineJa : session.outline, 100)}
+                  </Body>
+                </ContentInfo>
+                <div>
+                  {session.speakers!.map(speaker => (
+                    <SpeakerInfo key={speaker.id}>
+                      <Icon
+                        src={`/static/images/speakers/${
+                          speaker.speakerId
+                        }_thumb.png`}
+                      />
+                      <div>
+                        <Text level="display1">
+                          {isJa ? speaker.nameJa : speaker.name}
+                        </Text>
+                        <Text level="body">
+                          {isJa ? speaker.positionJa : speaker.position}
+                        </Text>
+                      </div>
+                    </SpeakerInfo>
+                  ))}
+                </div>
+              </>
+            );
+          }}
+        </I18n>
       </Wrapper>
     );
   }
 
   private onClick = () => {
-    const { content, onClick } = this.props;
-    onClick(content);
+    const { session, onClick } = this.props;
+    onClick(session.sessionId);
   };
 }
 

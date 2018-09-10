@@ -9,11 +9,21 @@ type Query {
   """
   セッション一覧を取得します。
   """
-  sessions(
-    first: Int!
+  sessionList(
+    first: Int
     after: String
     req: SessionListInput
   ): SessionConnection!
+
+  """
+  セッションを取得します。
+  """
+  session(sessionId: Int!): Session
+
+  """
+  お知らせ一覧を取得します
+  """
+  newsList(first: Int, after: String): NewsConnection!
 }
 
 type Mutation {
@@ -32,16 +42,6 @@ interface Node {
   id: ID!
 }
 
-interface Connection {
-  pageInfo: PageInfo
-  edges: [Edge]
-}
-
-interface Edge {
-  cursor: String
-  node: Node!
-}
-
 type PageInfo {
   startCursor: String
   endCursor: String
@@ -49,13 +49,13 @@ type PageInfo {
   hasPreviousPage: Boolean!
 }
 
-type SessionConnection implements Connection {
+type SessionConnection {
   pageInfo: PageInfo!
-  edges: [SessionEdge]
-  nodes: [Session]
+  edges: [SessionEdge!]!
+  nodes: [Session!]!
 }
 
-type SessionEdge implements Edge {
+type SessionEdge {
   cursor: String
   node: Session!
 }
@@ -69,6 +69,8 @@ input SessionListInput {
 """
 type Session implements Node {
   id: ID!
+  sessionId: Int!
+  type: String!
   place: String!
   title: String!
   titleJa: String!
@@ -77,8 +79,8 @@ type Session implements Node {
   outline: String!
   outlineJa: String!
   lang: String!
-  tags: [String!]
-  speakers: [Speaker!]
+  tags: [String!]!
+  speakers: [Speaker!]!
 }
 
 """
@@ -86,6 +88,7 @@ type Session implements Node {
 """
 type Speaker implements Node {
   id: ID!
+  speakerId: String!
   name: String!
   nameJa: String!
   company: String!
@@ -119,4 +122,26 @@ type CreateLikePayload {
 type Like implements Node {
   id: ID!
   sessionID: ID!
+}
+
+type NewsConnection {
+  pageInfo: PageInfo!
+  edges: [NewsEdge!]!
+  nodes: [News!]!
+}
+
+type NewsEdge {
+  cursor: String
+  node: News!
+}
+
+"""
+お知らせです。
+"""
+type News implements Node {
+  id: ID!
+  date: String!
+  message: String!
+  messageJa: String!
+  link: String
 }

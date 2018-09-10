@@ -3,16 +3,19 @@
     "module": "esnext",
     "target": "esnext",
     "jsx": "preserve",
+    "allowJs": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "noImplicitUseStrict": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": [
+      "types/*.d.ts"
+    ]
   }
 }

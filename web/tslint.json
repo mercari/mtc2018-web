@@ -17,9 +17,13 @@
     "no-use-before-declare": false,
     "jsx-no-multiline-js": false,
     "object-literal-sort-keys": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "max-classes-per-file": false
   },
   "linterOptions": {
-    "typeCheck": true
+    "typeCheck": true,
+    "exclude": [
+      "**/*.js"
+    ]
   }
 }

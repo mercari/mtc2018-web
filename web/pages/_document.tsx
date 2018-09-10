@@ -2,6 +2,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 import { colors } from '../components/styles';
+import '../i18n';
 
 export default class MyDocument extends Document {
   public static getInitialProps({ renderPage }: any) {
