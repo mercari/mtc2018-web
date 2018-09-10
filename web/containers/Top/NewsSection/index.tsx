@@ -4,16 +4,11 @@ import { I18n } from 'react-i18next';
 import { Text, Button, Card, Section } from '../../../components';
 import { colors } from '../../../components/styles';
 import NewsList from './NewsList';
-import { NewsListFragment } from '../../../graphql/generated/NewsListFragment';
 
-interface Props {
-  data: NewsListFragment;
-}
-
-const NewsSection: React.SFC<Props> = ({ ...props }) => (
+const NewsSection: React.SFC = ({ ...props }) => (
   <Section title="NEWS" id="news" {...props}>
     <Wrapper>
-      <StyledNewsList data={props.data} />
+      <StyledNewsList />
       <FollowButton
         type="primary"
         size="medium"

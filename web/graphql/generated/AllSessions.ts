@@ -2,44 +2,44 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: ContentGridFragment
+// GraphQL query operation: AllSessions
 // ====================================================
 
-export interface ContentGridFragment_sessionList_nodes_speakers {
+export interface AllSessions_sessionList_nodes_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
-  name: string;
-  nameJa: string;
   position: string;
   positionJa: string;
+  name: string;
+  nameJa: string;
 }
 
-export interface ContentGridFragment_sessionList_nodes {
+export interface AllSessions_sessionList_nodes {
   __typename: "Session";
   id: string;
   sessionId: number;
-  title: string;
-  titleJa: string;
   startTime: string;
   endTime: string;
   type: string;
   place: string;
   outline: string;
   outlineJa: string;
+  lang: string;
   tags: string[];
-  speakers: ContentGridFragment_sessionList_nodes_speakers[];
+  title: string;
+  titleJa: string;
+  speakers: AllSessions_sessionList_nodes_speakers[];
 }
 
-export interface ContentGridFragment_sessionList {
+export interface AllSessions_sessionList {
   __typename: "SessionConnection";
-  nodes: ContentGridFragment_sessionList_nodes[];
+  nodes: AllSessions_sessionList_nodes[];
 }
 
-export interface ContentGridFragment {
-  __typename: "Query";
+export interface AllSessions {
   /**
    * セッション一覧を取得します。
    */
-  sessionList: ContentGridFragment_sessionList;
+  sessionList: AllSessions_sessionList;
 }

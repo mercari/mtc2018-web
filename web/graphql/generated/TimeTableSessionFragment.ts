@@ -2,16 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: TimetableContentSlotFragment
+// GraphQL fragment: TimeTableSessionFragment
 // ====================================================
 
-export interface TimetableContentSlotFragment_speakers {
-  __typename: "Speaker";
-  name: string;
-  nameJa: string;
-}
-
-export interface TimetableContentSlotFragment {
+export interface TimeTableSessionFragment {
   __typename: "Session";
   id: string;
   sessionId: number;
@@ -19,5 +13,4 @@ export interface TimetableContentSlotFragment {
   tags: string[];
   title: string;
   titleJa: string;
-  speakers: TimetableContentSlotFragment_speakers[];
 }

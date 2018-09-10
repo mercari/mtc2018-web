@@ -1,39 +1,22 @@
 import * as React from 'react';
 import { MiniGrid } from '../../../../components';
-import ContentGridItem, {
-  CONTENT_GRID_SESSION_FRAGMENT
-} from './ContentGridItem';
-
-import gql from 'graphql-tag';
-import { ContentGridFragment } from '../../../../graphql/generated/ContentGridFragment';
-
-export const CONTENT_GRID_FRAGMENT = gql`
-  fragment ContentGridFragment on Query {
-    sessionList {
-      nodes {
-        ...ContentGridSessionFragment
-      }
-    }
-  }
-
-  ${CONTENT_GRID_SESSION_FRAGMENT}
-`;
+import ContentGridItem from './ContentGridItem';
+import { AllSessions_sessionList } from '../../../../graphql/generated/AllSessions';
 
 interface Props {
-  data: ContentGridFragment;
+  sessions: AllSessions_sessionList;
   onClickItem: (sessionId: number) => void;
 }
 
 class ContentGrid extends React.Component<Props> {
   public render() {
-    const { data, onClickItem } = this.props;
-    const { sessionList } = data;
+    const { sessions, onClickItem } = this.props;
     return (
       <MiniGrid minColumnWidth={360}>
-        {sessionList.nodes!.map((session, index) => (
+        {sessions.nodes!.map((session, index) => (
           <ContentGridItem
-            key={`${session.id}_${index}`}
-            session={session}
+            key={`${session!.id}_${index}`}
+            session={session!}
             index={index}
             onClick={onClickItem}
           />
