@@ -6,7 +6,7 @@ interface Props {
   size?: 'large' | 'medium' | 'small';
 }
 
-const getStyle = (type?: string, size?: string) => {
+const getStyle = (type?: Props['type'], size?: Props['size']) => {
   let typeStyle: InterpolationValue[];
   switch (type) {
     case 'primary':
