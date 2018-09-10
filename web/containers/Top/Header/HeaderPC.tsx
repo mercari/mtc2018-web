@@ -26,7 +26,7 @@ class HeaderPC extends React.Component<Props> {
             <TwitterShareButton />
             <FacebookShareButton />
           </SNS>
-          <LanguageToggleButton />
+          <StyledLangButton />
         </Nav>
       </Wrapper>
     );
@@ -110,6 +110,10 @@ const SNS = styled.div`
       margin-right: 0;
     }
   }
+`;
+
+const StyledLangButton = styled(LanguageToggleButton)`
+  margin-left: 36px;
 `;
 
 export default HeaderPC;
