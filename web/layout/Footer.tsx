@@ -7,6 +7,9 @@ const Footer = () => (
     <Body>
       <Copy>© 2018 Mercari, Inc.</Copy>
       <EmptySpace />
+      <Link href="/2017" target="_blank">
+        mercari Tech Conf 2017
+      </Link>
       <Link href="https://about.mercari.com/" target="_blank">
         会社概要
       </Link>
@@ -58,6 +61,11 @@ const Link = styled.a`
   ${getTextStyle('display1')};
   color: ${colors.yuki};
   text-decoration: none;
+  margin-left: 60px;
+
+  @media screen and (max-width: 767px) {
+    margin-left: 0;
+  }
 `;
 
 export default Footer;

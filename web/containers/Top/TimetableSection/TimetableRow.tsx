@@ -2,24 +2,42 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { colors } from '../../../components/styles';
 import { Row } from '../../../types';
-import TimetableContentSlot, { TimetableSession } from './TimetableContentSlot';
+import TimetableContentSlot, {
+  TIMETABLE_CONTENT_SLOT_FRAGMENT
+} from './TimetableContentSlot';
 import TimetableOtherSlot from './TimetableOtherSlot';
+
+import gql from 'graphql-tag';
+import {
+  TimetableRowFragment,
+  TimetableRowFragment_nodes
+} from '../../../graphql/generated/TimetableRowFragment';
+
+export const TIMETABLE_ROW_FRAGMENT = gql`
+  fragment TimetableRowFragment on SessionConnection {
+    nodes {
+      ...TimetableContentSlotFragment
+    }
+  }
+
+  ${TIMETABLE_CONTENT_SLOT_FRAGMENT}
+`;
 
 interface Props {
   row: Row;
-  sessions: TimetableSession[];
+  sessionList: TimetableRowFragment;
   isJa: boolean;
 }
 
 const getContentById = (
   id: number,
-  contents: TimetableSession[] = []
-): TimetableSession | undefined =>
+  contents: TimetableRowFragment_nodes[] = []
+): TimetableRowFragment_nodes | undefined =>
   contents.find(content => content.sessionId === id);
 
 const getContentSlot = (
   contentId: number,
-  sessions: TimetableSession[],
+  sessions: TimetableRowFragment_nodes[],
   isJa: boolean
 ) => {
   const content = getContentById(contentId, sessions);
@@ -32,7 +50,7 @@ const getContentSlot = (
   );
 };
 
-const TimetableRow: React.SFC<Props> = ({ row, sessions, isJa }) => {
+const TimetableRow: React.SFC<Props> = ({ row, sessionList, isJa }) => {
   const tdList: React.ReactNode[] = [];
 
   switch (row.type) {
@@ -41,7 +59,7 @@ const TimetableRow: React.SFC<Props> = ({ row, sessions, isJa }) => {
       tdList.push(
         <td key="track_a">
           {row.trackA.map(contentId =>
-            getContentSlot(contentId, sessions, isJa)
+            getContentSlot(contentId, sessionList.nodes, isJa)
           )}
         </td>
       );
@@ -49,7 +67,7 @@ const TimetableRow: React.SFC<Props> = ({ row, sessions, isJa }) => {
       tdList.push(
         <td key="track_b">
           {row.trackB.map(contentId =>
-            getContentSlot(contentId, sessions, isJa)
+            getContentSlot(contentId, sessionList.nodes, isJa)
           )}
         </td>
       );
