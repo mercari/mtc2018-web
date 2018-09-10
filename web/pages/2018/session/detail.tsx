@@ -3,18 +3,32 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import Router, { withRouter, WithRouterProps } from 'next/router';
 import Default from '../../../layout/Default';
-import ContentCard from '../../../containers/Session/ContentCard';
+import ContentCard, {
+  SESSION_FRAGMENT
+} from '../../../containers/Session/ContentCard';
 import Header from '../../../containers/Session/Header';
 import { Button, Section } from '../../../components';
 import { withI18next } from '../../../lib/with-i18next';
 import { I18n } from 'react-i18next';
+import { isJapan } from '../../../utils';
+
+import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import {
   Session as SessionQuery,
   SessionVariables
 } from '../../../graphql/generated/Session';
-import { SESSION_QUERY } from '../../../graphql/query';
-import { isJapan } from '../../../utils';
+
+export const SESSION_QUERY = gql`
+  query Session($sessionId: Int!) {
+    session(sessionId: $sessionId) {
+      id
+      sessionId
+      ...SessionFragment
+    }
+  }
+  ${SESSION_FRAGMENT}
+`;
 
 class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
 

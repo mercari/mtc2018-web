@@ -2,7 +2,22 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components';
 import { getTextStyle, borderRadius } from '../../../components/styles';
+
+import gql from 'graphql-tag';
 import { SpeakerFragment } from '../../../graphql/generated/SpeakerFragment';
+
+export const SPEAKER_FRAGMENT = gql`
+  fragment SpeakerFragment on Speaker {
+    id
+    speakerId
+    name
+    nameJa
+    position
+    positionJa
+    profile
+    profileJa
+  }
+`;
 
 interface Props {
   speaker: SpeakerFragment;

@@ -5,11 +5,37 @@ import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
 import { omitText, isJapan } from '../../../../utils';
-import { AllSessions_sessionList_nodes } from '../../../../graphql/generated/AllSessions';
+
+import gql from 'graphql-tag';
+import { ContentGridSessionFragment } from '../../../../graphql/generated/ContentGridSessionFragment';
+
+export const CONTENT_GRID_SESSION_FRAGMENT = gql`
+  fragment ContentGridSessionFragment on Session {
+    id
+    sessionId
+    title
+    titleJa
+    startTime
+    endTime
+    type
+    place
+    outline
+    outlineJa
+    tags
+    speakers {
+      id
+      speakerId
+      name
+      nameJa
+      position
+      positionJa
+    }
+  }
+`;
 
 interface Props {
   index: number;
-  session: AllSessions_sessionList_nodes;
+  session: ContentGridSessionFragment;
   onClick: (sessionId: number) => void;
 }
 
