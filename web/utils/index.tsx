@@ -46,3 +46,7 @@ export function joinWithBr(texts: string[]): React.ReactNode[] {
   result.splice(result.length - 1, 1);
   return result;
 }
+
+export function isJapan(lang: string): boolean {
+  return lang === 'ja-JP' || lang === 'ja';
+}

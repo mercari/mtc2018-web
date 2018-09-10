@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
-import { omitText } from '../../../../utils';
+import { omitText, isJapan } from '../../../../utils';
 import { AllSessions_sessionList_nodes } from '../../../../graphql/generated/AllSessions';
 
 interface Props {
@@ -22,7 +22,7 @@ class ContentGridItem extends React.PureComponent<Props> {
       <Wrapper onClick={this.onClick} {...props}>
         <I18n>
           {(_, { i18n }) => {
-            const isJa = i18n.language === 'ja-JP';
+            const isJa = isJapan(i18n.language);
             return (
               <>
                 <ContentInfo>

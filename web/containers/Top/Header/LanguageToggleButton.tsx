@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import styled from 'styled-components';
+import { isJapan } from '../../../utils';
 
 const img = {
   en: '/static/images/en.svg',
@@ -12,7 +13,7 @@ class LanguageToggleButton extends React.PureComponent {
     return (
       <I18n>
         {(_, { i18n }) => {
-          const isJa = i18n.language === 'ja-JP';
+          const isJa = isJapan(i18n.language);
           const onClick = () => i18n.changeLanguage(isJa ? 'en-US' : 'ja-JP');
           return (
             <Wrapper onClick={onClick}>

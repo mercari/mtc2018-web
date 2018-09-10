@@ -5,6 +5,7 @@ import { colors, getTextStyle } from '../../../components/styles';
 import { HamburgerMenu } from '../../../components';
 import TwitterShareButton from './TwitterShareButton';
 import FacebookShareButton from './FacebookShareButton';
+import { isJapan } from '../../../utils';
 
 interface Props {
   isTopY: boolean;
@@ -50,7 +51,7 @@ class Header extends React.Component<Props, State> {
           </SNS>
           <I18n>
             {(_, { i18n }) => {
-              const isJa = i18n.language === 'ja-JP';
+              const isJa = isJapan(i18n.language);
               const onClick = () => {
                 i18n.changeLanguage(isJa ? 'en-US' : 'ja-JP');
                 this.onClickNav();
