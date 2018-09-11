@@ -7,7 +7,7 @@ class MyApp extends App {
   public componentDidMount() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/service-worker.js', { scope: '/2018/' })
+        .register('/service-worker.js', { scope: '/2018' })
         .then(() => {
           // console.log('service worker registration successful', registration);
           // TODO: push notification に対応するとか
