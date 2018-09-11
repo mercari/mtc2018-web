@@ -28,5 +28,7 @@ module.exports = withTypescript(withOffline({
       { urlPattern: /^https?.*/, handler: 'networkFirst' }
     ],
     importScripts: ['/sw.js'],
+    clientsClaim: true,
+    skipWaiting: true,
   },
 }));
