@@ -6,6 +6,14 @@
     "p3": "In addition to various talk sessions, there will also be exhibition booths run by our various engineering teams as well as an after party with food and drinks provided. We hope all attendees can take advantage of this opportunity to socialize and network with your fellow engineers.",
     "p4": "Simultaneous interpretation into English and Japanese will be provided for all sessions."
   },
+  "session": {
+    "en": "English session",
+    "ja": "Japanese session"
+  },
+  "overview": {
+    "title": "Overview",
+    "url": "https://about.mercari.com/en/"
+  },
   "access": {
     "title": "Roppongi Academyhills",
     "address": "Mori Tower 49th Floor 6-10-1 Roppongi, Minato-ku, Tokyo 106-0032",
