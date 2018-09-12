@@ -46,7 +46,7 @@ i18n
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
 
         // redirect root access to /2018
-        server.get('/', (req, res) => res.redirect('/2018'))
+        // server.get('/', (req, res) => res.redirect('/2018'))
 
         // use next.js
         // server.get('*', (req, res) => handle(req, res))
