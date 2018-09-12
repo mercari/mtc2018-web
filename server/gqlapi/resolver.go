@@ -57,6 +57,7 @@ func NewResolver() (ResolverRoot, error) {
 			EndTime:   session.EndTime,
 			Outline:   session.Outline,
 			OutlineJa: session.OutlineJa,
+			Lang:      session.Lang,
 			Tags:      session.Tags,
 			Speakers:  speakers,
 		})
