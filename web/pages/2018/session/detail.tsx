@@ -55,7 +55,7 @@ class Session extends React.Component<WithRouterProps> {
                           {isJa ? data.session!.titleJa : data.session!.title}
                         </title>
                       </Head>
-                      <Header />
+                      <StyledHeader isTopY={true} />
                       <Body>
                         <Section title="SESSION">
                           <ContentCard session={data.session!} isJa={isJa} />
@@ -84,9 +84,16 @@ class Session extends React.Component<WithRouterProps> {
   };
 }
 
+const StyledHeader = styled(Header)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
+
 const Body = styled.div`
   width: 100%;
-  padding: 32px 64px 64px;
+  padding: 96px 64px 64px;
   box-sizing: border-box;
 
   > * {

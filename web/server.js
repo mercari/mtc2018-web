@@ -29,6 +29,10 @@ i18n
       .then(() => {
         const server = express()
 
+        // service worker
+        server.get('/service-worker.js', (req, res) => app.serveStatic(req, res, path.join(__dirname, '.next', '/service-worker.js')))
+        server.get('/sw.js', (req, res) => app.serveStatic(req, res, path.join(__dirname, '.next', '/sw.js')))
+
         // mercari tech conf 2017
         server.use('/2017', express.static(path.join(__dirname+'/static/2017')));
 
@@ -40,6 +44,9 @@ i18n
 
         // missing keys
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
+
+        // redirect root access to /2018
+        server.get('/', (req, res) => res.redirect('/2018'))
 
         // use next.js
         // server.get('*', (req, res) => handle(req, res))
