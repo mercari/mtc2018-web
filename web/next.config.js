@@ -9,7 +9,10 @@ module.exports = withTypescript(withOffline({
       config.plugins.push(new ForkTsCheckerWebpackPlugin());
     }
 
-    config.plugins.push(new CopyWebpackPlugin(['./lib/sw.js']));
+    config.plugins.push(new CopyWebpackPlugin([
+      './lib/sw.js',
+      './lib/web-app-manifest/'
+    ]));
 
     return config;
   },
