@@ -7,14 +7,35 @@ import LanguageToggleButton from './LanguageToggleButton';
 
 interface Props {
   isTopY: boolean;
+  online: boolean;
+  pushPermission: NotificationPermission | undefined;
+  enablePush: () => void;
+  sendPush: () => void;
 }
 
 class HeaderPC extends React.Component<Props> {
   public render() {
-    const { isTopY, ...props } = this.props;
+    const {
+      isTopY,
+      online,
+      pushPermission,
+      enablePush,
+      sendPush,
+      ...props
+    } = this.props;
     return (
       <Wrapper showBg={isTopY} {...props}>
         <Logo onClick={this.onClickLogo} />
+        {online ? null : <p style={{ color: '#F6422A' }}>offline</p>}
+        {pushPermission === 'default' ? (
+          <div>
+            <button onClick={enablePush}>Push通知をONにする</button>
+          </div>
+        ) : pushPermission === 'granted' ? (
+          <div>
+            <button onClick={sendPush}>Push通知を送る</button>
+          </div>
+        ) : null}
         <EmptySpace />
         <Nav>
           <NavButton href="/2018#news">NEWS</NavButton>

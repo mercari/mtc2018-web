@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 /**
  * 文字を渡された文字数で省略する
  */
@@ -7,20 +9,6 @@ export const omitText = (text: string, maxLength: number = 20): string => {
   }
   return text;
 };
-
-/**
- * 渡されたものを指定された数だけ
- * 複製して配列で返却
- */
-export function duplicate<T>(n: number) {
-  return (item: T): T[] => {
-    const list: T[] = [];
-    for (let i = 0; i < n; i++) {
-      list.push(item);
-    }
-    return list;
-  };
-}
 
 /**
  * 渡された回数だけ関数を実行する
@@ -49,4 +37,22 @@ export function joinWithBr(texts: string[]): React.ReactNode[] {
 
 export function isJapan(lang: string): boolean {
   return lang === 'ja-JP' || lang === 'ja';
+}
+
+/**
+ * ネットワーク接続状態のObservableを生成する
+ */
+export function createNetworkStatusObserver(): Observable<boolean> {
+  return new Observable(observer => {
+    observer.next(navigator.onLine);
+    const onlineHandler = () => observer.next(true);
+    const offlineHandler = () => observer.next(false);
+    window.addEventListener('online', onlineHandler);
+    window.addEventListener('offline', offlineHandler);
+
+    return () => {
+      window.removeEventListener('online', onlineHandler);
+      window.removeEventListener('offline', offlineHandler);
+    };
+  });
 }
