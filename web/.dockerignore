@@ -3,3 +3,5 @@ npm-debug.log
 .gitignore
 .git
 .next
+.envrc
+.envrc.sample

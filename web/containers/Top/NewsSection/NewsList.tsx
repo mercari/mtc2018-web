@@ -1,48 +1,54 @@
 import * as React from 'react';
 import { I18n } from 'react-i18next';
+import { isJapan } from '../../../utils';
 import styled, { css } from 'styled-components';
 import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
-import { Query } from 'react-apollo';
-import { NewsQuery } from '../../../graphql/generated/NewsQuery';
-import { NEWS_QUERY } from '../../../graphql/query';
-import { isJapan } from '../../../utils';
 
-class News extends Query<NewsQuery> {}
+import gql from 'graphql-tag';
+import { NewsListFragment } from '../../../graphql/generated/NewsListFragment';
 
-const NewsList: React.SFC = ({ ...props }) => (
+interface Props {
+  gqlData: NewsListFragment;
+}
+
+export const NEWS_LIST_FRAGMENT = gql`
+  fragment NewsListFragment on Query {
+    newsList {
+      nodes {
+        id
+        date
+        message
+        messageJa
+        link
+      }
+    }
+  }
+`;
+
+const NewsList: React.SFC<Props> = ({ gqlData, ...props }) => (
   <Wrapper {...props}>
-    <News query={NEWS_QUERY}>
-      {({ data, error, loading }) => {
-        if (error || loading || !data) {
-          return null;
-        }
-
-        return (
-          <I18n>
-            {(_, { i18n }) => {
-              return data.newsList.nodes.map(newsItem => {
-                const message = isJapan(i18n.language)
-                  ? newsItem.messageJa
-                  : newsItem.message;
-                return (
-                  <ListItem key={newsItem.id}>
-                    <ListItemDate>{newsItem.date}</ListItemDate>
-                    {newsItem.link ? (
-                      <ListItemMessageLink href={newsItem.link} target="_blank">
-                        {message}
-                      </ListItemMessageLink>
-                    ) : (
-                      <ListItemMessage>{message}</ListItemMessage>
-                    )}
-                  </ListItem>
-                );
-              });
-            }}
-          </I18n>
-        );
+    <I18n>
+      {(_, { i18n }) => {
+        return gqlData.newsList.nodes.map(newsItem => {
+          const message = isJapan(i18n.language)
+            ? newsItem.messageJa
+            : newsItem.message;
+          return (
+            <ListItem key={newsItem.id}>
+              <ListItemDate>{newsItem.date}</ListItemDate>
+              {newsItem.link ? (
+                <ListItemMessageLink href={newsItem.link} target="_blank">
+                  {message}
+                </ListItemMessageLink>
+              ) : (
+                <ListItemMessage>{message}</ListItemMessage>
+              )}
+            </ListItem>
+          );
+        });
       }}
-    </News>
+    </I18n>
   </Wrapper>
 );
 

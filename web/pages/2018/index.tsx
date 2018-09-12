@@ -7,14 +7,30 @@ import MainVisual from '../../containers/Top/MainVisual';
 import NewsSection from '../../containers/Top/NewsSection';
 import AboutSection from '../../containers/Top/AboutSection';
 import ContentSection from '../../containers/Top/ContentSection';
-import TimetableSection from '../../containers/Top/TimetableSection';
+import TimetableSection, {
+  TIMETABLE_SECTION_FRAGMENT
+} from '../../containers/Top/TimetableSection';
 import AccessSection from '../../containers/Top/AccessSection';
 import { withI18next } from '../../lib/with-i18next';
-import { Query } from 'react-apollo';
-import { AllSessions } from '../../graphql/generated/AllSessions';
-import { SESSIONS_QUERY } from '../../graphql/query';
 
-class AllSessionsQuery extends Query<AllSessions> {}
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+import { Top as TopQuery } from '../../graphql/generated/Top';
+import { NEWS_LIST_FRAGMENT } from '../../containers/Top/NewsSection/NewsList';
+import { CONTENT_GRID_FRAGMENT } from '../../containers/Top/ContentSection/ContentGrid';
+
+export const TOP_QUERY = gql`
+  query Top {
+    ...NewsListFragment
+    ...ContentGridFragment
+    ...TimetableSectionFragment
+  }
+  ${NEWS_LIST_FRAGMENT}
+  ${CONTENT_GRID_FRAGMENT}
+  ${TIMETABLE_SECTION_FRAGMENT}
+`;
+
+class TopQueryComponent extends Query<TopQuery> {}
 
 interface State {
   isTopY: boolean;
@@ -57,25 +73,25 @@ class Top extends React.Component<{}, State> {
         <StyledHeader isTopY={isTopY} />
         <MainVisual />
         <Body>
-          <NewsSection />
-          <AboutSection />
-          <AllSessionsQuery query={SESSIONS_QUERY}>
+          <TopQueryComponent query={TOP_QUERY}>
             {({ loading, error, data }) => {
               if (error) {
                 return null;
               }
-              if (loading || !data) {
+              if (loading || !data || !data.newsList) {
                 return null;
               }
 
               return (
                 <>
-                  <ContentSection sessions={data.sessionList} />
-                  <StyledTimetableSection sessions={data.sessionList} />
+                  <NewsSection gqlData={data} />
+                  <AboutSection />
+                  <ContentSection gqlData={data} />
+                  <StyledTimetableSection gqlData={data} />
                 </>
               );
             }}
-          </AllSessionsQuery>
+          </TopQueryComponent>
           <AccessSection />
         </Body>
       </Default>

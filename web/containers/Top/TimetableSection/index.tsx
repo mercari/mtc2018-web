@@ -5,16 +5,28 @@ import { colors, getTextStyle } from '../../../components/styles';
 import { Section } from '../../../components';
 import { rows } from '../../../store/timetable';
 import { Row } from '../../../types';
-import TimetableRow from './TimetableRow';
+import TimetableRow, { TIMETABLE_ROW_FRAGMENT } from './TimetableRow';
 import { I18n } from 'react-i18next';
-import { AllSessions_sessionList } from '../../../graphql/generated/AllSessions';
 import { isJapan } from '../../../utils';
 
+import gql from 'graphql-tag';
+import { TimetableSectionFragment } from '../../../graphql/generated/TimetableSectionFragment';
+
+export const TIMETABLE_SECTION_FRAGMENT = gql`
+  fragment TimetableSectionFragment on Query {
+    sessionList {
+      ...TimetableRowFragment
+    }
+  }
+
+  ${TIMETABLE_ROW_FRAGMENT}
+`;
+
 interface Props {
-  sessions: AllSessions_sessionList;
+  gqlData: TimetableSectionFragment;
 }
 
-const TimetableSection: React.SFC<Props> = ({ sessions, ...props }) => {
+const TimetableSection: React.SFC<Props> = ({ gqlData, ...props }) => {
   return (
     <I18n>
       {(t, { i18n }) => {
@@ -39,7 +51,7 @@ const TimetableSection: React.SFC<Props> = ({ sessions, ...props }) => {
                 {rows.map((row: Row, rowIndex) => (
                   <TimetableRow
                     row={row}
-                    sessions={sessions.nodes}
+                    sessionList={gqlData.sessionList}
                     isJa={isJa}
                     key={rowIndex}
                   />
