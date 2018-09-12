@@ -84,10 +84,10 @@ class Top extends React.Component<{}, State> {
 
               return (
                 <>
-                  <NewsSection data={data} />
+                  <NewsSection gqlData={data} />
                   <AboutSection />
-                  <ContentSection data={data} />
-                  <StyledTimetableSection data={data} />
+                  <ContentSection gqlData={data} />
+                  <StyledTimetableSection gqlData={data} />
                 </>
               );
             }}

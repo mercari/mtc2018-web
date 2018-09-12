@@ -9,7 +9,7 @@ import gql from 'graphql-tag';
 import { NewsListFragment } from '../../../graphql/generated/NewsListFragment';
 
 interface Props {
-  data: NewsListFragment;
+  gqlData: NewsListFragment;
 }
 
 export const NEWS_LIST_FRAGMENT = gql`
@@ -30,8 +30,8 @@ const NewsList: React.SFC<Props> = ({ ...props }) => (
   <Wrapper {...props}>
     <I18n>
       {(_, { i18n }) => {
-        const { data } = props;
-        return data.newsList.nodes.map(newsItem => {
+        const { gqlData } = props;
+        return (gqlData.newsList || []).nodes.map(newsItem => {
           const message = isJapan(i18n.language)
             ? newsItem.messageJa
             : newsItem.message;

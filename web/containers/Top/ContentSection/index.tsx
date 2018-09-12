@@ -5,14 +5,17 @@ import ContentGrid from './ContentGrid';
 import { ContentGridFragment } from '../../../graphql/generated/ContentGridFragment';
 
 interface Props {
-  data: ContentGridFragment;
+  gqlData: ContentGridFragment;
 }
 
 class ContentSection extends React.PureComponent<Props> {
   public render() {
     return (
       <Section title="CONTENTS" id="contents" {...this.props}>
-        <ContentGrid data={this.props.data} onClickItem={this.onClickItem} />
+        <ContentGrid
+          gqlData={this.props.gqlData}
+          onClickItem={this.onClickItem}
+        />
       </Section>
     );
   }

@@ -23,10 +23,10 @@ export const TIMETABLE_SECTION_FRAGMENT = gql`
 `;
 
 interface Props {
-  data: TimetableSectionFragment;
+  gqlData: TimetableSectionFragment;
 }
 
-const TimetableSection: React.SFC<Props> = ({ data, ...props }) => {
+const TimetableSection: React.SFC<Props> = ({ gqlData, ...props }) => {
   return (
     <Section title="TIME TABLE" id="timetable" {...props}>
       <Lang>
@@ -50,7 +50,7 @@ const TimetableSection: React.SFC<Props> = ({ data, ...props }) => {
               return rows.map((row: Row, rowIndex) => (
                 <TimetableRow
                   row={row}
-                  sessionList={data.sessionList}
+                  sessionList={gqlData.sessionList}
                   isJa={isJa}
                   key={rowIndex}
                 />

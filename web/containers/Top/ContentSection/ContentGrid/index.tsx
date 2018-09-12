@@ -20,14 +20,14 @@ export const CONTENT_GRID_FRAGMENT = gql`
 `;
 
 interface Props {
-  data: ContentGridFragment;
+  gqlData: ContentGridFragment;
   onClickItem: (sessionId: number) => void;
 }
 
 class ContentGrid extends React.Component<Props> {
   public render() {
-    const { data, onClickItem } = this.props;
-    const { sessionList } = data;
+    const { gqlData, onClickItem } = this.props;
+    const { sessionList } = gqlData;
     return (
       <MiniGrid minColumnWidth={360}>
         {sessionList.nodes!.map((session, index) => (

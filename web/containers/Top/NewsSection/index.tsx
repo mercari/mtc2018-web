@@ -7,13 +7,13 @@ import NewsList from './NewsList';
 import { NewsListFragment } from '../../../graphql/generated/NewsListFragment';
 
 interface Props {
-  data: NewsListFragment;
+  gqlData: NewsListFragment;
 }
 
 const NewsSection: React.SFC<Props> = ({ ...props }) => (
   <Section title="NEWS" id="news" {...props}>
     <Wrapper>
-      <StyledNewsList data={props.data} />
+      <StyledNewsList gqlData={props.gqlData} />
       <FollowButton
         type="primary"
         size="medium"
