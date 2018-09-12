@@ -15,7 +15,7 @@ import { withI18next } from '../../lib/with-i18next';
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Top as TopQueryTypes } from '../../graphql/generated/Top';
+import { Top as TopQuery } from '../../graphql/generated/Top';
 import { NEWS_LIST_FRAGMENT } from '../../containers/Top/NewsSection/NewsList';
 import { CONTENT_GRID_FRAGMENT } from '../../containers/Top/ContentSection/ContentGrid';
 
@@ -30,7 +30,7 @@ export const TOP_QUERY = gql`
   ${TIMETABLE_SECTION_FRAGMENT}
 `;
 
-class TopQuery extends Query<TopQueryTypes> {}
+class TopQueryComponent extends Query<TopQuery> {}
 
 interface State {
   isTopY: boolean;
@@ -73,7 +73,7 @@ class Top extends React.Component<{}, State> {
         <StyledHeader isTopY={isTopY} />
         <MainVisual />
         <Body>
-          <TopQuery query={TOP_QUERY}>
+          <TopQueryComponent query={TOP_QUERY}>
             {({ loading, error, data }) => {
               if (error) {
                 return null;
@@ -91,7 +91,7 @@ class Top extends React.Component<{}, State> {
                 </>
               );
             }}
-          </TopQuery>
+          </TopQueryComponent>
           <AccessSection />
         </Body>
       </Default>

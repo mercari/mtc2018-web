@@ -31,7 +31,7 @@ const NewsList: React.SFC<Props> = ({ ...props }) => (
     <I18n>
       {(_, { i18n }) => {
         const { gqlData } = props;
-        return (gqlData.newsList || []).nodes.map(newsItem => {
+        return gqlData.newsList.nodes.map(newsItem => {
           const message = isJapan(i18n.language)
             ? newsItem.messageJa
             : newsItem.message;

@@ -6,10 +6,10 @@ import { colors, getTextStyle, borderRadius } from '../../../components/styles';
 import ContentCardSpeaker, { SPEAKER_FRAGMENT } from './ContentCardSpeaker';
 
 import gql from 'graphql-tag';
-import { SessionFragment } from '../../../graphql/generated/SessionFragment';
+import { ContentCardFragment } from '../../../graphql/generated/ContentCardFragment';
 
-export const SESSION_FRAGMENT = gql`
-  fragment SessionFragment on Session {
+export const CONTENT_CARD_FRAGMENT = gql`
+  fragment ContentCardFragment on Session {
     startTime
     endTime
     type
@@ -27,7 +27,7 @@ export const SESSION_FRAGMENT = gql`
 `;
 
 interface Props {
-  session: SessionFragment;
+  session: ContentCardFragment;
   isJa: boolean;
 }
 

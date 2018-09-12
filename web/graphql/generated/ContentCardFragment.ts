@@ -2,10 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Session
+// GraphQL fragment: ContentCardFragment
 // ====================================================
 
-export interface Session_session_speakers {
+export interface ContentCardFragment_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
@@ -17,27 +17,16 @@ export interface Session_session_speakers {
   profileJa: string;
 }
 
-export interface Session_session {
+export interface ContentCardFragment {
   __typename: "Session";
-  title: string;
-  titleJa: string;
   startTime: string;
   endTime: string;
   type: string;
   place: string;
+  title: string;
+  titleJa: string;
   tags: string[];
   outline: string;
   outlineJa: string;
-  speakers: Session_session_speakers[];
-}
-
-export interface Session {
-  /**
-   * セッションを取得します。
-   */
-  session: Session_session | null;
-}
-
-export interface SessionVariables {
-  sessionId: number;
+  speakers: ContentCardFragment_speakers[];
 }

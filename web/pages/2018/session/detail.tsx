@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Router, { withRouter, WithRouterProps } from 'next/router';
 import Default from '../../../layout/Default';
 import ContentCard, {
-  SESSION_FRAGMENT
+  CONTENT_CARD_FRAGMENT
 } from '../../../containers/Session/ContentCard';
 import Header from '../../../containers/Session/Header';
 import { Button, Section } from '../../../components';
@@ -18,16 +18,22 @@ import {
   Session as SessionQuery,
   SessionVariables
 } from '../../../graphql/generated/Session';
+import { SessionFragment } from '../../../graphql/generated/SessionFragment';
 
 export const SESSION_QUERY = gql`
   query Session($sessionId: Int!) {
     session(sessionId: $sessionId) {
-      id
-      sessionId
       ...SessionFragment
+      ...ContentCardFragment
     }
   }
-  ${SESSION_FRAGMENT}
+
+  fragment SessionFragment on Session {
+    title
+    titleJa
+  }
+
+  ${CONTENT_CARD_FRAGMENT}
 `;
 
 class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
@@ -47,12 +53,13 @@ class Session extends React.Component<WithRouterProps> {
               <I18n>
                 {(_, { i18n }) => {
                   const isJa = isJapan(i18n.language);
+                  const session: SessionFragment = data.session!;
                   return (
                     <>
                       <Head>
                         <title>
                           Mercari Tech Conf 2018 -{' '}
-                          {isJa ? data.session!.titleJa : data.session!.title}
+                          {isJa ? session.titleJa : session.title}
                         </title>
                       </Head>
                       <StyledHeader isTopY={true} />
