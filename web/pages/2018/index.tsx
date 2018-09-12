@@ -78,7 +78,7 @@ class Top extends React.Component<{}, State> {
               if (error) {
                 return null;
               }
-              if (loading || !data) {
+              if (loading || !data || !data.newsList) {
                 return null;
               }
 

@@ -10,10 +10,10 @@ interface Props {
   gqlData: NewsListFragment;
 }
 
-const NewsSection: React.SFC<Props> = ({ ...props }) => (
+const NewsSection: React.SFC<Props> = ({ gqlData, ...props }) => (
   <Section title="NEWS" id="news" {...props}>
     <Wrapper>
-      <StyledNewsList gqlData={props.gqlData} />
+      <StyledNewsList gqlData={gqlData} />
       <FollowButton
         type="primary"
         size="medium"

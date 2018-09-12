@@ -26,11 +26,10 @@ export const NEWS_LIST_FRAGMENT = gql`
   }
 `;
 
-const NewsList: React.SFC<Props> = ({ ...props }) => (
+const NewsList: React.SFC<Props> = ({ gqlData, ...props }) => (
   <Wrapper {...props}>
     <I18n>
       {(_, { i18n }) => {
-        const { gqlData } = props;
         return gqlData.newsList.nodes.map(newsItem => {
           const message = isJapan(i18n.language)
             ? newsItem.messageJa
