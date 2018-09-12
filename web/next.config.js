@@ -25,10 +25,32 @@ module.exports = withTypescript(withOffline({
   workboxOpts: {
     // next-offline default workboxOpts
     // https://github.com/hanford/next-offline/blob/acc4f35ed18ddb55b4573315b469761696310663/index.js#L23-L30
-    globPatterns: ['static/**/*'],
+    globPatterns: [
+      'static/images/speakers/*thumb.png',
+      'static/images/*.svg',
+    ],
     globDirectory: '.',
     runtimeCaching: [
-      { urlPattern: /^https?.*/, handler: 'networkFirst' }
+      {
+        // Match any same-origin request that contains 'api'.
+        urlPattern: /^https?.*/,
+        // Apply a network-first strategy.
+        handler: 'networkFirst',
+        options: {
+          // Fall back to the cache after 10 seconds.
+          networkTimeoutSeconds: 10,
+          // Use a custom cache name for this route.
+          cacheName: 'mtc2018-runtime-cache',
+          // Configure custom cache expiration.
+          expiration: {
+            maxAgeSeconds: 60 * 60 * 12,
+          },
+          // Configure which responses are considered cacheable.
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      }
     ],
     importScripts: ['/sw.js'],
     clientsClaim: true,
