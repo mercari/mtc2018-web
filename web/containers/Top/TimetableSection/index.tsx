@@ -28,38 +28,40 @@ interface Props {
 
 const TimetableSection: React.SFC<Props> = ({ gqlData, ...props }) => {
   return (
-    <Section title="TIME TABLE" id="timetable" {...props}>
-      <Lang>
-        <span>(JA)</span>
-        日本語講演
-        <span>(EN)</span>
-        英語講演
-      </Lang>
-      <TimelineTable>
-        <thead>
-          <tr>
-            <th />
-            <th>TRACK A</th>
-            <th>TRACK B</th>
-          </tr>
-        </thead>
-        <tbody>
-          <I18n>
-            {(_, { i18n }) => {
-              const isJa = isJapan(i18n.language);
-              return rows.map((row: Row, rowIndex) => (
-                <TimetableRow
-                  row={row}
-                  sessionList={gqlData.sessionList}
-                  isJa={isJa}
-                  key={rowIndex}
-                />
-              ));
-            }}
-          </I18n>
-        </tbody>
-      </TimelineTable>
-    </Section>
+    <I18n>
+      {(t, { i18n }) => {
+        const isJa = isJapan(i18n.language);
+        return (
+          <Section title="TIME TABLE" id="timetable" {...props}>
+            <Lang>
+              <span>(JA)</span>
+              {t('session.ja')}
+              <span>(EN)</span>
+              {t('session.en')}
+            </Lang>
+            <TimelineTable>
+              <thead>
+                <tr>
+                  <th />
+                  <th>TRACK A</th>
+                  <th>TRACK B</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row: Row, rowIndex) => (
+                  <TimetableRow
+                    row={row}
+                    sessionList={gqlData.sessionList}
+                    isJa={isJa}
+                    key={rowIndex}
+                  />
+                ))}
+              </tbody>
+            </TimelineTable>
+          </Section>
+        );
+      }}
+    </I18n>
   );
 };
 
