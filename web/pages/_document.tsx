@@ -58,6 +58,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
             rel="stylesheet"
           />
+          <link rel="manifest" href="/2018/manifest.json" />
           <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
           {this.props.styleTags}
         </Head>

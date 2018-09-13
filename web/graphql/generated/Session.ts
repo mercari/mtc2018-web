@@ -19,14 +19,12 @@ export interface Session_session_speakers {
 
 export interface Session_session {
   __typename: "Session";
-  id: string;
-  sessionId: number;
+  title: string;
+  titleJa: string;
   startTime: string;
   endTime: string;
   type: string;
   place: string;
-  title: string;
-  titleJa: string;
   tags: string[];
   outline: string;
   outlineJa: string;

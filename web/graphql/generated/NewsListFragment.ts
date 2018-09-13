@@ -2,10 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: NewsQuery
+// GraphQL fragment: NewsListFragment
 // ====================================================
 
-export interface NewsQuery_newsList_nodes {
+export interface NewsListFragment_newsList_nodes {
   __typename: "News";
   id: string;
   date: string;
@@ -14,14 +14,15 @@ export interface NewsQuery_newsList_nodes {
   link: string | null;
 }
 
-export interface NewsQuery_newsList {
+export interface NewsListFragment_newsList {
   __typename: "NewsConnection";
-  nodes: NewsQuery_newsList_nodes[];
+  nodes: NewsListFragment_newsList_nodes[];
 }
 
-export interface NewsQuery {
+export interface NewsListFragment {
+  __typename: "Query";
   /**
    * お知らせ一覧を取得します
    */
-  newsList: NewsQuery_newsList;
+  newsList: NewsListFragment_newsList;
 }

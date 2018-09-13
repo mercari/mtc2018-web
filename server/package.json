@@ -1,0 +1,15 @@
+{
+  "name": "mtc2018-server",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "fmt": "npm run fmt:graphql",
+    "fmt:graphql": "prettier --write '*.graphql' 'gqlapi/testsuite/**/*.graphql'"
+  },
+  "author": "vvakame",
+  "license": "ISC",
+  "devDependencies": {
+    "graphql-schema-linter": "^0.1.6",
+    "prettier": "^1.13.7"
+  }
+}

@@ -1,0 +1,71 @@
+--- newsList.graphql
+query {
+  newsList {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        ...NewsFragment
+      }
+    }
+    nodes {
+      ...NewsFragment
+    }
+  }
+}
+
+fragment NewsFragment on News {
+  id
+  newsId
+  date
+  message
+  messageJa
+  link
+}
+
+
+--- Result
+{"data":{"newsList":{"pageInfo":{"startCursor":null,"endCursor":null,"hasNextPage":false,"hasPreviousPage":false},"edges":[{"cursor":null,"node":{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale as of August 31st, 2018.","messageJa":"チケット販売をオープンしました","link":"https://mercari-tech-conf-2018.peatix.com"}}],"nodes":[{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale as of August 31st, 2018.","messageJa":"チケット販売をオープンしました","link":"https://mercari-tech-conf-2018.peatix.com"}]}}}
+
+--- Result (formatted)
+{
+  "data": {
+    "newsList": {
+      "edges": [
+        {
+          "cursor": null,
+          "node": {
+            "date": "2018-09-04",
+            "id": "News:1",
+            "link": "https://mercari-tech-conf-2018.peatix.com",
+            "message": "Tickets are on sale as of August 31st, 2018.",
+            "messageJa": "チケット販売をオープンしました",
+            "newsId": "1"
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "date": "2018-09-04",
+          "id": "News:1",
+          "link": "https://mercari-tech-conf-2018.peatix.com",
+          "message": "Tickets are on sale as of August 31st, 2018.",
+          "messageJa": "チケット販売をオープンしました",
+          "newsId": "1"
+        }
+      ],
+      "pageInfo": {
+        "endCursor": null,
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": null
+      }
+    }
+  }
+}
+

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { colors, getTextStyle } from '../components/styles';
+import { I18n } from 'react-i18next';
 
 const Footer = () => (
   <Wrapper>
@@ -10,9 +11,13 @@ const Footer = () => (
       <Link href="/2017" target="_blank">
         mercari Tech Conf 2017
       </Link>
-      <Link href="https://about.mercari.com/" target="_blank">
-        会社概要
-      </Link>
+      <I18n>
+        {t => (
+          <Link href={t('overview.url')} target="_blank">
+            {t('overview.title')}
+          </Link>
+        )}
+      </I18n>
     </Body>
   </Wrapper>
 );

@@ -1,0 +1,52 @@
+query {
+  sessionList {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        ...SessionFragment
+      }
+    }
+    nodes {
+      ...SessionFragment
+    }
+  }
+}
+
+fragment SessionFragment on Session {
+  id
+  sessionId
+  type
+  place
+  title
+  titleJa
+  startTime
+  endTime
+  outline
+  outlineJa
+  lang
+  tags
+  speakers {
+    id
+    speakerId
+    name
+    nameJa
+    company
+    position
+    positionJa
+    profile
+    profileJa
+    iconUrl
+    twitterId
+    githubId
+    sessions {
+      id
+      sessionId
+    }
+  }
+}

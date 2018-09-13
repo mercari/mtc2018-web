@@ -12,6 +12,8 @@
 # below:
 .git
 .gitignore
+.envrc
+.envrc.sample
 
 # Node.js dependencies:
 node_modules/

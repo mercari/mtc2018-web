@@ -3,18 +3,38 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import Router, { withRouter, WithRouterProps } from 'next/router';
 import Default from '../../../layout/Default';
-import ContentCard from '../../../containers/Session/ContentCard';
+import ContentCard, {
+  CONTENT_CARD_FRAGMENT
+} from '../../../containers/Session/ContentCard';
 import Header from '../../../containers/Session/Header';
 import { Button, Section } from '../../../components';
 import { withI18next } from '../../../lib/with-i18next';
 import { I18n } from 'react-i18next';
+import { isJapan } from '../../../utils';
+
+import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import {
   Session as SessionQuery,
   SessionVariables
 } from '../../../graphql/generated/Session';
-import { SESSION_QUERY } from '../../../graphql/query';
-import { isJapan } from '../../../utils';
+import { SessionFragment } from '../../../graphql/generated/SessionFragment';
+
+export const SESSION_QUERY = gql`
+  query Session($sessionId: Int!) {
+    session(sessionId: $sessionId) {
+      ...SessionFragment
+      ...ContentCardFragment
+    }
+  }
+
+  fragment SessionFragment on Session {
+    title
+    titleJa
+  }
+
+  ${CONTENT_CARD_FRAGMENT}
+`;
 
 class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
 
@@ -33,12 +53,13 @@ class Session extends React.Component<WithRouterProps> {
               <I18n>
                 {(_, { i18n }) => {
                   const isJa = isJapan(i18n.language);
+                  const session: SessionFragment = data.session!;
                   return (
                     <>
                       <Head>
                         <title>
                           Mercari Tech Conf 2018 -{' '}
-                          {isJa ? data.session!.titleJa : data.session!.title}
+                          {isJa ? session.titleJa : session.title}
                         </title>
                       </Head>
                       <StyledHeader isTopY={true} />
