@@ -47,8 +47,8 @@ type ComplexityRoot struct {
 	}
 
 	Like struct {
-		Id        func(childComplexity int) int
-		SessionId func(childComplexity int) int
+		Id      func(childComplexity int) int
+		Session func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -103,6 +103,7 @@ type ComplexityRoot struct {
 		OutlineJa func(childComplexity int) int
 		Lang      func(childComplexity int) int
 		Tags      func(childComplexity int) int
+		Liked     func(childComplexity int) int
 		Speakers  func(childComplexity int) int
 	}
 
@@ -189,12 +190,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Like.Id(childComplexity), true
 
-	case "Like.sessionId":
-		if e.complexity.Like.SessionId == nil {
+	case "Like.session":
+		if e.complexity.Like.Session == nil {
 			break
 		}
 
-		return e.complexity.Like.SessionId(childComplexity), true
+		return e.complexity.Like.Session(childComplexity), true
 
 	case "Mutation.createLike":
 		if e.complexity.Mutation.CreateLike == nil {
@@ -559,6 +560,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Session.Tags(childComplexity), true
 
+	case "Session.liked":
+		if e.complexity.Session.Liked == nil {
+			break
+		}
+
+		return e.complexity.Session.Liked(childComplexity), true
+
 	case "Session.speakers":
 		if e.complexity.Session.Speakers == nil {
 			break
@@ -865,8 +873,8 @@ func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "sessionId":
-			out.Values[i] = ec._Like_sessionId(ctx, field, obj)
+		case "session":
+			out.Values[i] = ec._Like_session(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -904,7 +912,7 @@ func (ec *executionContext) _Like_id(ctx context.Context, field graphql.Collecte
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Like_sessionId(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
+func (ec *executionContext) _Like_session(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
 		Args:   nil,
@@ -912,7 +920,7 @@ func (ec *executionContext) _Like_sessionId(ctx context.Context, field graphql.C
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.SessionID, nil
+		return obj.Session, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -920,9 +928,10 @@ func (ec *executionContext) _Like_sessionId(ctx context.Context, field graphql.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(Session)
 	rctx.Result = res
-	return graphql.MarshalString(res)
+
+	return ec._Session(ctx, field.Selections, &res)
 }
 
 var mutationImplementors = []string{"Mutation"}
@@ -2039,6 +2048,11 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "liked":
+			out.Values[i] = ec._Session_liked(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "speakers":
 			out.Values[i] = ec._Session_speakers(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2326,6 +2340,28 @@ func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.Col
 	}
 
 	return arr1
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Liked, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	return graphql.MarshalInt(res)
 }
 
 // nolint: vetshadow
@@ -4557,6 +4593,8 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
+
+  liked: Int!
   speakers: [Speaker!]!
 }
 
@@ -4598,7 +4636,7 @@ type CreateLikePayload {
 """
 type Like implements Node {
   id: ID!
-  sessionId: String!
+  session: Session!
 }
 
 type NewsConnection {
