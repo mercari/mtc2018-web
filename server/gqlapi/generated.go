@@ -32,9 +32,7 @@ type Config struct {
 
 type ResolverRoot interface {
 	Mutation() MutationResolver
-	News() NewsResolver
 	Query() QueryResolver
-	Session() SessionResolver
 	Speaker() SpeakerResolver
 	Subscription() SubscriptionResolver
 }
@@ -143,9 +141,6 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
 }
-type NewsResolver interface {
-	ID(ctx context.Context, obj *News) (string, error)
-}
 type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
@@ -153,12 +148,7 @@ type QueryResolver interface {
 	Session(ctx context.Context, sessionId int) (*Session, error)
 	NewsList(ctx context.Context, first *int, after *string) (NewsConnection, error)
 }
-type SessionResolver interface {
-	ID(ctx context.Context, obj *Session) (string, error)
-}
 type SpeakerResolver interface {
-	ID(ctx context.Context, obj *Speaker) (string, error)
-
 	Sessions(ctx context.Context, obj *Speaker) ([]Session, error)
 }
 type SubscriptionResolver interface {
@@ -1008,7 +998,6 @@ var newsImplementors = []string{"News", "Node"}
 func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj *News) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, newsImplementors)
 
-	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -1018,14 +1007,10 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("News")
 		case "id":
-			wg.Add(1)
-			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._News_id(ctx, field, obj)
-				if out.Values[i] == graphql.Null {
-					invalid = true
-				}
-				wg.Done()
-			}(i, field)
+			out.Values[i] = ec._News_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "newsId":
 			out.Values[i] = ec._News_newsId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -1052,7 +1037,7 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-	wg.Wait()
+
 	if invalid {
 		return graphql.Null
 	}
@@ -1068,7 +1053,7 @@ func (ec *executionContext) _News_id(ctx context.Context, field graphql.Collecte
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return ec.resolvers.News().ID(ctx, obj)
+		return obj.ID, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -1986,7 +1971,6 @@ var sessionImplementors = []string{"Session", "Node"}
 func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, obj *Session) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, sessionImplementors)
 
-	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -1996,14 +1980,10 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Session")
 		case "id":
-			wg.Add(1)
-			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Session_id(ctx, field, obj)
-				if out.Values[i] == graphql.Null {
-					invalid = true
-				}
-				wg.Done()
-			}(i, field)
+			out.Values[i] = ec._Session_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "sessionId":
 			out.Values[i] = ec._Session_sessionId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2068,7 +2048,7 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-	wg.Wait()
+
 	if invalid {
 		return graphql.Null
 	}
@@ -2084,7 +2064,7 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return ec.resolvers.Session().ID(ctx, obj)
+		return obj.ID, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2670,14 +2650,10 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Speaker")
 		case "id":
-			wg.Add(1)
-			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Speaker_id(ctx, field, obj)
-				if out.Values[i] == graphql.Null {
-					invalid = true
-				}
-				wg.Done()
-			}(i, field)
+			out.Values[i] = ec._Speaker_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "speakerId":
 			out.Values[i] = ec._Speaker_speakerId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2759,7 +2735,7 @@ func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.Colle
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return ec.resolvers.Speaker().ID(ctx, obj)
+		return obj.ID, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
