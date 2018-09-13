@@ -108,7 +108,7 @@ type Speaker implements Node {
 """
 input CreateLikeInput {
   clientMutationId: String
-  sessionID: ID!
+  sessionId: ID!
 }
 
 type CreateLikePayload {
@@ -121,7 +121,7 @@ type CreateLikePayload {
 """
 type Like implements Node {
   id: ID!
-  sessionID: ID!
+  sessionId: String!
 }
 
 type NewsConnection {
@@ -140,6 +140,7 @@ type NewsEdge {
 """
 type News implements Node {
   id: ID!
+  newsId: String!
   date: String!
   message: String!
   messageJa: String!

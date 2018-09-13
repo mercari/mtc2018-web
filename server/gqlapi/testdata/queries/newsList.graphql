@@ -20,6 +20,7 @@ query {
 
 fragment NewsFragment on News {
   id
+  newsId
   date
   message
   messageJa

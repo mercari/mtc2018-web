@@ -32,7 +32,9 @@ type Config struct {
 
 type ResolverRoot interface {
 	Mutation() MutationResolver
+	News() NewsResolver
 	Query() QueryResolver
+	Session() SessionResolver
 	Speaker() SpeakerResolver
 	Subscription() SubscriptionResolver
 }
@@ -57,6 +59,7 @@ type ComplexityRoot struct {
 
 	News struct {
 		Id        func(childComplexity int) int
+		NewsId    func(childComplexity int) int
 		Date      func(childComplexity int) int
 		Message   func(childComplexity int) int
 		MessageJa func(childComplexity int) int
@@ -140,6 +143,9 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
 }
+type NewsResolver interface {
+	ID(ctx context.Context, obj *News) (string, error)
+}
 type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
@@ -147,7 +153,12 @@ type QueryResolver interface {
 	Session(ctx context.Context, sessionId int) (*Session, error)
 	NewsList(ctx context.Context, first *int, after *string) (NewsConnection, error)
 }
+type SessionResolver interface {
+	ID(ctx context.Context, obj *Session) (string, error)
+}
 type SpeakerResolver interface {
+	ID(ctx context.Context, obj *Speaker) (string, error)
+
 	Sessions(ctx context.Context, obj *Speaker) ([]Session, error)
 }
 type SubscriptionResolver interface {
@@ -188,7 +199,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Like.Id(childComplexity), true
 
-	case "Like.sessionID":
+	case "Like.sessionId":
 		if e.complexity.Like.SessionId == nil {
 			break
 		}
@@ -219,6 +230,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.News.Id(childComplexity), true
+
+	case "News.newsId":
+		if e.complexity.News.NewsId == nil {
+			break
+		}
+
+		return e.complexity.News.NewsId(childComplexity), true
 
 	case "News.date":
 		if e.complexity.News.Date == nil {
@@ -857,8 +875,8 @@ func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "sessionID":
-			out.Values[i] = ec._Like_sessionID(ctx, field, obj)
+		case "sessionId":
+			out.Values[i] = ec._Like_sessionId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -896,7 +914,7 @@ func (ec *executionContext) _Like_id(ctx context.Context, field graphql.Collecte
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Like_sessionID(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
+func (ec *executionContext) _Like_sessionId(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
 		Args:   nil,
@@ -914,7 +932,7 @@ func (ec *executionContext) _Like_sessionID(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(string)
 	rctx.Result = res
-	return graphql.MarshalID(res)
+	return graphql.MarshalString(res)
 }
 
 var mutationImplementors = []string{"Mutation"}
@@ -990,6 +1008,7 @@ var newsImplementors = []string{"News", "Node"}
 func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj *News) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, newsImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -999,7 +1018,16 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("News")
 		case "id":
-			out.Values[i] = ec._News_id(ctx, field, obj)
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._News_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "newsId":
+			out.Values[i] = ec._News_newsId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -1024,7 +1052,7 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -1040,7 +1068,7 @@ func (ec *executionContext) _News_id(ctx context.Context, field graphql.Collecte
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.ID, nil
+		return ec.resolvers.News().ID(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -1051,6 +1079,28 @@ func (ec *executionContext) _News_id(ctx context.Context, field graphql.Collecte
 	res := resTmp.(string)
 	rctx.Result = res
 	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _News_newsId(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "News",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.NewsID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
@@ -1936,6 +1986,7 @@ var sessionImplementors = []string{"Session", "Node"}
 func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, obj *Session) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, sessionImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -1945,10 +1996,14 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Session")
 		case "id":
-			out.Values[i] = ec._Session_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "sessionId":
 			out.Values[i] = ec._Session_sessionId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2013,7 +2068,7 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -2029,7 +2084,7 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.ID, nil
+		return ec.resolvers.Session().ID(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2615,10 +2670,14 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Speaker")
 		case "id":
-			out.Values[i] = ec._Speaker_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Speaker_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "speakerId":
 			out.Values[i] = ec._Speaker_speakerId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2700,7 +2759,7 @@ func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.Colle
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.ID, nil
+		return ec.resolvers.Speaker().ID(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -4381,7 +4440,7 @@ func UnmarshalCreateLikeInput(v interface{}) (CreateLikeInput, error) {
 			if err != nil {
 				return it, err
 			}
-		case "sessionID":
+		case "sessionId":
 			var err error
 			it.SessionID, err = graphql.UnmarshalID(v)
 			if err != nil {
@@ -4550,7 +4609,7 @@ type Speaker implements Node {
 """
 input CreateLikeInput {
   clientMutationId: String
-  sessionID: ID!
+  sessionId: ID!
 }
 
 type CreateLikePayload {
@@ -4563,7 +4622,7 @@ type CreateLikePayload {
 """
 type Like implements Node {
   id: ID!
-  sessionID: ID!
+  sessionId: String!
 }
 
 type NewsConnection {
@@ -4582,6 +4641,7 @@ type NewsEdge {
 """
 type News implements Node {
   id: ID!
+  newsId: String!
   date: String!
   message: String!
   messageJa: String!

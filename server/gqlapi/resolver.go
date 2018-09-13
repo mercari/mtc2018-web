@@ -24,13 +24,10 @@ func NewResolver() (ResolverRoot, error) {
 		likeObservers: make(map[string]chan Like),
 	}
 
-	for idx, session := range data.Sessions {
+	for _, session := range data.Sessions {
 		speakers := make([]Speaker, 0)
 		for _, speaker := range session.Speakers {
-			id := base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Speaker:%d", len(r.speakers)+1)))
-			// GitHubIDは必須入力でかつユニークっぽい(今のところ)
 			r.speakers[speaker.GithubID] = Speaker{
-				ID:         id,
 				SpeakerID:  speaker.SpeakerID,
 				Name:       speaker.Name,
 				NameJa:     speaker.NameJa,
@@ -48,7 +45,6 @@ func NewResolver() (ResolverRoot, error) {
 		}
 
 		r.sessions = append(r.sessions, Session{
-			ID:        base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Session:%d", idx+1))),
 			SessionID: session.SessionID,
 			Type:      session.Type,
 			Title:     session.Title,
@@ -65,7 +61,7 @@ func NewResolver() (ResolverRoot, error) {
 
 	for _, news := range data.News {
 		r.news = append(r.news, News{
-			ID:        news.ID,
+			NewsID:    news.NewsID,
 			Date:      news.Date,
 			Message:   news.Message,
 			MessageJa: news.MessageJa,
@@ -96,6 +92,14 @@ func (r *rootResolver) Query() QueryResolver {
 
 func (r *rootResolver) Subscription() SubscriptionResolver {
 	return &subscriptionResolver{r}
+}
+
+func (r *rootResolver) News() NewsResolver {
+	return &newsQueryResolver{r}
+}
+
+func (r *rootResolver) Session() SessionResolver {
+	return &sessionQueryResolver{r}
 }
 
 func (r *rootResolver) Speaker() SpeakerResolver {
@@ -138,7 +142,6 @@ func (r *queryResolver) SessionList(ctx context.Context, first *int, after *stri
 	// TODO first, afterちゃんと参照する
 
 	conn := SessionConnection{}
-
 	for _, session := range r.sessions {
 		session := session
 		conn.Edges = append(conn.Edges, SessionEdge{Node: session})
@@ -171,7 +174,32 @@ func (r *queryResolver) NewsList(ctx context.Context, first *int, after *string)
 	return conn, nil
 }
 
+type newsQueryResolver struct{ *rootResolver }
+
+func (r *newsQueryResolver) ID(ctx context.Context, obj *News) (string, error) {
+	if obj.NewsID == "" {
+		return "", fmt.Errorf("unexpected NewsID: %s", obj.NewsID)
+	}
+	return fmt.Sprintf("News:%s", obj.NewsID), nil
+}
+
+type sessionQueryResolver struct{ *rootResolver }
+
+func (r *sessionQueryResolver) ID(ctx context.Context, obj *Session) (string, error) {
+	if obj.SessionID == 0 {
+		return "", fmt.Errorf("unexpected SessionID: %d", obj.SessionID)
+	}
+	return fmt.Sprintf("Session:%d", obj.SessionID), nil
+}
+
 type speakerQueryResolver struct{ *rootResolver }
+
+func (r *speakerQueryResolver) ID(ctx context.Context, obj *Speaker) (string, error) {
+	if obj.SpeakerID == "" {
+		return "", fmt.Errorf("unexpected SpeakerID: %s", obj.SpeakerID)
+	}
+	return fmt.Sprintf("Speaker:%s", obj.SpeakerID), nil
+}
 
 func (r *speakerQueryResolver) Sessions(ctx context.Context, obj *Speaker) ([]Session, error) {
 	if obj == nil {

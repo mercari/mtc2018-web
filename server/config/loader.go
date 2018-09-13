@@ -72,7 +72,7 @@ type Speaker struct {
 
 // News information
 type News struct {
-	ID        string `json:"id"`
+	NewsID    string `json:"id"` // Relay Global Object ID SpecのIDではない
 	Date      string `json:"date"`
 	Message   string `json:"message"`
 	MessageJa string `json:"messageJa"`

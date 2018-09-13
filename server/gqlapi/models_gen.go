@@ -5,7 +5,7 @@ package gqlapi
 // セッションに対していいね！する時の引数です。
 type CreateLikeInput struct {
 	ClientMutationID *string `json:"clientMutationId"`
-	SessionID        string  `json:"sessionID"`
+	SessionID        string  `json:"sessionId"`
 }
 
 type CreateLikePayload struct {
@@ -16,12 +16,13 @@ type CreateLikePayload struct {
 // セッションに対していいね！した情報です。
 type Like struct {
 	ID        string `json:"id"`
-	SessionID string `json:"sessionID"`
+	SessionID string `json:"sessionId"`
 }
 
 // お知らせです。
 type News struct {
 	ID        string  `json:"id"`
+	NewsID    string  `json:"newsId"`
 	Date      string  `json:"date"`
 	Message   string  `json:"message"`
 	MessageJa string  `json:"messageJa"`
