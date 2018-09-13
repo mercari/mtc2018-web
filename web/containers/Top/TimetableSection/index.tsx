@@ -14,7 +14,7 @@ import { TimetableSectionFragment } from '../../../graphql/generated/TimetableSe
 
 export const TIMETABLE_SECTION_FRAGMENT = gql`
   fragment TimetableSectionFragment on Query {
-    sessionList {
+    sessionList(first: 100) {
       ...TimetableRowFragment
     }
   }

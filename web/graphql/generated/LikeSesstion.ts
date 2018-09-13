@@ -8,7 +8,7 @@
 export interface LikeSesstion_createLike_like {
   __typename: "Like";
   id: string;
-  sessionID: string;
+  sessionId: string;
 }
 
 export interface LikeSesstion_createLike {
@@ -26,6 +26,6 @@ export interface LikeSesstion {
 }
 
 export interface LikeSesstionVariables {
-  randomID: string;
-  sessionID: string;
+  randomId: string;
+  sessionId: string;
 }

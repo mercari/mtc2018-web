@@ -14,7 +14,7 @@ interface Props {
 
 export const NEWS_LIST_FRAGMENT = gql`
   fragment NewsListFragment on Query {
-    newsList {
+    newsList(first: 100) {
       nodes {
         id
         date

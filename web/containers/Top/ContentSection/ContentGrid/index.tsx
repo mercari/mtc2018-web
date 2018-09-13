@@ -9,7 +9,7 @@ import { ContentGridFragment } from '../../../../graphql/generated/ContentGridFr
 
 export const CONTENT_GRID_FRAGMENT = gql`
   fragment ContentGridFragment on Query {
-    sessionList {
+    sessionList(first: 100) {
       nodes {
         ...ContentGridSessionFragment
       }
