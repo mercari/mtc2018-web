@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { MiniGrid } from '../../../../components';
-import ContentGridItem, {
-  CONTENT_GRID_SESSION_FRAGMENT
-} from './ContentGridItem';
+import ContentGridItem, { CONTENT_GRID_ITEM_FRAGMENT } from './ContentGridItem';
 
 import gql from 'graphql-tag';
 import { ContentGridFragment } from '../../../../graphql/generated/ContentGridFragment';
@@ -11,12 +9,12 @@ export const CONTENT_GRID_FRAGMENT = gql`
   fragment ContentGridFragment on Query {
     sessionList(first: 100) {
       nodes {
-        ...ContentGridSessionFragment
+        ...ContentGridItemFragment
       }
     }
   }
 
-  ${CONTENT_GRID_SESSION_FRAGMENT}
+  ${CONTENT_GRID_ITEM_FRAGMENT}
 `;
 
 interface Props {

@@ -4,10 +4,10 @@ import { Text } from '../../../components';
 import { getTextStyle, borderRadius } from '../../../components/styles';
 
 import gql from 'graphql-tag';
-import { SpeakerFragment } from '../../../graphql/generated/SpeakerFragment';
+import { ContentCardSpeakerFragment } from '../../../graphql/generated/ContentCardSpeakerFragment';
 
-export const SPEAKER_FRAGMENT = gql`
-  fragment SpeakerFragment on Speaker {
+export const CONTENT_CARD_SPEAKER_FRAGMENT = gql`
+  fragment ContentCardSpeakerFragment on Speaker {
     id
     speakerId
     name
@@ -20,7 +20,7 @@ export const SPEAKER_FRAGMENT = gql`
 `;
 
 interface Props {
-  speaker: SpeakerFragment;
+  speaker: ContentCardSpeakerFragment;
   isJa: boolean;
 }
 
