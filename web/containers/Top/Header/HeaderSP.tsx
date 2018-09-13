@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Router from 'next/router';
 import styled from 'styled-components';
 import { I18n } from 'react-i18next';
 import { colors, getTextStyle } from '../../../components/styles';
@@ -33,16 +34,16 @@ class Header extends React.Component<Props, State> {
         <EmptySpace />
         <HamburgerMenu active={this.state.showMenu} onClick={this.toggleMenu} />
         <Menu show={this.state.showMenu} onClick={this.toggleMenu}>
-          <NavButton href="#news" onClick={this.onClickNav}>
+          <NavButton href="/2018#news" onClick={this.onClickNav}>
             NEWS
           </NavButton>
-          <NavButton href="#about" onClick={this.onClickNav}>
+          <NavButton href="/2018#about" onClick={this.onClickNav}>
             ABOUT
           </NavButton>
-          <NavButton href="#contents" onClick={this.onClickNav}>
+          <NavButton href="/2018#contents" onClick={this.onClickNav}>
             CONTENTS
           </NavButton>
-          <NavButton href="#access" onClick={this.onClickNav}>
+          <NavButton href="/2018#access" onClick={this.onClickNav}>
             ACCESS
           </NavButton>
           <SNS>
@@ -69,7 +70,7 @@ class Header extends React.Component<Props, State> {
   }
 
   private onClickLogo = () => {
-    window.scrollTo(0, 0);
+    Router.push('/2018').then(() => window.scrollTo(0, 0));
   };
 
   private toggleMenu = () => {
