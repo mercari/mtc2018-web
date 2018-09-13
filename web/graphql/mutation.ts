@@ -6,7 +6,10 @@ export const LIKE_SESSION_MUTATION = gql`
       clientMutationId
       like {
         id
-        sessionId
+        session {
+          id
+          liked
+        }
       }
     }
   }

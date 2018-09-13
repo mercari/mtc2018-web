@@ -5,10 +5,16 @@
 // GraphQL mutation operation: LikeSesstion
 // ====================================================
 
+export interface LikeSesstion_createLike_like_session {
+  __typename: "Session";
+  id: string;
+  liked: number;
+}
+
 export interface LikeSesstion_createLike_like {
   __typename: "Like";
   id: string;
-  sessionId: string;
+  session: LikeSesstion_createLike_like_session;
 }
 
 export interface LikeSesstion_createLike {
