@@ -10,7 +10,17 @@ model:
   filename: models_gen.go
 
 models:
+  Session:
+    fields:
+      id:
+        resolver: true
   Speaker:
     fields:
+      id:
+        resolver: true
       sessions:
+        resolver: true
+  News:
+    fields:
+      id:
         resolver: true

@@ -4,5 +4,6 @@
 
 bin/
 vendor/
+node_modules/
 
 .envrc
