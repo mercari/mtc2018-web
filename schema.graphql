@@ -80,6 +80,8 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
+
+  liked: Int!
   speakers: [Speaker!]!
 }
 
@@ -121,7 +123,7 @@ type CreateLikePayload {
 """
 type Like implements Node {
   id: ID!
-  sessionId: String!
+  session: Session!
 }
 
 type NewsConnection {

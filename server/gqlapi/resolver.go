@@ -4,7 +4,6 @@ package gqlapi
 
 import (
 	"context"
-	"encoding/base64"
 	"fmt"
 	"sync"
 
@@ -116,10 +115,24 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	id := base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Like:%d", len(r.likes)+1)))
+	var session *Session
+	for idx := range r.sessions {
+		if r.sessions[idx].ID == input.SessionID {
+			session = &r.sessions[idx]
+			break
+		}
+	}
+	if session == nil {
+		// TODO Internal Server ErrorとBad Requestを区別できるようにしたい
+		return nil, fmt.Errorf("unknown sessionId: %s", input.SessionID)
+	}
+
+	session.Liked++
+
+	id := fmt.Sprintf("Like:%d", len(r.likes)+1)
 	like := Like{
-		ID:        id,
-		SessionID: input.SessionID,
+		ID:      id,
+		Session: *session,
 	}
 
 	for _, observer := range r.likeObservers {
