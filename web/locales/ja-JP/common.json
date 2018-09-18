@@ -14,6 +14,74 @@
     "title": "会社概要",
     "url": "https://about.mercari.com/"
   },
+  "exhibitions": [
+    {
+      "no": 1,
+      "title": "経営課題をエンジニアリングで解決、Corporate Solutions Engineering の取り組み",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 2,
+      "title": "Welcome to Mercari US",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 3,
+      "title": "クイズ・iOS app Rearchitecture",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 4,
+      "title": "メルカリにおける量子アニーリングの応用可能性",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 5,
+      "title": "mercari & microservices",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 6,
+      "title": "Days in Mercari Android",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 7,
+      "title": "研究開発組織「R4D」",
+      "description": "研究開発組織「R4D」で進められている一部プロジェクトの紹介と、ロボットと量子コンピュータを用いたデモンストレーションを行います。",
+      "place": "l"
+    },
+    {
+      "no": 8,
+      "title": "エキスパートチームの取り組み（Gopher道場、Go Fridayなど）",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 9,
+      "title": "We are Machine Learning team!",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "l"
+    },
+    {
+      "no": 10,
+      "title": "MTC App by Flutter",
+      "description": "Flutterで作ったカンファレンスアプリ（iOS/Android）の内側を紹介します。",
+      "place": "s"
+    },
+    {
+      "no": 11,
+      "title": "AQAチームによるテスト自動化及びZapier自動化ブース",
+      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "place": "s"
+    }
+  ],
   "access": {
     "title": "六本木アカデミーヒルズ",
     "address": "〒106-6149 東京都港区六本木６丁目１０番１号 六本木ヒルズ森タワー49F",
