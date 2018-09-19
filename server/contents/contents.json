@@ -392,8 +392,8 @@
       "endTime": "2018-10-04T16:30:00+09:00",
       "title": "Customer Experience Improvement",
       "titleJa": "Customer Experience Improvement",
-      "outline": "Mercari places particular importance on Customer Support. The Customer Support team has grown in tandem with the application, and they work every day to improve the user experience. More than half of Mercari’s employees work in Customer Support, and in this session Ichikawa will speak about what systems the team uses, how they monitor the listings and transactions of 10.75 million monthly active users, and how the Customer Support systems will evolve as Mercari shifts to microservices.",
-      "outlineJa": "メルカリはCustomer Supportを特に重視しており、アプリケーションの成長と共にCustomer Supportチームも大きく成長しお客様の体験向上の為に日々尽力しています。社員数の半数以上にもなるCustomer Supportチームがどのようなシステムを使用しているのか、MAU:1,075万人から行われる出品や取り引きをどのようにモニタリングしているのか、そしてMicroservice化が進んでいく今Customer Supportのシステムをどのように進化をさせていくかについて話します。",
+      "outline": "Mercari places particular importance on Customer Service. The Customer Service team has grown in tandem with the application, and they work every day to improve the user experience. More than half of Mercari’s employees work in Customer Service, and in this session Ichikawa will speak about what systems the team uses, how they monitor the listings and transactions of 10.75 million monthly active users, and how the Customer Service systems will evolve as Mercari shifts to microservices.",
+      "outlineJa": "メルカリはCustomer Serviceを特に重視しており、アプリケーションの成長と共にCustomer Serviceチームも大きく成長しお客様の体験向上の為に日々尽力しています。社員数の半数以上にもなるCustomer Serviceチームがどのようなシステムを使用しているのか、MAU:1,075万人から行われる出品や取り引きをどのようにモニタリングしているのか、そしてMicroservice化が進んでいく今Customer Serviceのシステムをどのように進化をさせていくかについて話します。",
       "lang": "jp",
       "tags": [
         "Microservices", "CRE"
@@ -406,8 +406,8 @@
           "company": "mercari",
           "position": "Software Engineer (Backend)",
           "positionJa": "Software Engineer (Backend)",
-          "profile": "Shingo Ichikawa joined Mercari as part of the CXI (Customer Experience Improvement) Team, where he worked on development of systems used by Customer Support to keep Mercari safe and secure. Following that, he moved to the CRE Team, and then to his current position in the Microservice Development Team, where he works on projects such as implementing machine learning to aid item surveillance and the move towards microservices.",
-          "profileJa": "CXI(Customer Experience Improvement)チームとして入社し、メルカリの安心・安全を支えるCustomer Supportのメンバーが使用するシステムの開発を行ってきました。 その後CRE > MicroserviceDevelopmentとチームが変わりながら、マイクロサービス化や商品監視に機械学習を導入する取り組み等を行っています。",
+          "profile": "Shingo Ichikawa joined Mercari as part of the CXI (Customer Experience Improvement) Team, where he worked on development of systems used by Customer Service to keep Mercari safe and secure. Following that, he moved to the CRE Team, and then to his current position in the Microservice Development Team, where he works on projects such as implementing machine learning to aid item surveillance and the move towards microservices.",
+          "profileJa": "CXI(Customer Experience Improvement)チームとして入社し、メルカリの安心・安全を支えるCustomer Serviceのメンバーが使用するシステムの開発を行ってきました。 その後CRE > MicroserviceDevelopmentとチームが変わりながら、マイクロサービス化や商品監視に機械学習を導入する取り組み等を行っています。",
           "iconUrl": "",
           "twitterId": "ichikawa_0829",
           "githubId": "s-ichikawa"
