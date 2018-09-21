@@ -683,19 +683,6 @@
       ],
       "speakers": [
         {
-          "id": "matthew_vern",
-          "name": "Matthew Vern",
-          "nameJa": "Matthew Vern",
-          "company": "mercari",
-          "position": "Software Engineer (Android)",
-          "positionJa": "Software Engineer (Android)",
-          "profile": "Matthew is an Android Engineer working on the Mercari US product.",
-          "profileJa": "Matthew is an Android Engineer working on the Mercari US product.",
-          "iconUrl": "",
-          "twitterId": "callipan",
-          "githubId": "panpanini"
-        },
-        {
           "id": "atsuko_fukui",
           "name": "Atsuko Fukui",
           "nameJa": "福井 敦子",
@@ -707,6 +694,19 @@
           "iconUrl": "",
           "twitterId": "muumuumuumuu",
           "githubId": "atsuko-fukui"
+        },
+        {
+          "id": "matthew_vern",
+          "name": "Matthew Vern",
+          "nameJa": "Matthew Vern",
+          "company": "mercari",
+          "position": "Software Engineer (Android)",
+          "positionJa": "Software Engineer (Android)",
+          "profile": "Matthew is an Android Engineer working on the Mercari US product.",
+          "profileJa": "Matthew is an Android Engineer working on the Mercari US product.",
+          "iconUrl": "",
+          "twitterId": "callipan",
+          "githubId": "panpanini"
         }
       ]
     }
