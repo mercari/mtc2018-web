@@ -9,6 +9,18 @@ module.exports = withTypescript(withOffline({
       config.plugins.push(new ForkTsCheckerWebpackPlugin());
     }
 
+    const originalEntry = config.entry;
+    config.entry = async () => {
+      const entries = await originalEntry();
+
+      if (entries['main.js']) {
+        entries['main.js'].unshift('core-js/fn/array/find');
+        entries['main.js'].unshift('core-js/fn/object/assign');
+      }
+
+      return entries;
+    }
+
     config.plugins.push(new CopyWebpackPlugin([
       './lib/sw.js',
       './lib/web-app-manifest/'

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip } from '../../../components';
 import { colors, getTextStyle, borderRadius } from '../../../components/styles';
-import ContentCardSpeaker, { SPEAKER_FRAGMENT } from './ContentCardSpeaker';
+import ContentCardSpeaker, {
+  CONTENT_CARD_SPEAKER_FRAGMENT
+} from './ContentCardSpeaker';
 
 import gql from 'graphql-tag';
 import { ContentCardFragment } from '../../../graphql/generated/ContentCardFragment';
@@ -20,10 +22,10 @@ export const CONTENT_CARD_FRAGMENT = gql`
     outline
     outlineJa
     speakers {
-      ...SpeakerFragment
+      ...ContentCardSpeakerFragment
     }
   }
-  ${SPEAKER_FRAGMENT}
+  ${CONTENT_CARD_SPEAKER_FRAGMENT}
 `;
 
 interface Props {

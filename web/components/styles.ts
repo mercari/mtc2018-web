@@ -1,4 +1,3 @@
-import 'core-js/fn/array/find';
 import { css } from 'styled-components';
 
 export const colors = {

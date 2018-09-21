@@ -7,10 +7,10 @@ import { colors, borderRadius, boxShadow } from '../../../../components/styles';
 import { omitText, isJapan } from '../../../../utils';
 
 import gql from 'graphql-tag';
-import { ContentGridSessionFragment } from '../../../../graphql/generated/ContentGridSessionFragment';
+import { ContentGridItemFragment } from '../../../../graphql/generated/ContentGridItemFragment';
 
-export const CONTENT_GRID_SESSION_FRAGMENT = gql`
-  fragment ContentGridSessionFragment on Session {
+export const CONTENT_GRID_ITEM_FRAGMENT = gql`
+  fragment ContentGridItemFragment on Session {
     id
     sessionId
     title
@@ -35,7 +35,7 @@ export const CONTENT_GRID_SESSION_FRAGMENT = gql`
 
 interface Props {
   index: number;
-  session: ContentGridSessionFragment;
+  session: ContentGridItemFragment;
   onClick: (sessionId: number) => void;
 }
 

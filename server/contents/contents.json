@@ -270,8 +270,8 @@
       "place": "TrackA",
       "startTime": "2018-10-04T15:00:00+09:00",
       "endTime": "2018-10-04T15:30:00+09:00",
-      "title": "Implementing TypeErase in ViewController",
-      "titleJa": "ViewControllerのTypeEraseを実装する",
+      "title": "Implementing TypeErasure in ViewController",
+      "titleJa": "ViewControllerのTypeErasureを実装する",
       "outline": "To develop our app, we use MicroViewController, which we introduced at iOSDC, and we have also implemented the idea of MicroFrameworks. A common issue with using MicroFrameworks is circular dependencies, but by using the MicroViewController model, we can implement TypeErasure for ViewController.  We call this ViewControllerRequest. Today I will talk about ViewControllerRequest, our prized service that solved the problem of circular dependencies and greatly reduced the work required for refactoring.",
       "outlineJa": "我々はiOSDCで発表したMicroViewControllerに加えてMicroFrameworksの考え方も導入してアプリケーションを開発しています。MicroFrameworksに付き物なのが循環依存の問題ですが、MicroViewControllerの型を導入することで、「ViewControllerに対してTypeErasureを実装する」ことが可能になりました。我々はこれをViewControllerRequestと名付けて利用しています。循環依存の問題を解決し、更にはリファクタリングの工数を大幅に縮めた虎の子「ViewControllerRequest」について、お話しします。",
       "lang": "jp",
@@ -392,8 +392,8 @@
       "endTime": "2018-10-04T16:30:00+09:00",
       "title": "Customer Experience Improvement",
       "titleJa": "Customer Experience Improvement",
-      "outline": "Mercari places particular importance on Customer Support. The Customer Support team has grown in tandem with the application, and they work every day to improve the user experience. More than half of Mercari’s employees work in Customer Support, and in this session Ichikawa will speak about what systems the team uses, how they monitor the listings and transactions of 10.75 million monthly active users, and how the Customer Support systems will evolve as Mercari shifts to microservices.",
-      "outlineJa": "メルカリはCustomer Supportを特に重視しており、アプリケーションの成長と共にCustomer Supportチームも大きく成長しお客様の体験向上の為に日々尽力しています。社員数の半数以上にもなるCustomer Supportチームがどのようなシステムを使用しているのか、MAU:1,075万人から行われる出品や取り引きをどのようにモニタリングしているのか、そしてMicroservice化が進んでいく今Customer Supportのシステムをどのように進化をさせていくかについて話します。",
+      "outline": "Mercari places particular importance on Customer Service. The Customer Service team has grown in tandem with the application, and they work every day to improve the user experience. More than half of Mercari’s employees work in Customer Service, and in this session Ichikawa will speak about what systems the team uses, how they monitor the listings and transactions of 10.75 million monthly active users, and how the Customer Service systems will evolve as Mercari shifts to microservices.",
+      "outlineJa": "メルカリはCustomer Serviceを特に重視しており、アプリケーションの成長と共にCustomer Serviceチームも大きく成長しお客様の体験向上の為に日々尽力しています。社員数の半数以上にもなるCustomer Serviceチームがどのようなシステムを使用しているのか、MAU:1,075万人から行われる出品や取り引きをどのようにモニタリングしているのか、そしてMicroservice化が進んでいく今Customer Serviceのシステムをどのように進化をさせていくかについて話します。",
       "lang": "jp",
       "tags": [
         "Microservices", "CRE"
@@ -406,8 +406,8 @@
           "company": "mercari",
           "position": "Software Engineer (Backend)",
           "positionJa": "Software Engineer (Backend)",
-          "profile": "Shingo Ichikawa joined Mercari as part of the CXI (Customer Experience Improvement) Team, where he worked on development of systems used by Customer Support to keep Mercari safe and secure. Following that, he moved to the CRE Team, and then to his current position in the Microservice Development Team, where he works on projects such as implementing machine learning to aid item surveillance and the move towards microservices.",
-          "profileJa": "CXI(Customer Experience Improvement)チームとして入社し、メルカリの安心・安全を支えるCustomer Supportのメンバーが使用するシステムの開発を行ってきました。 その後CRE > MicroserviceDevelopmentとチームが変わりながら、マイクロサービス化や商品監視に機械学習を導入する取り組み等を行っています。",
+          "profile": "Shingo Ichikawa joined Mercari as part of the CXI (Customer Experience Improvement) Team, where he worked on development of systems used by Customer Service to keep Mercari safe and secure. Following that, he moved to the CRE Team, and then to his current position in the Microservice Development Team, where he works on projects such as implementing machine learning to aid item surveillance and the move towards microservices.",
+          "profileJa": "CXI(Customer Experience Improvement)チームとして入社し、メルカリの安心・安全を支えるCustomer Serviceのメンバーが使用するシステムの開発を行ってきました。 その後CRE > MicroserviceDevelopmentとチームが変わりながら、マイクロサービス化や商品監視に機械学習を導入する取り組み等を行っています。",
           "iconUrl": "",
           "twitterId": "ichikawa_0829",
           "githubId": "s-ichikawa"
@@ -643,8 +643,8 @@
       "place": "TrackB",
       "startTime": "2018-10-04T18:00:00+09:00",
       "endTime": "2018-10-04T18:30:00+09:00",
-      "title": "Building an Elastic Team",
-      "titleJa": "Building an Elastic Team しなやかなチームをつくる",
+      "title": "Developing Across the Pacific: The Role of Tech Lead in an International Team",
+      "titleJa": "海をまたぐ開発チームとTech Lead",
       "outline": "Starting this year, every platform team at Mercari, regularly draws up a technical roadmap, and looks at the initiatives they can take to contribute to our products from a technological perspective. The Android Team for Mercari US drew up a technical roadmap focused on the goal of creating a highly mobile and elastic team. In this session, Imai will discuss how the team formulated and pushed forward with this roadmap and his role in the process as a Tech Lead.",
       "outlineJa": "メルカリでは今年からプラットフォームごとに技術ロードマップを策定し、技術的な観点からもプロダクトへ貢献できるような取り組みをしています。US版Mercari Androidチームはスケールしても機動力の高いしなやかなチームを作ることを目指し、技術ロードマップを策定しました。本セッションではどのように技術ロードマップが策定され推進されてきたのかをテックリードの役割も交えてお話します。",
       "lang": "jp",
@@ -683,19 +683,6 @@
       ],
       "speakers": [
         {
-          "id": "matthew_vern",
-          "name": "Matthew Vern",
-          "nameJa": "Matthew Vern",
-          "company": "mercari",
-          "position": "Software Engineer (Android)",
-          "positionJa": "Software Engineer (Android)",
-          "profile": "Matthew is an Android Engineer working on the Mercari US product.",
-          "profileJa": "Matthew is an Android Engineer working on the Mercari US product.",
-          "iconUrl": "",
-          "twitterId": "callipan",
-          "githubId": "panpanini"
-        },
-        {
           "id": "atsuko_fukui",
           "name": "Atsuko Fukui",
           "nameJa": "福井 敦子",
@@ -707,6 +694,19 @@
           "iconUrl": "",
           "twitterId": "muumuumuumuu",
           "githubId": "atsuko-fukui"
+        },
+        {
+          "id": "matthew_vern",
+          "name": "Matthew Vern",
+          "nameJa": "Matthew Vern",
+          "company": "mercari",
+          "position": "Software Engineer (Android)",
+          "positionJa": "Software Engineer (Android)",
+          "profile": "Matthew is an Android Engineer working on the Mercari US product.",
+          "profileJa": "Matthew is an Android Engineer working on the Mercari US product.",
+          "iconUrl": "",
+          "twitterId": "callipan",
+          "githubId": "panpanini"
         }
       ]
     }

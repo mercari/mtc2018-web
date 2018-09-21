@@ -15,8 +15,8 @@ type CreateLikePayload struct {
 
 // セッションに対していいね！した情報です。
 type Like struct {
-	ID        string `json:"id"`
-	SessionID string `json:"sessionId"`
+	ID      string  `json:"id"`
+	Session Session `json:"session"`
 }
 
 // お知らせです。
@@ -63,6 +63,7 @@ type Session struct {
 	OutlineJa string    `json:"outlineJa"`
 	Lang      string    `json:"lang"`
 	Tags      []string  `json:"tags"`
+	Liked     int       `json:"liked"`
 	Speakers  []Speaker `json:"speakers"`
 }
 

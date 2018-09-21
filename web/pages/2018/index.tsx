@@ -18,6 +18,7 @@ import { Query } from 'react-apollo';
 import { Top as TopQuery } from '../../graphql/generated/Top';
 import { NEWS_LIST_FRAGMENT } from '../../containers/Top/NewsSection/NewsList';
 import { CONTENT_GRID_FRAGMENT } from '../../containers/Top/ContentSection/ContentGrid';
+import { I18n } from 'react-i18next';
 
 export const TOP_QUERY = gql`
   query Top {
@@ -87,6 +88,27 @@ class Top extends React.Component<{}, State> {
                   <NewsSection gqlData={data} />
                   <AboutSection />
                   <ContentSection gqlData={data} />
+                  {/* ExhibitionSection */}
+                  <I18n>
+                    {t => {
+                      const exhibitions = t('exhibitions', {
+                        returnObjects: true
+                      }).sort((a: any, b: any) => a.no - b.no);
+
+                      const exhibitionsAtLibraryCafe = exhibitions.filter(
+                        (e: any) => e.place === 'l'
+                      );
+                      const exhibitionsAtSkyStudio = exhibitions.filter(
+                        (e: any) => e.place === 's'
+                      );
+                      // tslint:disable
+                      console.log('All exhibitions', exhibitions);
+                      console.log('at Library Cafe:', exhibitionsAtLibraryCafe);
+                      console.log('at Sky Studio:', exhibitionsAtSkyStudio);
+                      // tslint:enable
+                      return null;
+                    }}
+                  </I18n>
                   <StyledTimetableSection gqlData={data} />
                 </>
               );

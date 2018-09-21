@@ -4,7 +4,6 @@ package gqlapi
 
 import (
 	"context"
-	"encoding/base64"
 	"fmt"
 	"sync"
 
@@ -27,7 +26,11 @@ func NewResolver() (ResolverRoot, error) {
 	for _, session := range data.Sessions {
 		speakers := make([]Speaker, 0)
 		for _, speaker := range session.Speakers {
+			if speaker.SpeakerID == "" {
+				return nil, fmt.Errorf("unexpected SpeakerID: %s", speaker.SpeakerID)
+			}
 			r.speakers[speaker.GithubID] = Speaker{
+				ID:         fmt.Sprintf("Speaker:%s", speaker.SpeakerID),
 				SpeakerID:  speaker.SpeakerID,
 				Name:       speaker.Name,
 				NameJa:     speaker.NameJa,
@@ -44,7 +47,11 @@ func NewResolver() (ResolverRoot, error) {
 			speakers = append(speakers, r.speakers[speaker.GithubID])
 		}
 
+		if session.SessionID == 0 {
+			return nil, fmt.Errorf("unexpected SessionID: %d", session.SessionID)
+		}
 		r.sessions = append(r.sessions, Session{
+			ID:        fmt.Sprintf("Session:%d", session.SessionID),
 			SessionID: session.SessionID,
 			Type:      session.Type,
 			Title:     session.Title,
@@ -60,7 +67,11 @@ func NewResolver() (ResolverRoot, error) {
 	}
 
 	for _, news := range data.News {
+		if news.NewsID == "" {
+			return nil, fmt.Errorf("unexpected NewsID: %s", news.NewsID)
+		}
 		r.news = append(r.news, News{
+			ID:        fmt.Sprintf("News:%s", news.NewsID),
 			NewsID:    news.NewsID,
 			Date:      news.Date,
 			Message:   news.Message,
@@ -94,14 +105,6 @@ func (r *rootResolver) Subscription() SubscriptionResolver {
 	return &subscriptionResolver{r}
 }
 
-func (r *rootResolver) News() NewsResolver {
-	return &newsQueryResolver{r}
-}
-
-func (r *rootResolver) Session() SessionResolver {
-	return &sessionQueryResolver{r}
-}
-
 func (r *rootResolver) Speaker() SpeakerResolver {
 	return &speakerQueryResolver{r}
 }
@@ -112,10 +115,24 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	id := base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("Like:%d", len(r.likes)+1)))
+	var session *Session
+	for idx := range r.sessions {
+		if r.sessions[idx].ID == input.SessionID {
+			session = &r.sessions[idx]
+			break
+		}
+	}
+	if session == nil {
+		// TODO Internal Server ErrorとBad Requestを区別できるようにしたい
+		return nil, fmt.Errorf("unknown sessionId: %s", input.SessionID)
+	}
+
+	session.Liked++
+
+	id := fmt.Sprintf("Like:%d", len(r.likes)+1)
 	like := Like{
-		ID:        id,
-		SessionID: input.SessionID,
+		ID:      id,
+		Session: *session,
 	}
 
 	for _, observer := range r.likeObservers {
@@ -139,14 +156,45 @@ func (r *queryResolver) Nodes(ctx context.Context, ids []string) ([]*Node, error
 }
 
 func (r *queryResolver) SessionList(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error) {
-	// TODO first, afterちゃんと参照する
+
+	if first == nil || *first == 0 {
+		newFirst := 10
+		first = &newFirst
+	}
+
+	var startIndex int
+	var pageInfo PageInfo
+	if after != nil {
+		// after には前回の最後のIDが渡される想定
+		pageInfo.StartCursor = after
+		pageInfo.HasPreviousPage = true
+		for idx, session := range r.sessions {
+			startIndex = idx + 1
+			if session.ID == *after {
+				break
+			}
+		}
+	}
+	if startIndex > len(r.sessions) {
+		startIndex = len(r.sessions)
+	}
+	endIndex := startIndex + *first
+	if endIndex > len(r.sessions) {
+		endIndex = len(r.sessions)
+	}
+	pageInfo.HasNextPage = endIndex != len(r.sessions)
 
 	conn := SessionConnection{}
-	for _, session := range r.sessions {
+	for _, session := range r.sessions[startIndex:endIndex] {
 		session := session
-		conn.Edges = append(conn.Edges, SessionEdge{Node: session})
+		pageInfo.EndCursor = &session.ID
+		conn.Edges = append(conn.Edges, SessionEdge{
+			Cursor: &session.ID,
+			Node:   session,
+		})
 		conn.Nodes = append(conn.Nodes, session)
 	}
+	conn.PageInfo = pageInfo
 
 	return conn, nil
 }
@@ -163,43 +211,49 @@ func (r *queryResolver) Session(ctx context.Context, sessionID int) (*Session, e
 func (r *queryResolver) NewsList(ctx context.Context, first *int, after *string) (NewsConnection, error) {
 	// TODO first, afterちゃんと参照する
 
-	conn := NewsConnection{}
+	if first == nil || *first == 0 {
+		newFirst := 10
+		first = &newFirst
+	}
 
-	for _, news := range r.news {
+	var startIndex int
+	var pageInfo PageInfo
+	if after != nil {
+		// after には前回の最後のIDが渡される想定
+		pageInfo.StartCursor = after
+		pageInfo.HasPreviousPage = true
+		for idx, news := range r.news {
+			startIndex = idx + 1
+			if news.ID == *after {
+				break
+			}
+		}
+	}
+	if startIndex > len(r.news) {
+		startIndex = len(r.news)
+	}
+	endIndex := startIndex + *first
+	if endIndex > len(r.news) {
+		endIndex = len(r.news)
+	}
+	pageInfo.HasNextPage = endIndex != len(r.news)
+
+	conn := NewsConnection{}
+	for _, news := range r.news[startIndex:endIndex] {
 		news := news
-		conn.Edges = append(conn.Edges, NewsEdge{Node: news})
+		pageInfo.EndCursor = &news.ID
+		conn.Edges = append(conn.Edges, NewsEdge{
+			Cursor: &news.ID,
+			Node:   news,
+		})
 		conn.Nodes = append(conn.Nodes, news)
 	}
+	conn.PageInfo = pageInfo
 
 	return conn, nil
 }
 
-type newsQueryResolver struct{ *rootResolver }
-
-func (r *newsQueryResolver) ID(ctx context.Context, obj *News) (string, error) {
-	if obj.NewsID == "" {
-		return "", fmt.Errorf("unexpected NewsID: %s", obj.NewsID)
-	}
-	return fmt.Sprintf("News:%s", obj.NewsID), nil
-}
-
-type sessionQueryResolver struct{ *rootResolver }
-
-func (r *sessionQueryResolver) ID(ctx context.Context, obj *Session) (string, error) {
-	if obj.SessionID == 0 {
-		return "", fmt.Errorf("unexpected SessionID: %d", obj.SessionID)
-	}
-	return fmt.Sprintf("Session:%d", obj.SessionID), nil
-}
-
 type speakerQueryResolver struct{ *rootResolver }
-
-func (r *speakerQueryResolver) ID(ctx context.Context, obj *Speaker) (string, error) {
-	if obj.SpeakerID == "" {
-		return "", fmt.Errorf("unexpected SpeakerID: %s", obj.SpeakerID)
-	}
-	return fmt.Sprintf("Speaker:%s", obj.SpeakerID), nil
-}
 
 func (r *speakerQueryResolver) Sessions(ctx context.Context, obj *Speaker) ([]Session, error) {
 	if obj == nil {

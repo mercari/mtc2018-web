@@ -30,7 +30,7 @@ fragment NewsFragment on News {
 
 
 --- Result
-{"data":{"newsList":{"pageInfo":{"startCursor":null,"endCursor":null,"hasNextPage":false,"hasPreviousPage":false},"edges":[{"cursor":null,"node":{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale as of August 31st, 2018.","messageJa":"チケット販売をオープンしました","link":"https://mercari-tech-conf-2018.peatix.com"}}],"nodes":[{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale as of August 31st, 2018.","messageJa":"チケット販売をオープンしました","link":"https://mercari-tech-conf-2018.peatix.com"}]}}}
+{"data":{"newsList":{"pageInfo":{"startCursor":null,"endCursor":"News:1","hasNextPage":false,"hasPreviousPage":false},"edges":[{"cursor":"News:1","node":{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale as of August 31st, 2018.","messageJa":"チケット販売をオープンしました","link":"https://mercari-tech-conf-2018.peatix.com"}}],"nodes":[{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale as of August 31st, 2018.","messageJa":"チケット販売をオープンしました","link":"https://mercari-tech-conf-2018.peatix.com"}]}}}
 
 --- Result (formatted)
 {
@@ -38,7 +38,7 @@ fragment NewsFragment on News {
     "newsList": {
       "edges": [
         {
-          "cursor": null,
+          "cursor": "News:1",
           "node": {
             "date": "2018-09-04",
             "id": "News:1",
@@ -60,7 +60,7 @@ fragment NewsFragment on News {
         }
       ],
       "pageInfo": {
-        "endCursor": null,
+        "endCursor": "News:1",
         "hasNextPage": false,
         "hasPreviousPage": false,
         "startCursor": null
