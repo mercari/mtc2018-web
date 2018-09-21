@@ -4,8 +4,8 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '10:00 ~ 10:15',
-    label: 'Openning ( Shintaro Yamada )',
-    labelJa: 'オープニング ( 山田 進太郎 )'
+    label: 'Openning ( Yuki Hamada )',
+    labelJa: 'オープニング ( 濱田 優貴 )'
   },
   {
     type: 'other',
