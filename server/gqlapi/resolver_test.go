@@ -13,6 +13,7 @@ import (
 	"github.com/99designs/gqlgen/handler"
 	"github.com/mercari/mtc2018-web/server/gqlapi"
 	"github.com/pmezard/go-difflib/difflib"
+	"go.uber.org/zap"
 )
 
 func TestGraphQLEndpoint_ByTestData(t *testing.T) {
@@ -24,7 +25,7 @@ func TestGraphQLEndpoint_ByTestData(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	resolver, err := gqlapi.NewResolver()
+	resolver, err := gqlapi.NewResolver(zap.NewNop())
 	if err != nil {
 		t.Fatal(err)
 	}
