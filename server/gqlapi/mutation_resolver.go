@@ -26,6 +26,10 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 		return nil, fmt.Errorf("invalid id format: %s", input.SessionID)
 	}
 
+	if input.UUID == "" {
+		return nil, fmt.Errorf("invalid uuid")
+	}
+
 	sessionList, err := r.sessionRepo.Get(ctx, id)
 	if err != nil {
 		return nil, err
@@ -39,7 +43,7 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 
 	like, err := r.likeRepo.Insert(ctx, &domains.Like{
 		SessionID: id,
-		UserID:    "TODO",
+		UUID:      input.UUID,
 	})
 	if err != nil {
 		return nil, err

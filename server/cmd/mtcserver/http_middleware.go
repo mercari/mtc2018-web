@@ -68,22 +68,28 @@ func (h *logHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func newDelegator(w http.ResponseWriter) *responseWriterDelegator {
-	cn, ok := w.(http.CloseNotifier)
-	if ok {
-		return &responseWriterDelegator{
-			ResponseWriter: w,
-			CloseNotifier:  cn,
-		}
-	}
-	return &responseWriterDelegator{
+	d := &responseWriterDelegator{
 		ResponseWriter: w,
 	}
+
+	cn, ok := w.(http.CloseNotifier)
+	if ok {
+		d.CloseNotifier = cn
+	}
+
+	hj, ok := w.(http.Hijacker)
+	if ok {
+		d.Hijacker = hj
+	}
+
+	return d
 }
 
 type responseWriterDelegator struct {
 	status int
 	http.ResponseWriter
 	http.CloseNotifier
+	http.Hijacker
 }
 
 // WriteHeader recordes status code while writing header.

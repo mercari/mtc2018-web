@@ -6,10 +6,11 @@ import (
 	"sync"
 
 	"github.com/mercari/mtc2018-web/server/domains"
+	"go.uber.org/zap"
 )
 
 // NewResolver returns GraphQL root resolver.
-func NewResolver() (ResolverRoot, error) {
+func NewResolver(logger *zap.Logger) (ResolverRoot, error) {
 
 	sessionRepo, err := domains.NewSessionRepo()
 	if err != nil {
@@ -34,6 +35,9 @@ func NewResolver() (ResolverRoot, error) {
 		speakerRepo: speakerRepo,
 		likeRepo:    likeRepo,
 		newsRepo:    newsRepo,
+
+		Logger:        logger,
+		likeObservers: make(map[string]chan domains.Like),
 	}
 
 	return r, nil
@@ -45,6 +49,7 @@ type rootResolver struct {
 	likeRepo    domains.LikeRepo
 	newsRepo    domains.NewsRepo
 
+	Logger        *zap.Logger
 	mu            sync.Mutex
 	likeObservers map[string]chan domains.Like
 }

@@ -90,7 +90,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger) {
 	// GraphQL implementation
 	// playgroundがapiの下にあるの微妙だけどGKEのIngress的にこのほうが楽なのでまぁこれでいいでしょ
 	mux.Handle("/2018/api/playground", handler.Playground("GraphQL playground", "/2018/api/query"))
-	resolver, err := gqlapi.NewResolver()
+	resolver, err := gqlapi.NewResolver(logger)
 	if err != nil {
 		logger.Fatal(err.Error(), zap.Error(err))
 	}
