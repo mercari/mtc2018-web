@@ -7,8 +7,10 @@ import (
 )
 
 // セッションに対していいね！する時の引数です。
+// uuidはいいね！した人のUUIDです。
 type CreateLikeInput struct {
 	ClientMutationID *string `json:"clientMutationId"`
+	UUID             string  `json:"uuid"`
 	SessionID        string  `json:"sessionId"`
 }
 

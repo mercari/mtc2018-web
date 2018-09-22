@@ -9,7 +9,7 @@ import (
 type Like struct {
 	ID        int64
 	SessionID int
-	UserID    string
+	UUID      string
 	CreatedAt time.Time
 }
 

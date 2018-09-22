@@ -4497,6 +4497,12 @@ func UnmarshalCreateLikeInput(v interface{}) (CreateLikeInput, error) {
 			if err != nil {
 				return it, err
 			}
+		case "uuid":
+			var err error
+			it.UUID, err = graphql.UnmarshalString(v)
+			if err != nil {
+				return it, err
+			}
 		case "sessionId":
 			var err error
 			it.SessionID, err = graphql.UnmarshalID(v)
@@ -4587,7 +4593,7 @@ type Query {
 type Mutation {
   """
   セッションに対していいね！することができます。
-  ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
+  ログイン周りのシステムはないので、リクエストにUUIDを付与してください。
   """
   createLike(input: CreateLikeInput!): CreateLikePayload
 }
@@ -4665,9 +4671,19 @@ type Speaker implements Node {
 
 """
 セッションに対していいね！する時の引数です。
+uuidはいいね！した人のUUIDです。
 """
 input CreateLikeInput {
   clientMutationId: String
+  """
+  いいねした人のUUID。
+  適当にブラウザのセッションでユニークなIDをつっこんでください。
+  """
+  uuid: String!
+  """
+  いいねするSessionのID。
+  Session:10 みたいな形式。
+  """
   sessionId: ID!
 }
 
