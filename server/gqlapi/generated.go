@@ -11,6 +11,7 @@ import (
 
 	graphql "github.com/99designs/gqlgen/graphql"
 	introspection "github.com/99designs/gqlgen/graphql/introspection"
+	domains "github.com/mercari/mtc2018-web/server/domains"
 	gqlparser "github.com/vektah/gqlparser"
 	ast "github.com/vektah/gqlparser/ast"
 )
@@ -31,8 +32,11 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	Like() LikeResolver
 	Mutation() MutationResolver
+	News() NewsResolver
 	Query() QueryResolver
+	Session() SessionResolver
 	Speaker() SpeakerResolver
 	Subscription() SubscriptionResolver
 }
@@ -139,21 +143,35 @@ type ComplexityRoot struct {
 	}
 }
 
+type LikeResolver interface {
+	ID(ctx context.Context, obj *domains.Like) (string, error)
+	Session(ctx context.Context, obj *domains.Like) (domains.Session, error)
+}
 type MutationResolver interface {
 	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
+}
+type NewsResolver interface {
+	ID(ctx context.Context, obj *domains.News) (string, error)
 }
 type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
 	SessionList(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error)
-	Session(ctx context.Context, sessionId int) (*Session, error)
+	Session(ctx context.Context, sessionId int) (*domains.Session, error)
 	NewsList(ctx context.Context, first *int, after *string) (NewsConnection, error)
 }
+type SessionResolver interface {
+	ID(ctx context.Context, obj *domains.Session) (string, error)
+
+	Speakers(ctx context.Context, obj *domains.Session) ([]domains.Speaker, error)
+}
 type SpeakerResolver interface {
-	Sessions(ctx context.Context, obj *Speaker) ([]Session, error)
+	ID(ctx context.Context, obj *domains.Speaker) (string, error)
+
+	Sessions(ctx context.Context, obj *domains.Speaker) ([]domains.Session, error)
 }
 type SubscriptionResolver interface {
-	LikeAdded(ctx context.Context) (<-chan Like, error)
+	LikeAdded(ctx context.Context) (<-chan domains.Like, error)
 }
 
 type executableSchema struct {
@@ -848,7 +866,7 @@ func (ec *executionContext) _CreateLikePayload_like(ctx context.Context, field g
 		}
 		return graphql.Null
 	}
-	res := resTmp.(Like)
+	res := resTmp.(domains.Like)
 	rctx.Result = res
 
 	return ec._Like(ctx, field.Selections, &res)
@@ -857,9 +875,10 @@ func (ec *executionContext) _CreateLikePayload_like(ctx context.Context, field g
 var likeImplementors = []string{"Like", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj *Like) graphql.Marshaler {
+func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj *domains.Like) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, likeImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -869,20 +888,28 @@ func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Like")
 		case "id":
-			out.Values[i] = ec._Like_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Like_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "session":
-			out.Values[i] = ec._Like_session(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Like_session(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -890,7 +917,7 @@ func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Like_id(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
+func (ec *executionContext) _Like_id(ctx context.Context, field graphql.CollectedField, obj *domains.Like) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
 		Args:   nil,
@@ -898,7 +925,7 @@ func (ec *executionContext) _Like_id(ctx context.Context, field graphql.Collecte
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.ID, nil
+		return ec.resolvers.Like().ID(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -912,7 +939,7 @@ func (ec *executionContext) _Like_id(ctx context.Context, field graphql.Collecte
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Like_session(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
+func (ec *executionContext) _Like_session(ctx context.Context, field graphql.CollectedField, obj *domains.Like) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
 		Args:   nil,
@@ -920,7 +947,7 @@ func (ec *executionContext) _Like_session(ctx context.Context, field graphql.Col
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.Session, nil
+		return ec.resolvers.Like().Session(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -928,7 +955,7 @@ func (ec *executionContext) _Like_session(ctx context.Context, field graphql.Col
 		}
 		return graphql.Null
 	}
-	res := resTmp.(Session)
+	res := resTmp.(domains.Session)
 	rctx.Result = res
 
 	return ec._Session(ctx, field.Selections, &res)
@@ -1004,9 +1031,10 @@ func (ec *executionContext) _Mutation_createLike(ctx context.Context, field grap
 var newsImplementors = []string{"News", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj *domains.News) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, newsImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -1016,10 +1044,14 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("News")
 		case "id":
-			out.Values[i] = ec._News_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._News_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "newsId":
 			out.Values[i] = ec._News_newsId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -1046,7 +1078,7 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -1054,7 +1086,29 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_id(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_id(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "News",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.News().ID(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _News_newsId(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1072,33 +1126,11 @@ func (ec *executionContext) _News_id(ctx context.Context, field graphql.Collecte
 	}
 	res := resTmp.(string)
 	rctx.Result = res
-	return graphql.MarshalID(res)
-}
-
-// nolint: vetshadow
-func (ec *executionContext) _News_newsId(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
-	rctx := &graphql.ResolverContext{
-		Object: "News",
-		Args:   nil,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.NewsID, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	rctx.Result = res
 	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_date(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_date(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1120,7 +1152,7 @@ func (ec *executionContext) _News_date(ctx context.Context, field graphql.Collec
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_message(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_message(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1142,7 +1174,7 @@ func (ec *executionContext) _News_message(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1164,7 +1196,7 @@ func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.C
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_link(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_link(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1321,7 +1353,7 @@ func (ec *executionContext) _NewsConnection_nodes(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]News)
+	res := resTmp.([]domains.News)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -1431,7 +1463,7 @@ func (ec *executionContext) _NewsEdge_node(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(News)
+	res := resTmp.(domains.News)
 	rctx.Result = res
 
 	return ec._News(ctx, field.Selections, &res)
@@ -1849,7 +1881,7 @@ func (ec *executionContext) _Query_session(ctx context.Context, field graphql.Co
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*Session)
+	res := resTmp.(*domains.Session)
 	rctx.Result = res
 
 	if res == nil {
@@ -1977,9 +2009,10 @@ func (ec *executionContext) _Query___schema(ctx context.Context, field graphql.C
 var sessionImplementors = []string{"Session", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, obj *domains.Session) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, sessionImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -1989,10 +2022,14 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Session")
 		case "id":
-			out.Values[i] = ec._Session_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "sessionId":
 			out.Values[i] = ec._Session_sessionId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2054,15 +2091,19 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 				invalid = true
 			}
 		case "speakers":
-			out.Values[i] = ec._Session_speakers(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_speakers(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -2070,7 +2111,29 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_id(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_id(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Session().ID(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_sessionId(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2086,35 +2149,13 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
-	rctx.Result = res
-	return graphql.MarshalID(res)
-}
-
-// nolint: vetshadow
-func (ec *executionContext) _Session_sessionId(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
-	rctx := &graphql.ResolverContext{
-		Object: "Session",
-		Args:   nil,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.SessionID, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
 	res := resTmp.(int)
 	rctx.Result = res
 	return graphql.MarshalInt(res)
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_type(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_type(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2136,7 +2177,7 @@ func (ec *executionContext) _Session_type(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_place(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_place(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2158,7 +2199,7 @@ func (ec *executionContext) _Session_place(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_title(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_title(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2180,7 +2221,7 @@ func (ec *executionContext) _Session_title(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2202,7 +2243,7 @@ func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_startTime(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_startTime(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2224,7 +2265,7 @@ func (ec *executionContext) _Session_startTime(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2246,7 +2287,7 @@ func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2268,7 +2309,7 @@ func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2290,7 +2331,7 @@ func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2312,7 +2353,7 @@ func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2343,7 +2384,7 @@ func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2365,7 +2406,7 @@ func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2373,7 +2414,7 @@ func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.Speakers, nil
+		return ec.resolvers.Session().Speakers(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2381,7 +2422,7 @@ func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]Speaker)
+	res := resTmp.([]domains.Speaker)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -2554,7 +2595,7 @@ func (ec *executionContext) _SessionConnection_nodes(ctx context.Context, field 
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]Session)
+	res := resTmp.([]domains.Session)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -2664,7 +2705,7 @@ func (ec *executionContext) _SessionEdge_node(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.(Session)
+	res := resTmp.(domains.Session)
 	rctx.Result = res
 
 	return ec._Session(ctx, field.Selections, &res)
@@ -2673,7 +2714,7 @@ func (ec *executionContext) _SessionEdge_node(ctx context.Context, field graphql
 var speakerImplementors = []string{"Speaker", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, obj *domains.Speaker) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, speakerImplementors)
 
 	var wg sync.WaitGroup
@@ -2686,10 +2727,14 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Speaker")
 		case "id":
-			out.Values[i] = ec._Speaker_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Speaker_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "speakerId":
 			out.Values[i] = ec._Speaker_speakerId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2763,7 +2808,29 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Speaker",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Speaker().ID(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Speaker_speakerId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2781,33 +2848,11 @@ func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(string)
 	rctx.Result = res
-	return graphql.MarshalID(res)
-}
-
-// nolint: vetshadow
-func (ec *executionContext) _Speaker_speakerId(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
-	rctx := &graphql.ResolverContext{
-		Object: "Speaker",
-		Args:   nil,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.SpeakerID, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	rctx.Result = res
 	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2829,7 +2874,7 @@ func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2851,7 +2896,7 @@ func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.C
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2873,7 +2918,7 @@ func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2895,7 +2940,7 @@ func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2917,7 +2962,7 @@ func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graph
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2939,7 +2984,7 @@ func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2961,7 +3006,7 @@ func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2983,7 +3028,7 @@ func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -3005,7 +3050,7 @@ func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -3027,7 +3072,7 @@ func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -3040,7 +3085,7 @@ func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]Session)
+	res := resTmp.([]domains.Session)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -4414,21 +4459,21 @@ func (ec *executionContext) _Node(ctx context.Context, sel ast.SelectionSet, obj
 	switch obj := (*obj).(type) {
 	case nil:
 		return graphql.Null
-	case Session:
+	case domains.Session:
 		return ec._Session(ctx, sel, &obj)
-	case *Session:
+	case *domains.Session:
 		return ec._Session(ctx, sel, obj)
-	case Speaker:
+	case domains.Speaker:
 		return ec._Speaker(ctx, sel, &obj)
-	case *Speaker:
+	case *domains.Speaker:
 		return ec._Speaker(ctx, sel, obj)
-	case Like:
+	case domains.Like:
 		return ec._Like(ctx, sel, &obj)
-	case *Like:
+	case *domains.Like:
 		return ec._Like(ctx, sel, obj)
-	case News:
+	case domains.News:
 		return ec._News(ctx, sel, &obj)
-	case *News:
+	case *domains.News:
 		return ec._News(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))

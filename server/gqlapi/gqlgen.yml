@@ -10,7 +10,34 @@ model:
   filename: models_gen.go
 
 models:
-  Speaker:
+  Session:
+    model: github.com/mercari/mtc2018-web/server/domains.Session
     fields:
-      sessions:
+      id:
         resolver: true
+      sessionId:
+        fieldName: ID
+
+  Speaker:
+    model: github.com/mercari/mtc2018-web/server/domains.Speaker
+    fields:
+      id:
+        resolver: true
+      speakerId:
+        fieldName: ID
+
+  News:
+    model: github.com/mercari/mtc2018-web/server/domains.News
+    fields:
+      id:
+        resolver: true
+      newsId:
+        fieldName: ID
+
+  Like:
+    model: github.com/mercari/mtc2018-web/server/domains.Like
+    fields:
+      id:
+        resolver: true
+      likeId:
+        fieldName: ID
