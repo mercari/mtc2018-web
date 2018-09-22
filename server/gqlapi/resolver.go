@@ -54,6 +54,7 @@ func NewResolver() (ResolverRoot, error) {
 			ID:        fmt.Sprintf("Session:%d", session.SessionID),
 			SessionID: session.SessionID,
 			Type:      session.Type,
+			Place:     session.Place,
 			Title:     session.Title,
 			TitleJa:   session.TitleJa,
 			StartTime: session.StartTime,
