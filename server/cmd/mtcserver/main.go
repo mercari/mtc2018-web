@@ -127,6 +127,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger) {
 		}),
 		IsPublicEndpoint: true,
 	}
+	handler = WithLogHandler(logger, mux)
 	handler = WithCORSHandler(env, handler)
 	err = http.ListenAndServe(fmt.Sprintf(":%d", port), handler)
 	if err != nil {
