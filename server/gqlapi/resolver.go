@@ -19,6 +19,7 @@ func NewResolver() (ResolverRoot, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	likeRepo, err := domains.NewLikeRepo()
 	if err != nil {
 		return nil, err
