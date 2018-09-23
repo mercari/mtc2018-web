@@ -30,14 +30,33 @@ func NewResolver(logger *zap.Logger) (ResolverRoot, error) {
 		return nil, err
 	}
 
+	likeSumRepo, err := domains.NewLikeSummaryRepo()
+	if err != nil {
+		return nil, err
+	}
+
+	storer := newStorer(logger, likeRepo, likeSumRepo)
+	go storer.Run()
+
+	eventCh := make(chan likeEvent, 128)
+
+	observer := newObserver(logger, eventCh, likeSumRepo)
+	go observer.Run()
+
+	listener := newListener(logger, eventCh)
+	go listener.Run()
+
 	r := &rootResolver{
 		sessionRepo: sessionRepo,
 		speakerRepo: speakerRepo,
 		likeRepo:    likeRepo,
 		newsRepo:    newsRepo,
+		likeSumRepo: likeSumRepo,
 
-		Logger:        logger,
-		likeObservers: make(map[string]chan domains.Like),
+		Logger:   logger,
+		storer:   storer,
+		observer: observer,
+		listener: listener,
 	}
 
 	return r, nil
@@ -48,10 +67,14 @@ type rootResolver struct {
 	speakerRepo domains.SpeakerRepo
 	likeRepo    domains.LikeRepo
 	newsRepo    domains.NewsRepo
+	likeSumRepo domains.LikeSummaryRepo
 
-	Logger        *zap.Logger
-	mu            sync.Mutex
-	likeObservers map[string]chan domains.Like
+	Logger *zap.Logger
+	mu     sync.Mutex
+
+	storer   *storer
+	observer *observer
+	listener *listener
 }
 
 func (r *rootResolver) Query() QueryResolver {

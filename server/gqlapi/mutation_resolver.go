@@ -15,22 +15,11 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	kind, id, err := extractIntID(ctx, input.SessionID)
-	if err != nil {
-		return nil, err
-	}
-	if kind != "Session" {
-		return nil, fmt.Errorf("invalid id format: %s", input.SessionID)
-	}
-	if id == 0 {
-		return nil, fmt.Errorf("invalid id format: %s", input.SessionID)
-	}
-
 	if input.UUID == "" {
 		return nil, fmt.Errorf("invalid uuid")
 	}
 
-	sessionList, err := r.sessionRepo.Get(ctx, id)
+	sessionList, err := r.sessionRepo.Get(ctx, input.SessionID)
 	if err != nil {
 		return nil, err
 	}
@@ -42,16 +31,14 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 	}
 
 	like, err := r.likeRepo.Insert(ctx, &domains.Like{
-		SessionID: id,
+		SessionID: session.ID,
 		UUID:      input.UUID,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	for _, observer := range r.likeObservers {
-		observer <- *like
-	}
+	r.storer.Add(session.ID, input.UUID)
 
 	return &CreateLikePayload{
 		ClientMutationID: input.ClientMutationID,

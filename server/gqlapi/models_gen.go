@@ -11,12 +11,17 @@ import (
 type CreateLikeInput struct {
 	ClientMutationID *string `json:"clientMutationId"`
 	UUID             string  `json:"uuid"`
-	SessionID        string  `json:"sessionId"`
+	SessionID        int     `json:"sessionId"`
 }
 
 type CreateLikePayload struct {
 	ClientMutationID *string      `json:"clientMutationId"`
 	Like             domains.Like `json:"like"`
+}
+
+type LikeEvent struct {
+	SessionID int `json:"sessionId"`
+	Likes     int `json:"likes"`
 }
 
 type NewsConnection struct {

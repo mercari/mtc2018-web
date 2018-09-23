@@ -1,0 +1,34 @@
+--- createLike.graphql
+mutation {
+  createLike(input: { uuid: "aaaa", sessionId: 12 }) {
+    clientMutationId
+    like {
+      id
+      session {
+        id
+        title
+      }
+    }
+  }
+}
+
+
+--- Result
+{"data":{"createLike":{"clientMutationId":null,"like":{"id":"Like:1","session":{"id":"Session:12","title":"Introduction to the Corporate Solutions Engineering"}}}}}
+
+--- Result (formatted)
+{
+  "data": {
+    "createLike": {
+      "clientMutationId": null,
+      "like": {
+        "id": "Like:1",
+        "session": {
+          "id": "Session:12",
+          "title": "Introduction to the Corporate Solutions Engineering"
+        }
+      }
+    }
+  }
+}
+

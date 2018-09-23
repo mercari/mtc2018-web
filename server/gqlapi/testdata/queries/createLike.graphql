@@ -1,0 +1,12 @@
+mutation {
+  createLike(input: { uuid: "aaaa", sessionId: 12 }) {
+    clientMutationId
+    like {
+      id
+      session {
+        id
+        title
+      }
+    }
+  }
+}
