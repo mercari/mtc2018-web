@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/mercari/mtc2018-web/server/domains"
 	"go.uber.org/zap"
 )
@@ -266,7 +267,7 @@ type storer struct {
 	likeSumRepo domains.LikeSummaryRepo
 
 	likesMu sync.Mutex
-	likes   []*domains.Like
+	likes   []domains.Like
 
 	likeSumMu                sync.Mutex
 	likeSum                  map[likeSummaryPerSec]int
@@ -302,12 +303,12 @@ func (s *storer) Stop() {
 	close(s.done)
 }
 
-func (s *storer) Add(sessionID int, uuid string) {
+func (s *storer) Add(sessionID int, uuid string) domains.Like {
 	now := time.Now().UTC()
 
-	like := &domains.Like{
-		SessionID: sessionID,
-		UUID:      uuid,
+	like := domains.Like{
+		SessionID: int64(sessionID),
+		UserUUID:  uuid,
 		CreatedAt: now,
 	}
 
@@ -329,16 +330,21 @@ func (s *storer) Add(sessionID int, uuid string) {
 		s.likeSum[sum] = 1
 	}
 	s.likeSumMu.Unlock()
+
+	return like
 }
 
 func (s *storer) flushLikes() {
-	s.logger.Debug("start flush likes")
+	flushID := uuid.New().String()
+	s.logger.Debug("start flush likes",
+		zap.String("flush_id", flushID),
+	)
 	s.likesMu.Lock()
 	if len(s.likes) == 0 {
 		s.likesMu.Unlock()
 		return
 	}
-	likes := make([]*domains.Like, len(s.likes))
+	likes := make([]domains.Like, len(s.likes))
 	copy(likes, s.likes)
 	s.likes = s.likes[:0]
 	s.likesMu.Unlock()
@@ -349,7 +355,9 @@ func (s *storer) flushLikes() {
 	for {
 		select {
 		case <-parentCtx.Done():
-			s.logger.Error("timeout: give up flushing")
+			s.logger.Error("timeout: give up flushing",
+				zap.String("flush_id", flushID),
+			)
 			return
 		default:
 		}
@@ -365,7 +373,10 @@ func (s *storer) flushLikes() {
 			return
 		}
 
-		s.logger.Error("timeout: will retry")
+		s.logger.Error("failed to flush likes, will retry",
+			zap.Error(err),
+			zap.String("flush_id", flushID),
+		)
 	}
 }
 
@@ -383,9 +394,11 @@ func (s *storer) flushLikeSummary() {
 	}
 
 	copyLikeSum := make(map[likeSummaryPerSec]int, 10)
+	flushID := uuid.New().String()
 
 	s.logger.Debug("start flush summary",
 		zap.Int64("second", sec),
+		zap.String("flush_id", flushID),
 	)
 
 	for sum, v := range s.likeSum {
@@ -406,10 +419,10 @@ func (s *storer) flushLikeSummary() {
 	likeSummary := make([]*domains.LikeSummaryServer, 0, len(copyLikeSum))
 	for sum, v := range copyLikeSum {
 		likeSummary = append(likeSummary, &domains.LikeSummaryServer{
-			SessionID: sum.sessionID,
+			SessionID: int64(sum.sessionID),
 			Second:    sum.second,
 			ServerID:  hostname,
-			Likes:     v,
+			Likes:     int64(v),
 			CreatedAt: now,
 		})
 	}
@@ -417,7 +430,9 @@ func (s *storer) flushLikeSummary() {
 	for {
 		select {
 		case <-parentCtx.Done():
-			s.logger.Error("timeout: give up flushing summary")
+			s.logger.Error("timeout: give up flushing summary",
+				zap.String("flush_id", flushID),
+			)
 			return
 		default:
 		}
@@ -433,6 +448,9 @@ func (s *storer) flushLikeSummary() {
 			return
 		}
 
-		s.logger.Error("timeout: will retry")
+		s.logger.Error("failed to flush like summary, will retry",
+			zap.Error(err),
+			zap.String("flush_id", flushID),
+		)
 	}
 }

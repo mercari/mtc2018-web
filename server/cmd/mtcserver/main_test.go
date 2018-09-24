@@ -32,7 +32,7 @@ func TestTrace(t *testing.T) {
 		Port:            port,
 	}
 
-	go runServer(port, env, logger) // never stop
+	go runServer(port, env, logger, nil) // never stop
 
 	time.Sleep(100 * time.Millisecond)
 

@@ -5,12 +5,13 @@ package gqlapi
 import (
 	"sync"
 
+	"cloud.google.com/go/spanner"
 	"github.com/mercari/mtc2018-web/server/domains"
 	"go.uber.org/zap"
 )
 
 // NewResolver returns GraphQL root resolver.
-func NewResolver(logger *zap.Logger) (ResolverRoot, error) {
+func NewResolver(logger *zap.Logger, spannerClient *spanner.Client) (ResolverRoot, error) {
 
 	sessionRepo, err := domains.NewSessionRepo()
 	if err != nil {
@@ -21,18 +22,35 @@ func NewResolver(logger *zap.Logger) (ResolverRoot, error) {
 		return nil, err
 	}
 
-	likeRepo, err := domains.NewLikeRepo()
-	if err != nil {
-		return nil, err
-	}
 	newsRepo, err := domains.NewNewsRepo()
 	if err != nil {
 		return nil, err
 	}
 
-	likeSumRepo, err := domains.NewLikeSummaryRepo()
-	if err != nil {
-		return nil, err
+	var (
+		likeRepo    domains.LikeRepo
+		likeSumRepo domains.LikeSummaryRepo
+	)
+	if spannerClient != nil {
+		var err error
+		likeRepo, err = domains.NewLikeRepo(spannerClient)
+		if err != nil {
+			return nil, err
+		}
+		likeSumRepo, err = domains.NewLikeSummaryRepo(spannerClient)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		var err error
+		likeRepo, err = domains.NewFakeLikeRepo()
+		if err != nil {
+			return nil, err
+		}
+		likeSumRepo, err = domains.NewFakeLikeSummaryRepo()
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	storer := newStorer(logger, likeRepo, likeSumRepo)

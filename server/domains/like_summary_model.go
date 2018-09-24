@@ -3,17 +3,10 @@ package domains
 import (
 	"context"
 	"sync"
-	"time"
-)
 
-// LikeSummaryServer has the like summary per second per server for session.
-type LikeSummaryServer struct {
-	SessionID int
-	Second    int64
-	ServerID  string
-	Likes     int
-	CreatedAt time.Time
-}
+	"cloud.google.com/go/spanner"
+	"google.golang.org/api/iterator"
+)
 
 // LikeSummary has the like summary per second for session.
 type LikeSummary struct {
@@ -34,17 +27,17 @@ type LikeSummaryRepo interface {
 	List(ctx context.Context, second int64) (*LikeSummaryListResp, error)
 }
 
-// NewLikeSummaryRepo returns new LikeSummaryRepo.
-func NewLikeSummaryRepo() (LikeSummaryRepo, error) {
-	return &likeSummaryRepo{}, nil
+// NewFakeLikeSummaryRepo returns new LikeSummaryRepo.
+func NewFakeLikeSummaryRepo() (LikeSummaryRepo, error) {
+	return &fakeLikeSummaryRepo{}, nil
 }
 
-type likeSummaryRepo struct {
+type fakeLikeSummaryRepo struct {
 	list []*LikeSummaryServer
 	mu   sync.RWMutex
 }
 
-func (repo *likeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer) (*LikeSummaryServer, error) {
+func (repo *fakeLikeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer) (*LikeSummaryServer, error) {
 	repo.mu.Lock()
 	defer repo.mu.Unlock()
 
@@ -52,7 +45,7 @@ func (repo *likeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer
 	return like, nil
 }
 
-func (repo *likeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSummaryServer) ([]*LikeSummaryServer, error) {
+func (repo *fakeLikeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSummaryServer) ([]*LikeSummaryServer, error) {
 	repo.mu.Lock()
 	defer repo.mu.Unlock()
 
@@ -63,8 +56,8 @@ func (repo *likeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSumm
 }
 
 // List fetches sum of likes in specified second.
-func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
-	// SELECT Second, SessionID, SUM(Likes) Likes FROM LikesSummaries GROUP BY Second, SessionID WHERE Second = n
+func (repo *fakeLikeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
+	// SELECT Second, SessionID, SUM(Likes) AS Likes FROM LikeSummaryServers WHERE Second = n GROUP BY Second, SessionID
 
 	repo.mu.RLock()
 	defer repo.mu.RUnlock()
@@ -76,7 +69,7 @@ func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSumma
 			continue
 		}
 
-		sessionSum[s.SessionID] += s.Likes
+		sessionSum[int(s.SessionID)] += int(s.Likes)
 	}
 
 	var list []*LikeSummary
@@ -85,6 +78,77 @@ func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSumma
 			SessionID: sessionID,
 			Second:    second,
 			Likes:     v,
+		})
+	}
+
+	return &LikeSummaryListResp{
+		List: list,
+	}, nil
+}
+
+// NewLikeSummaryRepo returns new LikeSummaryRepo.
+func NewLikeSummaryRepo(spannerClient *spanner.Client) (LikeSummaryRepo, error) {
+	return &likeSummaryRepo{spanner: spannerClient}, nil
+}
+
+type likeSummaryRepo struct {
+	spanner *spanner.Client
+}
+
+func (repo *likeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer) (*LikeSummaryServer, error) {
+	_, err := repo.spanner.Apply(ctx, []*spanner.Mutation{like.Insert(ctx)})
+	if err != nil {
+		return nil, err
+	}
+	return like, nil
+}
+
+func (repo *likeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSummaryServer) ([]*LikeSummaryServer, error) {
+	muts := make([]*spanner.Mutation, 0, len(likeSum))
+	for _, sum := range likeSum {
+		muts = append(muts, sum.Insert(ctx))
+	}
+
+	_, err := repo.spanner.Apply(ctx, muts)
+	if err != nil {
+		return nil, err
+	}
+
+	return likeSum, nil
+}
+
+// List fetches sum of likes in specified second.
+func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
+	sql := `SELECT Second, SessionID, SUM(Likes) AS Likes FROM LikeSummaryServers WHERE Second = @second GROUP BY Second, SessionID`
+
+	stmt := spanner.NewStatement(sql)
+	stmt.Params["second"] = second
+
+	iter := repo.spanner.Single().Query(ctx, stmt)
+	defer iter.Stop()
+
+	var list []*LikeSummary
+	for {
+		row, err := iter.Next()
+		if err != nil {
+			if err == iterator.Done {
+				break
+			}
+			return nil, err
+		}
+
+		var (
+			second    int64
+			sessionID int64
+			likes     int64
+		)
+		if err := row.Columns(&second, &sessionID, &likes); err != nil {
+			return nil, err
+		}
+		list = append(list, &LikeSummary{
+			Second:    second,
+			SessionID: int(sessionID),
+			Likes:     int(likes),
 		})
 	}
 
