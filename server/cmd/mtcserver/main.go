@@ -78,6 +78,7 @@ func main() {
 		var err error
 		dbname := fmt.Sprintf("projects/%s/instances/%s/databases/%s",
 			env.SpannerProjectID, env.SpannerInstanceID, env.SpannerDatabaseID)
+		logger.Info(fmt.Sprintf("enable spanner: %s", dbname))
 		spannerClient, err = spanner.NewClient(context.Background(), dbname)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "[ERROR] Failed to create spanner client: %s\n", err)

@@ -1,3 +1,4 @@
+export ENV=development
 export USE_SPANNER=true
 export SPANNER_PROJECT_ID=<your GCP Project name place here>
 export SPANNER_INSTANCE_ID=<your Spanner instance name place here>
