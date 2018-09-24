@@ -3,8 +3,6 @@ package gqlapi
 import (
 	"context"
 	"fmt"
-
-	"github.com/mercari/mtc2018-web/server/domains"
 )
 
 var _ MutationResolver = (*mutationResolver)(nil)
@@ -30,19 +28,10 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 		return nil, err
 	}
 
-	// TODO: remove
-	like, err := r.likeRepo.Insert(ctx, &domains.Like{
-		SessionID: int64(session.ID),
-		UserUUID:  input.UUID,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	r.storer.Add(session.ID, input.UUID)
+	like := r.storer.Add(session.ID, input.UUID)
 
 	return &CreateLikePayload{
 		ClientMutationID: input.ClientMutationID,
-		Like:             *like,
+		Like:             like,
 	}, nil
 }

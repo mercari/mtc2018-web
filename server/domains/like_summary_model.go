@@ -3,19 +3,9 @@ package domains
 import (
 	"context"
 	"sync"
-	"time"
 
 	"cloud.google.com/go/spanner"
 )
-
-// LikeSummaryServer has the like summary per second per server for session.
-type LikeSummaryServer struct {
-	SessionID int
-	Second    int64
-	ServerID  string
-	Likes     int
-	CreatedAt time.Time
-}
 
 // LikeSummary has the like summary per second for session.
 type LikeSummary struct {
@@ -78,7 +68,7 @@ func (repo *fakeLikeSummaryRepo) List(ctx context.Context, second int64) (*LikeS
 			continue
 		}
 
-		sessionSum[s.SessionID] += s.Likes
+		sessionSum[int(s.SessionID)] += int(s.Likes)
 	}
 
 	var list []*LikeSummary
@@ -129,7 +119,7 @@ func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSumma
 			continue
 		}
 
-		sessionSum[s.SessionID] += s.Likes
+		sessionSum[int(s.SessionID)] += int(s.Likes)
 	}
 
 	var list []*LikeSummary
