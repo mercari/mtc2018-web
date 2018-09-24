@@ -33,6 +33,12 @@ type Env struct {
 
 	// Port is port to listen.
 	Port int `envconfig:"HTTP_PORT" default:"8080"`
+
+	// UseSpanner enables spanner to persistent for like model
+	UseSpanner        bool   `envconfig:"USE_SPANNER" default:"false"`
+	SpannerProjectID  string `envconfig:"SPANNER_PROJECT_ID" default:""`
+	SpannerInstanceID string `envconfig:"SPANNER_INSTANCE_ID" default:""`
+	SpannerDatabaseID string `envconfig:"SPANNER_DATABASE_ID" default:""`
 }
 
 // validate validates
