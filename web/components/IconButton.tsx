@@ -31,8 +31,8 @@ const Wrapper = styled.button`
   }
 
   img {
-    width: 20px;
-    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
   }
 `;
 

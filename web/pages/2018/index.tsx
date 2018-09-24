@@ -33,26 +33,8 @@ export const TOP_QUERY = gql`
 
 class TopQueryComponent extends Query<TopQuery> {}
 
-interface State {
-  isTopY: boolean;
-}
-
-class Top extends React.Component<{}, State> {
-  public state = {
-    isTopY: false
-  };
-
-  public componentDidMount() {
-    this.updateHeaderState();
-    window.addEventListener('scroll', this.onScroll);
-  }
-
-  public componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
-  }
-
+class Top extends React.PureComponent {
   public render() {
-    const { isTopY } = this.state;
     return (
       <Default>
         <Head>
@@ -71,7 +53,7 @@ class Top extends React.Component<{}, State> {
           />
           <title>Mercari Tech Conf 2018</title>
         </Head>
-        <StyledHeader isTopY={isTopY} />
+        <StyledHeader />
         <MainVisual />
         <Body>
           <TopQueryComponent query={TOP_QUERY}>
@@ -119,27 +101,6 @@ class Top extends React.Component<{}, State> {
       </Default>
     );
   }
-
-  private onScroll = () => {
-    this.updateHeaderState();
-  };
-
-  private updateHeaderState = () => {
-    const scrollY = window.scrollY;
-    const windowH = 300;
-    let overScroll = false;
-
-    // 100vh以上スクロールしていたら
-    // Headerの背景を変更
-    if (windowH > scrollY) {
-      overScroll = true;
-    }
-
-    // 現状のステートと差分があれば更新
-    if (this.state.isTopY === overScroll) {
-      this.setState({ isTopY: !overScroll });
-    }
-  };
 }
 
 const StyledHeader = styled(Header)`
