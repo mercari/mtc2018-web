@@ -306,7 +306,7 @@ func (s *storer) Add(sessionID int, uuid string) {
 	now := time.Now().UTC()
 
 	like := &domains.Like{
-		SessionID: sessionID,
+		SessionID: int64(sessionID),
 		UUID:      uuid,
 		CreatedAt: now,
 	}

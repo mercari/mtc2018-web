@@ -30,9 +30,10 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 		return nil, err
 	}
 
+	// TODO: remove
 	like, err := r.likeRepo.Insert(ctx, &domains.Like{
-		SessionID: session.ID,
-		UUID:      input.UUID,
+		SessionID: int64(session.ID),
+		UserUUID:  input.UUID,
 	})
 	if err != nil {
 		return nil, err

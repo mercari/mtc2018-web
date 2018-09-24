@@ -4,6 +4,8 @@ import (
 	"context"
 	"sync"
 	"time"
+
+	"cloud.google.com/go/spanner"
 )
 
 // LikeSummaryServer has the like summary per second per server for session.
@@ -34,17 +36,17 @@ type LikeSummaryRepo interface {
 	List(ctx context.Context, second int64) (*LikeSummaryListResp, error)
 }
 
-// NewLikeSummaryRepo returns new LikeSummaryRepo.
-func NewLikeSummaryRepo() (LikeSummaryRepo, error) {
-	return &likeSummaryRepo{}, nil
+// NewFakeLikeSummaryRepo returns new LikeSummaryRepo.
+func NewFakeLikeSummaryRepo() (LikeSummaryRepo, error) {
+	return &fakeLikeSummaryRepo{}, nil
 }
 
-type likeSummaryRepo struct {
+type fakeLikeSummaryRepo struct {
 	list []*LikeSummaryServer
 	mu   sync.RWMutex
 }
 
-func (repo *likeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer) (*LikeSummaryServer, error) {
+func (repo *fakeLikeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer) (*LikeSummaryServer, error) {
 	repo.mu.Lock()
 	defer repo.mu.Unlock()
 
@@ -52,7 +54,7 @@ func (repo *likeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer
 	return like, nil
 }
 
-func (repo *likeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSummaryServer) ([]*LikeSummaryServer, error) {
+func (repo *fakeLikeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSummaryServer) ([]*LikeSummaryServer, error) {
 	repo.mu.Lock()
 	defer repo.mu.Unlock()
 
@@ -63,11 +65,62 @@ func (repo *likeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSumm
 }
 
 // List fetches sum of likes in specified second.
-func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
+func (repo *fakeLikeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
 	// SELECT Second, SessionID, SUM(Likes) Likes FROM LikesSummaries GROUP BY Second, SessionID WHERE Second = n
 
 	repo.mu.RLock()
 	defer repo.mu.RUnlock()
+
+	sessionSum := make(map[int]int)
+	for i := range repo.list {
+		s := repo.list[i]
+		if s.Second != second {
+			continue
+		}
+
+		sessionSum[s.SessionID] += s.Likes
+	}
+
+	var list []*LikeSummary
+	for sessionID, v := range sessionSum {
+		list = append(list, &LikeSummary{
+			SessionID: sessionID,
+			Second:    second,
+			Likes:     v,
+		})
+	}
+
+	return &LikeSummaryListResp{
+		List: list,
+	}, nil
+}
+
+// NewLikeSummaryRepo returns new LikeSummaryRepo.
+func NewLikeSummaryRepo(spannerClient *spanner.Client) (LikeSummaryRepo, error) {
+	return &likeSummaryRepo{spanner: spannerClient}, nil
+}
+
+type likeSummaryRepo struct {
+	spanner *spanner.Client
+
+	list []*LikeSummaryServer
+}
+
+func (repo *likeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer) (*LikeSummaryServer, error) {
+	repo.list = append(repo.list, like)
+	return like, nil
+}
+
+func (repo *likeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSummaryServer) ([]*LikeSummaryServer, error) {
+	for i := range likeSum {
+		repo.list = append(repo.list, likeSum[i])
+	}
+	return likeSum, nil
+}
+
+// List fetches sum of likes in specified second.
+func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
+	// SELECT Second, SessionID, SUM(Likes) Likes FROM LikesSummaries GROUP BY Second, SessionID WHERE Second = n
 
 	sessionSum := make(map[int]int)
 	for i := range repo.list {

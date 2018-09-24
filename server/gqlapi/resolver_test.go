@@ -32,7 +32,7 @@ func TestGraphQLEndpoint_ByTestData(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	resolver, err := gqlapi.NewResolver(zap.NewNop())
+	resolver, err := gqlapi.NewResolver(zap.NewNop(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -153,7 +153,7 @@ type operationMessage struct {
 }
 
 func TestGraphQLEndpoint_Subscription(t *testing.T) {
-	resolver, err := gqlapi.NewResolver(zap.NewNop())
+	resolver, err := gqlapi.NewResolver(zap.NewNop(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

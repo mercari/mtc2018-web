@@ -3,16 +3,10 @@ package domains
 import (
 	"context"
 	"sync"
-	"time"
-)
 
-// Like has the like data for session.
-type Like struct {
-	ID        int64
-	SessionID int
-	UUID      string
-	CreatedAt time.Time
-}
+	"cloud.google.com/go/spanner"
+	"github.com/google/uuid"
+)
 
 // LikeRepo is basic operation unit for Like.
 type LikeRepo interface {
@@ -20,32 +14,57 @@ type LikeRepo interface {
 	BulkInsert(ctx context.Context, like []*Like) ([]*Like, error)
 }
 
-// NewLikeRepo returns new LikeRepo.
-func NewLikeRepo() (LikeRepo, error) {
-	return &likeRepo{}, nil
+// NewFakeLikeRepo returns new LikeRepo.
+func NewFakeLikeRepo() (LikeRepo, error) {
+	return &fakeLikeRepo{}, nil
 }
 
-type likeRepo struct {
+type fakeLikeRepo struct {
 	list []*Like
 
 	mu sync.Mutex
 }
 
-func (repo *likeRepo) Insert(ctx context.Context, like *Like) (*Like, error) {
+func (repo *fakeLikeRepo) Insert(ctx context.Context, like *Like) (*Like, error) {
 	repo.mu.Lock()
 	defer repo.mu.Unlock()
 
-	like.ID = int64(len(repo.list) + 1)
+	like.UUID = uuid.New().String()
+	repo.list = append(repo.list, like)
+	return like, nil
+}
+
+func (repo *fakeLikeRepo) BulkInsert(ctx context.Context, likes []*Like) ([]*Like, error) {
+	repo.mu.Lock()
+	defer repo.mu.Unlock()
+
+	for _, like := range likes {
+		like.UUID = uuid.New().String()
+		repo.list = append(repo.list, like)
+	}
+	return likes, nil
+}
+
+// NewLikeRepo returns new LikeRepo.
+func NewLikeRepo(spannerClient *spanner.Client) (LikeRepo, error) {
+	return &likeRepo{spanner: spannerClient}, nil
+}
+
+type likeRepo struct {
+	spanner *spanner.Client
+
+	list []*Like
+}
+
+func (repo *likeRepo) Insert(ctx context.Context, like *Like) (*Like, error) {
+	like.UUID = uuid.New().String()
 	repo.list = append(repo.list, like)
 	return like, nil
 }
 
 func (repo *likeRepo) BulkInsert(ctx context.Context, likes []*Like) ([]*Like, error) {
-	repo.mu.Lock()
-	defer repo.mu.Unlock()
-
 	for _, like := range likes {
-		like.ID = int64(len(repo.list) + 1)
+		like.UUID = uuid.New().String()
 		repo.list = append(repo.list, like)
 	}
 	return likes, nil
