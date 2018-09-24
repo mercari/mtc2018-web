@@ -4,7 +4,7 @@ WORKDIR /go/src/app
 COPY . .
 ENV GO111MODULE on
 
-RUN apk --update add git
+RUN apk --update add git gcc g++
 RUN go build -o mtcserver -a -tags netgo -installsuffix netgo github.com/mercari/mtc2018-web/server/cmd/mtcserver
 
 
