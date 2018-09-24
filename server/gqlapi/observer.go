@@ -151,6 +151,19 @@ func (o *observer) observeUpdate() {
 	fn2(now - 1)
 	fn2(now - 2)
 	fn2(now - 3)
+	oldSecond := now - 4
+
+	// gc lastLikes
+	for k, sessionLastLikes := range o.lastLikes {
+		for sec := range sessionLastLikes {
+			if oldSecond >= sec {
+				delete(sessionLastLikes, sec)
+			}
+		}
+		if len(sessionLastLikes) == 0 {
+			delete(o.lastLikes, k)
+		}
+	}
 
 	for sessionID, num := range updates {
 		o.eventCh <- likeEvent{
@@ -271,7 +284,6 @@ type storer struct {
 
 	likeSumMu                sync.Mutex
 	likeSum                  map[likeSummaryPerSec]int
-	likeSum2                 map[int64]map[int]int
 	lastSummaryFlushedSecond int64
 
 	done chan struct{}
@@ -388,7 +400,7 @@ func (s *storer) flushLikeSummary() {
 	lastFlushed := s.lastSummaryFlushedSecond
 	s.lastSummaryFlushedSecond = sec
 
-	if lastFlushed == sec {
+	if lastFlushed == sec || len(s.likeSum) == 0 {
 		s.likeSumMu.Unlock()
 		return
 	}
