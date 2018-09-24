@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"cloud.google.com/go/spanner"
+	"google.golang.org/api/iterator"
 )
 
 // LikeSummary has the like summary per second for session.
@@ -56,7 +57,7 @@ func (repo *fakeLikeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*Like
 
 // List fetches sum of likes in specified second.
 func (repo *fakeLikeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
-	// SELECT Second, SessionID, SUM(Likes) Likes FROM LikesSummaries GROUP BY Second, SessionID WHERE Second = n
+	// SELECT Second, SessionID, SUM(Likes) AS Likes FROM LikeSummaryServers WHERE Second = n GROUP BY Second, SessionID
 
 	repo.mu.RLock()
 	defer repo.mu.RUnlock()
@@ -92,42 +93,62 @@ func NewLikeSummaryRepo(spannerClient *spanner.Client) (LikeSummaryRepo, error) 
 
 type likeSummaryRepo struct {
 	spanner *spanner.Client
-
-	list []*LikeSummaryServer
 }
 
 func (repo *likeSummaryRepo) Insert(ctx context.Context, like *LikeSummaryServer) (*LikeSummaryServer, error) {
-	repo.list = append(repo.list, like)
+	_, err := repo.spanner.Apply(ctx, []*spanner.Mutation{like.Insert(ctx)})
+	if err != nil {
+		return nil, err
+	}
 	return like, nil
 }
 
 func (repo *likeSummaryRepo) BulkInsert(ctx context.Context, likeSum []*LikeSummaryServer) ([]*LikeSummaryServer, error) {
-	for i := range likeSum {
-		repo.list = append(repo.list, likeSum[i])
+	muts := make([]*spanner.Mutation, 0, len(likeSum))
+	for _, sum := range likeSum {
+		muts = append(muts, sum.Insert(ctx))
 	}
+
+	_, err := repo.spanner.Apply(ctx, muts)
+	if err != nil {
+		return nil, err
+	}
+
 	return likeSum, nil
 }
 
 // List fetches sum of likes in specified second.
 func (repo *likeSummaryRepo) List(ctx context.Context, second int64) (*LikeSummaryListResp, error) {
-	// SELECT Second, SessionID, SUM(Likes) Likes FROM LikesSummaries GROUP BY Second, SessionID WHERE Second = n
+	sql := `SELECT Second, SessionID, SUM(Likes) AS Likes FROM LikeSummaryServers WHERE Second = @second GROUP BY Second, SessionID`
 
-	sessionSum := make(map[int]int)
-	for i := range repo.list {
-		s := repo.list[i]
-		if s.Second != second {
-			continue
-		}
+	stmt := spanner.NewStatement(sql)
+	stmt.Params["second"] = second
 
-		sessionSum[int(s.SessionID)] += int(s.Likes)
-	}
+	iter := repo.spanner.Single().Query(ctx, stmt)
+	defer iter.Stop()
 
 	var list []*LikeSummary
-	for sessionID, v := range sessionSum {
+	for {
+		row, err := iter.Next()
+		if err != nil {
+			if err == iterator.Done {
+				break
+			}
+			return nil, err
+		}
+
+		var (
+			second    int64
+			sessionID int64
+			likes     int64
+		)
+		if err := row.Columns(&second, &sessionID, &likes); err != nil {
+			return nil, err
+		}
 		list = append(list, &LikeSummary{
-			SessionID: sessionID,
 			Second:    second,
-			Likes:     v,
+			SessionID: int(sessionID),
+			Likes:     int(likes),
 		})
 	}
 

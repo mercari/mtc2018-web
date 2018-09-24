@@ -52,8 +52,6 @@ func NewLikeRepo(spannerClient *spanner.Client) (LikeRepo, error) {
 
 type likeRepo struct {
 	spanner *spanner.Client
-
-	list []*Like
 }
 
 func (repo *likeRepo) Insert(ctx context.Context, like *Like) (*Like, error) {
