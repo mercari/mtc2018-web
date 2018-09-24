@@ -3,8 +3,6 @@ package gqlapi
 import (
 	"context"
 	"fmt"
-
-	"github.com/mercari/mtc2018-web/server/domains"
 )
 
 var _ MutationResolver = (*mutationResolver)(nil)
@@ -15,22 +13,11 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	kind, id, err := extractIntID(ctx, input.SessionID)
-	if err != nil {
-		return nil, err
-	}
-	if kind != "Session" {
-		return nil, fmt.Errorf("invalid id format: %s", input.SessionID)
-	}
-	if id == 0 {
-		return nil, fmt.Errorf("invalid id format: %s", input.SessionID)
-	}
-
 	if input.UUID == "" {
 		return nil, fmt.Errorf("invalid uuid")
 	}
 
-	sessionList, err := r.sessionRepo.Get(ctx, id)
+	sessionList, err := r.sessionRepo.Get(ctx, input.SessionID)
 	if err != nil {
 		return nil, err
 	}
@@ -41,20 +28,10 @@ func (r *mutationResolver) CreateLike(ctx context.Context, input CreateLikeInput
 		return nil, err
 	}
 
-	like, err := r.likeRepo.Insert(ctx, &domains.Like{
-		SessionID: id,
-		UUID:      input.UUID,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	for _, observer := range r.likeObservers {
-		observer <- *like
-	}
+	like := r.storer.Add(session.ID, input.UUID)
 
 	return &CreateLikePayload{
 		ClientMutationID: input.ClientMutationID,
-		Like:             *like,
+		Like:             like,
 	}, nil
 }

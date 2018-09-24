@@ -55,6 +55,11 @@ type ComplexityRoot struct {
 		Session func(childComplexity int) int
 	}
 
+	LikeEvent struct {
+		SessionId func(childComplexity int) int
+		Likes     func(childComplexity int) int
+	}
+
 	Mutation struct {
 		CreateLike func(childComplexity int, input CreateLikeInput) int
 	}
@@ -139,7 +144,7 @@ type ComplexityRoot struct {
 	}
 
 	Subscription struct {
-		LikeAdded func(childComplexity int) int
+		LikeAdded func(childComplexity int, sessionId int) int
 	}
 }
 
@@ -171,7 +176,7 @@ type SpeakerResolver interface {
 	Sessions(ctx context.Context, obj *domains.Speaker) ([]domains.Session, error)
 }
 type SubscriptionResolver interface {
-	LikeAdded(ctx context.Context) (<-chan domains.Like, error)
+	LikeAdded(ctx context.Context, sessionId int) (<-chan LikeEvent, error)
 }
 
 type executableSchema struct {
@@ -214,6 +219,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Like.Session(childComplexity), true
+
+	case "LikeEvent.sessionId":
+		if e.complexity.LikeEvent.SessionId == nil {
+			break
+		}
+
+		return e.complexity.LikeEvent.SessionId(childComplexity), true
+
+	case "LikeEvent.likes":
+		if e.complexity.LikeEvent.Likes == nil {
+			break
+		}
+
+		return e.complexity.LikeEvent.Likes(childComplexity), true
 
 	case "Mutation.createLike":
 		if e.complexity.Mutation.CreateLike == nil {
@@ -722,8 +741,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Subscription.LikeAdded == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		return e.complexity.Subscription.LikeAdded(childComplexity), true
+		var arg0 int
+		if tmp, ok := rawArgs["sessionId"]; ok {
+			var err error
+			arg0, err = graphql.UnmarshalInt(tmp)
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["sessionId"] = arg0
+
+		return e.complexity.Subscription.LikeAdded(childComplexity, args["sessionId"].(int)), true
 
 	}
 	return 0, false
@@ -959,6 +989,85 @@ func (ec *executionContext) _Like_session(ctx context.Context, field graphql.Col
 	rctx.Result = res
 
 	return ec._Session(ctx, field.Selections, &res)
+}
+
+var likeEventImplementors = []string{"LikeEvent"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _LikeEvent(ctx context.Context, sel ast.SelectionSet, obj *LikeEvent) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, likeEventImplementors)
+
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("LikeEvent")
+		case "sessionId":
+			out.Values[i] = ec._LikeEvent_sessionId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "likes":
+			out.Values[i] = ec._LikeEvent_likes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _LikeEvent_sessionId(ctx context.Context, field graphql.CollectedField, obj *LikeEvent) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "LikeEvent",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.SessionID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	return graphql.MarshalInt(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _LikeEvent_likes(ctx context.Context, field graphql.CollectedField, obj *LikeEvent) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "LikeEvent",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Likes, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	return graphql.MarshalInt(res)
 }
 
 var mutationImplementors = []string{"Mutation"}
@@ -3145,10 +3254,22 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 }
 
 func (ec *executionContext) _Subscription_likeAdded(ctx context.Context, field graphql.CollectedField) func() graphql.Marshaler {
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["sessionId"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalInt(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return nil
+		}
+	}
+	args["sessionId"] = arg0
 	ctx = graphql.WithResolverContext(ctx, &graphql.ResolverContext{
 		Field: field,
 	})
-	results, err := ec.resolvers.Subscription().LikeAdded(ctx)
+	results, err := ec.resolvers.Subscription().LikeAdded(ctx, args["sessionId"].(int))
 	if err != nil {
 		ec.Error(ctx, err)
 		return nil
@@ -3160,7 +3281,7 @@ func (ec *executionContext) _Subscription_likeAdded(ctx context.Context, field g
 		}
 		var out graphql.OrderedMap
 		out.Add(field.Alias, func() graphql.Marshaler {
-			return ec._Like(ctx, field.Selections, &res)
+			return ec._LikeEvent(ctx, field.Selections, &res)
 		}())
 		return &out
 	}
@@ -4505,7 +4626,7 @@ func UnmarshalCreateLikeInput(v interface{}) (CreateLikeInput, error) {
 			}
 		case "sessionId":
 			var err error
-			it.SessionID, err = graphql.UnmarshalID(v)
+			it.SessionID, err = graphql.UnmarshalInt(v)
 			if err != nil {
 				return it, err
 			}
@@ -4599,7 +4720,11 @@ type Mutation {
 }
 
 type Subscription {
-  likeAdded: Like!
+  """
+  セッションに対するいいね！をイベントとして取得します。
+  一定期間中にいいね！された数を返します。
+  """
+  likeAdded(sessionId: Int!): LikeEvent!
 }
 
 interface Node {
@@ -4682,9 +4807,8 @@ input CreateLikeInput {
   uuid: String!
   """
   いいねするSessionのID。
-  Session:10 みたいな形式。
   """
-  sessionId: ID!
+  sessionId: Int!
 }
 
 type CreateLikePayload {
@@ -4698,6 +4822,11 @@ type CreateLikePayload {
 type Like implements Node {
   id: ID!
   session: Session!
+}
+
+type LikeEvent {
+  sessionId: Int!
+  likes: Int!
 }
 
 type NewsConnection {

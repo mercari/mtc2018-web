@@ -5,12 +5,13 @@ package gqlapi
 import (
 	"sync"
 
+	"cloud.google.com/go/spanner"
 	"github.com/mercari/mtc2018-web/server/domains"
 	"go.uber.org/zap"
 )
 
 // NewResolver returns GraphQL root resolver.
-func NewResolver(logger *zap.Logger) (ResolverRoot, error) {
+func NewResolver(logger *zap.Logger, spannerClient *spanner.Client) (ResolverRoot, error) {
 
 	sessionRepo, err := domains.NewSessionRepo()
 	if err != nil {
@@ -21,23 +22,59 @@ func NewResolver(logger *zap.Logger) (ResolverRoot, error) {
 		return nil, err
 	}
 
-	likeRepo, err := domains.NewLikeRepo()
-	if err != nil {
-		return nil, err
-	}
 	newsRepo, err := domains.NewNewsRepo()
 	if err != nil {
 		return nil, err
 	}
+
+	var (
+		likeRepo    domains.LikeRepo
+		likeSumRepo domains.LikeSummaryRepo
+	)
+	if spannerClient != nil {
+		var err error
+		likeRepo, err = domains.NewLikeRepo(spannerClient)
+		if err != nil {
+			return nil, err
+		}
+		likeSumRepo, err = domains.NewLikeSummaryRepo(spannerClient)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		var err error
+		likeRepo, err = domains.NewFakeLikeRepo()
+		if err != nil {
+			return nil, err
+		}
+		likeSumRepo, err = domains.NewFakeLikeSummaryRepo()
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	storer := newStorer(logger, likeRepo, likeSumRepo)
+	go storer.Run()
+
+	eventCh := make(chan likeEvent, 128)
+
+	observer := newObserver(logger, eventCh, likeSumRepo)
+	go observer.Run()
+
+	listener := newListener(logger, eventCh)
+	go listener.Run()
 
 	r := &rootResolver{
 		sessionRepo: sessionRepo,
 		speakerRepo: speakerRepo,
 		likeRepo:    likeRepo,
 		newsRepo:    newsRepo,
+		likeSumRepo: likeSumRepo,
 
-		Logger:        logger,
-		likeObservers: make(map[string]chan domains.Like),
+		Logger:   logger,
+		storer:   storer,
+		observer: observer,
+		listener: listener,
 	}
 
 	return r, nil
@@ -48,10 +85,14 @@ type rootResolver struct {
 	speakerRepo domains.SpeakerRepo
 	likeRepo    domains.LikeRepo
 	newsRepo    domains.NewsRepo
+	likeSumRepo domains.LikeSummaryRepo
 
-	Logger        *zap.Logger
-	mu            sync.Mutex
-	likeObservers map[string]chan domains.Like
+	Logger *zap.Logger
+	mu     sync.Mutex
+
+	storer   *storer
+	observer *observer
+	listener *listener
 }
 
 func (r *rootResolver) Query() QueryResolver {
