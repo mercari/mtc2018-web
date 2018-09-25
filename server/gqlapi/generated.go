@@ -168,6 +168,7 @@ type QueryResolver interface {
 type SessionResolver interface {
 	ID(ctx context.Context, obj *domains.Session) (string, error)
 
+	Liked(ctx context.Context, obj *domains.Session) (int, error)
 	Speakers(ctx context.Context, obj *domains.Session) ([]domains.Speaker, error)
 }
 type SpeakerResolver interface {
@@ -2195,10 +2196,14 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 				invalid = true
 			}
 		case "liked":
-			out.Values[i] = ec._Session_liked(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_liked(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "speakers":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
@@ -2501,7 +2506,7 @@ func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.Co
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.Liked, nil
+		return ec.resolvers.Session().Liked(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {

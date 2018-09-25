@@ -15,6 +15,16 @@ func (r *sessionResolver) ID(ctx context.Context, obj *domains.Session) (string,
 	return fmt.Sprintf("Session:%d", obj.ID), nil
 }
 
+func (r *sessionResolver) Liked(ctx context.Context, obj *domains.Session) (int, error) {
+	if obj == nil {
+		return 0, nil
+	}
+
+	// TODO DBから取得して適当にキャッシュするようにする
+
+	return obj.Liked, nil
+}
+
 func (r *sessionResolver) Speakers(ctx context.Context, obj *domains.Session) ([]domains.Speaker, error) {
 	if obj == nil {
 		return nil, nil

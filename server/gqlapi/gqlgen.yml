@@ -17,6 +17,8 @@ models:
         resolver: true
       sessionId:
         fieldName: ID
+      liked:
+        resolver: true
 
   Speaker:
     model: github.com/mercari/mtc2018-web/server/domains.Speaker
