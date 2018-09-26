@@ -5,6 +5,7 @@ export const colors = {
   primaryAlpha: 'rgba(18, 28, 59, 0.9)',
   secondary: '#F6422A',
   orange: '#FB7A61',
+  skin: '#FFE8E5',
   yuki: '#FFFFFF',
   nezumi: '#9D9D9D',
   kemuri: '#D8D8D8',
