@@ -1,0 +1,31 @@
+query {
+  # 最初の10個
+  exhibitionListA: exhibisionList(first: 10) {
+    ...ExhibitionConnectionFragment
+  }
+}
+
+fragment ExhibitionConnectionFragment on ExhibitionConnection {
+  pageInfo {
+    startCursor
+    endCursor
+    hasNextPage
+    hasPreviousPage
+  }
+  edges {
+    cursor
+    node {
+      ...ExhibitionFragment
+    }
+  }
+}
+
+fragment ExhibitionFragment on Exhibition {
+  id
+  exhibitionId
+  place
+  title
+  titleJa
+  description
+  descriptionJa
+}
