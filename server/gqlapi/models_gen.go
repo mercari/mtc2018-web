@@ -19,6 +19,21 @@ type CreateLikePayload struct {
 	Like             domains.Like `json:"like"`
 }
 
+type ExhibitionConnection struct {
+	PageInfo PageInfo             `json:"pageInfo"`
+	Edges    []ExhibitionEdge     `json:"edges"`
+	Nodes    []domains.Exhibition `json:"nodes"`
+}
+
+type ExhibitionEdge struct {
+	Cursor *string            `json:"cursor"`
+	Node   domains.Exhibition `json:"node"`
+}
+
+type ExhibitionListInput struct {
+	Tmp *string `json:"tmp"`
+}
+
 type LikeEvent struct {
 	SessionID int `json:"sessionId"`
 	Likes     int `json:"likes"`
