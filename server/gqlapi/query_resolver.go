@@ -127,3 +127,56 @@ func (r *queryResolver) NewsList(ctx context.Context, first *int, after *string)
 
 	return conn, nil
 }
+
+func (r *queryResolver) ExhibisionList(ctx context.Context, first *int, after *string, req *ExhibitionListInput) (ExhibitionConnection, error) {
+
+	listReq := &domains.ExhibitionListRequest{}
+	if first != nil {
+		listReq.Limit = *first
+	}
+	if after != nil {
+		kind, id, err := extractIntID(ctx, *after)
+		if err != nil {
+			return ExhibitionConnection{}, err
+		}
+		if kind != "Exhibition" {
+			return ExhibitionConnection{}, fmt.Errorf("invalid id format: %s", *after)
+		}
+		if id == 0 {
+			return ExhibitionConnection{}, fmt.Errorf("invalid id format: %s", *after)
+		}
+
+		listReq.LastKnownID = id
+	}
+
+	var pageInfo PageInfo
+	if after != nil {
+		// after には前回の最後のIDが渡される想定
+		pageInfo.StartCursor = after
+		pageInfo.HasPreviousPage = true
+	}
+
+	listResp, err := r.exhibitionRepo.List(ctx, listReq)
+	if err != nil {
+		return ExhibitionConnection{}, err
+	}
+
+	pageInfo.HasNextPage = listResp.HasNext
+
+	conn := ExhibitionConnection{}
+	for _, node := range listResp.List {
+		id := fmt.Sprintf("Exhibition:%d", node.ID)
+		conn.Edges = append(conn.Edges, ExhibitionEdge{
+			Cursor: &id,
+			Node:   *node,
+		})
+		conn.Nodes = append(conn.Nodes, *node)
+	}
+	if len(listResp.List) != 0 {
+		id := fmt.Sprintf("Exhibition:%d", listResp.LastKnownID)
+		pageInfo.EndCursor = &id
+	}
+	conn.PageInfo = pageInfo
+
+	return conn, nil
+}

@@ -22,6 +22,11 @@ func NewResolver(logger *zap.Logger, spannerClient *spanner.Client) (ResolverRoo
 		return nil, err
 	}
 
+	exhibitionRepo, err := domains.NewExhibitionRepo()
+	if err != nil {
+		return nil, err
+	}
+
 	newsRepo, err := domains.NewNewsRepo()
 	if err != nil {
 		return nil, err
@@ -65,11 +70,12 @@ func NewResolver(logger *zap.Logger, spannerClient *spanner.Client) (ResolverRoo
 	go listener.Run()
 
 	r := &rootResolver{
-		sessionRepo: sessionRepo,
-		speakerRepo: speakerRepo,
-		likeRepo:    likeRepo,
-		newsRepo:    newsRepo,
-		likeSumRepo: likeSumRepo,
+		sessionRepo:    sessionRepo,
+		exhibitionRepo: exhibitionRepo,
+		speakerRepo:    speakerRepo,
+		likeRepo:       likeRepo,
+		newsRepo:       newsRepo,
+		likeSumRepo:    likeSumRepo,
 
 		Logger:   logger,
 		storer:   storer,
@@ -81,11 +87,12 @@ func NewResolver(logger *zap.Logger, spannerClient *spanner.Client) (ResolverRoo
 }
 
 type rootResolver struct {
-	sessionRepo domains.SessionRepo
-	speakerRepo domains.SpeakerRepo
-	likeRepo    domains.LikeRepo
-	newsRepo    domains.NewsRepo
-	likeSumRepo domains.LikeSummaryRepo
+	sessionRepo    domains.SessionRepo
+	exhibitionRepo domains.ExhibitionRepo
+	speakerRepo    domains.SpeakerRepo
+	likeRepo       domains.LikeRepo
+	newsRepo       domains.NewsRepo
+	likeSumRepo    domains.LikeSummaryRepo
 
 	Logger *zap.Logger
 	mu     sync.Mutex
@@ -113,6 +120,10 @@ func (r *rootResolver) Session() SessionResolver {
 
 func (r *rootResolver) Speaker() SpeakerResolver {
 	return &speakerResolver{r}
+}
+
+func (r *rootResolver) Exhibition() ExhibitionResolver {
+	return &exhibitionResolver{r}
 }
 
 func (r *rootResolver) Like() LikeResolver {

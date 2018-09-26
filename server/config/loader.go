@@ -34,9 +34,10 @@ func Load() (*Data, error) {
 
 // Data provides content of contents.json.
 type Data struct {
-	Tags     []string  `json:"tags"`
-	Sessions []Session `json:"sessions"`
-	News     []News    `json:"news"`
+	Tags        []string     `json:"tags"`
+	Sessions    []Session    `json:"sessions"`
+	News        []News       `json:"news"`
+	Exhibitions []Exhibition `json:"exhibitions"`
 }
 
 // Session information.
@@ -68,6 +69,16 @@ type Speaker struct {
 	IconURL    string `json:"iconUrl"`
 	TwitterID  string `json:"twitterId"`
 	GithubID   string `json:"githubId"`
+}
+
+// Exhibition information.
+type Exhibition struct {
+	ExhibitionID  int    `json:"id"` // Relay Global Object ID SpecのIDではない
+	Place         string `json:"place"`
+	Title         string `json:"title"`
+	TitleJa       string `json:"titleJa"`
+	Description   string `json:"description"`
+	DescriptionJa string `json:"descriptionJa"`
 }
 
 // News information
