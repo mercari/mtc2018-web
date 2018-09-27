@@ -4,18 +4,20 @@ import { Text, Card, Section } from '../../../components';
 import ContentsList from './ContentsList';
 import i18n from '../../../i18n';
 import { Exhibition } from '../../../types';
+import CafeMap from './CafeMap';
+import StudioMap from './StudioMap';
 
 interface State {
-  currentNum: number | null;
+  currentNo: number | null;
 }
 
 class ExhibitionSection extends React.Component<{}, State> {
   public state = {
-    currentNum: null
+    currentNo: null
   };
 
   public render() {
-    const { currentNum } = this.state;
+    const { currentNo } = this.state;
 
     const exhibitions: Exhibition[] = i18n.t('exhibitions', {
       returnObjects: true
@@ -36,9 +38,16 @@ class ExhibitionSection extends React.Component<{}, State> {
             ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。
           </Message>
           <Place>
+            <Map>
+              <CafeMap
+                currentNo={currentNo}
+                onHoverItem={this.onHoverItem}
+                onBlurItem={this.onBlurItem}
+              />
+            </Map>
             <ContentsList
               place="Library Cafe"
-              currentNum={currentNum}
+              currentNo={currentNo}
               exhibitions={cafeExhibitions}
               onHoverItem={this.onHoverItem}
               onBlurItem={this.onBlurItem}
@@ -47,11 +56,18 @@ class ExhibitionSection extends React.Component<{}, State> {
           <Place>
             <ContentsList
               place="Sky Studio"
-              currentNum={currentNum}
+              currentNo={currentNo}
               exhibitions={studioExhibitions}
               onHoverItem={this.onHoverItem}
               onBlurItem={this.onBlurItem}
             />
+            <Map>
+              <StudioMap
+                currentNo={currentNo}
+                onHoverItem={this.onHoverItem}
+                onBlurItem={this.onBlurItem}
+              />
+            </Map>
           </Place>
         </Wrapper>
       </Section>
@@ -59,11 +75,11 @@ class ExhibitionSection extends React.Component<{}, State> {
   }
 
   private onHoverItem = (no: number) => {
-    this.setState({ currentNum: no });
+    this.setState({ currentNo: no });
   };
 
   private onBlurItem = () => {
-    this.setState({ currentNum: null });
+    this.setState({ currentNo: null });
   };
 }
 
@@ -102,6 +118,10 @@ const Place = styled.div`
       margin-right: 0;
     }
   }
+`;
+
+const Map = styled.div`
+  flex-shrink: 0;
 `;
 
 export default ExhibitionSection;

@@ -7,7 +7,7 @@ import ContentsListItem from './ContentsListItem';
 
 interface Props {
   place: string;
-  currentNum: number | null;
+  currentNo: number | null;
   exhibitions: Exhibition[];
   onHoverItem: (no: number) => void;
   onBlurItem: () => void;
@@ -17,7 +17,7 @@ class ContentsList extends React.PureComponent<Props> {
   public render() {
     const {
       place,
-      currentNum,
+      currentNo,
       exhibitions,
       onHoverItem,
       onBlurItem,
@@ -31,7 +31,7 @@ class ContentsList extends React.PureComponent<Props> {
           {exhibitions.map(exhibition => (
             <ContentsListItem
               key={exhibition.no}
-              active={currentNum === exhibition.no}
+              active={currentNo === exhibition.no}
               exhibition={exhibition}
               onHoverItem={onHoverItem}
               onBlurItem={onBlurItem}
