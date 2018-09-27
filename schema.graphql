@@ -21,6 +21,15 @@ type Query {
   session(sessionId: Int!): Session
 
   """
+  展示一覧を取得します。
+  """
+  exhibisionList(
+    first: Int
+    after: String
+    req: ExhibitionListInput
+  ): ExhibitionConnection!
+
+  """
   お知らせ一覧を取得します
   """
   newsList(first: Int, after: String): NewsConnection!
@@ -107,6 +116,34 @@ type Speaker implements Node {
   githubId: String!
 
   sessions: [Session!]
+}
+
+type ExhibitionConnection {
+  pageInfo: PageInfo!
+  edges: [ExhibitionEdge!]!
+  nodes: [Exhibition!]!
+}
+
+type ExhibitionEdge {
+  cursor: String
+  node: Exhibition!
+}
+
+input ExhibitionListInput {
+  tmp: String
+}
+
+"""
+展示1つに関する情報。
+"""
+type Exhibition implements Node {
+  id: ID!
+  exhibitionId: Int!
+  place: String!
+  title: String!
+  titleJa: String!
+  description: String!
+  descriptionJa: String!
 }
 
 """
