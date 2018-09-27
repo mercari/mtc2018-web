@@ -62,7 +62,7 @@ class Session extends React.Component<WithRouterProps> {
                           {isJa ? session.titleJa : session.title}
                         </title>
                       </Head>
-                      <StyledHeader isTopY={true} />
+                      <StyledHeader />
                       <Body>
                         <Section title="SESSION">
                           <ContentCard session={data.session!} isJa={isJa} />

@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
 	"strings"
 
+	"cloud.google.com/go/spanner"
 	"github.com/99designs/gqlgen/handler"
 	"github.com/DataDog/opencensus-go-exporter-datadog"
 	"github.com/gorilla/websocket"
@@ -71,10 +73,23 @@ func main() {
 		DefaultSampler: trace.AlwaysSample(),
 	})
 
-	runServer(env.Port, env, logger)
+	var spannerClient *spanner.Client
+	if env.UseSpanner {
+		var err error
+		dbname := fmt.Sprintf("projects/%s/instances/%s/databases/%s",
+			env.SpannerProjectID, env.SpannerInstanceID, env.SpannerDatabaseID)
+		logger.Info(fmt.Sprintf("enable spanner: %s", dbname))
+		spannerClient, err = spanner.NewClient(context.Background(), dbname)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "[ERROR] Failed to create spanner client: %s\n", err)
+			os.Exit(1)
+		}
+	}
+
+	runServer(env.Port, env, logger, spannerClient)
 }
 
-func runServer(port int, env *config.Env, logger *zap.Logger) {
+func runServer(port int, env *config.Env, logger *zap.Logger, spannerClient *spanner.Client) {
 	mux := http.NewServeMux()
 
 	// for kubernetes readiness probe
@@ -90,7 +105,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger) {
 	// GraphQL implementation
 	// playgroundがapiの下にあるの微妙だけどGKEのIngress的にこのほうが楽なのでまぁこれでいいでしょ
 	mux.Handle("/2018/api/playground", handler.Playground("GraphQL playground", "/2018/api/query"))
-	resolver, err := gqlapi.NewResolver()
+	resolver, err := gqlapi.NewResolver(logger, spannerClient)
 	if err != nil {
 		logger.Fatal(err.Error(), zap.Error(err))
 	}
@@ -127,6 +142,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger) {
 		}),
 		IsPublicEndpoint: true,
 	}
+	handler = WithLogHandler(logger, mux)
 	handler = WithCORSHandler(env, handler)
 	err = http.ListenAndServe(fmt.Sprintf(":%d", port), handler)
 	if err != nil {

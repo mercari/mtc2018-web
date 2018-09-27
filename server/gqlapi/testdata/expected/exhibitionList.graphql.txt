@@ -1,0 +1,173 @@
+--- exhibitionList.graphql
+query {
+  # 最初の10個
+  exhibitionListA: exhibisionList(first: 10) {
+    ...ExhibitionConnectionFragment
+  }
+}
+
+fragment ExhibitionConnectionFragment on ExhibitionConnection {
+  pageInfo {
+    startCursor
+    endCursor
+    hasNextPage
+    hasPreviousPage
+  }
+  edges {
+    cursor
+    node {
+      ...ExhibitionFragment
+    }
+  }
+}
+
+fragment ExhibitionFragment on Exhibition {
+  id
+  exhibitionId
+  place
+  title
+  titleJa
+  description
+  descriptionJa
+}
+
+
+--- Result
+{"data":{"exhibitionListA":{"pageInfo":{"startCursor":null,"endCursor":"Exhibition:10","hasNextPage":true,"hasPreviousPage":false},"edges":[{"cursor":"Exhibition:1","node":{"id":"Exhibition:1","exhibitionId":1,"place":"BoothA","title":"Potential Applications of Quantum Annealing at Mercari","titleJa":"メルカリにおける量子アニーリングの研究","description":"In 2018, Mercari began carrying out research into D-Wave. Learn about our research and experience how D-Wave works through our demonstration.","descriptionJa":"メルカリは今年に入ってからD-Waveの研究をはじめました。 今回はその研究の一部のご紹介およびD-Waveの動き方を体験できるデモンストレーションををご用意させていただきます。"}},{"cursor":"Exhibition:2","node":{"id":"Exhibition:2","exhibitionId":2,"place":"BoothA","title":"Solving Business Challenges with Engineering: Mercari’s Corporate Solutions Engineering Team","titleJa":"経営課題をエンジニアリングで解決、Corporate Solutions Engineering の取り組み","description":"Learn about the activities and future plans of the Corporate Solutions Engineering Team formed last year. There will also be a demo of our HR database 'Teams' and evaluation system 'Reviews'.","descriptionJa":"昨年末にスタートしたCorporate Solutions Engineeringのここまでの動きとこれからについてご紹介します。人事データベース Teams と評価システム Reviewsのデモも行います。"}},{"cursor":"Exhibition:3","node":{"id":"Exhibition:3","exhibitionId":3,"place":"BoothA","title":"Initiatives by the Expert Team (Gopher Dojo, Go Friday, etc.)","titleJa":"エキスパートチームの取り組み（Gopher道場、Go Fridayなど）","description":"Learn more about our Gopher Dojo, Go Friday, and the activities of the Merpay Expert Team. A hands on experience with plenty of demos to enjoy!","descriptionJa":"Gopher道場やGo Fridayなど、メルペイのエキスパートチームが日頃取り組んでいる社内外での活動についてご紹介いたします。また、実際に体験できるコンテンツもご用意しておりますのでお楽しみに！"}},{"cursor":"Exhibition:4","node":{"id":"Exhibition:4","exhibitionId":4,"place":"BoothA","title":"MTC App by Flutter","titleJa":"MTC App by Flutter","description":"Learn about the inner workings of the app (iOS/Android) we made for this conference using Flutter.","descriptionJa":"Flutterで作ったカンファレンスアプリ（iOS/Android）の内側をご紹介します。"}},{"cursor":"Exhibition:5","node":{"id":"Exhibition:5","exhibitionId":5,"place":"BoothA","title":"AQA Team Test Automation and Zapier Automation Booth","titleJa":"AQAチームによるテスト自動化及びZapier自動化ブース","description":"Take a behind-the-scenes look at Mercari’s mobile test automation. We’ll also be introducing Zapier, an automation tool used at the company.","descriptionJa":"メルカリが取り組んでいるモバイルテスト自動化の取り組みや裏側、そして社内で使われている自動化ツール「Zapier」についてご紹介します。"}},{"cursor":"Exhibition:6","node":{"id":"Exhibition:6","exhibitionId":6,"place":"BoothA","title":"iOS App Rearchitecture Quiz","titleJa":"クイズ・iOS app Rearchitecture","description":"The iOS team is in the process of rehauling the architecture of the Mercari JP app. Experience the changes we are implementing first-hand with a demo using the actual app! ","descriptionJa":"メルカリのJP版メルカリは、iOSチームによりアーキテクチャの大刷新が行われています。 その違いを実際のアプリを通して見比べることができるコンテンツをご用意させていただきましたので、ぜひお楽しみくださいませ！"}},{"cursor":"Exhibition:7","node":{"id":"Exhibition:7","exhibitionId":7,"place":"BoothA","title":"Welcome to Mercari US","titleJa":"Welcome to Mercari US","description":"Hello, we are Mercari US. This year, we rebranded the Mercari US and completely transformed the app. Try out the US version of Mercari at our demo corner and experience the atmosphere of our US office through video and free swags.","descriptionJa":"Hello, we are Mercari US. 今年リブランドし生まれ変わったUS版メルカリを実際に体験できるコーナーや、US現地のオフィスの雰囲気を知ってもらえるよう、映像やノベルティをご用意してお待ちしております！"}},{"cursor":"Exhibition:8","node":{"id":"Exhibition:8","exhibitionId":8,"place":"BoothA","title":"Days in Mercari Android","titleJa":"Days in Mercari Android","description":"Learn about the everyday life of engineers on Mercari's Android Team, including the kinds of features we’re developing and the documentation we produce.","descriptionJa":"メルカリAndroidチームのエンジニアが実際にどのように機能開発やドキュメンテーションに取り組んでいるかをイメージいただけるような、リアルな開発チームの日常をご紹介します。"}},{"cursor":"Exhibition:9","node":{"id":"Exhibition:9","exhibitionId":9,"place":"BoothA","title":"We are the Machine Learning Team!","titleJa":"We are the Machine Learning team!!","description":"Learn about the work of Mercari's Machine Learning Team and the critical thinking we apply in solving challenges with machine learning.","descriptionJa":"メルカリ機械学習チームの取り組みと我々がどのような問題意識をもって課題解決に取り組んでいるかをご紹介します。"}},{"cursor":"Exhibition:10","node":{"id":"Exhibition:10","exhibitionId":10,"place":"BoothB","title":"Mercari \u0026 Microservices","titleJa":"Mercari \u0026 Microservices","description":"Learn about microservices at Mercari and talk with the team members involved in our project to move to microservices.","descriptionJa":"mercariのMicroservices について、実際に業務を担当しているメンバーからのご紹介とディスカッションの場です。"}}]}}}
+
+--- Result (formatted)
+{
+  "data": {
+    "exhibitionListA": {
+      "edges": [
+        {
+          "cursor": "Exhibition:1",
+          "node": {
+            "description": "In 2018, Mercari began carrying out research into D-Wave. Learn about our research and experience how D-Wave works through our demonstration.",
+            "descriptionJa": "メルカリは今年に入ってからD-Waveの研究をはじめました。 今回はその研究の一部のご紹介およびD-Waveの動き方を体験できるデモンストレーションををご用意させていただきます。",
+            "exhibitionId": 1,
+            "id": "Exhibition:1",
+            "place": "BoothA",
+            "title": "Potential Applications of Quantum Annealing at Mercari",
+            "titleJa": "メルカリにおける量子アニーリングの研究"
+          }
+        },
+        {
+          "cursor": "Exhibition:2",
+          "node": {
+            "description": "Learn about the activities and future plans of the Corporate Solutions Engineering Team formed last year. There will also be a demo of our HR database 'Teams' and evaluation system 'Reviews'.",
+            "descriptionJa": "昨年末にスタートしたCorporate Solutions Engineeringのここまでの動きとこれからについてご紹介します。人事データベース Teams と評価システム Reviewsのデモも行います。",
+            "exhibitionId": 2,
+            "id": "Exhibition:2",
+            "place": "BoothA",
+            "title": "Solving Business Challenges with Engineering: Mercari’s Corporate Solutions Engineering Team",
+            "titleJa": "経営課題をエンジニアリングで解決、Corporate Solutions Engineering の取り組み"
+          }
+        },
+        {
+          "cursor": "Exhibition:3",
+          "node": {
+            "description": "Learn more about our Gopher Dojo, Go Friday, and the activities of the Merpay Expert Team. A hands on experience with plenty of demos to enjoy!",
+            "descriptionJa": "Gopher道場やGo Fridayなど、メルペイのエキスパートチームが日頃取り組んでいる社内外での活動についてご紹介いたします。また、実際に体験できるコンテンツもご用意しておりますのでお楽しみに！",
+            "exhibitionId": 3,
+            "id": "Exhibition:3",
+            "place": "BoothA",
+            "title": "Initiatives by the Expert Team (Gopher Dojo, Go Friday, etc.)",
+            "titleJa": "エキスパートチームの取り組み（Gopher道場、Go Fridayなど）"
+          }
+        },
+        {
+          "cursor": "Exhibition:4",
+          "node": {
+            "description": "Learn about the inner workings of the app (iOS/Android) we made for this conference using Flutter.",
+            "descriptionJa": "Flutterで作ったカンファレンスアプリ（iOS/Android）の内側をご紹介します。",
+            "exhibitionId": 4,
+            "id": "Exhibition:4",
+            "place": "BoothA",
+            "title": "MTC App by Flutter",
+            "titleJa": "MTC App by Flutter"
+          }
+        },
+        {
+          "cursor": "Exhibition:5",
+          "node": {
+            "description": "Take a behind-the-scenes look at Mercari’s mobile test automation. We’ll also be introducing Zapier, an automation tool used at the company.",
+            "descriptionJa": "メルカリが取り組んでいるモバイルテスト自動化の取り組みや裏側、そして社内で使われている自動化ツール「Zapier」についてご紹介します。",
+            "exhibitionId": 5,
+            "id": "Exhibition:5",
+            "place": "BoothA",
+            "title": "AQA Team Test Automation and Zapier Automation Booth",
+            "titleJa": "AQAチームによるテスト自動化及びZapier自動化ブース"
+          }
+        },
+        {
+          "cursor": "Exhibition:6",
+          "node": {
+            "description": "The iOS team is in the process of rehauling the architecture of the Mercari JP app. Experience the changes we are implementing first-hand with a demo using the actual app! ",
+            "descriptionJa": "メルカリのJP版メルカリは、iOSチームによりアーキテクチャの大刷新が行われています。 その違いを実際のアプリを通して見比べることができるコンテンツをご用意させていただきましたので、ぜひお楽しみくださいませ！",
+            "exhibitionId": 6,
+            "id": "Exhibition:6",
+            "place": "BoothA",
+            "title": "iOS App Rearchitecture Quiz",
+            "titleJa": "クイズ・iOS app Rearchitecture"
+          }
+        },
+        {
+          "cursor": "Exhibition:7",
+          "node": {
+            "description": "Hello, we are Mercari US. This year, we rebranded the Mercari US and completely transformed the app. Try out the US version of Mercari at our demo corner and experience the atmosphere of our US office through video and free swags.",
+            "descriptionJa": "Hello, we are Mercari US. 今年リブランドし生まれ変わったUS版メルカリを実際に体験できるコーナーや、US現地のオフィスの雰囲気を知ってもらえるよう、映像やノベルティをご用意してお待ちしております！",
+            "exhibitionId": 7,
+            "id": "Exhibition:7",
+            "place": "BoothA",
+            "title": "Welcome to Mercari US",
+            "titleJa": "Welcome to Mercari US"
+          }
+        },
+        {
+          "cursor": "Exhibition:8",
+          "node": {
+            "description": "Learn about the everyday life of engineers on Mercari's Android Team, including the kinds of features we’re developing and the documentation we produce.",
+            "descriptionJa": "メルカリAndroidチームのエンジニアが実際にどのように機能開発やドキュメンテーションに取り組んでいるかをイメージいただけるような、リアルな開発チームの日常をご紹介します。",
+            "exhibitionId": 8,
+            "id": "Exhibition:8",
+            "place": "BoothA",
+            "title": "Days in Mercari Android",
+            "titleJa": "Days in Mercari Android"
+          }
+        },
+        {
+          "cursor": "Exhibition:9",
+          "node": {
+            "description": "Learn about the work of Mercari's Machine Learning Team and the critical thinking we apply in solving challenges with machine learning.",
+            "descriptionJa": "メルカリ機械学習チームの取り組みと我々がどのような問題意識をもって課題解決に取り組んでいるかをご紹介します。",
+            "exhibitionId": 9,
+            "id": "Exhibition:9",
+            "place": "BoothA",
+            "title": "We are the Machine Learning Team!",
+            "titleJa": "We are the Machine Learning team!!"
+          }
+        },
+        {
+          "cursor": "Exhibition:10",
+          "node": {
+            "description": "Learn about microservices at Mercari and talk with the team members involved in our project to move to microservices.",
+            "descriptionJa": "mercariのMicroservices について、実際に業務を担当しているメンバーからのご紹介とディスカッションの場です。",
+            "exhibitionId": 10,
+            "id": "Exhibition:10",
+            "place": "BoothB",
+            "title": "Mercari \u0026 Microservices",
+            "titleJa": "Mercari \u0026 Microservices"
+          }
+        }
+      ],
+      "pageInfo": {
+        "endCursor": "Exhibition:10",
+        "hasNextPage": true,
+        "hasPreviousPage": false,
+        "startCursor": null
+      }
+    }
+  }
+}
+
