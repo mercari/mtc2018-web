@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Text, Card, Section } from '../../../components';
+import { getTextStyle } from '../../../components/styles';
 import ContentsList from './ContentsList';
 import i18n from '../../../i18n';
 import { Exhibition } from '../../../types';
@@ -37,6 +38,20 @@ class ExhibitionSection extends React.Component<{}, State> {
           <Message>
             ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。
           </Message>
+          <MarkList>
+            <MarkListItem>
+              <img src="../../../static/images/booth_circle.svg" alt="" />
+              Booth
+            </MarkListItem>
+            <MarkListItem>
+              <img src="../../../static/images/plug.svg" alt="" />
+              Power
+            </MarkListItem>
+            <MarkListItem>
+              <img src="../../../static/images/tea_mug.svg" alt="" />
+              Cafespace
+            </MarkListItem>
+          </MarkList>
           <Place>
             <Map>
               <CafeMap
@@ -136,6 +151,30 @@ const AskTheSpeaker = styled(Text).attrs({
   level: 'body'
 })`
   margin-top: 20px;
+`;
+
+const MarkList = styled.ul`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0 0 60px;
+  padding: 0;
+`;
+
+const MarkListItem = styled.li`
+  ${getTextStyle('display3')} display: flex;
+  align-items: center;
+  margin-right: 40px;
+
+  img {
+    margin-right: 14px;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 export default ExhibitionSection;
