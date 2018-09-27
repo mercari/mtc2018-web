@@ -43,15 +43,24 @@ class ExhibitionSection extends React.Component<{}, State> {
                 </Message>
                 <MarkList>
                   <MarkListItem>
-                    <img src="../../../static/images/booth_circle.svg" alt="" />
+                    <span>
+                      <img
+                        src="../../../static/images/booth_circle.svg"
+                        alt=""
+                      />
+                    </span>
                     Booth
                   </MarkListItem>
                   <MarkListItem>
-                    <img src="../../../static/images/plug.svg" alt="" />
+                    <span>
+                      <img src="../../../static/images/plug.svg" alt="" />
+                    </span>
                     Power
                   </MarkListItem>
                   <MarkListItem>
-                    <img src="../../../static/images/tea_mug.svg" alt="" />
+                    <span>
+                      <img src="../../../static/images/tea_mug.svg" alt="" />
+                    </span>
                     Cafespace
                   </MarkListItem>
                 </MarkList>
@@ -133,6 +142,12 @@ const Message = styled(Text).attrs({
   level: 'display2'
 })`
   margin-bottom: 60px;
+  text-align: center;
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 40px;
+    ${getTextStyle('body')};
+  }
 `;
 
 const Place = styled.div`
@@ -147,26 +162,49 @@ const Place = styled.div`
       margin-right: 0;
     }
   }
+
+  @media screen and (max-width: 960px) {
+    flex-direction: column;
+    padding: 0;
+
+    > * {
+      margin-right: 0;
+    }
+  }
 `;
 
 const Map = styled.div`
   flex-shrink: 0;
+  padding: 20px;
+
+  > svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const AskTheSpeaker = styled(Text).attrs({
   level: 'body'
 })`
   margin-top: 20px;
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const MarkList = styled.ul`
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
   list-style: none;
   margin: 0 0 60px;
   padding: 0;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    margin: 0 0 20px;
+  }
 `;
 
 const MarkListItem = styled.li`
@@ -174,12 +212,23 @@ const MarkListItem = styled.li`
   align-items: center;
   margin-right: 40px;
 
-  img {
-    margin-right: 14px;
+  span {
+    width: 30px;
+    display: flex;
+    align-items: center;
   }
 
   &:last-child {
     margin-right: 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin-right: 0;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 `;
 

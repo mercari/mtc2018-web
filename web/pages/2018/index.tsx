@@ -67,11 +67,11 @@ class Top extends React.PureComponent {
 
               return (
                 <>
-                  <ExhibitionSection />
                   <NewsSection gqlData={data} />
                   <AboutSection />
                   <ContentSection gqlData={data} />
                   <StyledTimetableSection gqlData={data} />
+                  <ExhibitionSection />
                 </>
               );
             }}
@@ -96,7 +96,8 @@ const Body = styled.div`
   box-sizing: border-box;
 
   > * {
-    margin-bottom: 160px;
+    padding-top: 80px;
+    margin-bottom: 80px;
 
     &:last-child {
       margin-bottom: 0;

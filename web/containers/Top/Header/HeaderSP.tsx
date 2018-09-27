@@ -43,6 +43,9 @@ class Header extends React.Component<Props, State> {
           <NavButton href="/2018#contents" onClick={this.onClickNav}>
             CONTENTS
           </NavButton>
+          <NavButton href="/2018#exhibition" onClick={this.onClickNav}>
+            EXHIBITION
+          </NavButton>
           <NavButton href="/2018#access" onClick={this.onClickNav}>
             ACCESS
           </NavButton>

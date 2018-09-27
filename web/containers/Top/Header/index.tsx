@@ -55,14 +55,14 @@ class Header extends React.Component<{}, State> {
 
 const StyledHeaderPC = styled(HeaderPC)`
   display: flex;
-  @media screen and (max-width: 960px) {
+  @media screen and (max-width: 1120px) {
     display: none;
   }
 `;
 
 const StyledHeaderSP = styled(HeaderSP)`
   display: none;
-  @media screen and (max-width: 960px) {
+  @media screen and (max-width: 1120px) {
     display: flex;
   }
 `;

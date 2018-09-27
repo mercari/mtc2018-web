@@ -80,6 +80,10 @@ const Description = styled.div`
   transition-duration: 300ms;
   opacity: ${(props: { active: boolean }) => (props.active ? 1 : 0)};
   pointer-events: none;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const DescriptionInner = styled(Text).attrs({

@@ -25,7 +25,7 @@ class ContentsList extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <div {...props}>
+      <Wrapper {...props}>
         <PlaceName>{place}</PlaceName>
         <List>
           {exhibitions.map(exhibition => (
@@ -38,10 +38,14 @@ class ContentsList extends React.PureComponent<Props> {
             />
           ))}
         </List>
-      </div>
+      </Wrapper>
     );
   }
 }
+
+const Wrapper = styled.div`
+  width: 100%;
+`;
 
 const PlaceName = styled(Text).attrs({
   level: 'display3'
