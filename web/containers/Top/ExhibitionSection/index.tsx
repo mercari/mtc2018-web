@@ -78,10 +78,9 @@ class ExhibitionSection extends React.Component<{}, State> {
                 onBlurItem={this.onBlurItem}
               />
               <AskTheSpeaker>
-                ※Ask the Speakerについて
+                {i18n.t('askTheSpeaker.title')}
                 <br />
-                セッション後、登壇者と直接お話いただける場を設けています。SESSIONの疑問/質問などぜひ話しにお立ち寄りください。登壇者はSESSION終了後〜次のSESSIONが開始してから15分間までAsk
-                the Speakerブースにいます。
+                {i18n.t('askTheSpeaker.body')}
               </AskTheSpeaker>
             </div>
             <Map>
@@ -133,6 +132,7 @@ const Message = styled(Text).attrs({
 const Place = styled.div`
   display: flex;
   align-items: center;
+  padding: 0 32px;
 
   > * {
     margin-right: 60px;

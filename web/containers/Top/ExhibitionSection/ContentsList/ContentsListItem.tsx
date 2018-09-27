@@ -57,6 +57,7 @@ const Row = styled.div`
 const Num = styled(Text).attrs({
   level: 'display1'
 })`
+  line-height: 19px;
   font-weight: bold;
   width: 30px;
   flex-shrink: 0;
@@ -66,8 +67,9 @@ const Num = styled(Text).attrs({
 `;
 
 const Title = styled(Text).attrs({
-  level: 'display1'
+  level: 'body'
 })`
+  line-height: 19px;
   transition-duration: 300ms;
   color: ${(props: { active: boolean }) =>
     props.active ? colors.secondary : 'auto'};
@@ -89,7 +91,7 @@ const DescriptionInner = styled(Text).attrs({
   background: ${colors.skin};
   padding: 16px;
   border-radius: ${borderRadius.level1};
-  box-shadow: ${boxShadow.level1};
+  box-shadow: ${boxShadow.level2};
 `;
 
 export default ContentsListItem;

@@ -49,5 +49,6 @@ export const borderRadius = {
 };
 
 export const boxShadow = {
-  level1: '0 4px 6px rgba(0, 0, 0, 0.7)'
+  level1: '0 4px 6px rgba(0, 0, 0, 0.7)',
+  level2: '0 2px 6px rgba(0, 0, 0, 0.3)'
 };
