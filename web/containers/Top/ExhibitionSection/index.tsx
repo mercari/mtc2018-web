@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Text, Card, Section } from '../../../components';
 import { getTextStyle } from '../../../components/styles';
 import ContentsList from './ContentsList';
-import i18n from '../../../i18n';
+import { I18n } from 'react-i18next';
 import { Exhibition } from '../../../types';
 import CafeMap from './CafeMap';
 import StudioMap from './StudioMap';
@@ -18,81 +18,87 @@ class ExhibitionSection extends React.Component<{}, State> {
   };
 
   public render() {
-    const { currentNo } = this.state;
-
-    const exhibitions: Exhibition[] = i18n.t('exhibitions', {
-      returnObjects: true
-    });
-
-    const cafeExhibitions = exhibitions.filter(exhibition => {
-      return exhibition.place === 'l';
-    });
-
-    const studioExhibitions = exhibitions.filter(exhibition => {
-      return exhibition.place === 's';
-    });
-
     return (
-      <Section title="EXHIBITION" id="exhibition">
-        <Wrapper>
-          <Message>
-            ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。
-          </Message>
-          <MarkList>
-            <MarkListItem>
-              <img src="../../../static/images/booth_circle.svg" alt="" />
-              Booth
-            </MarkListItem>
-            <MarkListItem>
-              <img src="../../../static/images/plug.svg" alt="" />
-              Power
-            </MarkListItem>
-            <MarkListItem>
-              <img src="../../../static/images/tea_mug.svg" alt="" />
-              Cafespace
-            </MarkListItem>
-          </MarkList>
-          <Place>
-            <Map>
-              <CafeMap
-                currentNo={currentNo}
-                onHoverItem={this.onHoverItem}
-                onBlurItem={this.onBlurItem}
-              />
-            </Map>
-            <ContentsList
-              place="Library Cafe"
-              currentNo={currentNo}
-              exhibitions={cafeExhibitions}
-              onHoverItem={this.onHoverItem}
-              onBlurItem={this.onBlurItem}
-            />
-          </Place>
-          <Place>
-            <div>
-              <ContentsList
-                place="Sky Studio"
-                currentNo={currentNo}
-                exhibitions={studioExhibitions}
-                onHoverItem={this.onHoverItem}
-                onBlurItem={this.onBlurItem}
-              />
-              <AskTheSpeaker>
-                {i18n.t('askTheSpeaker.title')}
-                <br />
-                {i18n.t('askTheSpeaker.body')}
-              </AskTheSpeaker>
-            </div>
-            <Map>
-              <StudioMap
-                currentNo={currentNo}
-                onHoverItem={this.onHoverItem}
-                onBlurItem={this.onBlurItem}
-              />
-            </Map>
-          </Place>
-        </Wrapper>
-      </Section>
+      <I18n>
+        {t => {
+          const { currentNo } = this.state;
+
+          const exhibitions: Exhibition[] = t('exhibitions', {
+            returnObjects: true
+          });
+
+          const cafeExhibitions = exhibitions.filter(exhibition => {
+            return exhibition.place === 'l';
+          });
+
+          const studioExhibitions = exhibitions.filter(exhibition => {
+            return exhibition.place === 's';
+          });
+
+          return (
+            <Section title="EXHIBITION" id="exhibition">
+              <Wrapper>
+                <Message>
+                  ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。
+                </Message>
+                <MarkList>
+                  <MarkListItem>
+                    <img src="../../../static/images/booth_circle.svg" alt="" />
+                    Booth
+                  </MarkListItem>
+                  <MarkListItem>
+                    <img src="../../../static/images/plug.svg" alt="" />
+                    Power
+                  </MarkListItem>
+                  <MarkListItem>
+                    <img src="../../../static/images/tea_mug.svg" alt="" />
+                    Cafespace
+                  </MarkListItem>
+                </MarkList>
+                <Place>
+                  <Map>
+                    <CafeMap
+                      currentNo={currentNo}
+                      onHoverItem={this.onHoverItem}
+                      onBlurItem={this.onBlurItem}
+                    />
+                  </Map>
+                  <ContentsList
+                    place="Library Cafe"
+                    currentNo={currentNo}
+                    exhibitions={cafeExhibitions}
+                    onHoverItem={this.onHoverItem}
+                    onBlurItem={this.onBlurItem}
+                  />
+                </Place>
+                <Place>
+                  <div>
+                    <ContentsList
+                      place="Sky Studio"
+                      currentNo={currentNo}
+                      exhibitions={studioExhibitions}
+                      onHoverItem={this.onHoverItem}
+                      onBlurItem={this.onBlurItem}
+                    />
+                    <AskTheSpeaker>
+                      {t('askTheSpeaker.title')}
+                      <br />
+                      {t('askTheSpeaker.body')}
+                    </AskTheSpeaker>
+                  </div>
+                  <Map>
+                    <StudioMap
+                      currentNo={currentNo}
+                      onHoverItem={this.onHoverItem}
+                      onBlurItem={this.onBlurItem}
+                    />
+                  </Map>
+                </Place>
+              </Wrapper>
+            </Section>
+          );
+        }}
+      </I18n>
     );
   }
 
