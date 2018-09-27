@@ -19,7 +19,13 @@ const StudioMap: React.SFC<Props> = ({
   onBlurItem,
   ...props
 }) => (
-  <svg viewBox="0 0 271 274" {...props}>
+  <svg
+    viewBox="0 0 271 274"
+    width="271px"
+    height="274px"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g
       id="9/26-Update"
       stroke="none"

@@ -25,7 +25,13 @@ const CafeMap: React.SFC<Props> = ({
   onBlurItem,
   ...props
 }) => (
-  <svg viewBox="0 0 331 350" {...props}>
+  <svg
+    viewBox="0 0 331 350"
+    width="331px"
+    height="350px"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <defs>
       <pattern
         id="pattern-1"

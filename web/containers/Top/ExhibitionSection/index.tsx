@@ -81,7 +81,7 @@ class ExhibitionSection extends React.Component<{}, State> {
                   />
                 </Place>
                 <Place>
-                  <div>
+                  <StudioLeft>
                     <ContentsList
                       place="Sky Studio"
                       currentNo={currentNo}
@@ -94,7 +94,7 @@ class ExhibitionSection extends React.Component<{}, State> {
                       <br />
                       {t('askTheSpeaker.body')}
                     </AskTheSpeaker>
-                  </div>
+                  </StudioLeft>
                   <Map>
                     <StudioMap
                       currentNo={currentNo}
@@ -179,13 +179,14 @@ const Map = styled.div`
 
   > svg {
     width: 100%;
-    height: 100%;
+    max-height: 100%;
   }
 `;
 
 const AskTheSpeaker = styled(Text).attrs({
   level: 'body'
 })`
+  width: 100%;
   margin-top: 20px;
 
   @media screen and (max-width: 767px) {
@@ -230,6 +231,10 @@ const MarkListItem = styled.li`
       margin-bottom: 0;
     }
   }
+`;
+
+const StudioLeft = styled.div`
+  width: 100%;
 `;
 
 export default ExhibitionSection;
