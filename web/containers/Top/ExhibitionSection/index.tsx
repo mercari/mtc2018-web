@@ -54,13 +54,21 @@ class ExhibitionSection extends React.Component<{}, State> {
             />
           </Place>
           <Place>
-            <ContentsList
-              place="Sky Studio"
-              currentNo={currentNo}
-              exhibitions={studioExhibitions}
-              onHoverItem={this.onHoverItem}
-              onBlurItem={this.onBlurItem}
-            />
+            <div>
+              <ContentsList
+                place="Sky Studio"
+                currentNo={currentNo}
+                exhibitions={studioExhibitions}
+                onHoverItem={this.onHoverItem}
+                onBlurItem={this.onBlurItem}
+              />
+              <AskTheSpeaker>
+                ※Ask the Speakerについて
+                <br />
+                セッション後、登壇者と直接お話いただける場を設けています。SESSIONの疑問/質問などぜひ話しにお立ち寄りください。登壇者はSESSION終了後〜次のSESSIONが開始してから15分間までAsk
+                the Speakerブースにいます。
+              </AskTheSpeaker>
+            </div>
             <Map>
               <StudioMap
                 currentNo={currentNo}
@@ -122,6 +130,12 @@ const Place = styled.div`
 
 const Map = styled.div`
   flex-shrink: 0;
+`;
+
+const AskTheSpeaker = styled(Text).attrs({
+  level: 'body'
+})`
+  margin-top: 20px;
 `;
 
 export default ExhibitionSection;
