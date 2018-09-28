@@ -17,71 +17,81 @@
   "exhibitions": [
     {
       "no": 1,
-      "title": "経営課題をエンジニアリングで解決、Corporate Solutions Engineering の取り組み",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "メルカリにおける量子アニーリングの研究",
+      "description": "メルカリは今年に入ってからD-Waveの研究をはじめました。 今回はその研究の一部のご紹介およびD-Waveの動き方を体験できるデモンストレーションををご用意させていただきます。",
       "place": "l"
     },
     {
       "no": 2,
-      "title": "Welcome to Mercari US",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "経営課題をエンジニアリングで解決、Corporate Solutions Engineering の取り組み",
+      "description": "昨年末にスタートしたCorporate Solutions Engineeringのここまでの動きとこれからについてご紹介します。人事データベース Teams と評価システム Reviewsのデモも行います。",
       "place": "l"
     },
     {
       "no": 3,
-      "title": "クイズ・iOS app Rearchitecture",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "エキスパートチームの取り組み（Gopher道場、Go Fridayなど）",
+      "description": "Gopher道場やGo Fridayなど、メルペイのエキスパートチームが日頃取り組んでいる社内外での活動についてご紹介いたします。また、実際に体験できるコンテンツもご用意しておりますのでお楽しみに！",
       "place": "l"
     },
     {
       "no": 4,
-      "title": "メルカリにおける量子アニーリングの応用可能性",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "MTC App by Flutter",
+      "description": "Flutterで作ったカンファレンスアプリ（iOS/Android）の内側をご紹介します。",
       "place": "l"
     },
     {
       "no": 5,
-      "title": "mercari & microservices",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "AQAチームによるテスト自動化及びZapier自動化ブース",
+      "description": "メルカリが取り組んでいるモバイルテスト自動化の取り組みや裏側、そして社内で使われている自動化ツール「Zapier」についてご紹介します。",
       "place": "l"
     },
     {
       "no": 6,
-      "title": "Days in Mercari Android",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "クイズ・iOS app Rearchitecture",
+      "description": "メルカリのJP版メルカリは、iOSチームによりアーキテクチャの大刷新が行われています。 その違いを実際のアプリを通して見比べることができるコンテンツをご用意させていただきましたので、ぜひお楽しみくださいませ！",
       "place": "l"
     },
     {
       "no": 7,
-      "title": "研究開発組織「R4D」",
-      "description": "研究開発組織「R4D」で進められている一部プロジェクトの紹介と、ロボットと量子コンピュータを用いたデモンストレーションを行います。",
+      "title": "Welcome to Mercari US",
+      "description": "Hello, we are Mercari US. 今年リブランドし生まれ変わったUS版メルカリを実際に体験できるコーナーや、US現地のオフィスの雰囲気を知ってもらえるよう、映像やノベルティをご用意してお待ちしております！",
       "place": "l"
     },
     {
       "no": 8,
-      "title": "エキスパートチームの取り組み（Gopher道場、Go Fridayなど）",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "Days in Mercari Android",
+      "description": "メルカリAndroidチームのエンジニアが実際にどのように機能開発やドキュメンテーションに取り組んでいるかをイメージいただけるような、リアルな開発チームの日常をご紹介します。",
       "place": "l"
     },
     {
       "no": 9,
-      "title": "We are Machine Learning team!",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "We are the Machine Learning team!!",
+      "description": "メルカリ機械学習チームの取り組みと我々がどのような問題意識をもって課題解決に取り組んでいるかをご紹介します。",
       "place": "l"
     },
     {
       "no": 10,
-      "title": "MTC App by Flutter",
-      "description": "Flutterで作ったカンファレンスアプリ（iOS/Android）の内側を紹介します。",
+      "title": "Mercari & Microservices",
+      "description": "mercariのMicroservices について、実際に業務を担当しているメンバーからのご紹介とディスカッションの場です。",
       "place": "s"
     },
     {
       "no": 11,
-      "title": "AQAチームによるテスト自動化及びZapier自動化ブース",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "研究開発組織「R4D」",
+      "description": "メルカリの研究開発組織「R4D」で進めているプロジェクトをご紹介します。また、量子コンピュータを用いたロボットのデモンストレーション（研究開発中）も行う予定です。",
+      "place": "s"
+    },
+    {
+      "no": 12,
+      "title": "Ask the Speaker",
+      "description": "",
       "place": "s"
     }
   ],
+  "askTheSpeaker": {
+    "title": "※Ask the Speakerについて",
+    "body": "セッション後、登壇者と直接お話いただける場を設けています。SESSIONの疑問/質問などぜひ話しにお立ち寄りください。登壇者はSESSION終了後〜次のSESSIONが開始してから15分間までAsk the Speakerブースにいます。"
+  },
   "access": {
     "title": "六本木アカデミーヒルズ",
     "address": "〒106-6149 東京都港区六本木６丁目１０番１号 六本木ヒルズ森タワー49F",
