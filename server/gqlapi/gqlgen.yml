@@ -17,6 +17,16 @@ models:
         resolver: true
       sessionId:
         fieldName: ID
+      liked:
+        resolver: true
+
+  Exhibition:
+    model: github.com/mercari/mtc2018-web/server/domains.Exhibition
+    fields:
+      id:
+        resolver: true
+      exhibitionId:
+        fieldName: ID
 
   Speaker:
     model: github.com/mercari/mtc2018-web/server/domains.Speaker
