@@ -7,6 +7,7 @@ import MainVisual from '../../containers/Top/MainVisual';
 import NewsSection from '../../containers/Top/NewsSection';
 import AboutSection from '../../containers/Top/AboutSection';
 import ContentSection from '../../containers/Top/ContentSection';
+import ExhibitionSection from '../../containers/Top/ExhibitionSection';
 import TimetableSection, {
   TIMETABLE_SECTION_FRAGMENT
 } from '../../containers/Top/TimetableSection';
@@ -18,7 +19,6 @@ import { Query } from 'react-apollo';
 import { Top as TopQuery } from '../../graphql/generated/Top';
 import { NEWS_LIST_FRAGMENT } from '../../containers/Top/NewsSection/NewsList';
 import { CONTENT_GRID_FRAGMENT } from '../../containers/Top/ContentSection/ContentGrid';
-import { I18n } from 'react-i18next';
 
 export const TOP_QUERY = gql`
   query Top {
@@ -70,28 +70,8 @@ class Top extends React.PureComponent {
                   <NewsSection gqlData={data} />
                   <AboutSection />
                   <ContentSection gqlData={data} />
-                  {/* ExhibitionSection */}
-                  <I18n>
-                    {t => {
-                      const exhibitions = t('exhibitions', {
-                        returnObjects: true
-                      }).sort((a: any, b: any) => a.no - b.no);
-
-                      const exhibitionsAtLibraryCafe = exhibitions.filter(
-                        (e: any) => e.place === 'l'
-                      );
-                      const exhibitionsAtSkyStudio = exhibitions.filter(
-                        (e: any) => e.place === 's'
-                      );
-                      // tslint:disable
-                      console.log('All exhibitions', exhibitions);
-                      console.log('at Library Cafe:', exhibitionsAtLibraryCafe);
-                      console.log('at Sky Studio:', exhibitionsAtSkyStudio);
-                      // tslint:enable
-                      return null;
-                    }}
-                  </I18n>
                   <StyledTimetableSection gqlData={data} />
+                  <ExhibitionSection />
                 </>
               );
             }}
@@ -116,7 +96,8 @@ const Body = styled.div`
   box-sizing: border-box;
 
   > * {
-    margin-bottom: 160px;
+    padding-top: 80px;
+    margin-bottom: 80px;
 
     &:last-child {
       margin-bottom: 0;

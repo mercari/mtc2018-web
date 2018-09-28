@@ -17,71 +17,81 @@
   "exhibitions": [
     {
       "no": 1,
-      "title": "経営課題をエンジニアリングで解決、Corporate Solutions Engineering の取り組み",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "Potential Applications of Quantum Annealing at Mercari",
+      "description": "In 2018, Mercari began carrying out research into D-Wave. Learn about our research and experience how D-Wave works through our demonstration.",
       "place": "l"
     },
     {
       "no": 2,
-      "title": "Welcome to Mercari US",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "Solving Business Challenges with Engineering: Mercari’s Corporate Solutions Engineering Team",
+      "description": "Learn about the activities and future plans of the Corporate Solutions Engineering Team formed last year. There will also be a demo of our HR database 'Teams' and evaluation system 'Reviews'.",
       "place": "l"
     },
     {
       "no": 3,
-      "title": "クイズ・iOS app Rearchitecture",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "Initiatives by the Expert Team (Gopher Dojo, Go Friday, etc.)",
+      "description": "Learn more about our Gopher Dojo, Go Friday, and the activities of the Merpay Expert Team. A hands on experience with plenty of demos to enjoy!",
       "place": "l"
     },
     {
       "no": 4,
-      "title": "メルカリにおける量子アニーリングの応用可能性",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "MTC App by Flutter",
+      "description": "Learn about the inner workings of the app (iOS/Android) we made for this conference using Flutter.",
       "place": "l"
     },
     {
       "no": 5,
-      "title": "mercari & microservices",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "AQA Team Test Automation and Zapier Automation Booth",
+      "description": "Take a behind-the-scenes look at Mercari’s mobile test automation. We’ll also be introducing Zapier, an automation tool used at the company.",
       "place": "l"
     },
     {
       "no": 6,
-      "title": "Days in Mercari Android",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "iOS App Rearchitecture Quiz",
+      "description": "The iOS team is in the process of rehauling the architecture of the Mercari JP app. Experience the changes we are implementing first-hand with a demo using the actual app! ",
       "place": "l"
     },
     {
       "no": 7,
-      "title": "研究開発組織「R4D」",
-      "description": "研究開発組織「R4D」で進められている一部プロジェクトの紹介と、ロボットと量子コンピュータを用いたデモンストレーションを行います。",
+      "title": "Welcome to Mercari US",
+      "description": "Hello, we are Mercari US. This year, we rebranded the Mercari US and completely transformed the app. Try out the US version of Mercari at our demo corner and experience the atmosphere of our US office through video and free swags.",
       "place": "l"
     },
     {
       "no": 8,
-      "title": "エキスパートチームの取り組み（Gopher道場、Go Fridayなど）",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "Days in Mercari Android",
+      "description": "Learn about the everyday life of engineers on Mercari's Android Team, including the kinds of features we’re developing and the documentation we produce.",
       "place": "l"
     },
     {
       "no": 9,
-      "title": "We are Machine Learning team!",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "We are the Machine Learning Team!",
+      "description": "Learn about the work of Mercari's Machine Learning Team and the critical thinking we apply in solving challenges with machine learning.",
       "place": "l"
     },
     {
       "no": 10,
-      "title": "MTC App by Flutter",
-      "description": "Flutterで作ったカンファレンスアプリ（iOS/Android）の内側を紹介します。",
+      "title": "Mercari & Microservices",
+      "description": "Learn about microservices at Mercari and talk with the team members involved in our project to move to microservices.",
       "place": "s"
     },
     {
       "no": 11,
-      "title": "AQAチームによるテスト自動化及びZapier自動化ブース",
-      "description": "紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜紹介文〜〜〜〜",
+      "title": "Research and development organization \"R4D\"",
+      "description": "Learn about R4D, Mercari's research and development organization. There will be demonstrations on robotics using quantum computing (currently undergoing research and development).",
+      "place": "s"
+    },
+    {
+      "no": 12,
+      "title": "Ask the Speaker",
+      "description": "ここになにか入れます",
       "place": "s"
     }
   ],
+  "askTheSpeaker": {
+    "title": "※Ask the Speakerについて",
+    "body": "セッション後、登壇者と直接お話いただける場を設けています。SESSIONの疑問/質問などぜひ話しにお立ち寄りください。登壇者はSESSION終了後〜次のSESSIONが開始してから15分間までAsk the Speakerブースにいます。"
+  },
   "access": {
     "title": "Roppongi Academyhills",
     "address": "Mori Tower 49th Floor 6-10-1 Roppongi, Minato-ku, Tokyo 106-0032",

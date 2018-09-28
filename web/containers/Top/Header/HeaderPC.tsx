@@ -21,6 +21,7 @@ class HeaderPC extends React.Component<Props> {
           <NavButton href="/2018#about">ABOUT</NavButton>
           <NavButton href="/2018#contents">CONTENTS</NavButton>
           <NavButton href="/2018#timetable">TIME TABLE</NavButton>
+          <NavButton href="/2018#exhibition">EXHIBITION</NavButton>
           <NavButton href="/2018#access">ACCESS</NavButton>
           <SNS>
             <TwitterShareButton />
