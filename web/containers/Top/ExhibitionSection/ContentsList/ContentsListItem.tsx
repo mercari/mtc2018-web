@@ -28,9 +28,11 @@ class ContentsListItem extends React.PureComponent<Props> {
           <Num active={active}>{exhibition.no}.</Num>
           <Title active={active}>{exhibition.title}</Title>
         </Row>
-        <Description active={active}>
-          <DescriptionInner>{exhibition.description}</DescriptionInner>
-        </Description>
+        {exhibition.description && (
+          <Description active={active}>
+            <DescriptionInner>{exhibition.description}</DescriptionInner>
+          </Description>
+        )}
       </Wrapper>
     );
   }

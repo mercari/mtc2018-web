@@ -38,9 +38,6 @@ class ExhibitionSection extends React.Component<{}, State> {
           return (
             <Section title="EXHIBITION" id="exhibition">
               <Wrapper>
-                <Message>
-                  ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。ちょっとした素敵な文言が入ります。
-                </Message>
                 <MarkList>
                   <MarkListItem>
                     <span>
@@ -73,7 +70,7 @@ class ExhibitionSection extends React.Component<{}, State> {
                     />
                   </Map>
                   <ContentsList
-                    place="Library Cafe"
+                    place="Booth A"
                     currentNo={currentNo}
                     exhibitions={cafeExhibitions}
                     onHoverItem={this.onHoverItem}
@@ -83,7 +80,7 @@ class ExhibitionSection extends React.Component<{}, State> {
                 <Place>
                   <StudioLeft>
                     <ContentsList
-                      place="Sky Studio"
+                      place="Booth B"
                       currentNo={currentNo}
                       exhibitions={studioExhibitions}
                       onHoverItem={this.onHoverItem}
@@ -135,18 +132,6 @@ const Wrapper = styled(Card)`
     &:last-child {
       margin-bottom: 0;
     }
-  }
-`;
-
-const Message = styled(Text).attrs({
-  level: 'display2'
-})`
-  margin-bottom: 60px;
-  text-align: center;
-
-  @media screen and (max-width: 767px) {
-    margin-bottom: 40px;
-    ${getTextStyle('body')};
   }
 `;
 

@@ -2,9 +2,9 @@ import * as React from 'react';
 import MapCircle, { BoothCircle } from './MapCircle';
 
 const circles: BoothCircle[] = [
-  { no: 10, x: 57, y: 66 },
+  { no: 12, x: 57, y: 66 },
   { no: 11, x: 159, y: 119 },
-  { no: 12, x: 114, y: 167 }
+  { no: 10, x: 114, y: 167 }
 ];
 
 interface Props {
