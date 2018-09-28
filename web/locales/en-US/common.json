@@ -84,13 +84,13 @@
     {
       "no": 12,
       "title": "Ask the Speaker",
-      "description": "Ask the Speaker is an opportunity for you to talk directly to MTC speakers after their sessions. If you have any questions about a session, drop by after the session is finished and ask them anything! Speakers will move to the Ask the Speaker booth after their session ends, and remain there for the first 15 minutes of the following session.",
+      "description": "",
       "place": "s"
     }
   ],
   "askTheSpeaker": {
-    "title": "※Ask the Speakerについて",
-    "body": "セッション後、登壇者と直接お話いただける場を設けています。SESSIONの疑問/質問などぜひ話しにお立ち寄りください。登壇者はSESSION終了後〜次のSESSIONが開始してから15分間までAsk the Speakerブースにいます。"
+    "title": "*Ask the Speaker",
+    "body": "Ask the Speaker is an opportunity for you to talk directly to MTC speakers after their sessions. If you have any questions about a session, drop by after the session is finished and ask them anything! Speakers will move to the Ask the Speaker booth after their session ends, and remain there for the first 15 minutes of the following session."
   },
   "access": {
     "title": "Roppongi Academyhills",
