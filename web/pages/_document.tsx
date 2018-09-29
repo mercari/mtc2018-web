@@ -18,7 +18,7 @@ export default class MyDocument extends Document {
 
   public render() {
     return (
-      <html>
+      <html lang="ja">
         <Head>
           <meta name="format-detection" content="telephone=no" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -91,7 +91,9 @@ const Address = styled(Text).attrs({ level: 'body' })`
   text-align: center;
 `;
 
-const Map = styled.iframe`
+const Map = styled.iframe.attrs({
+  title: 'map'
+})`
   width: 100%;
   height: 320px;
 `;

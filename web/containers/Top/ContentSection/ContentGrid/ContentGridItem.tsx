@@ -84,6 +84,7 @@ class ContentGridItem extends React.PureComponent<Props> {
                         src={`/static/images/speakers/${
                           speaker.speakerId
                         }_thumb.png`}
+                        alt={isJa ? speaker.nameJa : speaker.name}
                       />
                       <div>
                         <Text level="display1">

@@ -61,9 +61,6 @@ export const loadFont = () => {
 
   document.head.appendChild(link);
 
-  const roboto = new FontFaceObserver('Montserrat');
-
-  roboto.load().then(() => {
-    document.documentElement.classList.add('montserrat');
-  });
+  const monstserrat = new FontFaceObserver('Montserrat');
+  monstserrat.load();
 };

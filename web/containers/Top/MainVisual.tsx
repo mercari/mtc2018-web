@@ -49,7 +49,8 @@ const EmptySpace = styled.div`
 `;
 
 const Logo = styled.img.attrs({
-  src: '../../static/images/logo.svg'
+  src: '../../static/images/logo.svg',
+  alt: 'mercari tech conf 2018'
 })`
   width: 280px;
   height: 134px;
