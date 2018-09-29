@@ -19,7 +19,9 @@ class Default extends React.Component {
   }
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.main.attrs({
+  role: 'main'
+})`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
