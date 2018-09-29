@@ -19,10 +19,12 @@
   },
   "author": "sawa-zen",
   "dependencies": {
+    "@types/fontfaceobserver": "0.0.6",
     "@zeit/next-typescript": "^1.1.0",
     "apollo-boost": "^0.1.15",
     "cross-env": "^5.2.0",
     "express": "^4.16.3",
+    "fontfaceobserver": "^2.0.13",
     "fork-ts-checker-webpack-plugin": "^0.4.9",
     "graphql-tag": "^2.9.2",
     "i18next": "^11.7.0",
