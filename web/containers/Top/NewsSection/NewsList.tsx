@@ -38,7 +38,11 @@ const NewsList: React.SFC<Props> = ({ gqlData, ...props }) => (
             <ListItem key={newsItem.id}>
               <ListItemDate>{newsItem.date}</ListItemDate>
               {newsItem.link ? (
-                <ListItemMessageLink href={newsItem.link} target="_blank">
+                <ListItemMessageLink
+                  href={newsItem.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {message}
                 </ListItemMessageLink>
               ) : (
