@@ -4,7 +4,7 @@ export const rows: Row[] = [
   {
     type: 'other',
     time: '9:00 ~ 10:00',
-    label: 'Reception starts',
+    label: 'Doors open',
     labelJa: '受付開始'
   },
   {
