@@ -29,6 +29,17 @@ i18n
       .then(() => {
         const server = express()
 
+        const robotsOptions = {
+        root: __dirname + '/static/',
+          headers: {
+          'Content-Type': 'text/plain;charset=UTF-8',
+          }
+        };
+
+        server.get('/robots.txt', (req, res) => (
+          res.status(200).sendFile('robots.txt', robotsOptions)
+        ));
+
         // mercari tech conf 2017
         server.use('/2017', express.static(path.join(__dirname+'/static/2017')));
 
