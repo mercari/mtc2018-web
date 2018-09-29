@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import FontFaceObserver from 'fontfaceobserver';
 
 export const colors = {
   primary: '#10172B',
@@ -51,4 +52,18 @@ export const borderRadius = {
 export const boxShadow = {
   level1: '0 4px 6px rgba(0, 0, 0, 0.7)',
   level2: '0 2px 6px rgba(0, 0, 0, 0.3)'
+};
+
+export const loadFont = () => {
+  const link = document.createElement('link');
+  link.href = 'https://fonts.googleapis.com/css?family=Montserrat:400,700';
+  link.rel = 'stylesheet';
+
+  document.head.appendChild(link);
+
+  const roboto = new FontFaceObserver('Montserrat');
+
+  roboto.load().then(() => {
+    document.documentElement.classList.add('montserrat');
+  });
 };

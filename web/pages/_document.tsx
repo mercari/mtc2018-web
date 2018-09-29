@@ -54,10 +54,6 @@ export default class MyDocument extends Document {
           <meta name="twitter:site" content="@mercari_inc" />
           <link rel="shortcut icon" href="/static/images/favicon.ico" />
           <title>Mercari Tech Conf 2018</title>
-          <link
-            href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-            rel="stylesheet"
-          />
           <link rel="manifest" href="/2018/manifest.json" />
           <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
           {this.props.styleTags}
