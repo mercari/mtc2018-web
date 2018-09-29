@@ -43,12 +43,13 @@ func NewNewsRepo() (NewsRepo, error) {
 	repo := &newsRepo{}
 
 	for _, newsData := range data.News {
+		link := newsData.Link
 		news := &News{
 			ID:        newsData.NewsID,
 			Date:      newsData.Date,
 			Message:   newsData.Message,
 			MessageJa: newsData.MessageJa,
-			Link:      &newsData.Link,
+			Link:      &link,
 		}
 
 		repo.list = append(repo.list, news)
