@@ -46,6 +46,7 @@ const AccessSection: React.SFC<{}> = props => (
           <Link
             href="http://forum.academyhills.com/roppongi/access/"
             target="_blank"
+            rel="noopener noreferrer"
           >
             {t('access.linkToAcademyHills')}
           </Link>
