@@ -46,6 +46,7 @@ const AccessSection: React.SFC<{}> = props => (
           <Link
             href="http://forum.academyhills.com/roppongi/access/"
             target="_blank"
+            rel="noopener noreferrer"
           >
             {t('access.linkToAcademyHills')}
           </Link>
@@ -90,7 +91,9 @@ const Address = styled(Text).attrs({ level: 'body' })`
   text-align: center;
 `;
 
-const Map = styled.iframe`
+const Map = styled.iframe.attrs({
+  title: 'map'
+})`
   width: 100%;
   height: 320px;
 `;

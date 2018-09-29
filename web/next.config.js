@@ -3,7 +3,22 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = withTypescript({
   webpack(config, options) {
-    if (options.isServer) { config.plugins.push(new ForkTsCheckerWebpackPlugin()); }
+    if (options.isServer) {
+      config.plugins.push(new ForkTsCheckerWebpackPlugin());
+    }
+
+    const originalEntry = config.entry;
+    config.entry = async () => {
+      const entries = await originalEntry();
+
+      if (entries['main.js']) {
+        entries['main.js'].unshift('core-js/fn/array/find');
+        entries['main.js'].unshift('core-js/fn/object/assign');
+      }
+
+      return entries;
+    }
+
     return config;
   },
   serverRuntimeConfig: {

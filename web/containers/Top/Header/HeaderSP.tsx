@@ -1,10 +1,12 @@
 import * as React from 'react';
+import Router from 'next/router';
 import styled from 'styled-components';
 import { I18n } from 'react-i18next';
 import { colors, getTextStyle } from '../../../components/styles';
 import { HamburgerMenu } from '../../../components';
 import TwitterShareButton from './TwitterShareButton';
 import FacebookShareButton from './FacebookShareButton';
+import { isJapan } from '../../../utils';
 
 interface Props {
   isTopY: boolean;
@@ -28,20 +30,27 @@ class Header extends React.Component<Props, State> {
     const { showMenu } = this.state;
     return (
       <Wrapper show={isTopY || showMenu} {...props}>
-        <Logo onClick={this.onClickLogo} />
+        <img
+          onClick={this.onClickLogo}
+          src="../../static/images/header_logo.svg"
+          alt="mercari tech conf 2018"
+        />
         <EmptySpace />
         <HamburgerMenu active={this.state.showMenu} onClick={this.toggleMenu} />
         <Menu show={this.state.showMenu} onClick={this.toggleMenu}>
-          <NavButton href="#news" onClick={this.onClickNav}>
+          <NavButton href="/2018#news" onClick={this.onClickNav}>
             NEWS
           </NavButton>
-          <NavButton href="#about" onClick={this.onClickNav}>
+          <NavButton href="/2018#about" onClick={this.onClickNav}>
             ABOUT
           </NavButton>
-          <NavButton href="#contents" onClick={this.onClickNav}>
+          <NavButton href="/2018#contents" onClick={this.onClickNav}>
             CONTENTS
           </NavButton>
-          <NavButton href="#access" onClick={this.onClickNav}>
+          <NavButton href="/2018#exhibition" onClick={this.onClickNav}>
+            EXHIBITION
+          </NavButton>
+          <NavButton href="/2018#access" onClick={this.onClickNav}>
             ACCESS
           </NavButton>
           <SNS>
@@ -50,7 +59,7 @@ class Header extends React.Component<Props, State> {
           </SNS>
           <I18n>
             {(_, { i18n }) => {
-              const isJa = i18n.language === 'ja-JP';
+              const isJa = isJapan(i18n.language);
               const onClick = () => {
                 i18n.changeLanguage(isJa ? 'en-US' : 'ja-JP');
                 this.onClickNav();
@@ -68,7 +77,7 @@ class Header extends React.Component<Props, State> {
   }
 
   private onClickLogo = () => {
-    window.scrollTo(0, 0);
+    Router.push('/2018').then(() => window.scrollTo(0, 0));
   };
 
   private toggleMenu = () => {
@@ -98,10 +107,6 @@ const Wrapper = styled.div`
   opacity: ${(props: { show: boolean }) => (props.show ? '1' : '0')};
   background-color: ${colors.primaryAlpha};
 `;
-
-const Logo = styled.img.attrs({
-  src: '../../static/images/header_logo.svg'
-})``;
 
 const EmptySpace = styled.div`
   flex-grow: 1;

@@ -1,22 +1,23 @@
 import * as React from 'react';
-import { I18n } from 'react-i18next';
 import styled from 'styled-components';
-
-const img = {
-  en: '/static/images/en.svg',
-  ja: '/static/images/ja.svg'
-};
+import { I18n } from 'react-i18next';
+import { Button } from '../../../components';
+import { isJapan } from '../../../utils';
 
 class LanguageToggleButton extends React.PureComponent {
   public render() {
     return (
       <I18n>
         {(_, { i18n }) => {
-          const isJa = i18n.language === 'ja-JP';
+          const isJa = isJapan(i18n.language);
           const onClick = () => i18n.changeLanguage(isJa ? 'en-US' : 'ja-JP');
+          const from = isJa ? 'JA' : 'EN';
+          const to = isJa ? 'EN' : 'JA';
           return (
-            <Wrapper onClick={onClick}>
-              <img src={isJa ? img.en : img.ja} alt="toggle language" />
+            <Wrapper onClick={onClick} size="small" {...this.props}>
+              {from}
+              <img src="/static/images/icn_arrow.svg" />
+              {to}
             </Wrapper>
           );
         }}
@@ -25,18 +26,9 @@ class LanguageToggleButton extends React.PureComponent {
   }
 }
 
-const Wrapper = styled.button`
-  margin-left: 20px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-
-  &:hover {
-    opacity: 0.5;
+const Wrapper = styled(Button)`
+  img {
+    margin: 0 8px 1px;
   }
 `;
 

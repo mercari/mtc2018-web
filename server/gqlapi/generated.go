@@ -11,6 +11,7 @@ import (
 
 	graphql "github.com/99designs/gqlgen/graphql"
 	introspection "github.com/99designs/gqlgen/graphql/introspection"
+	domains "github.com/mercari/mtc2018-web/server/domains"
 	gqlparser "github.com/vektah/gqlparser"
 	ast "github.com/vektah/gqlparser/ast"
 )
@@ -31,8 +32,12 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	Exhibition() ExhibitionResolver
+	Like() LikeResolver
 	Mutation() MutationResolver
+	News() NewsResolver
 	Query() QueryResolver
+	Session() SessionResolver
 	Speaker() SpeakerResolver
 	Subscription() SubscriptionResolver
 }
@@ -46,9 +51,35 @@ type ComplexityRoot struct {
 		Like             func(childComplexity int) int
 	}
 
+	Exhibition struct {
+		Id            func(childComplexity int) int
+		ExhibitionId  func(childComplexity int) int
+		Place         func(childComplexity int) int
+		Title         func(childComplexity int) int
+		TitleJa       func(childComplexity int) int
+		Description   func(childComplexity int) int
+		DescriptionJa func(childComplexity int) int
+	}
+
+	ExhibitionConnection struct {
+		PageInfo func(childComplexity int) int
+		Edges    func(childComplexity int) int
+		Nodes    func(childComplexity int) int
+	}
+
+	ExhibitionEdge struct {
+		Cursor func(childComplexity int) int
+		Node   func(childComplexity int) int
+	}
+
 	Like struct {
-		Id        func(childComplexity int) int
+		Id      func(childComplexity int) int
+		Session func(childComplexity int) int
+	}
+
+	LikeEvent struct {
 		SessionId func(childComplexity int) int
+		Likes     func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -57,6 +88,7 @@ type ComplexityRoot struct {
 
 	News struct {
 		Id        func(childComplexity int) int
+		NewsId    func(childComplexity int) int
 		Date      func(childComplexity int) int
 		Message   func(childComplexity int) int
 		MessageJa func(childComplexity int) int
@@ -82,11 +114,12 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Node        func(childComplexity int, id string) int
-		Nodes       func(childComplexity int, ids []string) int
-		SessionList func(childComplexity int, first *int, after *string, req *SessionListInput) int
-		Session     func(childComplexity int, sessionId int) int
-		NewsList    func(childComplexity int, first *int, after *string) int
+		Node           func(childComplexity int, id string) int
+		Nodes          func(childComplexity int, ids []string) int
+		SessionList    func(childComplexity int, first *int, after *string, req *SessionListInput) int
+		Session        func(childComplexity int, sessionId int) int
+		ExhibisionList func(childComplexity int, first *int, after *string, req *ExhibitionListInput) int
+		NewsList       func(childComplexity int, first *int, after *string) int
 	}
 
 	Session struct {
@@ -102,6 +135,7 @@ type ComplexityRoot struct {
 		OutlineJa func(childComplexity int) int
 		Lang      func(childComplexity int) int
 		Tags      func(childComplexity int) int
+		Liked     func(childComplexity int) int
 		Speakers  func(childComplexity int) int
 	}
 
@@ -133,25 +167,305 @@ type ComplexityRoot struct {
 	}
 
 	Subscription struct {
-		LikeAdded func(childComplexity int) int
+		LikeAdded func(childComplexity int, sessionId int) int
 	}
 }
 
+type ExhibitionResolver interface {
+	ID(ctx context.Context, obj *domains.Exhibition) (string, error)
+}
+type LikeResolver interface {
+	ID(ctx context.Context, obj *domains.Like) (string, error)
+	Session(ctx context.Context, obj *domains.Like) (domains.Session, error)
+}
 type MutationResolver interface {
 	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
+}
+type NewsResolver interface {
+	ID(ctx context.Context, obj *domains.News) (string, error)
 }
 type QueryResolver interface {
 	Node(ctx context.Context, id string) (Node, error)
 	Nodes(ctx context.Context, ids []string) ([]*Node, error)
 	SessionList(ctx context.Context, first *int, after *string, req *SessionListInput) (SessionConnection, error)
-	Session(ctx context.Context, sessionId int) (*Session, error)
+	Session(ctx context.Context, sessionId int) (*domains.Session, error)
+	ExhibisionList(ctx context.Context, first *int, after *string, req *ExhibitionListInput) (ExhibitionConnection, error)
 	NewsList(ctx context.Context, first *int, after *string) (NewsConnection, error)
 }
+type SessionResolver interface {
+	ID(ctx context.Context, obj *domains.Session) (string, error)
+
+	Liked(ctx context.Context, obj *domains.Session) (int, error)
+	Speakers(ctx context.Context, obj *domains.Session) ([]domains.Speaker, error)
+}
 type SpeakerResolver interface {
-	Sessions(ctx context.Context, obj *Speaker) ([]Session, error)
+	ID(ctx context.Context, obj *domains.Speaker) (string, error)
+
+	Sessions(ctx context.Context, obj *domains.Speaker) ([]domains.Session, error)
 }
 type SubscriptionResolver interface {
-	LikeAdded(ctx context.Context) (<-chan Like, error)
+	LikeAdded(ctx context.Context, sessionId int) (<-chan LikeEvent, error)
+}
+
+func field_Mutation_createLike_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 CreateLikeInput
+	if tmp, ok := rawArgs["input"]; ok {
+		var err error
+		arg0, err = UnmarshalCreateLikeInput(tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+
+}
+
+func field_Query_node_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["id"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalID(tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+
+}
+
+func field_Query_nodes_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 []string
+	if tmp, ok := rawArgs["ids"]; ok {
+		var err error
+		var rawIf1 []interface{}
+		if tmp != nil {
+			if tmp1, ok := tmp.([]interface{}); ok {
+				rawIf1 = tmp1
+			} else {
+				rawIf1 = []interface{}{tmp}
+			}
+		}
+		arg0 = make([]string, len(rawIf1))
+		for idx1 := range rawIf1 {
+			arg0[idx1], err = graphql.UnmarshalID(rawIf1[idx1])
+		}
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["ids"] = arg0
+	return args, nil
+
+}
+
+func field_Query_sessionList_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["first"]; ok {
+		var err error
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["first"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["after"]; ok {
+		var err error
+		var ptr1 string
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalString(tmp)
+			arg1 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["after"] = arg1
+	var arg2 *SessionListInput
+	if tmp, ok := rawArgs["req"]; ok {
+		var err error
+		var ptr1 SessionListInput
+		if tmp != nil {
+			ptr1, err = UnmarshalSessionListInput(tmp)
+			arg2 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["req"] = arg2
+	return args, nil
+
+}
+
+func field_Query_session_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["sessionId"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalInt(tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sessionId"] = arg0
+	return args, nil
+
+}
+
+func field_Query_exhibisionList_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["first"]; ok {
+		var err error
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["first"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["after"]; ok {
+		var err error
+		var ptr1 string
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalString(tmp)
+			arg1 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["after"] = arg1
+	var arg2 *ExhibitionListInput
+	if tmp, ok := rawArgs["req"]; ok {
+		var err error
+		var ptr1 ExhibitionListInput
+		if tmp != nil {
+			ptr1, err = UnmarshalExhibitionListInput(tmp)
+			arg2 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["req"] = arg2
+	return args, nil
+
+}
+
+func field_Query_newsList_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["first"]; ok {
+		var err error
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["first"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["after"]; ok {
+		var err error
+		var ptr1 string
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalString(tmp)
+			arg1 = &ptr1
+		}
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["after"] = arg1
+	return args, nil
+
+}
+
+func field_Query___type_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["name"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalString(tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["name"] = arg0
+	return args, nil
+
+}
+
+func field_Subscription_likeAdded_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["sessionId"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalInt(tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sessionId"] = arg0
+	return args, nil
+
+}
+
+func field___Type_fields_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["includeDeprecated"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalBoolean(tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["includeDeprecated"] = arg0
+	return args, nil
+
+}
+
+func field___Type_enumValues_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["includeDeprecated"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalBoolean(tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["includeDeprecated"] = arg0
+	return args, nil
+
 }
 
 type executableSchema struct {
@@ -181,6 +495,90 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.CreateLikePayload.Like(childComplexity), true
 
+	case "Exhibition.id":
+		if e.complexity.Exhibition.Id == nil {
+			break
+		}
+
+		return e.complexity.Exhibition.Id(childComplexity), true
+
+	case "Exhibition.exhibitionId":
+		if e.complexity.Exhibition.ExhibitionId == nil {
+			break
+		}
+
+		return e.complexity.Exhibition.ExhibitionId(childComplexity), true
+
+	case "Exhibition.place":
+		if e.complexity.Exhibition.Place == nil {
+			break
+		}
+
+		return e.complexity.Exhibition.Place(childComplexity), true
+
+	case "Exhibition.title":
+		if e.complexity.Exhibition.Title == nil {
+			break
+		}
+
+		return e.complexity.Exhibition.Title(childComplexity), true
+
+	case "Exhibition.titleJa":
+		if e.complexity.Exhibition.TitleJa == nil {
+			break
+		}
+
+		return e.complexity.Exhibition.TitleJa(childComplexity), true
+
+	case "Exhibition.description":
+		if e.complexity.Exhibition.Description == nil {
+			break
+		}
+
+		return e.complexity.Exhibition.Description(childComplexity), true
+
+	case "Exhibition.descriptionJa":
+		if e.complexity.Exhibition.DescriptionJa == nil {
+			break
+		}
+
+		return e.complexity.Exhibition.DescriptionJa(childComplexity), true
+
+	case "ExhibitionConnection.pageInfo":
+		if e.complexity.ExhibitionConnection.PageInfo == nil {
+			break
+		}
+
+		return e.complexity.ExhibitionConnection.PageInfo(childComplexity), true
+
+	case "ExhibitionConnection.edges":
+		if e.complexity.ExhibitionConnection.Edges == nil {
+			break
+		}
+
+		return e.complexity.ExhibitionConnection.Edges(childComplexity), true
+
+	case "ExhibitionConnection.nodes":
+		if e.complexity.ExhibitionConnection.Nodes == nil {
+			break
+		}
+
+		return e.complexity.ExhibitionConnection.Nodes(childComplexity), true
+
+	case "ExhibitionEdge.cursor":
+		if e.complexity.ExhibitionEdge.Cursor == nil {
+			break
+		}
+
+		return e.complexity.ExhibitionEdge.Cursor(childComplexity), true
+
+	case "ExhibitionEdge.node":
+		if e.complexity.ExhibitionEdge.Node == nil {
+			break
+		}
+
+		return e.complexity.ExhibitionEdge.Node(childComplexity), true
+
 	case "Like.id":
 		if e.complexity.Like.Id == nil {
 			break
@@ -188,28 +586,36 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Like.Id(childComplexity), true
 
-	case "Like.sessionID":
-		if e.complexity.Like.SessionId == nil {
+	case "Like.session":
+		if e.complexity.Like.Session == nil {
 			break
 		}
 
-		return e.complexity.Like.SessionId(childComplexity), true
+		return e.complexity.Like.Session(childComplexity), true
+
+	case "LikeEvent.sessionId":
+		if e.complexity.LikeEvent.SessionId == nil {
+			break
+		}
+
+		return e.complexity.LikeEvent.SessionId(childComplexity), true
+
+	case "LikeEvent.likes":
+		if e.complexity.LikeEvent.Likes == nil {
+			break
+		}
+
+		return e.complexity.LikeEvent.Likes(childComplexity), true
 
 	case "Mutation.createLike":
 		if e.complexity.Mutation.CreateLike == nil {
 			break
 		}
-		args := map[string]interface{}{}
 
-		var arg0 CreateLikeInput
-		if tmp, ok := rawArgs["input"]; ok {
-			var err error
-			arg0, err = UnmarshalCreateLikeInput(tmp)
-			if err != nil {
-				return 0, false
-			}
+		args, err := field_Mutation_createLike_args(rawArgs)
+		if err != nil {
+			return 0, false
 		}
-		args["input"] = arg0
 
 		return e.complexity.Mutation.CreateLike(childComplexity, args["input"].(CreateLikeInput)), true
 
@@ -219,6 +625,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.News.Id(childComplexity), true
+
+	case "News.newsId":
+		if e.complexity.News.NewsId == nil {
+			break
+		}
+
+		return e.complexity.News.NewsId(childComplexity), true
 
 	case "News.date":
 		if e.complexity.News.Date == nil {
@@ -315,17 +728,11 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.Node == nil {
 			break
 		}
-		args := map[string]interface{}{}
 
-		var arg0 string
-		if tmp, ok := rawArgs["id"]; ok {
-			var err error
-			arg0, err = graphql.UnmarshalID(tmp)
-			if err != nil {
-				return 0, false
-			}
+		args, err := field_Query_node_args(rawArgs)
+		if err != nil {
+			return 0, false
 		}
-		args["id"] = arg0
 
 		return e.complexity.Query.Node(childComplexity, args["id"].(string)), true
 
@@ -333,28 +740,11 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.Nodes == nil {
 			break
 		}
-		args := map[string]interface{}{}
 
-		var arg0 []string
-		if tmp, ok := rawArgs["ids"]; ok {
-			var err error
-			var rawIf1 []interface{}
-			if tmp != nil {
-				if tmp1, ok := tmp.([]interface{}); ok {
-					rawIf1 = tmp1
-				} else {
-					rawIf1 = []interface{}{tmp}
-				}
-			}
-			arg0 = make([]string, len(rawIf1))
-			for idx1 := range rawIf1 {
-				arg0[idx1], err = graphql.UnmarshalID(rawIf1[idx1])
-			}
-			if err != nil {
-				return 0, false
-			}
+		args, err := field_Query_nodes_args(rawArgs)
+		if err != nil {
+			return 0, false
 		}
-		args["ids"] = arg0
 
 		return e.complexity.Query.Nodes(childComplexity, args["ids"].([]string)), true
 
@@ -362,52 +752,11 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.SessionList == nil {
 			break
 		}
-		args := map[string]interface{}{}
 
-		var arg0 *int
-		if tmp, ok := rawArgs["first"]; ok {
-			var err error
-			var ptr1 int
-			if tmp != nil {
-				ptr1, err = graphql.UnmarshalInt(tmp)
-				arg0 = &ptr1
-			}
-
-			if err != nil {
-				return 0, false
-			}
+		args, err := field_Query_sessionList_args(rawArgs)
+		if err != nil {
+			return 0, false
 		}
-		args["first"] = arg0
-
-		var arg1 *string
-		if tmp, ok := rawArgs["after"]; ok {
-			var err error
-			var ptr1 string
-			if tmp != nil {
-				ptr1, err = graphql.UnmarshalString(tmp)
-				arg1 = &ptr1
-			}
-
-			if err != nil {
-				return 0, false
-			}
-		}
-		args["after"] = arg1
-
-		var arg2 *SessionListInput
-		if tmp, ok := rawArgs["req"]; ok {
-			var err error
-			var ptr1 SessionListInput
-			if tmp != nil {
-				ptr1, err = UnmarshalSessionListInput(tmp)
-				arg2 = &ptr1
-			}
-
-			if err != nil {
-				return 0, false
-			}
-		}
-		args["req"] = arg2
 
 		return e.complexity.Query.SessionList(childComplexity, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput)), true
 
@@ -415,55 +764,35 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.Session == nil {
 			break
 		}
-		args := map[string]interface{}{}
 
-		var arg0 int
-		if tmp, ok := rawArgs["sessionId"]; ok {
-			var err error
-			arg0, err = graphql.UnmarshalInt(tmp)
-			if err != nil {
-				return 0, false
-			}
+		args, err := field_Query_session_args(rawArgs)
+		if err != nil {
+			return 0, false
 		}
-		args["sessionId"] = arg0
 
 		return e.complexity.Query.Session(childComplexity, args["sessionId"].(int)), true
+
+	case "Query.exhibisionList":
+		if e.complexity.Query.ExhibisionList == nil {
+			break
+		}
+
+		args, err := field_Query_exhibisionList_args(rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.ExhibisionList(childComplexity, args["first"].(*int), args["after"].(*string), args["req"].(*ExhibitionListInput)), true
 
 	case "Query.newsList":
 		if e.complexity.Query.NewsList == nil {
 			break
 		}
-		args := map[string]interface{}{}
 
-		var arg0 *int
-		if tmp, ok := rawArgs["first"]; ok {
-			var err error
-			var ptr1 int
-			if tmp != nil {
-				ptr1, err = graphql.UnmarshalInt(tmp)
-				arg0 = &ptr1
-			}
-
-			if err != nil {
-				return 0, false
-			}
+		args, err := field_Query_newsList_args(rawArgs)
+		if err != nil {
+			return 0, false
 		}
-		args["first"] = arg0
-
-		var arg1 *string
-		if tmp, ok := rawArgs["after"]; ok {
-			var err error
-			var ptr1 string
-			if tmp != nil {
-				ptr1, err = graphql.UnmarshalString(tmp)
-				arg1 = &ptr1
-			}
-
-			if err != nil {
-				return 0, false
-			}
-		}
-		args["after"] = arg1
 
 		return e.complexity.Query.NewsList(childComplexity, args["first"].(*int), args["after"].(*string)), true
 
@@ -550,6 +879,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Session.Tags(childComplexity), true
+
+	case "Session.liked":
+		if e.complexity.Session.Liked == nil {
+			break
+		}
+
+		return e.complexity.Session.Liked(childComplexity), true
 
 	case "Session.speakers":
 		if e.complexity.Session.Speakers == nil {
@@ -689,7 +1025,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Subscription.LikeAdded(childComplexity), true
+		args, err := field_Subscription_likeAdded_args(rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Subscription.LikeAdded(childComplexity, args["sessionId"].(int)), true
 
 	}
 	return 0, false
@@ -747,6 +1088,10 @@ func (e *executableSchema) Subscription(ctx context.Context, op *ast.OperationDe
 			data.MarshalGQL(&buf)
 			return buf.Bytes()
 		})
+
+		if buf == nil {
+			return nil
+		}
 
 		return &graphql.Response{
 			Data:   buf,
@@ -832,17 +1177,236 @@ func (ec *executionContext) _CreateLikePayload_like(ctx context.Context, field g
 		}
 		return graphql.Null
 	}
-	res := resTmp.(Like)
+	res := resTmp.(domains.Like)
 	rctx.Result = res
 
 	return ec._Like(ctx, field.Selections, &res)
 }
 
-var likeImplementors = []string{"Like", "Node"}
+var exhibitionImplementors = []string{"Exhibition", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj *Like) graphql.Marshaler {
-	fields := graphql.CollectFields(ctx, sel, likeImplementors)
+func (ec *executionContext) _Exhibition(ctx context.Context, sel ast.SelectionSet, obj *domains.Exhibition) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, exhibitionImplementors)
+
+	var wg sync.WaitGroup
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Exhibition")
+		case "id":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Exhibition_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "exhibitionId":
+			out.Values[i] = ec._Exhibition_exhibitionId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "place":
+			out.Values[i] = ec._Exhibition_place(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "title":
+			out.Values[i] = ec._Exhibition_title(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "titleJa":
+			out.Values[i] = ec._Exhibition_titleJa(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "description":
+			out.Values[i] = ec._Exhibition_description(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "descriptionJa":
+			out.Values[i] = ec._Exhibition_descriptionJa(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	wg.Wait()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Exhibition_id(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Exhibition",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Exhibition().ID(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Exhibition_exhibitionId(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Exhibition",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.ID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	return graphql.MarshalInt(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Exhibition_place(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Exhibition",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Place, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Exhibition_title(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Exhibition",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Title, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Exhibition_titleJa(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Exhibition",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.TitleJa, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Exhibition_description(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Exhibition",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Description, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Exhibition_descriptionJa(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Exhibition",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.DescriptionJa, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalString(res)
+}
+
+var exhibitionConnectionImplementors = []string{"ExhibitionConnection"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _ExhibitionConnection(ctx context.Context, sel ast.SelectionSet, obj *ExhibitionConnection) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, exhibitionConnectionImplementors)
 
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
@@ -851,14 +1415,19 @@ func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj
 
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("Like")
-		case "id":
-			out.Values[i] = ec._Like_id(ctx, field, obj)
+			out.Values[i] = graphql.MarshalString("ExhibitionConnection")
+		case "pageInfo":
+			out.Values[i] = ec._ExhibitionConnection_pageInfo(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "sessionID":
-			out.Values[i] = ec._Like_sessionID(ctx, field, obj)
+		case "edges":
+			out.Values[i] = ec._ExhibitionConnection_edges(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "nodes":
+			out.Values[i] = ec._ExhibitionConnection_nodes(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -874,7 +1443,262 @@ func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Like_id(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
+func (ec *executionContext) _ExhibitionConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *ExhibitionConnection) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "ExhibitionConnection",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.PageInfo, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(PageInfo)
+	rctx.Result = res
+
+	return ec._PageInfo(ctx, field.Selections, &res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _ExhibitionConnection_edges(ctx context.Context, field graphql.CollectedField, obj *ExhibitionConnection) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "ExhibitionConnection",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Edges, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]ExhibitionEdge)
+	rctx.Result = res
+
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._ExhibitionEdge(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _ExhibitionConnection_nodes(ctx context.Context, field graphql.CollectedField, obj *ExhibitionConnection) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "ExhibitionConnection",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Nodes, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]domains.Exhibition)
+	rctx.Result = res
+
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._Exhibition(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
+}
+
+var exhibitionEdgeImplementors = []string{"ExhibitionEdge"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _ExhibitionEdge(ctx context.Context, sel ast.SelectionSet, obj *ExhibitionEdge) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, exhibitionEdgeImplementors)
+
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ExhibitionEdge")
+		case "cursor":
+			out.Values[i] = ec._ExhibitionEdge_cursor(ctx, field, obj)
+		case "node":
+			out.Values[i] = ec._ExhibitionEdge_node(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _ExhibitionEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *ExhibitionEdge) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "ExhibitionEdge",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Cursor, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+
+	if res == nil {
+		return graphql.Null
+	}
+	return graphql.MarshalString(*res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _ExhibitionEdge_node(ctx context.Context, field graphql.CollectedField, obj *ExhibitionEdge) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "ExhibitionEdge",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Node, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(domains.Exhibition)
+	rctx.Result = res
+
+	return ec._Exhibition(ctx, field.Selections, &res)
+}
+
+var likeImplementors = []string{"Like", "Node"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj *domains.Like) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, likeImplementors)
+
+	var wg sync.WaitGroup
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Like")
+		case "id":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Like_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "session":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Like_session(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	wg.Wait()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Like_id(ctx context.Context, field graphql.CollectedField, obj *domains.Like) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
 		Args:   nil,
@@ -882,7 +1706,7 @@ func (ec *executionContext) _Like_id(ctx context.Context, field graphql.Collecte
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.ID, nil
+		return ec.resolvers.Like().ID(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -896,9 +1720,67 @@ func (ec *executionContext) _Like_id(ctx context.Context, field graphql.Collecte
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Like_sessionID(ctx context.Context, field graphql.CollectedField, obj *Like) graphql.Marshaler {
+func (ec *executionContext) _Like_session(ctx context.Context, field graphql.CollectedField, obj *domains.Like) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Like().Session(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(domains.Session)
+	rctx.Result = res
+
+	return ec._Session(ctx, field.Selections, &res)
+}
+
+var likeEventImplementors = []string{"LikeEvent"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _LikeEvent(ctx context.Context, sel ast.SelectionSet, obj *LikeEvent) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, likeEventImplementors)
+
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("LikeEvent")
+		case "sessionId":
+			out.Values[i] = ec._LikeEvent_sessionId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "likes":
+			out.Values[i] = ec._LikeEvent_likes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _LikeEvent_sessionId(ctx context.Context, field graphql.CollectedField, obj *LikeEvent) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "LikeEvent",
 		Args:   nil,
 		Field:  field,
 	}
@@ -912,9 +1794,31 @@ func (ec *executionContext) _Like_sessionID(ctx context.Context, field graphql.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(int)
 	rctx.Result = res
-	return graphql.MarshalID(res)
+	return graphql.MarshalInt(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _LikeEvent_likes(ctx context.Context, field graphql.CollectedField, obj *LikeEvent) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "LikeEvent",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return obj.Likes, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	return graphql.MarshalInt(res)
 }
 
 var mutationImplementors = []string{"Mutation"}
@@ -951,17 +1855,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 // nolint: vetshadow
 func (ec *executionContext) _Mutation_createLike(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 CreateLikeInput
-	if tmp, ok := rawArgs["input"]; ok {
-		var err error
-		arg0, err = UnmarshalCreateLikeInput(tmp)
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field_Mutation_createLike_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["input"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Mutation",
 		Args:   args,
@@ -987,9 +1885,10 @@ func (ec *executionContext) _Mutation_createLike(ctx context.Context, field grap
 var newsImplementors = []string{"News", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj *domains.News) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, newsImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -999,7 +1898,16 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("News")
 		case "id":
-			out.Values[i] = ec._News_id(ctx, field, obj)
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._News_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "newsId":
+			out.Values[i] = ec._News_newsId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -1024,7 +1932,7 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -1032,7 +1940,29 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_id(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_id(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "News",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.News().ID(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _News_newsId(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1050,11 +1980,11 @@ func (ec *executionContext) _News_id(ctx context.Context, field graphql.Collecte
 	}
 	res := resTmp.(string)
 	rctx.Result = res
-	return graphql.MarshalID(res)
+	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_date(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_date(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1076,7 +2006,7 @@ func (ec *executionContext) _News_date(ctx context.Context, field graphql.Collec
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_message(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_message(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1098,7 +2028,7 @@ func (ec *executionContext) _News_message(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1120,7 +2050,7 @@ func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.C
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _News_link(ctx context.Context, field graphql.CollectedField, obj *News) graphql.Marshaler {
+func (ec *executionContext) _News_link(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -1277,7 +2207,7 @@ func (ec *executionContext) _NewsConnection_nodes(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]News)
+	res := resTmp.([]domains.News)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -1387,7 +2317,7 @@ func (ec *executionContext) _NewsEdge_node(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(News)
+	res := resTmp.(domains.News)
 	rctx.Result = res
 
 	return ec._News(ctx, field.Selections, &res)
@@ -1571,6 +2501,15 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				out.Values[i] = ec._Query_session(ctx, field)
 				wg.Done()
 			}(i, field)
+		case "exhibisionList":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Query_exhibisionList(ctx, field)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "newsList":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
@@ -1598,17 +2537,11 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 // nolint: vetshadow
 func (ec *executionContext) _Query_node(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["id"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalID(tmp)
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field_Query_node_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["id"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -1630,28 +2563,11 @@ func (ec *executionContext) _Query_node(ctx context.Context, field graphql.Colle
 // nolint: vetshadow
 func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 []string
-	if tmp, ok := rawArgs["ids"]; ok {
-		var err error
-		var rawIf1 []interface{}
-		if tmp != nil {
-			if tmp1, ok := tmp.([]interface{}); ok {
-				rawIf1 = tmp1
-			} else {
-				rawIf1 = []interface{}{tmp}
-			}
-		}
-		arg0 = make([]string, len(rawIf1))
-		for idx1 := range rawIf1 {
-			arg0[idx1], err = graphql.UnmarshalID(rawIf1[idx1])
-		}
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field_Query_nodes_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["ids"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -1712,52 +2628,11 @@ func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.Coll
 // nolint: vetshadow
 func (ec *executionContext) _Query_sessionList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 *int
-	if tmp, ok := rawArgs["first"]; ok {
-		var err error
-		var ptr1 int
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalInt(tmp)
-			arg0 = &ptr1
-		}
-
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field_Query_sessionList_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["first"] = arg0
-	var arg1 *string
-	if tmp, ok := rawArgs["after"]; ok {
-		var err error
-		var ptr1 string
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalString(tmp)
-			arg1 = &ptr1
-		}
-
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
-	}
-	args["after"] = arg1
-	var arg2 *SessionListInput
-	if tmp, ok := rawArgs["req"]; ok {
-		var err error
-		var ptr1 SessionListInput
-		if tmp != nil {
-			ptr1, err = UnmarshalSessionListInput(tmp)
-			arg2 = &ptr1
-		}
-
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
-	}
-	args["req"] = arg2
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -1782,17 +2657,11 @@ func (ec *executionContext) _Query_sessionList(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Query_session(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalInt(tmp)
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field_Query_session_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["sessionId"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -1805,7 +2674,7 @@ func (ec *executionContext) _Query_session(ctx context.Context, field graphql.Co
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*Session)
+	res := resTmp.(*domains.Session)
 	rctx.Result = res
 
 	if res == nil {
@@ -1816,39 +2685,42 @@ func (ec *executionContext) _Query_session(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
+func (ec *executionContext) _Query_exhibisionList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := field_Query_exhibisionList_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	rctx := &graphql.ResolverContext{
+		Object: "Query",
+		Args:   args,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, nil, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Query().ExhibisionList(ctx, args["first"].(*int), args["after"].(*string), args["req"].(*ExhibitionListInput))
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(ExhibitionConnection)
+	rctx.Result = res
+
+	return ec._ExhibitionConnection(ctx, field.Selections, &res)
+}
+
+// nolint: vetshadow
 func (ec *executionContext) _Query_newsList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 *int
-	if tmp, ok := rawArgs["first"]; ok {
-		var err error
-		var ptr1 int
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalInt(tmp)
-			arg0 = &ptr1
-		}
-
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field_Query_newsList_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["first"] = arg0
-	var arg1 *string
-	if tmp, ok := rawArgs["after"]; ok {
-		var err error
-		var ptr1 string
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalString(tmp)
-			arg1 = &ptr1
-		}
-
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
-	}
-	args["after"] = arg1
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -1873,17 +2745,11 @@ func (ec *executionContext) _Query_newsList(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["name"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalString(tmp)
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field_Query___type_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["name"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -1933,9 +2799,10 @@ func (ec *executionContext) _Query___schema(ctx context.Context, field graphql.C
 var sessionImplementors = []string{"Session", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, obj *domains.Session) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, sessionImplementors)
 
+	var wg sync.WaitGroup
 	out := graphql.NewOrderedMap(len(fields))
 	invalid := false
 	for i, field := range fields {
@@ -1945,10 +2812,14 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Session")
 		case "id":
-			out.Values[i] = ec._Session_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "sessionId":
 			out.Values[i] = ec._Session_sessionId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2004,16 +2875,29 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "liked":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_liked(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "speakers":
-			out.Values[i] = ec._Session_speakers(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_speakers(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-
+	wg.Wait()
 	if invalid {
 		return graphql.Null
 	}
@@ -2021,7 +2905,29 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_id(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_id(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Session().ID(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_sessionId(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2037,35 +2943,13 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
-	rctx.Result = res
-	return graphql.MarshalID(res)
-}
-
-// nolint: vetshadow
-func (ec *executionContext) _Session_sessionId(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
-	rctx := &graphql.ResolverContext{
-		Object: "Session",
-		Args:   nil,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.SessionID, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
 	res := resTmp.(int)
 	rctx.Result = res
 	return graphql.MarshalInt(res)
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_type(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_type(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2087,7 +2971,7 @@ func (ec *executionContext) _Session_type(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_place(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_place(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2109,7 +2993,7 @@ func (ec *executionContext) _Session_place(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_title(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_title(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2131,7 +3015,7 @@ func (ec *executionContext) _Session_title(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2153,7 +3037,7 @@ func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_startTime(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_startTime(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2175,7 +3059,7 @@ func (ec *executionContext) _Session_startTime(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2197,7 +3081,7 @@ func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2219,7 +3103,7 @@ func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2241,7 +3125,7 @@ func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2263,7 +3147,7 @@ func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2294,7 +3178,7 @@ func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql.CollectedField, obj *Session) graphql.Marshaler {
+func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -2302,7 +3186,7 @@ func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql
 	}
 	ctx = graphql.WithResolverContext(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.Speakers, nil
+		return ec.resolvers.Session().Liked(ctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2310,7 +3194,29 @@ func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]Speaker)
+	res := resTmp.(int)
+	rctx.Result = res
+	return graphql.MarshalInt(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Session().Speakers(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]domains.Speaker)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -2483,7 +3389,7 @@ func (ec *executionContext) _SessionConnection_nodes(ctx context.Context, field 
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]Session)
+	res := resTmp.([]domains.Session)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -2593,7 +3499,7 @@ func (ec *executionContext) _SessionEdge_node(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.(Session)
+	res := resTmp.(domains.Session)
 	rctx.Result = res
 
 	return ec._Session(ctx, field.Selections, &res)
@@ -2602,7 +3508,7 @@ func (ec *executionContext) _SessionEdge_node(ctx context.Context, field graphql
 var speakerImplementors = []string{"Speaker", "Node"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, obj *domains.Speaker) graphql.Marshaler {
 	fields := graphql.CollectFields(ctx, sel, speakerImplementors)
 
 	var wg sync.WaitGroup
@@ -2615,10 +3521,14 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Speaker")
 		case "id":
-			out.Values[i] = ec._Speaker_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Speaker_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "speakerId":
 			out.Values[i] = ec._Speaker_speakerId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2692,7 +3602,29 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Speaker",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		return ec.resolvers.Speaker().ID(ctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Speaker_speakerId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2710,33 +3642,11 @@ func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(string)
 	rctx.Result = res
-	return graphql.MarshalID(res)
-}
-
-// nolint: vetshadow
-func (ec *executionContext) _Speaker_speakerId(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
-	rctx := &graphql.ResolverContext{
-		Object: "Speaker",
-		Args:   nil,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
-		return obj.SpeakerID, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	rctx.Result = res
 	return graphql.MarshalString(res)
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2758,7 +3668,7 @@ func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2780,7 +3690,7 @@ func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.C
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2802,7 +3712,7 @@ func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2824,7 +3734,7 @@ func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2846,7 +3756,7 @@ func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graph
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2868,7 +3778,7 @@ func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2890,7 +3800,7 @@ func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2912,7 +3822,7 @@ func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2934,7 +3844,7 @@ func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphq
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2956,7 +3866,7 @@ func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql.CollectedField, obj *Speaker) graphql.Marshaler {
+func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -2969,7 +3879,7 @@ func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]Session)
+	res := resTmp.([]domains.Session)
 	rctx.Result = res
 
 	arr1 := make(graphql.Array, len(res))
@@ -3029,10 +3939,16 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 }
 
 func (ec *executionContext) _Subscription_likeAdded(ctx context.Context, field graphql.CollectedField) func() graphql.Marshaler {
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := field_Subscription_likeAdded_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return nil
+	}
 	ctx = graphql.WithResolverContext(ctx, &graphql.ResolverContext{
 		Field: field,
 	})
-	results, err := ec.resolvers.Subscription().LikeAdded(ctx)
+	results, err := ec.resolvers.Subscription().LikeAdded(ctx, args["sessionId"].(int))
 	if err != nil {
 		ec.Error(ctx, err)
 		return nil
@@ -3044,7 +3960,7 @@ func (ec *executionContext) _Subscription_likeAdded(ctx context.Context, field g
 		}
 		var out graphql.OrderedMap
 		out.Add(field.Alias, func() graphql.Marshaler {
-			return ec._Like(ctx, field.Selections, &res)
+			return ec._LikeEvent(ctx, field.Selections, &res)
 		}())
 		return &out
 	}
@@ -4034,17 +4950,11 @@ func (ec *executionContext) ___Type_description(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) ___Type_fields(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["includeDeprecated"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalBoolean(tmp)
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field___Type_fields_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["includeDeprecated"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   args,
@@ -4202,17 +5112,11 @@ func (ec *executionContext) ___Type_possibleTypes(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) ___Type_enumValues(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["includeDeprecated"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalBoolean(tmp)
-		if err != nil {
-			ec.Error(ctx, err)
-			return graphql.Null
-		}
+	args, err := field___Type_enumValues_args(rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
 	}
-	args["includeDeprecated"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   args,
@@ -4343,21 +5247,25 @@ func (ec *executionContext) _Node(ctx context.Context, sel ast.SelectionSet, obj
 	switch obj := (*obj).(type) {
 	case nil:
 		return graphql.Null
-	case Session:
+	case domains.Session:
 		return ec._Session(ctx, sel, &obj)
-	case *Session:
+	case *domains.Session:
 		return ec._Session(ctx, sel, obj)
-	case Speaker:
+	case domains.Speaker:
 		return ec._Speaker(ctx, sel, &obj)
-	case *Speaker:
+	case *domains.Speaker:
 		return ec._Speaker(ctx, sel, obj)
-	case Like:
+	case domains.Exhibition:
+		return ec._Exhibition(ctx, sel, &obj)
+	case *domains.Exhibition:
+		return ec._Exhibition(ctx, sel, obj)
+	case domains.Like:
 		return ec._Like(ctx, sel, &obj)
-	case *Like:
+	case *domains.Like:
 		return ec._Like(ctx, sel, obj)
-	case News:
+	case domains.News:
 		return ec._News(ctx, sel, &obj)
-	case *News:
+	case *domains.News:
 		return ec._News(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
@@ -4381,9 +5289,38 @@ func UnmarshalCreateLikeInput(v interface{}) (CreateLikeInput, error) {
 			if err != nil {
 				return it, err
 			}
-		case "sessionID":
+		case "uuid":
 			var err error
-			it.SessionID, err = graphql.UnmarshalID(v)
+			it.UUID, err = graphql.UnmarshalString(v)
+			if err != nil {
+				return it, err
+			}
+		case "sessionId":
+			var err error
+			it.SessionID, err = graphql.UnmarshalInt(v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
+func UnmarshalExhibitionListInput(v interface{}) (ExhibitionListInput, error) {
+	var it ExhibitionListInput
+	var asMap = v.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "tmp":
+			var err error
+			var ptr1 string
+			if v != nil {
+				ptr1, err = graphql.UnmarshalString(v)
+				it.Tmp = &ptr1
+			}
+
 			if err != nil {
 				return it, err
 			}
@@ -4463,6 +5400,15 @@ type Query {
   session(sessionId: Int!): Session
 
   """
+  展示一覧を取得します。
+  """
+  exhibisionList(
+    first: Int
+    after: String
+    req: ExhibitionListInput
+  ): ExhibitionConnection!
+
+  """
   お知らせ一覧を取得します
   """
   newsList(first: Int, after: String): NewsConnection!
@@ -4471,13 +5417,17 @@ type Query {
 type Mutation {
   """
   セッションに対していいね！することができます。
-  ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
+  ログイン周りのシステムはないので、リクエストにUUIDを付与してください。
   """
   createLike(input: CreateLikeInput!): CreateLikePayload
 }
 
 type Subscription {
-  likeAdded: Like!
+  """
+  セッションに対するいいね！をイベントとして取得します。
+  一定期間中にいいね！された数を返します。
+  """
+  likeAdded(sessionId: Int!): LikeEvent!
 }
 
 interface Node {
@@ -4522,6 +5472,8 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
+
+  liked: Int!
   speakers: [Speaker!]!
 }
 
@@ -4545,12 +5497,49 @@ type Speaker implements Node {
   sessions: [Session!]
 }
 
+type ExhibitionConnection {
+  pageInfo: PageInfo!
+  edges: [ExhibitionEdge!]!
+  nodes: [Exhibition!]!
+}
+
+type ExhibitionEdge {
+  cursor: String
+  node: Exhibition!
+}
+
+input ExhibitionListInput {
+  tmp: String
+}
+
+"""
+展示1つに関する情報。
+"""
+type Exhibition implements Node {
+  id: ID!
+  exhibitionId: Int!
+  place: String!
+  title: String!
+  titleJa: String!
+  description: String!
+  descriptionJa: String!
+}
+
 """
 セッションに対していいね！する時の引数です。
+uuidはいいね！した人のUUIDです。
 """
 input CreateLikeInput {
   clientMutationId: String
-  sessionID: ID!
+  """
+  いいねした人のUUID。
+  適当にブラウザのセッションでユニークなIDをつっこんでください。
+  """
+  uuid: String!
+  """
+  いいねするSessionのID。
+  """
+  sessionId: Int!
 }
 
 type CreateLikePayload {
@@ -4563,7 +5552,12 @@ type CreateLikePayload {
 """
 type Like implements Node {
   id: ID!
-  sessionID: ID!
+  session: Session!
+}
+
+type LikeEvent {
+  sessionId: Int!
+  likes: Int!
 }
 
 type NewsConnection {
@@ -4582,6 +5576,7 @@ type NewsEdge {
 """
 type News implements Node {
   id: ID!
+  newsId: String!
   date: String!
   message: String!
   messageJa: String!

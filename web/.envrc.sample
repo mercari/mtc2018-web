@@ -1,0 +1,1 @@
+export GRAPHQL_ENDPOINT=<Your GraphQL Endpoint URL place here>

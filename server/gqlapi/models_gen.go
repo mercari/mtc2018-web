@@ -2,41 +2,52 @@
 
 package gqlapi
 
+import (
+	domains "github.com/mercari/mtc2018-web/server/domains"
+)
+
 // セッションに対していいね！する時の引数です。
+// uuidはいいね！した人のUUIDです。
 type CreateLikeInput struct {
 	ClientMutationID *string `json:"clientMutationId"`
-	SessionID        string  `json:"sessionID"`
+	UUID             string  `json:"uuid"`
+	SessionID        int     `json:"sessionId"`
 }
 
 type CreateLikePayload struct {
-	ClientMutationID *string `json:"clientMutationId"`
-	Like             Like    `json:"like"`
+	ClientMutationID *string      `json:"clientMutationId"`
+	Like             domains.Like `json:"like"`
 }
 
-// セッションに対していいね！した情報です。
-type Like struct {
-	ID        string `json:"id"`
-	SessionID string `json:"sessionID"`
+type ExhibitionConnection struct {
+	PageInfo PageInfo             `json:"pageInfo"`
+	Edges    []ExhibitionEdge     `json:"edges"`
+	Nodes    []domains.Exhibition `json:"nodes"`
 }
 
-// お知らせです。
-type News struct {
-	ID        string  `json:"id"`
-	Date      string  `json:"date"`
-	Message   string  `json:"message"`
-	MessageJa string  `json:"messageJa"`
-	Link      *string `json:"link"`
+type ExhibitionEdge struct {
+	Cursor *string            `json:"cursor"`
+	Node   domains.Exhibition `json:"node"`
+}
+
+type ExhibitionListInput struct {
+	Tmp *string `json:"tmp"`
+}
+
+type LikeEvent struct {
+	SessionID int `json:"sessionId"`
+	Likes     int `json:"likes"`
 }
 
 type NewsConnection struct {
-	PageInfo PageInfo   `json:"pageInfo"`
-	Edges    []NewsEdge `json:"edges"`
-	Nodes    []News     `json:"nodes"`
+	PageInfo PageInfo       `json:"pageInfo"`
+	Edges    []NewsEdge     `json:"edges"`
+	Nodes    []domains.News `json:"nodes"`
 }
 
 type NewsEdge struct {
-	Cursor *string `json:"cursor"`
-	Node   News    `json:"node"`
+	Cursor *string      `json:"cursor"`
+	Node   domains.News `json:"node"`
 }
 
 type Node interface{}
@@ -48,51 +59,17 @@ type PageInfo struct {
 	HasPreviousPage bool    `json:"hasPreviousPage"`
 }
 
-// セッション1つに関する情報。
-type Session struct {
-	ID        string    `json:"id"`
-	SessionID int       `json:"sessionId"`
-	Type      string    `json:"type"`
-	Place     string    `json:"place"`
-	Title     string    `json:"title"`
-	TitleJa   string    `json:"titleJa"`
-	StartTime string    `json:"startTime"`
-	EndTime   string    `json:"endTime"`
-	Outline   string    `json:"outline"`
-	OutlineJa string    `json:"outlineJa"`
-	Lang      string    `json:"lang"`
-	Tags      []string  `json:"tags"`
-	Speakers  []Speaker `json:"speakers"`
-}
-
 type SessionConnection struct {
-	PageInfo PageInfo      `json:"pageInfo"`
-	Edges    []SessionEdge `json:"edges"`
-	Nodes    []Session     `json:"nodes"`
+	PageInfo PageInfo          `json:"pageInfo"`
+	Edges    []SessionEdge     `json:"edges"`
+	Nodes    []domains.Session `json:"nodes"`
 }
 
 type SessionEdge struct {
-	Cursor *string `json:"cursor"`
-	Node   Session `json:"node"`
+	Cursor *string         `json:"cursor"`
+	Node   domains.Session `json:"node"`
 }
 
 type SessionListInput struct {
 	Tmp *string `json:"tmp"`
-}
-
-// スピーカー1人に関する情報。
-type Speaker struct {
-	ID         string    `json:"id"`
-	SpeakerID  string    `json:"speakerId"`
-	Name       string    `json:"name"`
-	NameJa     string    `json:"nameJa"`
-	Company    string    `json:"company"`
-	Position   string    `json:"position"`
-	PositionJa string    `json:"positionJa"`
-	Profile    string    `json:"profile"`
-	ProfileJa  string    `json:"profileJa"`
-	IconURL    string    `json:"iconUrl"`
-	TwitterID  string    `json:"twitterId"`
-	GithubID   string    `json:"githubId"`
-	Sessions   []Session `json:"sessions"`
 }

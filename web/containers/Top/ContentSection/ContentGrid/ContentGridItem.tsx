@@ -4,14 +4,13 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
-import { omitText } from '../../../../utils';
 import { LazyImage } from '../../../../components/LazyImage';
-
+import { omitText, isJapan } from '../../../../utils';
 import gql from 'graphql-tag';
-import { ContentGridSessionFragment } from '../../../../graphql/generated/ContentGridSessionFragment';
+import { ContentGridItemFragment } from '../../../../graphql/generated/ContentGridItemFragment';
 
-export const CONTENT_GRID_SESSION_FRAGMENT = gql`
-  fragment ContentGridSessionFragment on Session {
+export const CONTENT_GRID_ITEM_FRAGMENT = gql`
+  fragment ContentGridItemFragment on Session {
     id
     sessionId
     title
@@ -36,7 +35,7 @@ export const CONTENT_GRID_SESSION_FRAGMENT = gql`
 
 interface Props {
   index: number;
-  session: ContentGridSessionFragment;
+  session: ContentGridItemFragment;
   onClick: (sessionId: number) => void;
 }
 
@@ -49,7 +48,7 @@ class ContentGridItem extends React.PureComponent<Props> {
       <Wrapper onClick={this.onClick} {...props}>
         <I18n>
           {(_, { i18n }) => {
-            const isJa = i18n.language === 'ja-JP';
+            const isJa = isJapan(i18n.language);
             return (
               <>
                 <ContentInfo>
@@ -85,6 +84,7 @@ class ContentGridItem extends React.PureComponent<Props> {
                         src={`/static/images/speakers/${
                           speaker.speakerId
                         }_thumb.png`}
+                        alt={isJa ? speaker.nameJa : speaker.name}
                       />
                       <div>
                         <Text level="display1">

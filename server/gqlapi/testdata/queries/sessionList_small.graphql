@@ -1,0 +1,47 @@
+# セッションは今21個ある前提でクエリを書く
+query {
+  # 最初の10個
+  sessionListA: sessionList(first: 10) {
+    ...SessionConnectionFragment
+  }
+  # sessionListAの続きの10個
+  sessionListB: sessionList(first: 10, after: "Session:19") {
+    ...SessionConnectionFragment
+  }
+  # sessionListBの続きの10個(1個)
+  sessionListC: sessionList(first: 10, after: "Session:29") {
+    ...SessionConnectionFragment
+  }
+  # sessionListCの続きの10個(0個)
+  sessionListD: sessionList(first: 10, after: "Session:30") {
+    ...SessionConnectionFragment
+  }
+}
+
+fragment SessionConnectionFragment on SessionConnection {
+  pageInfo {
+    startCursor
+    endCursor
+    hasNextPage
+    hasPreviousPage
+  }
+  edges {
+    cursor
+    node {
+      ...SessionFragment
+    }
+  }
+}
+
+fragment SessionFragment on Session {
+  id
+  sessionId
+  speakers {
+    id
+    speakerId
+    sessions {
+      id
+      sessionId
+    }
+  }
+}

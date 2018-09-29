@@ -26,6 +26,7 @@ jobs:
           working_directory: server
           command: |
             ./setup.sh
+            ./generate.sh
             ./test.sh -v
       - run:
           name: build

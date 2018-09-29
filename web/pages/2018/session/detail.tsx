@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import Router, { withRouter, WithRouterProps } from 'next/router';
 import Default from '../../../layout/Default';
 import ContentCard, {
-  SESSION_FRAGMENT
+  CONTENT_CARD_FRAGMENT
 } from '../../../containers/Session/ContentCard';
 import Header from '../../../containers/Session/Header';
 import { Button, Section } from '../../../components';
 import { withI18next } from '../../../lib/with-i18next';
 import { I18n } from 'react-i18next';
+import { isJapan } from '../../../utils';
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -17,16 +18,22 @@ import {
   Session as SessionQuery,
   SessionVariables
 } from '../../../graphql/generated/Session';
+import { SessionFragment } from '../../../graphql/generated/SessionFragment';
 
 export const SESSION_QUERY = gql`
   query Session($sessionId: Int!) {
     session(sessionId: $sessionId) {
-      id
-      sessionId
       ...SessionFragment
+      ...ContentCardFragment
     }
   }
-  ${SESSION_FRAGMENT}
+
+  fragment SessionFragment on Session {
+    title
+    titleJa
+  }
+
+  ${CONTENT_CARD_FRAGMENT}
 `;
 
 class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
@@ -45,16 +52,17 @@ class Session extends React.Component<WithRouterProps> {
             return (
               <I18n>
                 {(_, { i18n }) => {
-                  const isJa = i18n.language === 'ja-JP';
+                  const isJa = isJapan(i18n.language);
+                  const session: SessionFragment = data.session!;
                   return (
                     <>
                       <Head>
                         <title>
                           Mercari Tech Conf 2018 -{' '}
-                          {isJa ? data.session!.titleJa : data.session!.title}
+                          {isJa ? session.titleJa : session.title}
                         </title>
                       </Head>
-                      <Header />
+                      <StyledHeader />
                       <Body>
                         <Section title="SESSION">
                           <ContentCard session={data.session!} isJa={isJa} />
@@ -83,9 +91,16 @@ class Session extends React.Component<WithRouterProps> {
   };
 }
 
+const StyledHeader = styled(Header)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
+
 const Body = styled.div`
   width: 100%;
-  padding: 32px 64px 64px;
+  padding: 96px 64px 64px;
   box-sizing: border-box;
 
   > * {

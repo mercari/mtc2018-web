@@ -1,0 +1,123 @@
+{
+  "follow_us_on_twitter": "Please follow the official Twitter account (@mercaridevjp) for all announcements and information!",
+  "about": {
+    "p1": "Mercari Tech Conf (MTC) is a technology conference introducing the future business direction and the technological challenges of the companies of the Mercari Group to fellow engineers.",
+    "p2": "The theme of Mercari Tech Conf 2018 is Evolution. At this second annual conference we will introduce how the Mercari Group has evolved over the past year, and the changes yet to come.",
+    "p3": "In addition to various talk sessions, there will also be exhibition booths run by our various engineering teams as well as an after party with food and drinks provided. We hope all attendees can take advantage of this opportunity to socialize and network with your fellow engineers.",
+    "p4": "Simultaneous interpretation into English and Japanese will be provided for all sessions."
+  },
+  "session": {
+    "en": "English session",
+    "ja": "Japanese session"
+  },
+  "overview": {
+    "title": "Overview",
+    "url": "https://about.mercari.com/en/"
+  },
+  "exhibitions": [
+    {
+      "no": 1,
+      "title": "Potential Applications of Quantum Annealing at Mercari",
+      "description": "In 2018, Mercari began carrying out research into D-Wave. Learn about our research and experience how D-Wave works through our demonstration.",
+      "place": "l"
+    },
+    {
+      "no": 2,
+      "title": "Solving Business Challenges with Engineering: Mercari’s Corporate Solutions Engineering Team",
+      "description": "Learn about the activities and future plans of the Corporate Solutions Engineering Team formed last year. There will also be a demo of our HR database 'Teams' and evaluation system 'Reviews'.",
+      "place": "l"
+    },
+    {
+      "no": 3,
+      "title": "Initiatives by the Expert Team (Gopher Dojo, Go Friday, etc.)",
+      "description": "Learn more about our Gopher Dojo, Go Friday, and the activities of the Merpay Expert Team. A hands on experience with plenty of demos to enjoy!",
+      "place": "l"
+    },
+    {
+      "no": 4,
+      "title": "MTC App by Flutter",
+      "description": "Learn about the inner workings of the app (iOS/Android) we made for this conference using Flutter.",
+      "place": "l"
+    },
+    {
+      "no": 5,
+      "title": "AQA Team Test Automation and Zapier Automation Booth",
+      "description": "Take a behind-the-scenes look at Mercari’s mobile test automation. We’ll also be introducing Zapier, an automation tool used at the company.",
+      "place": "l"
+    },
+    {
+      "no": 6,
+      "title": "iOS App Rearchitecture Quiz",
+      "description": "The iOS team is in the process of rehauling the architecture of the Mercari JP app. Experience the changes we are implementing first-hand with a demo using the actual app! ",
+      "place": "l"
+    },
+    {
+      "no": 7,
+      "title": "Welcome to Mercari US",
+      "description": "Hello, we are Mercari US. This year, we rebranded the Mercari US and completely transformed the app. Try out the US version of Mercari at our demo corner and experience the atmosphere of our US office through video and free swags.",
+      "place": "l"
+    },
+    {
+      "no": 8,
+      "title": "Days in Mercari Android",
+      "description": "Learn about the everyday life of engineers on Mercari's Android Team, including the kinds of features we’re developing and the documentation we produce.",
+      "place": "l"
+    },
+    {
+      "no": 9,
+      "title": "We are the Machine Learning Team!",
+      "description": "Learn about the work of Mercari's Machine Learning Team and the critical thinking we apply in solving challenges with machine learning.",
+      "place": "l"
+    },
+    {
+      "no": 10,
+      "title": "Mercari & Microservices",
+      "description": "Learn about microservices at Mercari and talk with the team members involved in our project to move to microservices.",
+      "place": "s"
+    },
+    {
+      "no": 11,
+      "title": "Research and development organization \"R4D\"",
+      "description": "Learn about R4D, Mercari's research and development organization. There will be demonstrations on robotics using quantum computing (currently undergoing research and development).",
+      "place": "s"
+    },
+    {
+      "no": 12,
+      "title": "Ask the Speaker",
+      "description": "",
+      "place": "s"
+    }
+  ],
+  "askTheSpeaker": {
+    "title": "*Ask the Speaker",
+    "body": "Ask the Speaker is an opportunity for you to talk directly to MTC speakers after their sessions. If you have any questions about a session, drop by after the session is finished and ask them anything! Speakers will move to the Ask the Speaker booth after their session ends, and remain there for the first 15 minutes of the following session."
+  },
+  "access": {
+    "title": "Roppongi Academyhills",
+    "address": "Mori Tower 49th Floor 6-10-1 Roppongi, Minato-ku, Tokyo 106-0032",
+    "linkToAcademyHills": "Access to the Academyhills",
+    "train": {
+      "title": "Access by Subway",
+      "texts": [
+        "Tokyo Metro Hibiya Line Roppongi Station / 3 min. walk from Exit 1C (Direct link to concourse)",
+        "Toei Subway Oedo Line Roppongi Station / 6 min. walk from Exit 3"
+      ]
+    },
+    "bus": {
+      "title": "Access by Bus",
+      "fromShibuya": {
+        "title": "From Shibuya Station",
+        "texts": [
+          "Toei Route RH01 bus (Shibuya Station ⇔ Roppongi Hills): Get off at “Roppongi Hills” or “Roppongi Hills Keyakizaka” (Approx. 15 min.)",
+          "Toei Route 01 bus (Shibuya Station ⇔ Shimbashi Station): Get off at “EX-THEATER-ROPPONGI-MAE” (Approx. 14 min.)"
+        ]
+      },
+      "fromShimbashi": {
+        "title": "From Shimbashi Station",
+        "texts": [
+          "Toei Route 01 bus (Shimbashi Station ⇔ Shibuya Station) : Exit at “EX-THEATER-ROPPONGI-MAE” (Approx. 16 min.)"
+        ]
+      }
+    }
+  }
+}

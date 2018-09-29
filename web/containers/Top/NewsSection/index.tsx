@@ -7,18 +7,19 @@ import NewsList from './NewsList';
 import { NewsListFragment } from '../../../graphql/generated/NewsListFragment';
 
 interface Props {
-  data: NewsListFragment;
+  gqlData: NewsListFragment;
 }
 
-const NewsSection: React.SFC<Props> = ({ ...props }) => (
+const NewsSection: React.SFC<Props> = ({ gqlData, ...props }) => (
   <Section title="NEWS" id="news" {...props}>
     <Wrapper>
-      <StyledNewsList data={props.data} />
+      <StyledNewsList gqlData={gqlData} />
       <FollowButton
         type="primary"
         size="medium"
         href="https://twitter.com/intent/follow?screen_name=mercaridevjp"
         target="_blank"
+        rel="noopener noreferrer"
       >
         FOLLOW US ON
         <ButtonIcon src="../static/images/twitter.svg" alt="twitter" />

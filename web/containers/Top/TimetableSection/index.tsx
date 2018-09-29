@@ -7,13 +7,14 @@ import { rows } from '../../../store/timetable';
 import { Row } from '../../../types';
 import TimetableRow, { TIMETABLE_ROW_FRAGMENT } from './TimetableRow';
 import { I18n } from 'react-i18next';
+import { isJapan } from '../../../utils';
 
 import gql from 'graphql-tag';
 import { TimetableSectionFragment } from '../../../graphql/generated/TimetableSectionFragment';
 
 export const TIMETABLE_SECTION_FRAGMENT = gql`
   fragment TimetableSectionFragment on Query {
-    sessionList {
+    sessionList(first: 100) {
       ...TimetableRowFragment
     }
   }
@@ -22,43 +23,45 @@ export const TIMETABLE_SECTION_FRAGMENT = gql`
 `;
 
 interface Props {
-  data: TimetableSectionFragment;
+  gqlData: TimetableSectionFragment;
 }
 
-const TimetableSection: React.SFC<Props> = ({ data, ...props }) => {
+const TimetableSection: React.SFC<Props> = ({ gqlData, ...props }) => {
   return (
-    <Section title="TIME TABLE" id="timetable" {...props}>
-      <Lang>
-        <span>(JA)</span>
-        日本語講演
-        <span>(EN)</span>
-        英語講演
-      </Lang>
-      <TimelineTable>
-        <thead>
-          <tr>
-            <th />
-            <th>TRACK A</th>
-            <th>TRACK B</th>
-          </tr>
-        </thead>
-        <tbody>
-          <I18n>
-            {(_, { i18n }) => {
-              const isJa = i18n.language === 'ja-JP';
-              return rows.map((row: Row, rowIndex) => (
-                <TimetableRow
-                  row={row}
-                  sessionList={data.sessionList}
-                  isJa={isJa}
-                  key={rowIndex}
-                />
-              ));
-            }}
-          </I18n>
-        </tbody>
-      </TimelineTable>
-    </Section>
+    <I18n>
+      {(t, { i18n }) => {
+        const isJa = isJapan(i18n.language);
+        return (
+          <Section title="TIME TABLE" id="timetable" {...props}>
+            <Lang>
+              <span>(JA)</span>
+              {t('session.ja')}
+              <span>(EN)</span>
+              {t('session.en')}
+            </Lang>
+            <TimelineTable>
+              <thead>
+                <tr>
+                  <th />
+                  <th>TRACK A</th>
+                  <th>TRACK B</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row: Row, rowIndex) => (
+                  <TimetableRow
+                    row={row}
+                    sessionList={gqlData.sessionList}
+                    isJa={isJa}
+                    key={rowIndex}
+                  />
+                ))}
+              </tbody>
+            </TimelineTable>
+          </Section>
+        );
+      }}
+    </I18n>
   );
 };
 

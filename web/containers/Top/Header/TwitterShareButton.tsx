@@ -20,7 +20,11 @@ class TwitterShareButton extends React.PureComponent {
   }
 
   private onClick = () => {
-    window.open(twitterShareURL, '_blank');
+    const a = document.createElement('a');
+    a.href = twitterShareURL;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.click();
   };
 }
 

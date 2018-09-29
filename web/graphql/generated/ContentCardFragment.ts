@@ -2,10 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: ContentGridSessionFragment
+// GraphQL fragment: ContentCardFragment
 // ====================================================
 
-export interface ContentGridSessionFragment_speakers {
+export interface ContentCardFragment_speakers {
   __typename: "Speaker";
   id: string;
   speakerId: string;
@@ -13,20 +13,20 @@ export interface ContentGridSessionFragment_speakers {
   nameJa: string;
   position: string;
   positionJa: string;
+  profile: string;
+  profileJa: string;
 }
 
-export interface ContentGridSessionFragment {
+export interface ContentCardFragment {
   __typename: "Session";
-  id: string;
-  sessionId: number;
-  title: string;
-  titleJa: string;
   startTime: string;
   endTime: string;
   type: string;
   place: string;
+  title: string;
+  titleJa: string;
+  tags: string[];
   outline: string;
   outlineJa: string;
-  tags: string[];
-  speakers: ContentGridSessionFragment_speakers[];
+  speakers: ContentCardFragment_speakers[];
 }

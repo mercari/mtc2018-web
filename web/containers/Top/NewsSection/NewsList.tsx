@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { I18n } from 'react-i18next';
+import { isJapan } from '../../../utils';
 import styled, { css } from 'styled-components';
 import { Text } from '../../../components';
 import { colors, getTextStyle } from '../../../components/styles';
@@ -8,12 +9,12 @@ import gql from 'graphql-tag';
 import { NewsListFragment } from '../../../graphql/generated/NewsListFragment';
 
 interface Props {
-  data: NewsListFragment;
+  gqlData: NewsListFragment;
 }
 
 export const NEWS_LIST_FRAGMENT = gql`
   fragment NewsListFragment on Query {
-    newsList {
+    newsList(first: 100) {
       nodes {
         id
         date
@@ -25,19 +26,23 @@ export const NEWS_LIST_FRAGMENT = gql`
   }
 `;
 
-const NewsList: React.SFC<Props> = ({ ...props }) => (
+const NewsList: React.SFC<Props> = ({ gqlData, ...props }) => (
   <Wrapper {...props}>
     <I18n>
       {(_, { i18n }) => {
-        const { data } = props;
-        return data.newsList.nodes.map(newsItem => {
-          const message =
-            i18n.language === 'ja-JP' ? newsItem.messageJa : newsItem.message;
+        return gqlData.newsList.nodes.map(newsItem => {
+          const message = isJapan(i18n.language)
+            ? newsItem.messageJa
+            : newsItem.message;
           return (
             <ListItem key={newsItem.id}>
               <ListItemDate>{newsItem.date}</ListItemDate>
               {newsItem.link ? (
-                <ListItemMessageLink href={newsItem.link} target="_blank">
+                <ListItemMessageLink
+                  href={newsItem.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {message}
                 </ListItemMessageLink>
               ) : (

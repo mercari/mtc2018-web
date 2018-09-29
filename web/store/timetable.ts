@@ -3,19 +3,25 @@ import { Row } from '../types';
 export const rows: Row[] = [
   {
     type: 'other',
-    time: '10:00 ~ 10:15',
-    label: 'Openning ( Shintaro Yamada )',
-    labelJa: 'オープニング ( 山田 進太郎 )'
+    time: '9:00 ~ 10:00',
+    label: 'Doors open',
+    labelJa: '受付開始'
   },
   {
     type: 'other',
-    time: '10:15 ~ 11:45',
+    time: '10:00 ~ 10:15',
+    label: 'Opening ( Yuki Hamada )',
+    labelJa: 'オープニング ( 濱田 優貴 )'
+  },
+  {
+    type: 'other',
+    time: '10:15 ~ 11:15',
     label: 'Keynote ( Suguru Namura, Dr. Mok Oh, Keisuke Sogawa )',
     labelJa: '基調講演 ( 名村 卓, Dr. Mok Oh, 曾川 景介 )'
   },
   {
     type: 'other',
-    time: '11:45 ~ 13:00',
+    time: '11:15 ~ 13:00',
     label: 'Lunch break',
     labelJa: 'ランチブレイク'
   },
@@ -75,13 +81,13 @@ export const rows: Row[] = [
   },
   {
     type: 'other',
-    time: '18:30 ~ 18:50',
+    time: '18:30 ~ 18:40',
     label: 'Closing ( Yuki Hamada )',
     labelJa: 'クロージング ( 濱田 優貴 )'
   },
   {
     type: 'other',
-    time: '19:10 ~ 20:30',
+    time: '19:00 ~ 20:30',
     label: 'After Party',
     labelJa: 'アフターパーティー'
   }

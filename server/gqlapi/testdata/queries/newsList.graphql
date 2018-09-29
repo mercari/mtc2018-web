@@ -1,0 +1,28 @@
+query {
+  newsList {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        ...NewsFragment
+      }
+    }
+    nodes {
+      ...NewsFragment
+    }
+  }
+}
+
+fragment NewsFragment on News {
+  id
+  newsId
+  date
+  message
+  messageJa
+  link
+}

@@ -21,6 +21,15 @@ type Query {
   session(sessionId: Int!): Session
 
   """
+  展示一覧を取得します。
+  """
+  exhibisionList(
+    first: Int
+    after: String
+    req: ExhibitionListInput
+  ): ExhibitionConnection!
+
+  """
   お知らせ一覧を取得します
   """
   newsList(first: Int, after: String): NewsConnection!
@@ -29,13 +38,17 @@ type Query {
 type Mutation {
   """
   セッションに対していいね！することができます。
-  ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
+  ログイン周りのシステムはないので、リクエストにUUIDを付与してください。
   """
   createLike(input: CreateLikeInput!): CreateLikePayload
 }
 
 type Subscription {
-  likeAdded: Like!
+  """
+  セッションに対するいいね！をイベントとして取得します。
+  一定期間中にいいね！された数を返します。
+  """
+  likeAdded(sessionId: Int!): LikeEvent!
 }
 
 interface Node {
@@ -80,6 +93,8 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
+
+  liked: Int!
   speakers: [Speaker!]!
 }
 
@@ -103,12 +118,49 @@ type Speaker implements Node {
   sessions: [Session!]
 }
 
+type ExhibitionConnection {
+  pageInfo: PageInfo!
+  edges: [ExhibitionEdge!]!
+  nodes: [Exhibition!]!
+}
+
+type ExhibitionEdge {
+  cursor: String
+  node: Exhibition!
+}
+
+input ExhibitionListInput {
+  tmp: String
+}
+
+"""
+展示1つに関する情報。
+"""
+type Exhibition implements Node {
+  id: ID!
+  exhibitionId: Int!
+  place: String!
+  title: String!
+  titleJa: String!
+  description: String!
+  descriptionJa: String!
+}
+
 """
 セッションに対していいね！する時の引数です。
+uuidはいいね！した人のUUIDです。
 """
 input CreateLikeInput {
   clientMutationId: String
-  sessionID: ID!
+  """
+  いいねした人のUUID。
+  適当にブラウザのセッションでユニークなIDをつっこんでください。
+  """
+  uuid: String!
+  """
+  いいねするSessionのID。
+  """
+  sessionId: Int!
 }
 
 type CreateLikePayload {
@@ -121,7 +173,12 @@ type CreateLikePayload {
 """
 type Like implements Node {
   id: ID!
-  sessionID: ID!
+  session: Session!
+}
+
+type LikeEvent {
+  sessionId: Int!
+  likes: Int!
 }
 
 type NewsConnection {
@@ -140,6 +197,7 @@ type NewsEdge {
 """
 type News implements Node {
   id: ID!
+  newsId: String!
   date: String!
   message: String!
   messageJa: String!

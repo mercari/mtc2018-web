@@ -16,8 +16,8 @@ i18n
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
   .init({
-    fallbackLng: 'en',
-    preload: ['en', 'ja'], // preload all langages
+    fallbackLng: 'en-US',
+    preload: ['en-US', 'ja-JP'], // preload all langages
     ns: ['common'], // need to preload all the namespaces
     backend: {
       loadPath: path.join(__dirname, '/locales/{{lng}}/{{ns}}.json'),
@@ -28,6 +28,17 @@ i18n
     app.prepare()
       .then(() => {
         const server = express()
+
+        const robotsOptions = {
+        root: __dirname + '/static/',
+          headers: {
+          'Content-Type': 'text/plain;charset=UTF-8',
+          }
+        };
+
+        server.get('/robots.txt', (req, res) => (
+          res.status(200).sendFile('robots.txt', robotsOptions)
+        ));
 
         // mercari tech conf 2017
         server.use('/2017', express.static(path.join(__dirname+'/static/2017')));
@@ -40,6 +51,9 @@ i18n
 
         // missing keys
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
+
+        // redirect root access to /2018
+        // server.get('/', (req, res) => res.redirect('/2018'))
 
         // use next.js
         // server.get('*', (req, res) => handle(req, res))

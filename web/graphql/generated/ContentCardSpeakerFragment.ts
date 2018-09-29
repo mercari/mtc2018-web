@@ -2,10 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: SpeakerFragment
+// GraphQL fragment: ContentCardSpeakerFragment
 // ====================================================
 
-export interface SpeakerFragment {
+export interface ContentCardSpeakerFragment {
   __typename: "Speaker";
   id: string;
   speakerId: string;

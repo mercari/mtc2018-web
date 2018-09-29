@@ -1,11 +1,12 @@
-import 'core-js/fn/array/find';
 import { css } from 'styled-components';
+import FontFaceObserver from 'fontfaceobserver';
 
 export const colors = {
   primary: '#10172B',
   primaryAlpha: 'rgba(18, 28, 59, 0.9)',
   secondary: '#F6422A',
   orange: '#FB7A61',
+  skin: '#FFE8E5',
   yuki: '#FFFFFF',
   nezumi: '#9D9D9D',
   kemuri: '#D8D8D8',
@@ -49,5 +50,17 @@ export const borderRadius = {
 };
 
 export const boxShadow = {
-  level1: '0 4px 6px rgba(0, 0, 0, 0.7)'
+  level1: '0 4px 6px rgba(0, 0, 0, 0.7)',
+  level2: '0 2px 6px rgba(0, 0, 0, 0.3)'
+};
+
+export const loadFont = () => {
+  const link = document.createElement('link');
+  link.href = 'https://fonts.googleapis.com/css?family=Montserrat:400,700';
+  link.rel = 'stylesheet';
+
+  document.head.appendChild(link);
+
+  const monstserrat = new FontFaceObserver('Montserrat');
+  monstserrat.load();
 };

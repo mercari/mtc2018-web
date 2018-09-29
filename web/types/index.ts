@@ -50,3 +50,10 @@ export interface OtherRow {
   label: string;
   labelJa: string;
 }
+
+export interface Exhibition {
+  no: number;
+  title: string;
+  description: string;
+  place: 'l' | 's';
+}
