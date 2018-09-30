@@ -80,12 +80,20 @@ class ContentGridItem extends React.PureComponent<Props> {
                 <div>
                   {session.speakers!.map(speaker => (
                     <SpeakerInfo key={speaker.id}>
-                      <Icon
-                        src={`/static/images/speakers/${
-                          speaker.speakerId
-                        }_thumb.png`}
-                        alt={isJa ? speaker.nameJa : speaker.name}
-                      />
+                      <Icon>
+                        <source
+                          type="image/webp"
+                          srcSet={`/static/images/speakers/${
+                            speaker.speakerId
+                          }_thumb.webp`}
+                        />
+                        <img
+                          src={`/static/images/speakers/${
+                            speaker.speakerId
+                          }_thumb.png`}
+                          alt={isJa ? speaker.nameJa : speaker.name}
+                        />
+                      </Icon>
                       <div>
                         <Text level="display1">
                           {isJa ? speaker.nameJa : speaker.name}
@@ -194,12 +202,17 @@ const SpeakerInfo = styled.div`
   }
 `;
 
-const Icon = styled.img`
+const Icon = styled.picture`
   width: 60px;
   height: 60px;
   flex-shrink: 0;
-  border-radius: 50%;
   margin-right: 20px;
+
+  > * {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
 `;
 
 export default ContentGridItem;
