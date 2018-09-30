@@ -8,12 +8,16 @@ const Footer = () => (
     <Body>
       <Copy>© 2018 Mercari, Inc.</Copy>
       <EmptySpace />
-      <Link href="/2017" target="_blank">
+      <Link href="/2017" target="_blank" rel="noopener noreferrer">
         mercari Tech Conf 2017
       </Link>
       <I18n>
         {t => (
-          <Link href={t('overview.url')} target="_blank">
+          <Link
+            href={t('overview.url')}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {t('overview.title')}
           </Link>
         )}

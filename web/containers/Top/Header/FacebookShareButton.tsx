@@ -17,7 +17,11 @@ class FacebookShareButton extends React.PureComponent {
   }
 
   private onClick = () => {
-    window.open(facebookShareURL, '_blank');
+    const a = document.createElement('a');
+    a.href = facebookShareURL;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.click();
   };
 }
 

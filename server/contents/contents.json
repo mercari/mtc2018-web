@@ -20,9 +20,15 @@
   ],
   "news": [
     {
+      "id": "2",
+      "date": "2018-09-28",
+      "message": "The list of exhibition booths is now up on our website!",
+      "messageJa": "展示ブースの内容を公開しました"
+    },
+    {
       "id": "1",
       "date": "2018-09-04",
-      "message": "Tickets are on sale as of August 31st, 2018.",
+      "message": "Tickets are on sale.",
       "messageJa": "チケット販売をオープンしました",
       "link": "https://mercari-tech-conf-2018.peatix.com"
     }
@@ -33,7 +39,7 @@
       "type": "keynote",
       "place": "TrackA",
       "startTime": "2018-10-04T10:15:00+09:00",
-      "endTime": "2018-10-04T11:45:00+09:00",
+      "endTime": "2018-10-04T11:15:00+09:00",
       "title": "Keynote",
       "titleJa": "基調講演",
       "outline": "Mercari JP CTO Suguru Namura, Mercari US CTO Mok Oh, and Merpay Director Keisuke Sogawa will discuss the events that have occurred at their respective companies in the past year. They will also talk about the goals and technical challenges that they plan to tackle in the future.",

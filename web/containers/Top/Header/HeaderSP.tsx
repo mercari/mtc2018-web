@@ -30,7 +30,11 @@ class Header extends React.Component<Props, State> {
     const { showMenu } = this.state;
     return (
       <Wrapper show={isTopY || showMenu} {...props}>
-        <Logo onClick={this.onClickLogo} />
+        <img
+          onClick={this.onClickLogo}
+          src="../../static/images/header_logo.svg"
+          alt="mercari tech conf 2018"
+        />
         <EmptySpace />
         <HamburgerMenu active={this.state.showMenu} onClick={this.toggleMenu} />
         <Menu show={this.state.showMenu} onClick={this.toggleMenu}>
@@ -103,10 +107,6 @@ const Wrapper = styled.div`
   opacity: ${(props: { show: boolean }) => (props.show ? '1' : '0')};
   background-color: ${colors.primaryAlpha};
 `;
-
-const Logo = styled.img.attrs({
-  src: '../../static/images/header_logo.svg'
-})``;
 
 const EmptySpace = styled.div`
   flex-grow: 1;

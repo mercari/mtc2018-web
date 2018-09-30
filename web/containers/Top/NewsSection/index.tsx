@@ -19,6 +19,7 @@ const NewsSection: React.SFC<Props> = ({ gqlData, ...props }) => (
         size="medium"
         href="https://twitter.com/intent/follow?screen_name=mercaridevjp"
         target="_blank"
+        rel="noopener noreferrer"
       >
         FOLLOW US ON
         <ButtonIcon src="../static/images/twitter.svg" alt="twitter" />

@@ -53,7 +53,8 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.img.attrs({
-  src: '../../static/images/header_logo.svg'
+  src: '../../static/images/header_logo.svg',
+  alt: 'mercari tech conf 2018'
 })`
   cursor: pointer;
   transition: 0.3s;

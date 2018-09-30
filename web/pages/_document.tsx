@@ -18,7 +18,7 @@ export default class MyDocument extends Document {
 
   public render() {
     return (
-      <html>
+      <html lang="ja">
         <Head>
           <meta name="format-detection" content="telephone=no" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,11 +54,6 @@ export default class MyDocument extends Document {
           <meta name="twitter:site" content="@mercari_inc" />
           <link rel="shortcut icon" href="/static/images/favicon.ico" />
           <title>Mercari Tech Conf 2018</title>
-          <link
-            href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-            rel="stylesheet"
-          />
-          <link rel="manifest" href="/2018/manifest.json" />
           <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
           {this.props.styleTags}
         </Head>
