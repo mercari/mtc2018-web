@@ -2,10 +2,9 @@ import * as React from 'react';
 import { I18n } from 'react-i18next';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Text, Tip } from '../../../../components';
+import { Text, Tip, LazyImage } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
 import { omitText, isJapan } from '../../../../utils';
-
 import gql from 'graphql-tag';
 import { ContentGridItemFragment } from '../../../../graphql/generated/ContentGridItemFragment';
 
@@ -80,20 +79,15 @@ class ContentGridItem extends React.PureComponent<Props> {
                 <div>
                   {session.speakers!.map(speaker => (
                     <SpeakerInfo key={speaker.id}>
-                      <Icon>
-                        <source
-                          type="image/webp"
-                          srcSet={`/static/images/speakers/${
-                            speaker.speakerId
-                          }_thumb.webp`}
-                        />
-                        <img
-                          src={`/static/images/speakers/${
-                            speaker.speakerId
-                          }_thumb.png`}
-                          alt={isJa ? speaker.nameJa : speaker.name}
-                        />
-                      </Icon>
+                      <Icon
+                        src={`/static/images/speakers/${
+                          speaker.speakerId
+                        }_thumb.png`}
+                        webpSrc={`/static/images/speakers/${
+                          speaker.speakerId
+                        }_thumb.webp`}
+                        alt={isJa ? speaker.nameJa : speaker.name}
+                      />
                       <div>
                         <Text level="display1">
                           {isJa ? speaker.nameJa : speaker.name}
@@ -202,17 +196,11 @@ const SpeakerInfo = styled.div`
   }
 `;
 
-const Icon = styled.picture`
+const Icon = styled(LazyImage)`
   width: 60px;
   height: 60px;
   flex-shrink: 0;
   margin-right: 20px;
-
-  > * {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
 `;
 
 export default ContentGridItem;
