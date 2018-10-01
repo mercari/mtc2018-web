@@ -14,6 +14,7 @@ module.exports = withTypescript({
       if (entries['main.js']) {
         entries['main.js'].unshift('core-js/fn/array/find');
         entries['main.js'].unshift('core-js/fn/object/assign');
+        entries['main.js'].unshift('intersection-observer/intersection-observer');
       }
 
       return entries;
