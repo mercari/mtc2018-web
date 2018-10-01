@@ -2,9 +2,8 @@ import * as React from 'react';
 import { I18n } from 'react-i18next';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Text, Tip } from '../../../../components';
+import { Text, Tip, LazyImage } from '../../../../components';
 import { colors, borderRadius, boxShadow } from '../../../../components/styles';
-import { LazyImage } from '../../../../components/LazyImage';
 import { omitText, isJapan } from '../../../../utils';
 import gql from 'graphql-tag';
 import { ContentGridItemFragment } from '../../../../graphql/generated/ContentGridItemFragment';
@@ -84,6 +83,9 @@ class ContentGridItem extends React.PureComponent<Props> {
                         src={`/static/images/speakers/${
                           speaker.speakerId
                         }_thumb.png`}
+                        webpSrc={`/static/images/speakers/${
+                          speaker.speakerId
+                        }_thumb.webp`}
                         alt={isJa ? speaker.nameJa : speaker.name}
                       />
                       <div>
@@ -198,7 +200,6 @@ const Icon = styled(LazyImage)`
   width: 60px;
   height: 60px;
   flex-shrink: 0;
-  border-radius: 50%;
   margin-right: 20px;
 `;
 

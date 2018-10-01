@@ -1,8 +1,11 @@
 import React, { ImgHTMLAttributes } from 'react';
+import styled from 'styled-components';
 
-type Props = ImgHTMLAttributes<HTMLImageElement>;
+interface Props extends ImgHTMLAttributes<HTMLImageElement> {
+  webpSrc: string;
+}
 
-export class LazyImage extends React.Component<Props> {
+class LazyImage extends React.Component<Props> {
   public state = {
     show: false
   };
@@ -36,14 +39,22 @@ export class LazyImage extends React.Component<Props> {
   };
 
   public render() {
-    const { src, ...props } = this.props;
+    const { src, alt, webpSrc, ...props } = this.props;
     return (
-      <img
-        ref={this.imgRef}
-        className="lazy"
-        src={this.state.show ? src : ''}
-        {...props}
-      />
+      <Wrapper innerRef={this.imgRef} {...props}>
+        <source type="image/webp" srcSet={this.state.show ? webpSrc : ''} />
+        <img src={this.state.show ? src : ''} alt={alt} />
+      </Wrapper>
     );
   }
 }
+
+const Wrapper = styled.picture`
+  > * {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+`;
+
+export default LazyImage;
