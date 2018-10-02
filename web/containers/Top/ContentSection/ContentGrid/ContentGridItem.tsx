@@ -7,6 +7,7 @@ import { colors, borderRadius, boxShadow } from '../../../../components/styles';
 import { omitText, isJapan } from '../../../../utils';
 import gql from 'graphql-tag';
 import { ContentGridItemFragment } from '../../../../graphql/generated/ContentGridItemFragment';
+import { Content } from '../../../../types';
 
 export const CONTENT_GRID_ITEM_FRAGMENT = gql`
   fragment ContentGridItemFragment on Session {
@@ -38,6 +39,18 @@ interface Props {
   onClick: (sessionId: number) => void;
 }
 
+const getTip = (type: Content['type']) => {
+  switch (type) {
+    case 'keynote':
+      return <Tip type="important">KEYNOTE</Tip>;
+    case 'opening':
+      return <Tip type="important">OPENING</Tip>;
+    case 'session':
+    default:
+      return <Tip type="normal">SESSION</Tip>;
+  }
+};
+
 class ContentGridItem extends React.PureComponent<Props> {
   public render() {
     const { session, onClick, ...props } = this.props;
@@ -52,11 +65,7 @@ class ContentGridItem extends React.PureComponent<Props> {
               <>
                 <ContentInfo>
                   <Header>
-                    {session.type === 'keynote' ? (
-                      <Tip type="important">KEYNOTE</Tip>
-                    ) : (
-                      <Tip type="normal">SESSION</Tip>
-                    )}
+                    {getTip(session.type)}
                     <HeaderDetail>
                       <Text level="display2">{session.place}</Text>
                       <Text level="display2">
