@@ -6,6 +6,7 @@ import { colors, getTextStyle, borderRadius } from '../../../components/styles';
 import ContentCardSpeaker, {
   CONTENT_CARD_SPEAKER_FRAGMENT
 } from './ContentCardSpeaker';
+import { Content } from '../../../types';
 
 import gql from 'graphql-tag';
 import { ContentCardFragment } from '../../../graphql/generated/ContentCardFragment';
@@ -28,6 +29,18 @@ export const CONTENT_CARD_FRAGMENT = gql`
   ${CONTENT_CARD_SPEAKER_FRAGMENT}
 `;
 
+const getTip = (type: Content['type']) => {
+  switch (type) {
+    case 'keynote':
+      return <Tip type="important">KEYNOTE</Tip>;
+    case 'opening':
+      return <Tip type="important">OPENING</Tip>;
+    case 'session':
+    default:
+      return <Tip type="normal">SESSION</Tip>;
+  }
+};
+
 interface Props {
   session: ContentCardFragment;
   isJa: boolean;
@@ -42,11 +55,7 @@ class ContentCard extends React.PureComponent<Props> {
       <Wrapper {...props}>
         <ContentInfo>
           <Header>
-            {session.type === 'keynote' ? (
-              <Tip type="important">KEYNOTE</Tip>
-            ) : (
-              <Tip type="normal">SESSION</Tip>
-            )}
+            {getTip(session.type)}
             <HeaderDetail>
               <Text level="display2">{session.place}</Text>
               <Text level="display2">
