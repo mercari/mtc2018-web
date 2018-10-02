@@ -207,267 +207,6 @@ type SubscriptionResolver interface {
 	LikeAdded(ctx context.Context, sessionId int) (<-chan LikeEvent, error)
 }
 
-func field_Mutation_createLike_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 CreateLikeInput
-	if tmp, ok := rawArgs["input"]; ok {
-		var err error
-		arg0, err = UnmarshalCreateLikeInput(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["input"] = arg0
-	return args, nil
-
-}
-
-func field_Query_node_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["id"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalID(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-
-}
-
-func field_Query_nodes_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 []string
-	if tmp, ok := rawArgs["ids"]; ok {
-		var err error
-		var rawIf1 []interface{}
-		if tmp != nil {
-			if tmp1, ok := tmp.([]interface{}); ok {
-				rawIf1 = tmp1
-			} else {
-				rawIf1 = []interface{}{tmp}
-			}
-		}
-		arg0 = make([]string, len(rawIf1))
-		for idx1 := range rawIf1 {
-			arg0[idx1], err = graphql.UnmarshalID(rawIf1[idx1])
-		}
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["ids"] = arg0
-	return args, nil
-
-}
-
-func field_Query_sessionList_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 *int
-	if tmp, ok := rawArgs["first"]; ok {
-		var err error
-		var ptr1 int
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalInt(tmp)
-			arg0 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["first"] = arg0
-	var arg1 *string
-	if tmp, ok := rawArgs["after"]; ok {
-		var err error
-		var ptr1 string
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalString(tmp)
-			arg1 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["after"] = arg1
-	var arg2 *SessionListInput
-	if tmp, ok := rawArgs["req"]; ok {
-		var err error
-		var ptr1 SessionListInput
-		if tmp != nil {
-			ptr1, err = UnmarshalSessionListInput(tmp)
-			arg2 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["req"] = arg2
-	return args, nil
-
-}
-
-func field_Query_session_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalInt(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["sessionId"] = arg0
-	return args, nil
-
-}
-
-func field_Query_exhibisionList_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 *int
-	if tmp, ok := rawArgs["first"]; ok {
-		var err error
-		var ptr1 int
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalInt(tmp)
-			arg0 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["first"] = arg0
-	var arg1 *string
-	if tmp, ok := rawArgs["after"]; ok {
-		var err error
-		var ptr1 string
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalString(tmp)
-			arg1 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["after"] = arg1
-	var arg2 *ExhibitionListInput
-	if tmp, ok := rawArgs["req"]; ok {
-		var err error
-		var ptr1 ExhibitionListInput
-		if tmp != nil {
-			ptr1, err = UnmarshalExhibitionListInput(tmp)
-			arg2 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["req"] = arg2
-	return args, nil
-
-}
-
-func field_Query_newsList_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 *int
-	if tmp, ok := rawArgs["first"]; ok {
-		var err error
-		var ptr1 int
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalInt(tmp)
-			arg0 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["first"] = arg0
-	var arg1 *string
-	if tmp, ok := rawArgs["after"]; ok {
-		var err error
-		var ptr1 string
-		if tmp != nil {
-			ptr1, err = graphql.UnmarshalString(tmp)
-			arg1 = &ptr1
-		}
-
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["after"] = arg1
-	return args, nil
-
-}
-
-func field_Query___type_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["name"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalString(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["name"] = arg0
-	return args, nil
-
-}
-
-func field_Subscription_likeAdded_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalInt(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["sessionId"] = arg0
-	return args, nil
-
-}
-
-func field___Type_fields_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["includeDeprecated"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalBoolean(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["includeDeprecated"] = arg0
-	return args, nil
-
-}
-
-func field___Type_enumValues_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["includeDeprecated"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalBoolean(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["includeDeprecated"] = arg0
-	return args, nil
-
-}
-
 type executableSchema struct {
 	resolvers  ResolverRoot
 	directives DirectiveRoot
@@ -611,11 +350,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Mutation.CreateLike == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Mutation_createLike_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 CreateLikeInput
+		if tmp, ok := rawArgs["input"]; ok {
+			var err error
+			arg0, err = UnmarshalCreateLikeInput(tmp)
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["input"] = arg0
 
 		return e.complexity.Mutation.CreateLike(childComplexity, args["input"].(CreateLikeInput)), true
 
@@ -728,11 +473,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.Node == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Query_node_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 string
+		if tmp, ok := rawArgs["id"]; ok {
+			var err error
+			arg0, err = graphql.UnmarshalID(tmp)
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["id"] = arg0
 
 		return e.complexity.Query.Node(childComplexity, args["id"].(string)), true
 
@@ -740,11 +491,28 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.Nodes == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Query_nodes_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 []string
+		if tmp, ok := rawArgs["ids"]; ok {
+			var err error
+			var rawIf1 []interface{}
+			if tmp != nil {
+				if tmp1, ok := tmp.([]interface{}); ok {
+					rawIf1 = tmp1
+				} else {
+					rawIf1 = []interface{}{tmp}
+				}
+			}
+			arg0 = make([]string, len(rawIf1))
+			for idx1 := range rawIf1 {
+				arg0[idx1], err = graphql.UnmarshalID(rawIf1[idx1])
+			}
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["ids"] = arg0
 
 		return e.complexity.Query.Nodes(childComplexity, args["ids"].([]string)), true
 
@@ -752,11 +520,52 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.SessionList == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Query_sessionList_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 *int
+		if tmp, ok := rawArgs["first"]; ok {
+			var err error
+			var ptr1 int
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalInt(tmp)
+				arg0 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["first"] = arg0
+
+		var arg1 *string
+		if tmp, ok := rawArgs["after"]; ok {
+			var err error
+			var ptr1 string
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalString(tmp)
+				arg1 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["after"] = arg1
+
+		var arg2 *SessionListInput
+		if tmp, ok := rawArgs["req"]; ok {
+			var err error
+			var ptr1 SessionListInput
+			if tmp != nil {
+				ptr1, err = UnmarshalSessionListInput(tmp)
+				arg2 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["req"] = arg2
 
 		return e.complexity.Query.SessionList(childComplexity, args["first"].(*int), args["after"].(*string), args["req"].(*SessionListInput)), true
 
@@ -764,11 +573,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.Session == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Query_session_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 int
+		if tmp, ok := rawArgs["sessionId"]; ok {
+			var err error
+			arg0, err = graphql.UnmarshalInt(tmp)
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["sessionId"] = arg0
 
 		return e.complexity.Query.Session(childComplexity, args["sessionId"].(int)), true
 
@@ -776,11 +591,52 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.ExhibisionList == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Query_exhibisionList_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 *int
+		if tmp, ok := rawArgs["first"]; ok {
+			var err error
+			var ptr1 int
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalInt(tmp)
+				arg0 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["first"] = arg0
+
+		var arg1 *string
+		if tmp, ok := rawArgs["after"]; ok {
+			var err error
+			var ptr1 string
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalString(tmp)
+				arg1 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["after"] = arg1
+
+		var arg2 *ExhibitionListInput
+		if tmp, ok := rawArgs["req"]; ok {
+			var err error
+			var ptr1 ExhibitionListInput
+			if tmp != nil {
+				ptr1, err = UnmarshalExhibitionListInput(tmp)
+				arg2 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["req"] = arg2
 
 		return e.complexity.Query.ExhibisionList(childComplexity, args["first"].(*int), args["after"].(*string), args["req"].(*ExhibitionListInput)), true
 
@@ -788,11 +644,37 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Query.NewsList == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Query_newsList_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 *int
+		if tmp, ok := rawArgs["first"]; ok {
+			var err error
+			var ptr1 int
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalInt(tmp)
+				arg0 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["first"] = arg0
+
+		var arg1 *string
+		if tmp, ok := rawArgs["after"]; ok {
+			var err error
+			var ptr1 string
+			if tmp != nil {
+				ptr1, err = graphql.UnmarshalString(tmp)
+				arg1 = &ptr1
+			}
+
+			if err != nil {
+				return 0, false
+			}
+		}
+		args["after"] = arg1
 
 		return e.complexity.Query.NewsList(childComplexity, args["first"].(*int), args["after"].(*string)), true
 
@@ -1024,11 +906,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		if e.complexity.Subscription.LikeAdded == nil {
 			break
 		}
+		args := map[string]interface{}{}
 
-		args, err := field_Subscription_likeAdded_args(rawArgs)
-		if err != nil {
-			return 0, false
+		var arg0 int
+		if tmp, ok := rawArgs["sessionId"]; ok {
+			var err error
+			arg0, err = graphql.UnmarshalInt(tmp)
+			if err != nil {
+				return 0, false
+			}
 		}
+		args["sessionId"] = arg0
 
 		return e.complexity.Subscription.LikeAdded(childComplexity, args["sessionId"].(int)), true
 
@@ -1088,10 +976,6 @@ func (e *executableSchema) Subscription(ctx context.Context, op *ast.OperationDe
 			data.MarshalGQL(&buf)
 			return buf.Bytes()
 		})
-
-		if buf == nil {
-			return nil
-		}
 
 		return &graphql.Response{
 			Data:   buf,
@@ -1855,11 +1739,17 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 // nolint: vetshadow
 func (ec *executionContext) _Mutation_createLike(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Mutation_createLike_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 CreateLikeInput
+	if tmp, ok := rawArgs["input"]; ok {
+		var err error
+		arg0, err = UnmarshalCreateLikeInput(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["input"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Mutation",
 		Args:   args,
@@ -2537,11 +2427,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 // nolint: vetshadow
 func (ec *executionContext) _Query_node(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Query_node_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["id"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalID(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["id"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -2563,11 +2459,28 @@ func (ec *executionContext) _Query_node(ctx context.Context, field graphql.Colle
 // nolint: vetshadow
 func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Query_nodes_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 []string
+	if tmp, ok := rawArgs["ids"]; ok {
+		var err error
+		var rawIf1 []interface{}
+		if tmp != nil {
+			if tmp1, ok := tmp.([]interface{}); ok {
+				rawIf1 = tmp1
+			} else {
+				rawIf1 = []interface{}{tmp}
+			}
+		}
+		arg0 = make([]string, len(rawIf1))
+		for idx1 := range rawIf1 {
+			arg0[idx1], err = graphql.UnmarshalID(rawIf1[idx1])
+		}
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["ids"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -2628,11 +2541,52 @@ func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.Coll
 // nolint: vetshadow
 func (ec *executionContext) _Query_sessionList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Query_sessionList_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["first"]; ok {
+		var err error
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["first"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["after"]; ok {
+		var err error
+		var ptr1 string
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalString(tmp)
+			arg1 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["after"] = arg1
+	var arg2 *SessionListInput
+	if tmp, ok := rawArgs["req"]; ok {
+		var err error
+		var ptr1 SessionListInput
+		if tmp != nil {
+			ptr1, err = UnmarshalSessionListInput(tmp)
+			arg2 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["req"] = arg2
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -2657,11 +2611,17 @@ func (ec *executionContext) _Query_sessionList(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Query_session(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Query_session_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["sessionId"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalInt(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["sessionId"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -2687,11 +2647,52 @@ func (ec *executionContext) _Query_session(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Query_exhibisionList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Query_exhibisionList_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["first"]; ok {
+		var err error
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["first"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["after"]; ok {
+		var err error
+		var ptr1 string
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalString(tmp)
+			arg1 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["after"] = arg1
+	var arg2 *ExhibitionListInput
+	if tmp, ok := rawArgs["req"]; ok {
+		var err error
+		var ptr1 ExhibitionListInput
+		if tmp != nil {
+			ptr1, err = UnmarshalExhibitionListInput(tmp)
+			arg2 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["req"] = arg2
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -2716,11 +2717,37 @@ func (ec *executionContext) _Query_exhibisionList(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) _Query_newsList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Query_newsList_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["first"]; ok {
+		var err error
+		var ptr1 int
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalInt(tmp)
+			arg0 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["first"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["after"]; ok {
+		var err error
+		var ptr1 string
+		if tmp != nil {
+			ptr1, err = graphql.UnmarshalString(tmp)
+			arg1 = &ptr1
+		}
+
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
+	}
+	args["after"] = arg1
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -2745,11 +2772,17 @@ func (ec *executionContext) _Query_newsList(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Query___type_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["name"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalString(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["name"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   args,
@@ -3940,11 +3973,17 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 
 func (ec *executionContext) _Subscription_likeAdded(ctx context.Context, field graphql.CollectedField) func() graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Subscription_likeAdded_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return nil
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["sessionId"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalInt(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return nil
+		}
 	}
+	args["sessionId"] = arg0
 	ctx = graphql.WithResolverContext(ctx, &graphql.ResolverContext{
 		Field: field,
 	})
@@ -4950,11 +4989,17 @@ func (ec *executionContext) ___Type_description(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) ___Type_fields(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field___Type_fields_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["includeDeprecated"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalBoolean(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["includeDeprecated"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   args,
@@ -5112,11 +5157,17 @@ func (ec *executionContext) ___Type_possibleTypes(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) ___Type_enumValues(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field___Type_enumValues_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["includeDeprecated"]; ok {
+		var err error
+		arg0, err = graphql.UnmarshalBoolean(tmp)
+		if err != nil {
+			ec.Error(ctx, err)
+			return graphql.Null
+		}
 	}
+	args["includeDeprecated"] = arg0
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   args,

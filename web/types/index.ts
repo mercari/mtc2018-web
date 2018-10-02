@@ -22,7 +22,7 @@ export interface Speaker {
 
 export interface Content {
   id: number;
-  type: 'keynote' | 'session';
+  type: string;
   place: string;
   title: string;
   titleJa: string;

@@ -34,9 +34,10 @@ func (r *queryResolver) SessionList(ctx context.Context, first *int, after *stri
 		if kind != "Session" {
 			return SessionConnection{}, fmt.Errorf("invalid id format: %s", *after)
 		}
-		if id == 0 {
-			return SessionConnection{}, fmt.Errorf("invalid id format: %s", *after)
-		}
+		// NOTE: id=0 番が生えてしまった
+		//if id == 0 {
+		//	return SessionConnection{}, fmt.Errorf("invalid id format: %s", *after)
+		//}
 
 		listReq.LastKnownID = id
 	}

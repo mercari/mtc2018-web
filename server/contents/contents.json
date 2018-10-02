@@ -35,6 +35,36 @@
   ],
   "sessions": [
     {
+      "id": 0,
+      "type": "opening",
+      "place": "TrackA",
+      "startTime": "2018-10-04T10:00:00+09:00",
+      "endTime": "2018-10-04T10:10:00+09:00",
+      "title": "Opening",
+      "titleJa": "オープニング",
+      "outline": "The Mercari Group is working to utilize technology in more ways than ever before. Mercari CPO Yuki Hamada will discuss the thoughts and efforts behind this objective.",
+      "outlineJa": "メルカリグループは、今後、これまで以上にテクノロジー活用を進めてまいります。その取り組みの方針や思いをCPOの濱田 優貴からお話いたします。",
+      "lang": "jp",
+      "tags": [
+         "Evolution"
+      ],
+      "speakers": [
+        {
+          "id": "yuki_hamada",
+          "name": "Yuki Hamada",
+          "nameJa": "濱田 優貴",
+          "company": "mercari",
+          "position": "CPO, Mercari",
+          "positionJa": "CPO, Mercari",
+          "profile": "Yuki Hamada founded CYBRiDGE GROUP CORPORATION, where he took on the role of Executive Vice President, while enrolled in the Tokyo University of Science, Faculty of Engineering. After leaving CYBRiDGE in October 2014, Hamada joined Mercari, Inc. He became a board member in March 2016.",
+          "profileJa": "東京理科大学工学部在学中に株式会社サイブリッジを創業、取締役副社長に就任する。2014年10月に同社退社後、株式会社メルカリ入社。2016年3月に取締役に就任する。",
+          "iconUrl": "https://techconf.mercari.com/static/images/speakers/yuki_hamada.png",
+          "twitterId": "",
+          "githubId": ""
+        }
+      ]
+    },
+    {
       "id": 1,
       "type": "keynote",
       "place": "TrackA",
