@@ -123,7 +123,7 @@ func (repo *sessionRepo) GetBySpeakerIDs(ctx context.Context, speakerIDs ...stri
 func (repo *sessionRepo) List(ctx context.Context, req *SessionListRequest) (*SessionListResp, error) {
 
 	if req.Limit == 0 {
-		req.Limit = 10
+		req.Limit = 100
 	}
 
 	resp := &SessionListResp{}

@@ -26,7 +26,13 @@ interface Props {
 
 const ContentCardSpeaker: React.SFC<Props> = ({ speaker, isJa, ...props }) => (
   <Wrapper {...props}>
-    <Photo src={`/static/images/speakers/${speaker.speakerId}.png`} />
+    <Photo>
+      <source
+        type="image/webp"
+        srcSet={`/static/images/speakers/${speaker.speakerId}.webp`}
+      />
+      <img src={`/static/images/speakers/${speaker.speakerId}.png`} />
+    </Photo>
     <Profile>
       <Header>
         <div>
@@ -51,11 +57,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const Photo = styled.img`
+const Photo = styled.picture`
   width: 200px;
   height: 200px;
   flex-shrink: 0;
-  border-radius: ${borderRadius.level1};
   margin-right: 40px;
 
   @media screen and (max-width: 767px) {
@@ -63,6 +68,12 @@ const Photo = styled.img`
     height: 40vw;
     margin-right: 0;
     margin-bottom: 20px;
+  }
+
+  > * {
+    width: 100%;
+    height: 100%;
+    border-radius: ${borderRadius.level1};
   }
 `;
 
