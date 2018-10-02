@@ -49,13 +49,32 @@ fragment SessionFragment on Session {
 
 
 --- Result
-{"data":{"sessionListA":{"pageInfo":{"startCursor":null,"endCursor":"Session:19","hasNextPage":true,"hasPreviousPage":false},"edges":[{"cursor":"Session:1","node":{"id":"Session:1","sessionId":1,"speakers":[{"id":"Speaker:suguru_namura","speakerId":"suguru_namura","sessions":[{"id":"Session:1","sessionId":1}]},{"id":"Speaker:mok_oh","speakerId":"mok_oh","sessions":[{"id":"Session:1","sessionId":1}]},{"id":"Speaker:keisuke_sogawa","speakerId":"keisuke_sogawa","sessions":[{"id":"Session:1","sessionId":1}]}]}},{"cursor":"Session:10","node":{"id":"Session:10","sessionId":10,"speakers":[{"id":"Speaker:nakashima_taichi","speakerId":"nakashima_taichi","sessions":[{"id":"Session:10","sessionId":10}]}]}},{"cursor":"Session:12","node":{"id":"Session:12","sessionId":12,"speakers":[{"id":"Speaker:sotaro_karasawa","speakerId":"sotaro_karasawa","sessions":[{"id":"Session:12","sessionId":12}]}]}},{"cursor":"Session:13","node":{"id":"Session:13","sessionId":13,"speakers":[{"id":"Speaker:tonghui_li","speakerId":"tonghui_li","sessions":[{"id":"Session:13","sessionId":13}]}]}},{"cursor":"Session:14","node":{"id":"Session:14","sessionId":14,"speakers":[{"id":"Speaker:hirofumi_nakagawa","speakerId":"hirofumi_nakagawa","sessions":[{"id":"Session:14","sessionId":14}]}]}},{"cursor":"Session:15","node":{"id":"Session:15","sessionId":15,"speakers":[{"id":"Speaker:israel_ferrer_comacho","speakerId":"israel_ferrer_comacho","sessions":[{"id":"Session:15","sessionId":15}]}]}},{"cursor":"Session:16","node":{"id":"Session:16","sessionId":16,"speakers":[{"id":"Speaker:yuichiro_saito","speakerId":"yuichiro_saito","sessions":[{"id":"Session:16","sessionId":16}]}]}},{"cursor":"Session:17","node":{"id":"Session:17","sessionId":17,"speakers":[{"id":"Speaker:nobuo_saito","speakerId":"nobuo_saito","sessions":[{"id":"Session:17","sessionId":17}]}]}},{"cursor":"Session:18","node":{"id":"Session:18","sessionId":18,"speakers":[{"id":"Speaker:dani_arnaout","speakerId":"dani_arnaout","sessions":[{"id":"Session:18","sessionId":18}]}]}},{"cursor":"Session:19","node":{"id":"Session:19","sessionId":19,"speakers":[{"id":"Speaker:jeff_hara","speakerId":"jeff_hara","sessions":[{"id":"Session:19","sessionId":19}]}]}}]},"sessionListB":{"pageInfo":{"startCursor":"Session:19","endCursor":"Session:29","hasNextPage":true,"hasPreviousPage":true},"edges":[{"cursor":"Session:20","node":{"id":"Session:20","sessionId":20,"speakers":[{"id":"Speaker:taihei_morikuni","speakerId":"taihei_morikuni","sessions":[{"id":"Session:20","sessionId":20}]}]}},{"cursor":"Session:21","node":{"id":"Session:21","sessionId":21,"speakers":[{"id":"Speaker:shingo_ichikawa","speakerId":"shingo_ichikawa","sessions":[{"id":"Session:21","sessionId":21}]}]}},{"cursor":"Session:22","node":{"id":"Session:22","sessionId":22,"speakers":[{"id":"Speaker:yuto_yagi","speakerId":"yuto_yagi","sessions":[{"id":"Session:22","sessionId":22}]}]}},{"cursor":"Session:23","node":{"id":"Session:23","sessionId":23,"speakers":[{"id":"Speaker:shota_nagayama","speakerId":"shota_nagayama","sessions":[{"id":"Session:23","sessionId":23}]}]}},{"cursor":"Session:24","node":{"id":"Session:24","sessionId":24,"speakers":[{"id":"Speaker:sota_sugiura","speakerId":"sota_sugiura","sessions":[{"id":"Session:24","sessionId":24}]}]}},{"cursor":"Session:25","node":{"id":"Session:25","sessionId":25,"speakers":[{"id":"Speaker:yannarak_wannasai","speakerId":"yannarak_wannasai","sessions":[{"id":"Session:25","sessionId":25}]}]}},{"cursor":"Session:26","node":{"id":"Session:26","sessionId":26,"speakers":[{"id":"Speaker:takuma_yamaguchi","speakerId":"takuma_yamaguchi","sessions":[{"id":"Session:26","sessionId":26}]}]}},{"cursor":"Session:27","node":{"id":"Session:27","sessionId":27,"speakers":[{"id":"Speaker:takako_ohshima","speakerId":"takako_ohshima","sessions":[{"id":"Session:27","sessionId":27}]}]}},{"cursor":"Session:28","node":{"id":"Session:28","sessionId":28,"speakers":[{"id":"Speaker:kenji_sugiki","speakerId":"kenji_sugiki","sessions":[{"id":"Session:28","sessionId":28}]},{"id":"Speaker:yanpeng_lin","speakerId":"yanpeng_lin","sessions":[{"id":"Session:28","sessionId":28}]}]}},{"cursor":"Session:29","node":{"id":"Session:29","sessionId":29,"speakers":[{"id":"Speaker:tomoaki_imai","speakerId":"tomoaki_imai","sessions":[{"id":"Session:29","sessionId":29}]}]}}]},"sessionListC":{"pageInfo":{"startCursor":"Session:29","endCursor":"Session:30","hasNextPage":false,"hasPreviousPage":true},"edges":[{"cursor":"Session:30","node":{"id":"Session:30","sessionId":30,"speakers":[{"id":"Speaker:atsuko_fukui","speakerId":"atsuko_fukui","sessions":[{"id":"Session:30","sessionId":30}]},{"id":"Speaker:matthew_vern","speakerId":"matthew_vern","sessions":[{"id":"Session:30","sessionId":30}]}]}}]},"sessionListD":{"pageInfo":{"startCursor":"Session:30","endCursor":null,"hasNextPage":false,"hasPreviousPage":true},"edges":[]}}}
+{"data":{"sessionListA":{"pageInfo":{"startCursor":null,"endCursor":"Session:18","hasNextPage":true,"hasPreviousPage":false},"edges":[{"cursor":"Session:0","node":{"id":"Session:0","sessionId":0,"speakers":[{"id":"Speaker:yuki_hamada","speakerId":"yuki_hamada","sessions":[{"id":"Session:0","sessionId":0}]}]}},{"cursor":"Session:1","node":{"id":"Session:1","sessionId":1,"speakers":[{"id":"Speaker:suguru_namura","speakerId":"suguru_namura","sessions":[{"id":"Session:1","sessionId":1}]},{"id":"Speaker:mok_oh","speakerId":"mok_oh","sessions":[{"id":"Session:1","sessionId":1}]},{"id":"Speaker:keisuke_sogawa","speakerId":"keisuke_sogawa","sessions":[{"id":"Session:1","sessionId":1}]}]}},{"cursor":"Session:10","node":{"id":"Session:10","sessionId":10,"speakers":[{"id":"Speaker:nakashima_taichi","speakerId":"nakashima_taichi","sessions":[{"id":"Session:10","sessionId":10}]}]}},{"cursor":"Session:12","node":{"id":"Session:12","sessionId":12,"speakers":[{"id":"Speaker:sotaro_karasawa","speakerId":"sotaro_karasawa","sessions":[{"id":"Session:12","sessionId":12}]}]}},{"cursor":"Session:13","node":{"id":"Session:13","sessionId":13,"speakers":[{"id":"Speaker:tonghui_li","speakerId":"tonghui_li","sessions":[{"id":"Session:13","sessionId":13}]}]}},{"cursor":"Session:14","node":{"id":"Session:14","sessionId":14,"speakers":[{"id":"Speaker:hirofumi_nakagawa","speakerId":"hirofumi_nakagawa","sessions":[{"id":"Session:14","sessionId":14}]}]}},{"cursor":"Session:15","node":{"id":"Session:15","sessionId":15,"speakers":[{"id":"Speaker:israel_ferrer_comacho","speakerId":"israel_ferrer_comacho","sessions":[{"id":"Session:15","sessionId":15}]}]}},{"cursor":"Session:16","node":{"id":"Session:16","sessionId":16,"speakers":[{"id":"Speaker:yuichiro_saito","speakerId":"yuichiro_saito","sessions":[{"id":"Session:16","sessionId":16}]}]}},{"cursor":"Session:17","node":{"id":"Session:17","sessionId":17,"speakers":[{"id":"Speaker:nobuo_saito","speakerId":"nobuo_saito","sessions":[{"id":"Session:17","sessionId":17}]}]}},{"cursor":"Session:18","node":{"id":"Session:18","sessionId":18,"speakers":[{"id":"Speaker:dani_arnaout","speakerId":"dani_arnaout","sessions":[{"id":"Session:18","sessionId":18}]}]}}]},"sessionListB":{"pageInfo":{"startCursor":"Session:19","endCursor":"Session:29","hasNextPage":true,"hasPreviousPage":true},"edges":[{"cursor":"Session:20","node":{"id":"Session:20","sessionId":20,"speakers":[{"id":"Speaker:taihei_morikuni","speakerId":"taihei_morikuni","sessions":[{"id":"Session:20","sessionId":20}]}]}},{"cursor":"Session:21","node":{"id":"Session:21","sessionId":21,"speakers":[{"id":"Speaker:shingo_ichikawa","speakerId":"shingo_ichikawa","sessions":[{"id":"Session:21","sessionId":21}]}]}},{"cursor":"Session:22","node":{"id":"Session:22","sessionId":22,"speakers":[{"id":"Speaker:yuto_yagi","speakerId":"yuto_yagi","sessions":[{"id":"Session:22","sessionId":22}]}]}},{"cursor":"Session:23","node":{"id":"Session:23","sessionId":23,"speakers":[{"id":"Speaker:shota_nagayama","speakerId":"shota_nagayama","sessions":[{"id":"Session:23","sessionId":23}]}]}},{"cursor":"Session:24","node":{"id":"Session:24","sessionId":24,"speakers":[{"id":"Speaker:sota_sugiura","speakerId":"sota_sugiura","sessions":[{"id":"Session:24","sessionId":24}]}]}},{"cursor":"Session:25","node":{"id":"Session:25","sessionId":25,"speakers":[{"id":"Speaker:yannarak_wannasai","speakerId":"yannarak_wannasai","sessions":[{"id":"Session:25","sessionId":25}]}]}},{"cursor":"Session:26","node":{"id":"Session:26","sessionId":26,"speakers":[{"id":"Speaker:takuma_yamaguchi","speakerId":"takuma_yamaguchi","sessions":[{"id":"Session:26","sessionId":26}]}]}},{"cursor":"Session:27","node":{"id":"Session:27","sessionId":27,"speakers":[{"id":"Speaker:takako_ohshima","speakerId":"takako_ohshima","sessions":[{"id":"Session:27","sessionId":27}]}]}},{"cursor":"Session:28","node":{"id":"Session:28","sessionId":28,"speakers":[{"id":"Speaker:kenji_sugiki","speakerId":"kenji_sugiki","sessions":[{"id":"Session:28","sessionId":28}]},{"id":"Speaker:yanpeng_lin","speakerId":"yanpeng_lin","sessions":[{"id":"Session:28","sessionId":28}]}]}},{"cursor":"Session:29","node":{"id":"Session:29","sessionId":29,"speakers":[{"id":"Speaker:tomoaki_imai","speakerId":"tomoaki_imai","sessions":[{"id":"Session:29","sessionId":29}]}]}}]},"sessionListC":{"pageInfo":{"startCursor":"Session:29","endCursor":"Session:30","hasNextPage":false,"hasPreviousPage":true},"edges":[{"cursor":"Session:30","node":{"id":"Session:30","sessionId":30,"speakers":[{"id":"Speaker:atsuko_fukui","speakerId":"atsuko_fukui","sessions":[{"id":"Session:30","sessionId":30}]},{"id":"Speaker:matthew_vern","speakerId":"matthew_vern","sessions":[{"id":"Session:30","sessionId":30}]}]}}]},"sessionListD":{"pageInfo":{"startCursor":"Session:30","endCursor":null,"hasNextPage":false,"hasPreviousPage":true},"edges":[]}}}
 
 --- Result (formatted)
 {
   "data": {
     "sessionListA": {
       "edges": [
+        {
+          "cursor": "Session:0",
+          "node": {
+            "id": "Session:0",
+            "sessionId": 0,
+            "speakers": [
+              {
+                "id": "Speaker:yuki_hamada",
+                "sessions": [
+                  {
+                    "id": "Session:0",
+                    "sessionId": 0
+                  }
+                ],
+                "speakerId": "yuki_hamada"
+              }
+            ]
+          }
+        },
         {
           "cursor": "Session:1",
           "node": {
@@ -246,29 +265,10 @@ fragment SessionFragment on Session {
               }
             ]
           }
-        },
-        {
-          "cursor": "Session:19",
-          "node": {
-            "id": "Session:19",
-            "sessionId": 19,
-            "speakers": [
-              {
-                "id": "Speaker:jeff_hara",
-                "sessions": [
-                  {
-                    "id": "Session:19",
-                    "sessionId": 19
-                  }
-                ],
-                "speakerId": "jeff_hara"
-              }
-            ]
-          }
         }
       ],
       "pageInfo": {
-        "endCursor": "Session:19",
+        "endCursor": "Session:18",
         "hasNextPage": true,
         "hasPreviousPage": false,
         "startCursor": null
