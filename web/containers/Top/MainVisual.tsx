@@ -1,23 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Button, Text } from '../../components';
+import { Text } from '../../components';
 import { colors, getTextStyle } from '../../components/styles';
 
 const MainVisual = () => (
   <Wrapper>
-    <EmptySpace>
-      <Logo />
-    </EmptySpace>
+    <EmptySpace />
+    <Logo />
+    <EmptySpace />
     <Date>Oct. 4th, 2018 thu</Date>
     <Place>@ROPPONGI ACADEMYHILLS</Place>
-    <BuyButton
-      type="primary"
-      size="large"
-      href="https://mercari-tech-conf-2018.peatix.com"
-      target="_black"
-    >
-      BUY TICKET
-    </BuyButton>
+    <EmptySpace />
     <BottomArrow />
   </Wrapper>
 );
@@ -73,19 +66,12 @@ const Date = styled(Text)`
 
 const Place = styled(Text)`
   ${getTextStyle('display2')};
-  margin-bottom: 8.3vh; /* 64 / 768 */
   color: ${colors.yuki};
 
   @media screen and (max-width: 767px) {
     ${getTextStyle('display1')};
     color: ${colors.yuki};
   }
-`;
-
-const ButtonLink = Button.withComponent('a');
-const BuyButton = styled(ButtonLink)`
-  text-decoration: none;
-  margin-bottom: 9.3vh; /* 72 / 768 */
 `;
 
 const BottomArrow = styled.img.attrs({
