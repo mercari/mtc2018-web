@@ -5,9 +5,6 @@ package config
 import (
 	"encoding/json"
 
-	// link asset data
-	_ "github.com/mercari/mtc2018-web/server/config/statik"
-
 	"github.com/rakyll/statik/fs"
 )
 

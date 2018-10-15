@@ -18,6 +18,7 @@ import (
 
 	"github.com/99designs/gqlgen/handler"
 	"github.com/gorilla/websocket"
+	_ "github.com/mercari/mtc2018-web/server/config/statik"
 	"github.com/mercari/mtc2018-web/server/gqlapi"
 	"github.com/pmezard/go-difflib/difflib"
 	"go.uber.org/zap"

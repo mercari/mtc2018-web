@@ -26,6 +26,9 @@ type Session struct {
 	UpdatedAt  time.Time
 }
 
+// IsNode is marker for gqlgen.
+func (*Session) IsNode() {}
+
 // SessionRepo is basic operation unit for Session.
 type SessionRepo interface {
 	Get(ctx context.Context, ids ...int) ([]*Session, error)

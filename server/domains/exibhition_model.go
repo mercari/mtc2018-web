@@ -17,6 +17,9 @@ type Exhibition struct {
 	DescriptionJa string
 }
 
+// IsNode is marker for gqlgen.
+func (*Exhibition) IsNode() {}
+
 // ExhibitionRepo is basic operation unit for Exhibition.
 type ExhibitionRepo interface {
 	Get(ctx context.Context, ids ...int) ([]*Exhibition, error)
