@@ -1,6 +1,10 @@
 package config
 
-import "testing"
+import (
+	"testing"
+
+	_ "github.com/mercari/mtc2018-web/server/config/statik"
+)
 
 func TestLoad(t *testing.T) {
 	data, err := Load()

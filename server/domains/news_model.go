@@ -15,6 +15,9 @@ type News struct {
 	Link      *string
 }
 
+// IsNode is marker for gqlgen.
+func (*News) IsNode() {}
+
 // NewsRepo is basic operation unit for News.
 type NewsRepo interface {
 	List(ctx context.Context, req *NewsListRequest) (*NewsListResp, error)

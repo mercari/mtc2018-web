@@ -50,7 +50,9 @@ type NewsEdge struct {
 	Node   domains.News `json:"node"`
 }
 
-type Node interface{}
+type Node interface {
+	IsNode()
+}
 
 type PageInfo struct {
 	StartCursor     *string `json:"startCursor"`

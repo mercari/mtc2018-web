@@ -12,6 +12,7 @@ import (
 	"github.com/DataDog/opencensus-go-exporter-datadog"
 	"github.com/gorilla/websocket"
 	"github.com/mercari/mtc2018-web/server/config"
+	_ "github.com/mercari/mtc2018-web/server/config/statik"
 	"github.com/mercari/mtc2018-web/server/gqlapi"
 	"github.com/mercari/mtc2018-web/server/gqlapi/gqlopencensus"
 	"github.com/pkg/errors"

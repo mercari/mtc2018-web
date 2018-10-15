@@ -21,6 +21,9 @@ type Speaker struct {
 	GithubID   string
 }
 
+// IsNode is marker for gqlgen.
+func (*Speaker) IsNode() {}
+
 // SpeakerRepo is basic operation unit for Speaker.
 type SpeakerRepo interface {
 	Get(ctx context.Context, ids ...string) ([]*Speaker, error)
