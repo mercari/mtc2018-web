@@ -65,6 +65,9 @@ func main() {
 		Service:   config.ServiceName,
 		TraceAddr: fmt.Sprintf("%s:8126", env.DDAgentHostname),
 		Tags:      []string{"env", env.Env},
+		GlobalTags: map[string]interface{}{
+			"env": env.Env,
+		},
 	})
 	defer dd.Stop()
 
