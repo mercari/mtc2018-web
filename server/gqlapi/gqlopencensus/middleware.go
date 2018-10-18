@@ -32,7 +32,7 @@ func ResolverMiddleware() graphql.FieldMiddleware {
 		defer span.End()
 
 		span.AddAttributes(
-			trace.StringAttribute(ext.ResourceName, datadogResourceName(ctx)),
+			trace.StringAttribute(ext.ResourceName, datadogResourceName(ctx)+"/"+rctx.Object+"/"+rctx.Field.Name),
 			trace.StringAttribute("resolver.object", rctx.Object),
 			trace.StringAttribute("resolver.field", rctx.Field.Name),
 			trace.StringAttribute("resolver.path", fmt.Sprintf("%+v", rctx.Path())),
