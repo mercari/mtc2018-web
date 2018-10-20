@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>icn_movie</title>
+    <desc>Created with Sketch.</desc>
+    <g id="9/26-Update" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Detail" transform="translate(-523.000000, -462.000000)" fill="#202020" fill-rule="nonzero">
+            <g id="card" transform="translate(320.000000, 192.000000)">
+                <g id="Group-2" transform="translate(179.000000, 258.000000)">
+                    <g id="icn_movie" transform="translate(24.000000, 12.000000)">
+                        <path d="M13.3333333,1.18423789e-16 L2.66666667,1.18423789e-16 C1.19390733,-4.73695157e-16 1.18423789e-16,1.19390733 0,2.66666667 L0,13.3333333 C5.92118946e-17,14.0405773 0.280951574,14.7188544 0.781048584,15.2189514 C1.28114559,15.7190484 1.95942269,16 2.66666667,16 L13.3333333,16 C14.8060927,16 16,14.8060927 16,13.3333333 L16,2.66666667 C16,1.95942269 15.7190484,1.28114559 15.2189514,0.781048584 C14.7188544,0.280951574 14.0405773,5.92118946e-17 13.3333333,1.18423789e-16 Z M5.86666667,10.6666667 L5.86666667,5.33333333 L11.2,8 L5.86666667,10.6666667 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

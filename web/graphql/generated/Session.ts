@@ -28,6 +28,8 @@ export interface Session_session {
   tags: string[];
   outline: string;
   outlineJa: string;
+  slideUrl: string;
+  movieUrl: string;
   speakers: Session_session_speakers[];
 }
 
