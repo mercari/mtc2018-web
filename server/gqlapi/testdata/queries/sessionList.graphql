@@ -47,6 +47,8 @@ fragment SessionFragment on Session {
   endTime
   outline
   outlineJa
+  slideUrl
+  movieUrl
   lang
   tags
   speakers {
