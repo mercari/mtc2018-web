@@ -26,12 +26,12 @@ export interface LikeSession_createLike {
 export interface LikeSession {
   /**
    * セッションに対していいね！することができます。
-   * ログイン周りのシステムはないので、リクエストにUUIDを付与してください（仕様未定）。
+   * ログイン周りのシステムはないので、リクエストにUUIDを付与してください。
    */
   createLike: LikeSession_createLike | null;
 }
 
 export interface LikeSessionVariables {
   randomId: string;
-  sessionId: string;
+  sessionId: number;
 }

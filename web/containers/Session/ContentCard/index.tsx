@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Text, Tip } from '../../../components';
+import { Text, Tip, Button } from '../../../components';
 import { colors, getTextStyle, borderRadius } from '../../../components/styles';
 import ContentCardSpeaker, {
   CONTENT_CARD_SPEAKER_FRAGMENT
@@ -22,6 +22,8 @@ export const CONTENT_CARD_FRAGMENT = gql`
     tags
     outline
     outlineJa
+    slideUrl
+    movieUrl
     speakers {
       ...ContentCardSpeakerFragment
     }
@@ -72,6 +74,28 @@ class ContentCard extends React.PureComponent<Props> {
             ))}
           </Tags>
           <Body>{isJa ? session.outlineJa : session.outline}</Body>
+          <Links>
+            <LinkButton
+              type="primary"
+              size="medium"
+              href={session.slideUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkIcon src="../../static/images/icn_slide.svg" alt="slide" />
+              <Text level="display1">Slide</Text>
+            </LinkButton>
+            <LinkButton
+              type="primary"
+              size="medium"
+              href={session.movieUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkIcon src="../../static/images/icn_movie.svg" alt="movie" />
+              <Text level="display1">Movie</Text>
+            </LinkButton>
+          </Links>
         </ContentInfo>
         <div>
           {session.speakers!.map(speaker => (
@@ -102,6 +126,45 @@ const ContentInfo = styled.div`
   @media screen and (max-width: 767px) {
     margin-bottom: 20px;
   }
+`;
+
+const Links = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+
+  > * {
+    margin-right: 8px;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
+const ButtonLink = Button.withComponent('a');
+const LinkButton = styled(ButtonLink)`
+  text-decoration: none;
+
+  justify-content: center;
+  height: 30px;
+  border-radius: 15px;
+  padding: 0 16px;
+  border: solid 2px ${colors.primary};
+  background-color: ${colors.yuki};
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 10px;
+  }
+`;
+
+const LinkIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-left: 0px;
+  margin-right: 8px;
 `;
 
 const Header = styled.div`
@@ -147,6 +210,7 @@ const Body = styled(Text)`
   @media screen and (max-width: 767px) {
     ${getTextStyle('body')};
   }
+  margin-bottom: 16px;
 `;
 
 const Title = styled(Text).attrs({
