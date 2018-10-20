@@ -48,6 +48,8 @@ type Session struct {
 	EndTime   string    `json:"endTime"`
 	Outline   string    `json:"outline"`
 	OutlineJa string    `json:"outlineJa"`
+	SlideURL  string    `json:"slideUrl"`
+	MovieURL  string    `json:"movieUrl"`
 	Lang      string    `json:"lang"`
 	Tags      []string  `json:"tags"`
 	Speakers  []Speaker `json:"speakers"`
