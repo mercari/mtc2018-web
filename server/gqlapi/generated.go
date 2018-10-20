@@ -135,6 +135,8 @@ type ComplexityRoot struct {
 		OutlineJa func(childComplexity int) int
 		Lang      func(childComplexity int) int
 		Tags      func(childComplexity int) int
+		SlideUrl  func(childComplexity int) int
+		MovieUrl  func(childComplexity int) int
 		Liked     func(childComplexity int) int
 		Speakers  func(childComplexity int) int
 	}
@@ -879,6 +881,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Session.Tags(childComplexity), true
+
+	case "Session.slideUrl":
+		if e.complexity.Session.SlideUrl == nil {
+			break
+		}
+
+		return e.complexity.Session.SlideUrl(childComplexity), true
+
+	case "Session.movieUrl":
+		if e.complexity.Session.MovieUrl == nil {
+			break
+		}
+
+		return e.complexity.Session.MovieUrl(childComplexity), true
 
 	case "Session.liked":
 		if e.complexity.Session.Liked == nil {
@@ -3264,6 +3280,16 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "slideUrl":
+			out.Values[i] = ec._Session_slideUrl(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "movieUrl":
+			out.Values[i] = ec._Session_movieUrl(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "liked":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
@@ -3675,6 +3701,70 @@ func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.Col
 			}
 
 			return arr1
+		}()
+		return resTmp, err
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+	}
+	return resMarshaler
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_slideUrl(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	var resMarshaler graphql.Marshaler = graphql.Null
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		var resTmp interface{}
+		var err error
+		resTmp, err = obj.SlideURL, nil
+		if resTmp == nil {
+			return resTmp, nil
+		}
+
+		rctx.Result = resTmp
+		resMarshaler = func() graphql.Marshaler {
+			res := resTmp.(string)
+			return graphql.MarshalString(res)
+		}()
+		return resTmp, err
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+	}
+	return resMarshaler
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_movieUrl(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	var resMarshaler graphql.Marshaler = graphql.Null
+	resTmp := ec.FieldMiddleware(ctx, obj, func(ctx context.Context) (interface{}, error) {
+		var resTmp interface{}
+		var err error
+		resTmp, err = obj.MovieURL, nil
+		if resTmp == nil {
+			return resTmp, nil
+		}
+
+		rctx.Result = resTmp
+		resMarshaler = func() graphql.Marshaler {
+			res := resTmp.(string)
+			return graphql.MarshalString(res)
 		}()
 		return resTmp, err
 	})
@@ -6434,6 +6524,8 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
+  slideUrl: String!
+  movieUrl: String!
 
   liked: Int!
   speakers: [Speaker!]!
