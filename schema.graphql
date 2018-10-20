@@ -93,6 +93,8 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
+  slideUrl: String!
+  movieUrl: String!
 
   liked: Int!
   speakers: [Speaker!]!
