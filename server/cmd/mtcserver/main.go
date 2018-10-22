@@ -119,8 +119,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger, spannerClient *spa
 				Resolvers: resolver,
 			},
 		),
-		handler.RequestMiddleware(gqlopencensus.RequestMiddleware()),
-		handler.ResolverMiddleware(gqlopencensus.ResolverMiddleware()),
+		handler.Tracer(gqlopencensus.New()),
 		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
 
