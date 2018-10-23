@@ -4,6 +4,8 @@ cloud.google.com/go v0.30.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 git.apache.org/thrift.git v0.0.0-20180902110319-2566ecd5d999/go.mod h1:fPE2ZNJGynbRyZ4dJvy6G277gSllfV2HJqblrnkyeyg=
 github.com/99designs/gqlgen v0.4.5-0.20181018074137-59504941a748 h1:3wFwcZmVlXvmh9ADc0O1K/n1e73/z6c0CGb5RfQFBIU=
 github.com/99designs/gqlgen v0.4.5-0.20181018074137-59504941a748/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
+github.com/99designs/gqlgen v0.4.5-0.20181022102143-a3060e80a192 h1:XxXtRviL9pXT2VgN9Zw444+dM1dxU04UKKyMtfhPdgw=
+github.com/99designs/gqlgen v0.4.5-0.20181022102143-a3060e80a192/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
 github.com/99designs/gqlgen v0.6.0 h1:gg+WRRW2A+XldwDRcwkgBh0wffvyZlcQX8WUu+4rKd0=
 github.com/99designs/gqlgen v0.6.0/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
 github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895 h1:dmc/C8bpE5VkQn65PNbbyACDC8xw8Hpp/NEurdPmQDQ=
