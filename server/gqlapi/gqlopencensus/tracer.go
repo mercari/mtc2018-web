@@ -6,55 +6,83 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"go.opencensus.io/trace"
-	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext"
 )
 
 var _ graphql.Tracer = (*tracerImpl)(nil)
 
 // New tracer returns for OpenCensus.
-func New() graphql.Tracer {
-	return &tracerImpl{}
+func New(cfg *Config) graphql.Tracer {
+	return &tracerImpl{cfg}
+}
+
+// Config provides Tracer agent specific values.
+type Config struct {
+	OperationSpanModifier func(ctx context.Context, span *trace.Span)
+	FieldSpanModifier     func(ctx context.Context, span *trace.Span)
 }
 
 type tracerImpl struct {
+	cfg *Config
 }
 
-func (tracerImpl) StartRequestTracing(ctx context.Context) context.Context {
-	ctx, span := trace.StartSpan(ctx, datadogResourceName(ctx))
+func (t *tracerImpl) StartOperationExecution(ctx context.Context) context.Context {
+	ctx, span := trace.StartSpan(ctx, operationName(ctx))
 	requestContext := graphql.GetRequestContext(ctx)
 	span.AddAttributes(
 		trace.StringAttribute("request.query", requestContext.RawQuery),
 	)
+	if t.cfg != nil && t.cfg.OperationSpanModifier != nil {
+		t.cfg.OperationSpanModifier(ctx, span)
+	}
 
 	return ctx
 }
 
-func (tracerImpl) EndRequestTracing(ctx context.Context) {
-	span := trace.FromContext(ctx)
-	span.End()
-}
-
-func (tracerImpl) StartFieldTracing(ctx context.Context) context.Context {
-	rctx := graphql.GetResolverContext(ctx)
-	ctx, span := trace.StartSpan(ctx, rctx.Object+"/"+rctx.Field.Name)
+func (t *tracerImpl) StartFieldExecution(ctx context.Context, field graphql.CollectedField) context.Context {
+	ctx, span := trace.StartSpan(ctx, field.ObjectDefinition.Name+"/"+field.Name)
 	span.AddAttributes(
-		trace.StringAttribute(ext.ResourceName, datadogResourceName(ctx)),
-		trace.StringAttribute("resolver.object", rctx.Object),
-		trace.StringAttribute("resolver.field", rctx.Field.Name),
-		trace.StringAttribute("resolver.path", fmt.Sprintf("%+v", rctx.Path())),
+		trace.StringAttribute("resolver.object", field.ObjectDefinition.Name),
+		trace.StringAttribute("resolver.field", field.Name),
+		trace.StringAttribute("resolver.alias", field.Alias),
 	)
+	for idx, arg := range field.Arguments {
+		if arg.Value != nil {
+			span.AddAttributes(
+				trace.StringAttribute(fmt.Sprintf("resolver.args.%d", idx), arg.Value.Raw),
+			)
+		}
+	}
 
 	return ctx
 }
 
-func (tracerImpl) EndFieldTracing(ctx context.Context) {
+func (t *tracerImpl) StartFieldResolverExecution(ctx context.Context, rc *graphql.ResolverContext) context.Context {
+	span := trace.FromContext(ctx)
+	span.AddAttributes(
+		trace.StringAttribute("resolver.path", fmt.Sprintf("%+v", rc.Path())),
+	)
+	if t.cfg != nil && t.cfg.FieldSpanModifier != nil {
+		t.cfg.FieldSpanModifier(ctx, span)
+	}
+
+	return ctx
+}
+
+func (t *tracerImpl) StartFieldChildExecution(ctx context.Context) context.Context {
+	return ctx
+}
+
+func (t *tracerImpl) EndFieldExecution(ctx context.Context) {
 	span := trace.FromContext(ctx)
 	span.End()
 }
 
-func datadogResourceName(ctx context.Context) string {
-	// for DataDog tracing by github.com/DataDog/opencensus-go-exporter-datadog
-	// https://github.com/DataDog/opencensus-go-exporter-datadog/blob/e6c7f767dc57ec482938d9d37237dc10d578fba9/span.go#L125-L126
+func (t *tracerImpl) EndOperationExecution(ctx context.Context) {
+	span := trace.FromContext(ctx)
+	span.End()
+}
+
+func operationName(ctx context.Context) string {
 	requestContext := graphql.GetRequestContext(ctx)
 	requestName := "nameless-operation"
 	if len(requestContext.Doc.Operations) != 0 {

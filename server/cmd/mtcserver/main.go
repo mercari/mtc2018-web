@@ -119,7 +119,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger, spannerClient *spa
 				Resolvers: resolver,
 			},
 		),
-		handler.Tracer(gqlopencensus.New()),
+		handler.Tracer(gqlopencensus.New(gqlopencensus.DataDogConfig)),
 		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
 
