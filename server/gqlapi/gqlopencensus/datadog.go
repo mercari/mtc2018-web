@@ -7,6 +7,7 @@ import (
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext"
 )
 
+// DataDogConfig provides DataDog specific span attrs.
 var DataDogConfig = &Config{
 	FieldSpanModifier: func(ctx context.Context, span *trace.Span) {
 		// for DataDog tracing by github.com/DataDog/opencensus-go-exporter-datadog

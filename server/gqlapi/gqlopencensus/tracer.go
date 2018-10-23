@@ -15,6 +15,7 @@ func New(cfg *Config) graphql.Tracer {
 	return &tracerImpl{cfg}
 }
 
+// Config provides Tracer agent specific values.
 type Config struct {
 	OperationSpanModifier func(ctx context.Context, span *trace.Span)
 	FieldSpanModifier     func(ctx context.Context, span *trace.Span)
