@@ -45,10 +45,10 @@ func (t *tracerImpl) StartFieldExecution(ctx context.Context, field graphql.Coll
 		trace.StringAttribute("resolver.field", field.Name),
 		trace.StringAttribute("resolver.alias", field.Alias),
 	)
-	for idx, arg := range field.Arguments {
+	for _, arg := range field.Arguments {
 		if arg.Value != nil {
 			span.AddAttributes(
-				trace.StringAttribute(fmt.Sprintf("resolver.args.%d", idx), arg.Value.Raw),
+				trace.StringAttribute(fmt.Sprintf("resolver.args.%s", arg.Name), arg.Value.Raw),
 			)
 		}
 	}
