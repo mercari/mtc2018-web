@@ -77,7 +77,7 @@ class ContentCard extends React.PureComponent<Props> {
           <Links>
             <LinkButton
               type="primary"
-              size="medium"
+              size="small"
               href={session.slideUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -87,7 +87,7 @@ class ContentCard extends React.PureComponent<Props> {
             </LinkButton>
             <LinkButton
               type="primary"
-              size="medium"
+              size="small"
               href={session.movieUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -149,10 +149,8 @@ const LinkButton = styled(ButtonLink)`
   text-decoration: none;
 
   justify-content: center;
-  height: 30px;
-  border-radius: 15px;
-  padding: 0 16px;
-  border: solid 2px ${colors.primary};
+  padding: 12px 16px;
+  border: solid 1px ${colors.primary};
   background-color: ${colors.yuki};
 
   @media screen and (max-width: 767px) {
