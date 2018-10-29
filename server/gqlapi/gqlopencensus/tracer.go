@@ -38,6 +38,11 @@ func (t *tracerImpl) StartOperationExecution(ctx context.Context) context.Contex
 	span.AddAttributes(
 		trace.StringAttribute("request.query", requestContext.RawQuery),
 	)
+	for key, val := range requestContext.Variables {
+		span.AddAttributes(
+			trace.StringAttribute(fmt.Sprintf("request.variables.%s", key), fmt.Sprintf("%+v", val)),
+		)
+	}
 	for _, f := range t.startOperationExecutions {
 		ctx = f(ctx)
 	}
@@ -52,6 +57,14 @@ func (t *tracerImpl) StartFieldExecution(ctx context.Context, field graphql.Coll
 		trace.StringAttribute("resolver.field", field.Name),
 		trace.StringAttribute("resolver.alias", field.Alias),
 	)
+	for _, arg := range field.Arguments {
+		if arg.Value != nil {
+			span.AddAttributes(
+				trace.StringAttribute(fmt.Sprintf("resolver.args.%s", arg.Name), arg.Value.String()),
+			)
+		}
+	}
+
 	for _, f := range t.startFieldExecutions {
 		ctx = f(ctx, field)
 	}
