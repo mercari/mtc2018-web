@@ -2,17 +2,24 @@ const i18n = require('i18next')
 const XHR = require('i18next-xhr-backend')
 const LanguageDetector = require('i18next-browser-languagedetector')
 
+const lngDetector = new LanguageDetector()
+lngDetector.addDetector({
+  lookup: (options) => {
+    return 'en-US'
+  }
+})
+
 // for browser use xhr backend to load translations and browser lng detector
 if (process.browser) {
   i18n
     .use(XHR)
     // .use(Cache)
-    .use(LanguageDetector)
+    .use(lngDetector)
 }
 
 // initialize if not already initialized
 if (!i18n.isInitialized) {
-  i18n.init({
+  let option = {
     fallbackLng: 'en-US',
   
     // have a common namespace used around the full app
@@ -31,7 +38,19 @@ if (!i18n.isInitialized) {
         return value
       }
     }
-  })
+  }
+
+  if (process.env.NEXT_STATIC) {
+    option.resources = {
+      'ja-JP': {
+        common: require('./locales/ja-JP/common.json')
+      },
+      'en-US': {
+        common: require('./locales/en-US/common.json')
+      },
+    }
+  }
+  i18n.init(option)
 }
 
 // a simple helper to getInitialProps passed on loaded i18n data

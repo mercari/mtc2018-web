@@ -1,5 +1,7 @@
+const webpack = require('webpack');
 const withTypescript = require('@zeit/next-typescript');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const contents = require('../server/contents/contents.json');
 
 module.exports = withTypescript({
   webpack(config, options) {
@@ -20,6 +22,14 @@ module.exports = withTypescript({
       return entries;
     }
 
+    if (process.env.NEXT_STATIC) {
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          'process.env.NEXT_STATIC': JSON.stringify(true)
+        })
+      );
+    }
+
     return config;
   },
   serverRuntimeConfig: {
@@ -27,5 +37,21 @@ module.exports = withTypescript({
   },
   publicRuntimeConfig: {
     GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
+  },
+  exportPathMap: async function (defaultPathMap, { dev }) {
+    if (dev) {
+      return defaultPathMap
+    }
+
+    const pathMap = { ...defaultPathMap };
+    delete pathMap['/2018/session/detail'];
+    contents.sessions.forEach(session => {
+      pathMap[`/2018/session/${session.id}`] = {
+        page: '/2018/session/detail',
+        query: { id: session.id },
+      };
+    });
+
+    return pathMap;
   }
 });

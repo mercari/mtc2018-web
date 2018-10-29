@@ -6,6 +6,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV='production' node server.js",
+    "export": "NEXT_STATIC=true next build && next export",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged",
@@ -20,7 +21,7 @@
   "author": "sawa-zen",
   "dependencies": {
     "@types/fontfaceobserver": "0.0.6",
-    "@zeit/next-typescript": "^1.1.0",
+    "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.15",
     "cross-env": "^5.2.0",
     "express": "^4.16.3",
@@ -45,6 +46,7 @@
     "typescript": "^3.1.6"
   },
   "devDependencies": {
+    "@types/graphql": "^14.0.3",
     "@types/i18next": "^11.9.3",
     "@types/next": "^7.0.3",
     "@types/react": "^16.4.18",
