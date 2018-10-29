@@ -3,17 +3,19 @@ package gqlopencensus
 import (
 	"context"
 
+	"github.com/99designs/gqlgen/graphql"
 	"go.opencensus.io/trace"
-	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext"
 )
 
-// DataDogConfig provides DataDog specific span attrs.
-var DataDogConfig = &Config{
-	FieldSpanModifier: func(ctx context.Context, span *trace.Span) {
-		// for DataDog tracing by github.com/DataDog/opencensus-go-exporter-datadog
-		// https://github.com/DataDog/opencensus-go-exporter-datadog/blob/e6c7f767dc57ec482938d9d37237dc10d578fba9/span.go#L125-L126
+// WithDataDog provides DataDog specific span attrs.
+// see github.com/DataDog/opencensus-go-exporter-datadog
+func WithDataDog() Option {
+	return WithStartFieldResolverExecution(func(ctx context.Context, rc *graphql.ResolverContext) context.Context {
+		span := trace.FromContext(ctx)
 		span.AddAttributes(
-			trace.StringAttribute(ext.ResourceName, operationName(ctx)),
+			// key from gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext#ResourceName
+			trace.StringAttribute("resource.name", operationName(ctx)),
 		)
-	},
+		return ctx
+	})
 }
