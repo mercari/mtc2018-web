@@ -4,6 +4,8 @@ cloud.google.com/go v0.30.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 git.apache.org/thrift.git v0.0.0-20180902110319-2566ecd5d999/go.mod h1:fPE2ZNJGynbRyZ4dJvy6G277gSllfV2HJqblrnkyeyg=
 github.com/99designs/gqlgen v0.4.5-0.20181028055237-0d5c65b6dc1c h1:enfJ7MaOw8DuF2USF9LeFjp4XaV3fqUnhaNuALWYsTM=
 github.com/99designs/gqlgen v0.4.5-0.20181028055237-0d5c65b6dc1c/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
+github.com/99designs/gqlgen v0.4.5-0.20181029101704-784dc01fdb4f h1:H0iZ0U3L4GHjod/wAdRpf5sm4XcKN9DyM/X4W/Z+rl8=
+github.com/99designs/gqlgen v0.4.5-0.20181029101704-784dc01fdb4f/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
 github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895 h1:dmc/C8bpE5VkQn65PNbbyACDC8xw8Hpp/NEurdPmQDQ=
 github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/DataDog/opencensus-go-exporter-datadog v0.0.0-20180917103902-e6c7f767dc57 h1:V1H8VVVxLALfaPLvAFCPoa0AN5nVPAqEu2UvH+QP3Vc=
