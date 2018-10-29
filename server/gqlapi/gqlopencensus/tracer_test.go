@@ -3,6 +3,7 @@ package gqlopencensus_test
 import (
 	"context"
 	"reflect"
+	"sync"
 	"testing"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -13,6 +14,7 @@ import (
 
 func TestTracer(t *testing.T) {
 	var logs []string
+	var mu sync.Mutex
 
 	tracer := gqlopencensus.New(
 		gqlopencensus.WithStartOperationExecution(func(ctx context.Context) context.Context {
@@ -39,32 +41,56 @@ func TestTracer(t *testing.T) {
 		}),
 	)
 
-	ctx := context.Background()
-	ctx = graphql.WithRequestContext(ctx, &graphql.RequestContext{})
-	ctx, _ = trace.StartSpan(ctx, "test")
-	ctx = tracer.StartOperationExecution(ctx)
-	ctx = tracer.StartFieldExecution(ctx, graphql.CollectedField{
-		Field: &ast.Field{
-			Name: "F",
-			ObjectDefinition: &ast.Definition{
-				Name: "OD",
+	specs := []struct {
+		SpecName string
+		Sampler  trace.Sampler
+		Expected []string
+	}{
+		{
+			SpecName: "with sampling",
+			Sampler:  trace.AlwaysSample(),
+			Expected: []string{
+				"StartOperationExecution",
+				"StartFieldExecution",
+				"StartFieldResolverExecution",
+				"StartFieldChildExecution",
+				"EndFieldExecution",
+				"EndOperationExecution",
 			},
 		},
-	})
-	ctx = tracer.StartFieldResolverExecution(ctx, &graphql.ResolverContext{})
-	ctx = tracer.StartFieldChildExecution(ctx)
-	tracer.EndFieldExecution(ctx)
-	tracer.EndOperationExecution(ctx)
-
-	expected := []string{
-		"StartOperationExecution",
-		"StartFieldExecution",
-		"StartFieldResolverExecution",
-		"StartFieldChildExecution",
-		"EndFieldExecution",
-		"EndOperationExecution",
+		{
+			SpecName: "without sampling",
+			Sampler:  trace.NeverSample(),
+			Expected: nil,
+		},
 	}
-	if !reflect.DeepEqual(logs, expected) {
-		t.Errorf("unexpected result: %+v", logs)
+
+	for _, spec := range specs {
+		t.Run(spec.SpecName, func(t *testing.T) {
+			mu.Lock()
+			defer mu.Unlock()
+			logs = nil
+
+			ctx := context.Background()
+			ctx = graphql.WithRequestContext(ctx, &graphql.RequestContext{})
+			ctx, _ = trace.StartSpan(ctx, "test", trace.WithSampler(spec.Sampler))
+			ctx = tracer.StartOperationExecution(ctx)
+			ctx = tracer.StartFieldExecution(ctx, graphql.CollectedField{
+				Field: &ast.Field{
+					Name: "F",
+					ObjectDefinition: &ast.Definition{
+						Name: "OD",
+					},
+				},
+			})
+			ctx = tracer.StartFieldResolverExecution(ctx, &graphql.ResolverContext{})
+			ctx = tracer.StartFieldChildExecution(ctx)
+			tracer.EndFieldExecution(ctx)
+			tracer.EndOperationExecution(ctx)
+
+			if !reflect.DeepEqual(logs, spec.Expected) {
+				t.Errorf("unexpected result: %+v", logs)
+			}
+		})
 	}
 }
