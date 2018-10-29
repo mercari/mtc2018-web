@@ -41,65 +41,56 @@ func TestTracer(t *testing.T) {
 		}),
 	)
 
-	t.Run("with sampling", func(t *testing.T) {
-		mu.Lock()
-		defer mu.Unlock()
-		logs = nil
-
-		ctx := context.Background()
-		ctx = graphql.WithRequestContext(ctx, &graphql.RequestContext{})
-		ctx, _ = trace.StartSpan(ctx, "test", trace.WithSampler(trace.AlwaysSample()))
-		ctx = tracer.StartOperationExecution(ctx)
-		ctx = tracer.StartFieldExecution(ctx, graphql.CollectedField{
-			Field: &ast.Field{
-				Name: "F",
-				ObjectDefinition: &ast.Definition{
-					Name: "OD",
-				},
+	specs := []struct {
+		SpecName string
+		Sampler  trace.Sampler
+		Expected []string
+	}{
+		{
+			SpecName: "with sampling",
+			Sampler:  trace.AlwaysSample(),
+			Expected: []string{
+				"StartOperationExecution",
+				"StartFieldExecution",
+				"StartFieldResolverExecution",
+				"StartFieldChildExecution",
+				"EndFieldExecution",
+				"EndOperationExecution",
 			},
-		})
-		ctx = tracer.StartFieldResolverExecution(ctx, &graphql.ResolverContext{})
-		ctx = tracer.StartFieldChildExecution(ctx)
-		tracer.EndFieldExecution(ctx)
-		tracer.EndOperationExecution(ctx)
+		},
+		{
+			SpecName: "without sampling",
+			Sampler:  trace.NeverSample(),
+			Expected: nil,
+		},
+	}
 
-		expected := []string{
-			"StartOperationExecution",
-			"StartFieldExecution",
-			"StartFieldResolverExecution",
-			"StartFieldChildExecution",
-			"EndFieldExecution",
-			"EndOperationExecution",
-		}
-		if !reflect.DeepEqual(logs, expected) {
-			t.Errorf("unexpected result: %+v", logs)
-		}
-	})
-	t.Run("without sampling", func(t *testing.T) {
-		mu.Lock()
-		defer mu.Unlock()
-		logs = nil
+	for _, spec := range specs {
+		t.Run(spec.SpecName, func(t *testing.T) {
+			mu.Lock()
+			defer mu.Unlock()
+			logs = nil
 
-		ctx := context.Background()
-		ctx = graphql.WithRequestContext(ctx, &graphql.RequestContext{})
-		ctx, _ = trace.StartSpan(ctx, "test", trace.WithSampler(trace.NeverSample()))
-		ctx = tracer.StartOperationExecution(ctx)
-		ctx = tracer.StartFieldExecution(ctx, graphql.CollectedField{
-			Field: &ast.Field{
-				Name: "F",
-				ObjectDefinition: &ast.Definition{
-					Name: "OD",
+			ctx := context.Background()
+			ctx = graphql.WithRequestContext(ctx, &graphql.RequestContext{})
+			ctx, _ = trace.StartSpan(ctx, "test", trace.WithSampler(spec.Sampler))
+			ctx = tracer.StartOperationExecution(ctx)
+			ctx = tracer.StartFieldExecution(ctx, graphql.CollectedField{
+				Field: &ast.Field{
+					Name: "F",
+					ObjectDefinition: &ast.Definition{
+						Name: "OD",
+					},
 				},
-			},
-		})
-		ctx = tracer.StartFieldResolverExecution(ctx, &graphql.ResolverContext{})
-		ctx = tracer.StartFieldChildExecution(ctx)
-		tracer.EndFieldExecution(ctx)
-		tracer.EndOperationExecution(ctx)
+			})
+			ctx = tracer.StartFieldResolverExecution(ctx, &graphql.ResolverContext{})
+			ctx = tracer.StartFieldChildExecution(ctx)
+			tracer.EndFieldExecution(ctx)
+			tracer.EndOperationExecution(ctx)
 
-		var expected []string
-		if !reflect.DeepEqual(logs, expected) {
-			t.Errorf("unexpected result: %+v", logs)
-		}
-	})
+			if !reflect.DeepEqual(logs, spec.Expected) {
+				t.Errorf("unexpected result: %+v", logs)
+			}
+		})
+	}
 }
