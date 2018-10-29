@@ -40,9 +40,13 @@ func (t *tracerImpl) StartOperationExecution(ctx context.Context) context.Contex
 	requestContext := graphql.GetRequestContext(ctx)
 	span.AddAttributes(
 		trace.StringAttribute("request.query", requestContext.RawQuery),
-		trace.Int64Attribute("request.complexityLimit", int64(requestContext.ComplexityLimit)),
-		trace.Int64Attribute("request.operationComplexity", int64(requestContext.OperationComplexity)),
 	)
+	if requestContext.ComplexityLimit > 0 {
+		span.AddAttributes(
+			trace.Int64Attribute("request.complexityLimit", int64(requestContext.ComplexityLimit)),
+			trace.Int64Attribute("request.operationComplexity", int64(requestContext.OperationComplexity)),
+		)
+	}
 	for key, val := range requestContext.Variables {
 		span.AddAttributes(
 			trace.StringAttribute(fmt.Sprintf("request.variables.%s", key), fmt.Sprintf("%+v", val)),
