@@ -117,8 +117,10 @@ func runServer(port int, env *config.Env, logger *zap.Logger, spannerClient *spa
 		gqlapi.NewExecutableSchema(
 			gqlapi.Config{
 				Resolvers: resolver,
+				Complexity: gqlapi.NewComplexityRoot(),
 			},
 		),
+		handler.ComplexityLimit(10000), // 値は適当(動作テストしたいだけなので)
 		handler.Tracer(gqlopencensus.New(gqlopencensus.WithDataDog())),
 		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
