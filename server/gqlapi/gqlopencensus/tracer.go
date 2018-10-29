@@ -34,6 +34,9 @@ type tracerImpl struct {
 
 func (t *tracerImpl) StartOperationExecution(ctx context.Context) context.Context {
 	ctx, span := trace.StartSpan(ctx, operationName(ctx))
+	if !span.IsRecordingEvents() {
+		return ctx
+	}
 	requestContext := graphql.GetRequestContext(ctx)
 	span.AddAttributes(
 		trace.StringAttribute("request.query", requestContext.RawQuery),
@@ -52,6 +55,9 @@ func (t *tracerImpl) StartOperationExecution(ctx context.Context) context.Contex
 
 func (t *tracerImpl) StartFieldExecution(ctx context.Context, field graphql.CollectedField) context.Context {
 	ctx, span := trace.StartSpan(ctx, field.ObjectDefinition.Name+"/"+field.Name)
+	if !span.IsRecordingEvents() {
+		return ctx
+	}
 	span.AddAttributes(
 		trace.StringAttribute("resolver.object", field.ObjectDefinition.Name),
 		trace.StringAttribute("resolver.field", field.Name),
@@ -74,6 +80,9 @@ func (t *tracerImpl) StartFieldExecution(ctx context.Context, field graphql.Coll
 
 func (t *tracerImpl) StartFieldResolverExecution(ctx context.Context, rc *graphql.ResolverContext) context.Context {
 	span := trace.FromContext(ctx)
+	if !span.IsRecordingEvents() {
+		return ctx
+	}
 	span.AddAttributes(
 		trace.StringAttribute("resolver.path", fmt.Sprintf("%+v", rc.Path())),
 	)
@@ -85,6 +94,10 @@ func (t *tracerImpl) StartFieldResolverExecution(ctx context.Context, rc *graphq
 }
 
 func (t *tracerImpl) StartFieldChildExecution(ctx context.Context) context.Context {
+	span := trace.FromContext(ctx)
+	if !span.IsRecordingEvents() {
+		return ctx
+	}
 	for _, f := range t.startFieldChildExecutions {
 		ctx = f(ctx)
 	}
@@ -92,19 +105,25 @@ func (t *tracerImpl) StartFieldChildExecution(ctx context.Context) context.Conte
 }
 
 func (t *tracerImpl) EndFieldExecution(ctx context.Context) {
+	span := trace.FromContext(ctx)
+	defer span.End()
+	if !span.IsRecordingEvents() {
+		return
+	}
 	for _, f := range t.endFieldExecutions {
 		f(ctx)
 	}
-	span := trace.FromContext(ctx)
-	span.End()
 }
 
 func (t *tracerImpl) EndOperationExecution(ctx context.Context) {
+	span := trace.FromContext(ctx)
+	defer span.End()
+	if !span.IsRecordingEvents() {
+		return
+	}
 	for _, f := range t.endOperationExecutions {
 		f(ctx)
 	}
-	span := trace.FromContext(ctx)
-	span.End()
 }
 
 func operationName(ctx context.Context) string {
