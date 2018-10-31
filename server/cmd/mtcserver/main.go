@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"cloud.google.com/go/spanner"
+	"github.com/99designs/gqlgen/gqlapollotracing"
 	"github.com/99designs/gqlgen/handler"
 	"github.com/DataDog/opencensus-go-exporter-datadog"
 	"github.com/gorilla/websocket"
@@ -116,11 +117,12 @@ func runServer(port int, env *config.Env, logger *zap.Logger, spannerClient *spa
 	mux.Handle("/2018/api/query", handler.GraphQL(
 		gqlapi.NewExecutableSchema(
 			gqlapi.Config{
-				Resolvers: resolver,
+				Resolvers:  resolver,
 				Complexity: gqlapi.NewComplexityRoot(),
 			},
 		),
 		handler.ComplexityLimit(10000), // 値は適当(動作テストしたいだけなので)
+		handler.Tracer(gqlapollotracing.NewTracer()),
 		handler.Tracer(gqlopencensus.New(gqlopencensus.WithDataDog())),
 		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
