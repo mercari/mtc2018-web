@@ -32,6 +32,20 @@ type tracerImpl struct {
 	endOperationExecutions       []func(ctx context.Context)
 }
 
+func (t *tracerImpl) StartOperationParsing(ctx context.Context) context.Context {
+	return ctx
+}
+
+func (t *tracerImpl) EndOperationParsing(ctx context.Context) {
+}
+
+func (t *tracerImpl) StartOperationValidation(ctx context.Context) context.Context {
+	return ctx
+}
+
+func (t *tracerImpl) EndOperationValidation(ctx context.Context) {
+}
+
 func (t *tracerImpl) StartOperationExecution(ctx context.Context) context.Context {
 	ctx, span := trace.StartSpan(ctx, operationName(ctx))
 	if !span.IsRecordingEvents() {
@@ -41,12 +55,12 @@ func (t *tracerImpl) StartOperationExecution(ctx context.Context) context.Contex
 	span.AddAttributes(
 		trace.StringAttribute("request.query", requestContext.RawQuery),
 	)
-	if requestContext.ComplexityLimit > 0 {
-		span.AddAttributes(
-			trace.Int64Attribute("request.complexityLimit", int64(requestContext.ComplexityLimit)),
-			trace.Int64Attribute("request.operationComplexity", int64(requestContext.OperationComplexity)),
-		)
-	}
+	//if requestContext.ComplexityLimit > 0 {
+	//	span.AddAttributes(
+	//		trace.Int64Attribute("request.complexityLimit", int64(requestContext.ComplexityLimit)),
+	//		trace.Int64Attribute("request.operationComplexity", int64(requestContext.OperationComplexity)),
+	//	)
+	//}
 	for key, val := range requestContext.Variables {
 		span.AddAttributes(
 			trace.StringAttribute(fmt.Sprintf("request.variables.%s", key), fmt.Sprintf("%+v", val)),
