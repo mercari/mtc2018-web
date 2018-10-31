@@ -123,6 +123,7 @@ func runServer(port int, env *config.Env, logger *zap.Logger, spannerClient *spa
 		),
 		handler.ComplexityLimit(10000), // 値は適当(動作テストしたいだけなので)
 		handler.Tracer(gqlapollotracing.NewTracer()),
+		handler.RequestMiddleware(gqlapollotracing.RequestMiddleware()),
 		handler.Tracer(gqlopencensus.New(gqlopencensus.WithDataDog())),
 		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
