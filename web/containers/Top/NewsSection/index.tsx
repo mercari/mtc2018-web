@@ -22,7 +22,7 @@ const NewsSection: React.SFC<Props> = ({ gqlData, ...props }) => (
         rel="noopener noreferrer"
       >
         FOLLOW US ON
-        <ButtonIcon src="../static/images/twitter.svg" alt="twitter" />
+        <ButtonIcon src="/2018/static/images/twitter.svg" alt="twitter" />
       </FollowButton>
       <Message>
         <NamespacesConsumer ns={['common']}>

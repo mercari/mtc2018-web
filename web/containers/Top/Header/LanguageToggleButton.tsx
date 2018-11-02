@@ -16,7 +16,7 @@ class LanguageToggleButton extends React.PureComponent {
           return (
             <Wrapper onClick={onClick} size="small" {...this.props}>
               {from}
-              <img src="/static/images/icn_arrow.svg" />
+              <img src="/2018/static/images/icn_arrow.svg" />
               {to}
             </Wrapper>
           );

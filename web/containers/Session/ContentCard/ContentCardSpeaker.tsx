@@ -29,9 +29,9 @@ const ContentCardSpeaker: React.SFC<Props> = ({ speaker, isJa, ...props }) => (
     <Photo>
       <source
         type="image/webp"
-        srcSet={`/static/images/speakers/${speaker.speakerId}.webp`}
+        srcSet={`/2018/static/images/speakers/${speaker.speakerId}.webp`}
       />
-      <img src={`/static/images/speakers/${speaker.speakerId}.png`} />
+      <img src={`/2018/static/images/speakers/${speaker.speakerId}.png`} />
     </Photo>
     <Profile>
       <Header>
