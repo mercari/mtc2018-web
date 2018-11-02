@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { I18n } from 'react-i18next';
+import { NamespacesConsumer } from 'react-i18next';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Text, Tip, LazyImage } from '../../../../components';
@@ -58,7 +58,7 @@ class ContentGridItem extends React.PureComponent<Props> {
     const endTime = moment(session.endTime).format('HH:mm');
     return (
       <Wrapper onClick={this.onClick} {...props}>
-        <I18n>
+        <NamespacesConsumer ns={['common']}>
           {(_, { i18n }) => {
             const isJa = isJapan(i18n.language);
             return (
@@ -111,7 +111,7 @@ class ContentGridItem extends React.PureComponent<Props> {
               </>
             );
           }}
-        </I18n>
+        </NamespacesConsumer>
       </Wrapper>
     );
   }

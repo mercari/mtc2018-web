@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Text, Card, Section } from '../../../components';
 import { getTextStyle } from '../../../components/styles';
 import ContentsList from './ContentsList';
-import { I18n } from 'react-i18next';
+import { NamespacesConsumer } from 'react-i18next';
 import { Exhibition } from '../../../types';
 import CafeMap from './CafeMap';
 import StudioMap from './StudioMap';
@@ -19,7 +19,7 @@ class ExhibitionSection extends React.Component<{}, State> {
 
   public render() {
     return (
-      <I18n>
+      <NamespacesConsumer ns={['common']}>
         {t => {
           const { currentNo } = this.state;
 
@@ -104,7 +104,7 @@ class ExhibitionSection extends React.Component<{}, State> {
             </Section>
           );
         }}
-      </I18n>
+      </NamespacesConsumer>
     );
   }
 

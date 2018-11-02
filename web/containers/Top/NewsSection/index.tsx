@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { I18n } from 'react-i18next';
+import { NamespacesConsumer } from 'react-i18next';
 import { Text, Button, Card, Section } from '../../../components';
 import { colors } from '../../../components/styles';
 import NewsList from './NewsList';
@@ -25,7 +25,9 @@ const NewsSection: React.SFC<Props> = ({ gqlData, ...props }) => (
         <ButtonIcon src="../static/images/twitter.svg" alt="twitter" />
       </FollowButton>
       <Message>
-        <I18n>{t => t('follow_us_on_twitter')}</I18n>
+        <NamespacesConsumer ns={['common']}>
+          {t => t('follow_us_on_twitter')}
+        </NamespacesConsumer>
       </Message>
     </Wrapper>
   </Section>
