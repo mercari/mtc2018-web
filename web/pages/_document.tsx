@@ -4,7 +4,9 @@ import { ServerStyleSheet } from 'styled-components';
 import { colors } from '../components/styles';
 import '../i18n';
 
-export default class MyDocument extends Document {
+export default class MyDocument extends Document<{
+  styleTags: React.ReactElement<{}>;
+}> {
   public static getInitialProps({ renderPage }: any) {
     // styled-componentsのSSRのための処理
     const sheet = new ServerStyleSheet();
@@ -53,7 +55,6 @@ export default class MyDocument extends Document {
           />
           <meta name="twitter:site" content="@mercari_inc" />
           <link rel="shortcut icon" href="/static/images/favicon.ico" />
-          <title>Mercari Tech Conf 2018</title>
           <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
           {this.props.styleTags}
         </Head>
