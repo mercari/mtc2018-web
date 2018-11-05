@@ -8,7 +8,7 @@ class FacebookShareButton extends React.PureComponent {
   public render() {
     return (
       <IconButton
-        src="../../../static/images/facebook.svg"
+        src="/2018/static/images/facebook.svg"
         alt="facebook share"
         onClick={this.onClick}
         {...this.props}

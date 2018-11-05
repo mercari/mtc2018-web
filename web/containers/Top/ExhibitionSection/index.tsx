@@ -41,22 +41,19 @@ class ExhibitionSection extends React.Component<{}, State> {
                 <MarkList>
                   <MarkListItem>
                     <span>
-                      <img
-                        src="../../../static/images/booth_circle.svg"
-                        alt=""
-                      />
+                      <img src="/2018/static/images/booth_circle.svg" alt="" />
                     </span>
                     Booth
                   </MarkListItem>
                   <MarkListItem>
                     <span>
-                      <img src="../../../static/images/plug.svg" alt="" />
+                      <img src="/2018/static/images/plug.svg" alt="" />
                     </span>
                     Power
                   </MarkListItem>
                   <MarkListItem>
                     <span>
-                      <img src="../../../static/images/tea_mug.svg" alt="" />
+                      <img src="/2018/static/images/tea_mug.svg" alt="" />
                     </span>
                     Cafespace
                   </MarkListItem>

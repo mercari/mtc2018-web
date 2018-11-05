@@ -43,6 +43,9 @@ i18n
         // mercari tech conf 2017
         server.use('/2017', express.static(path.join(__dirname+'/static/2017')));
 
+        // static resources
+        server.use('/2018/static', express.static(path.join(__dirname+'/static/2018')));
+
         // enable middleware for i18next
         server.use(i18nextMiddleware.handle(i18n))
 

@@ -32,7 +32,7 @@ class Header extends React.Component<Props, State> {
       <Wrapper show={isTopY || showMenu} {...props}>
         <img
           onClick={this.onClickLogo}
-          src="../../static/images/header_logo.svg"
+          src="/2018/static/images/header_logo.svg"
           alt="mercari tech conf 2018"
         />
         <EmptySpace />

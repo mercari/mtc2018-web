@@ -42,7 +42,7 @@ const EmptySpace = styled.div`
 `;
 
 const Logo = styled.img.attrs({
-  src: '../../static/images/logo.svg',
+  src: '/2018/static/images/logo.svg',
   alt: 'mercari tech conf 2018'
 })`
   width: 280px;
@@ -75,7 +75,7 @@ const Place = styled(Text)`
 `;
 
 const BottomArrow = styled.img.attrs({
-  src: '../../static/images/arrow_bottom.svg'
+  src: '/2018/static/images/arrow_bottom.svg'
 })`
   @media screen and (max-width: 767px) {
     display: none;

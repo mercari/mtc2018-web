@@ -40,13 +40,13 @@ export default class MyDocument extends Document<{
           />
           <meta
             property="og:image"
-            content="https://techconf.mercari.com/static/images/ogp.png"
+            content="https://techconf.mercari.com/2018/static/images/ogp.png"
           />
           <meta property="og:site_name" content="" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta
             name="twitter:image"
-            content="https://techconf.mercari.com/static/images/ogp.png"
+            content="https://techconf.mercari.com/2018/static/images/ogp.png"
           />
           <meta name="twitter:title" content="Mercari Tech Conf 2018" />
           <meta
@@ -54,7 +54,7 @@ export default class MyDocument extends Document<{
             content="Mercari Tech Conf 2018は、メルカリグループの最新技術や、今後の展開を紹介するテックカンファレンスです。2018/10/04（Thu）に六本木アカデミーヒルズで開催します。"
           />
           <meta name="twitter:site" content="@mercari_inc" />
-          <link rel="shortcut icon" href="/static/images/favicon.ico" />
+          <link rel="shortcut icon" href="/2018/static/images/favicon.ico" />
           <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
           {this.props.styleTags}
         </Head>

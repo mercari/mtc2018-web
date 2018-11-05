@@ -82,7 +82,7 @@ class ContentCard extends React.PureComponent<Props> {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <LinkIcon src="../../static/images/icn_slide.svg" alt="slide" />
+              <LinkIcon src="/2018/static/images/icn_slide.svg" alt="slide" />
               <Text level="display1">Slide</Text>
             </LinkButton>
             <LinkButton
@@ -92,7 +92,7 @@ class ContentCard extends React.PureComponent<Props> {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <LinkIcon src="../../static/images/icn_movie.svg" alt="movie" />
+              <LinkIcon src="/2018/static/images/icn_movie.svg" alt="movie" />
               <Text level="display1">Movie</Text>
             </LinkButton>
           </Links>

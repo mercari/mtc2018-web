@@ -11,7 +11,7 @@ class TwitterShareButton extends React.PureComponent {
   public render() {
     return (
       <IconButton
-        src="../../../static/images/twitter.svg"
+        src="/2018/static/images/twitter.svg"
         alt="twitter share"
         onClick={this.onClick}
         {...this.props}
