@@ -20,6 +20,20 @@
   ],
   "news": [
     {
+      "id": "4",
+      "date": "2018-11-12",
+      "message": "Videos of the sessions are now available.",
+      "messageJa": "セッションの動画を公開しました",
+      "link": "https://www.youtube.com/playlist?list=PL5y9uEm8_ypUSnD4TbKKH_7935GxkbgGv"
+    },
+    {
+      "id": "3",
+      "date": "2018-11-12",
+      "message": "Slides from the sessions are now available.",
+      "messageJa": "セッションのスライドを公開しました",
+      "link": "https://speakerdeck.com/mercari"
+    },
+    {
       "id": "2",
       "date": "2018-09-28",
       "message": "The list of exhibition booths is now up on our website!",

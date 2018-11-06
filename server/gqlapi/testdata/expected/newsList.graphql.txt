@@ -30,13 +30,35 @@ fragment NewsFragment on News {
 
 
 --- Result
-{"data":{"newsList":{"pageInfo":{"startCursor":null,"endCursor":"News:1","hasNextPage":false,"hasPreviousPage":false},"edges":[{"cursor":"News:2","node":{"id":"News:2","newsId":"2","date":"2018-09-28","message":"The list of exhibition booths is now up on our website!","messageJa":"展示ブースの内容を公開しました","link":""}},{"cursor":"News:1","node":{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale.","messageJa":"チケット販売をオープンしました","link":""}}],"nodes":[{"id":"News:2","newsId":"2","date":"2018-09-28","message":"The list of exhibition booths is now up on our website!","messageJa":"展示ブースの内容を公開しました","link":""},{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale.","messageJa":"チケット販売をオープンしました","link":""}]}}}
+{"data":{"newsList":{"pageInfo":{"startCursor":null,"endCursor":"News:1","hasNextPage":false,"hasPreviousPage":false},"edges":[{"cursor":"News:4","node":{"id":"News:4","newsId":"4","date":"2018-11-12","message":"Videos of the sessions are now available.","messageJa":"セッションの動画を公開しました","link":"https://www.youtube.com/playlist?list=PL5y9uEm8_ypUSnD4TbKKH_7935GxkbgGv"}},{"cursor":"News:3","node":{"id":"News:3","newsId":"3","date":"2018-11-12","message":"Slides from the sessions are now available.","messageJa":"セッションのスライドを公開しました","link":"https://speakerdeck.com/mercari"}},{"cursor":"News:2","node":{"id":"News:2","newsId":"2","date":"2018-09-28","message":"The list of exhibition booths is now up on our website!","messageJa":"展示ブースの内容を公開しました","link":""}},{"cursor":"News:1","node":{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale.","messageJa":"チケット販売をオープンしました","link":""}}],"nodes":[{"id":"News:4","newsId":"4","date":"2018-11-12","message":"Videos of the sessions are now available.","messageJa":"セッションの動画を公開しました","link":"https://www.youtube.com/playlist?list=PL5y9uEm8_ypUSnD4TbKKH_7935GxkbgGv"},{"id":"News:3","newsId":"3","date":"2018-11-12","message":"Slides from the sessions are now available.","messageJa":"セッションのスライドを公開しました","link":"https://speakerdeck.com/mercari"},{"id":"News:2","newsId":"2","date":"2018-09-28","message":"The list of exhibition booths is now up on our website!","messageJa":"展示ブースの内容を公開しました","link":""},{"id":"News:1","newsId":"1","date":"2018-09-04","message":"Tickets are on sale.","messageJa":"チケット販売をオープンしました","link":""}]}}}
 
 --- Result (formatted)
 {
   "data": {
     "newsList": {
       "edges": [
+        {
+          "cursor": "News:4",
+          "node": {
+            "date": "2018-11-12",
+            "id": "News:4",
+            "link": "https://www.youtube.com/playlist?list=PL5y9uEm8_ypUSnD4TbKKH_7935GxkbgGv",
+            "message": "Videos of the sessions are now available.",
+            "messageJa": "セッションの動画を公開しました",
+            "newsId": "4"
+          }
+        },
+        {
+          "cursor": "News:3",
+          "node": {
+            "date": "2018-11-12",
+            "id": "News:3",
+            "link": "https://speakerdeck.com/mercari",
+            "message": "Slides from the sessions are now available.",
+            "messageJa": "セッションのスライドを公開しました",
+            "newsId": "3"
+          }
+        },
         {
           "cursor": "News:2",
           "node": {
@@ -61,6 +83,22 @@ fragment NewsFragment on News {
         }
       ],
       "nodes": [
+        {
+          "date": "2018-11-12",
+          "id": "News:4",
+          "link": "https://www.youtube.com/playlist?list=PL5y9uEm8_ypUSnD4TbKKH_7935GxkbgGv",
+          "message": "Videos of the sessions are now available.",
+          "messageJa": "セッションの動画を公開しました",
+          "newsId": "4"
+        },
+        {
+          "date": "2018-11-12",
+          "id": "News:3",
+          "link": "https://speakerdeck.com/mercari",
+          "message": "Slides from the sessions are now available.",
+          "messageJa": "セッションのスライドを公開しました",
+          "newsId": "3"
+        },
         {
           "date": "2018-09-28",
           "id": "News:2",
