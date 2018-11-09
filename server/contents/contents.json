@@ -57,11 +57,9 @@
       "titleJa": "オープニング",
       "outline": "The Mercari Group is working to utilize technology in more ways than ever before. Mercari CPO Yuki Hamada will discuss the thoughts and efforts behind this objective.",
       "outlineJa": "メルカリグループは、今後、これまで以上にテクノロジー活用を進めてまいります。その取り組みの方針や思いをCPOの濱田 優貴からお話いたします。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-         "Evolution"
+        "Evolution"
       ],
       "speakers": [
         {
@@ -89,8 +87,6 @@
       "titleJa": "基調講演",
       "outline": "Mercari JP CTO Suguru Namura, Mercari US CTO Mok Oh, and Merpay Director Keisuke Sogawa will discuss the events that have occurred at their respective companies in the past year. They will also talk about the goals and technical challenges that they plan to tackle in the future.",
       "outlineJa": "株式会社メルカリCTO 名村 卓、株式会社メルペイ取締役 曾川景介、Mercari, Inc. CTO Dr. Mok Ohの3名から、各社でここ1年間に起こったこと、これから目指す方向、技術的な取り組みについてご紹介します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
         "Evolution"
@@ -147,11 +143,10 @@
       "titleJa": "Microservices Platform at Mercari",
       "outline": "As Mercari continues to grow as a service and organization, we decided it was time to make the move from a monolith architecture to microservices. The Microservices Platform Team is the team responsible for building the platform for this. The goal is to create a platform that allows developers to maximize their productivity for a rapid service development cycle where teams are independent and have ownership over their projects. In this session, Nakashima will introduce the initiatives the Microservices Platform Team are taking to achieve this goal.",
       "outlineJa": "Mercariではサービスと組織の拡大に合わせてMonolithアーキテクチャからMicroservicesアーキテクチャへの移行を進めています．Microservices Platform TeamはこのMicroservicesのためのPlatformの構築を行っています．開発者のDeveloper Productivityを最大限に高め各チームがオーナーシップを持ち独立して高速にサービス開発サイクルを回せるようなPlatformを目指しています．本セッションではMicroservices Platform Teamの取り組みを紹介します",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "Microservices", "Platform"
+        "Microservices",
+        "Platform"
       ],
       "speakers": [
         {
@@ -179,11 +174,10 @@
       "titleJa": "Introduction to the Corporate Solutions Engineering",
       "outline": "Mercari has a Corporate Solutions Engineering Team for solving the challenges faced in managing the company. In this session, Karasawa will introduce the activities of his team, the kinds of challenges they are trying to resolve, how they go about developing products to overcome these challenges, and the fundamental philosophy behind what they do.",
       "outlineJa": "メルカリには「経営課題を解決する」ための Corporate Solutions Engineering というチームがあります。このチームがどのような活動を通じてどのような課題を解決しているのか、また、そこでどのようなプロダクトを開発しているのか、その基礎となる考え方と活動についてご紹介します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "Microservices", "CSE"
+        "Microservices",
+        "CSE"
       ],
       "speakers": [
         {
@@ -211,8 +205,6 @@
       "titleJa": "Mercari API: from Monolithic to Microservices",
       "outline": "Mercari has evolved tremendously in the last 5 years, and so is our code base. As of 2018, the backend API is a monolithic repository of half-million lines of code, serving all the functions of the Mercari web and mobile applications. It is becoming a bottle neck of our growth, in terms of both the system and the organization. This talk will focus on how we migrate the monolithic backend API to a microservice architecture, the methodology we choose and the lessons we learned.",
       "outlineJa": "Mercari has evolved tremendously in the last 5 years, and so is our code base. As of 2018, the backend API is a monolithic repository of half-million lines of code, serving all the functions of the Mercari web and mobile applications. It is becoming a bottle neck of our growth, in terms of both the system and the organization. This talk will focus on how we migrate the monolithic backend API to a microservice architecture, the methodology we choose and the lessons we learned.",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "en",
       "tags": [
         "Microservices"
@@ -243,11 +235,10 @@
       "titleJa": "Mercari ML Platform",
       "outline": "Mercari uses several machine learning (ML) models. After an ML model is created, it requires continuous tuning and retraining. This is why it's not possible to use multiple ML models without having a highly automated system in place. In this session, I will be talking about the fundamentals of such automation and systems, what we’re currently using, and what we're developing.",
       "outlineJa": "メルカリでは多数の機械学習モデル(以下MLモデル)を運用しています。MLモデルは構築後も継続的な評価・再トレーニング・チューニングが必要で、高度に自動化された仕組み無しでは多数のMLモデルを運用できません。本セッションではそれらの基盤と自動化の仕組み等、現状と開発中の物について話します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "MachineLearning", "Platform"
+        "MachineLearning",
+        "Platform"
       ],
       "speakers": [
         {
@@ -275,11 +266,10 @@
       "titleJa": "Android at Scale",
       "outline": "In this talk, Israel Ferrer Camacho will share what are the common pitfalls at developing applications with big teams and big codebases and how to solve them.",
       "outlineJa": "In this talk, Israel Ferrer Camacho will share what are the common pitfalls at developing applications with big teams and big codebases and how to solve them.",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "en",
       "tags": [
-        "Android", "Rearchitecture"
+        "Android",
+        "Rearchitecture"
       ],
       "speakers": [
         {
@@ -307,11 +297,10 @@
       "titleJa": "どうして僕らは決済処理をマイクロサービス化しようとしているのか",
       "outline": "Merpay will provide users with the means to use their Mercari sales balance as a form of electronic money. This feature will of course be available for shopping on Mercari itself, but in order to do that, we have to face the issue of processing payments over Mercari. A monolithic program that has been built up over years now finds itself confronted with the challenge of implementing a new method of payment. To resolve this, we are taking a Go Bold approach of moving to microservices, but many difficulties lie within. In this session, Saito will talk about:\n1) Why we decided to make the move to microservices\n2) Deciphering the control flow of complex intertwined switch statements \n3) The battle with potential errors caused by distributed transactions \n4) How to reduce the effect on accounting systems",
       "outlineJa": "メルカリの売上金も電子マネーとして使えるようになるメルペイ。もちろんメルカリでの買い物でも使える予定ですが、そこで問題となったのがメルカリ上での決済処理。増築に増築を重ねたモノリシックなプログラムが、新しい決済手段の導入の前に立ちはだかります。そこで、私達はGO BOLDにMicroservice化で解決しようとしていますが、その中で認められた問題点と解決策を示していきます。0) なぜMicroservices化に踏み切ったのか1) 複雑に絡み合ったswitch文となった業務フローを読み解く2) 分散トランザクションで発生するであろうエラーとの戦い3) 会計システムへの影響をいかに減らすか",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "Merpay", "Microservices"
+        "Merpay",
+        "Microservices"
       ],
       "speakers": [
         {
@@ -339,11 +328,10 @@
       "titleJa": "ViewControllerのTypeErasureを実装する",
       "outline": "To develop our app, we use MicroViewController, which we introduced at iOSDC, and we have also implemented the idea of MicroFrameworks. A common issue with using MicroFrameworks is circular dependencies, but by using the MicroViewController model, we can implement TypeErasure for ViewController.  We call this ViewControllerRequest. Today I will talk about ViewControllerRequest, our prized service that solved the problem of circular dependencies and greatly reduced the work required for refactoring.",
       "outlineJa": "我々はiOSDCで発表したMicroViewControllerに加えてMicroFrameworksの考え方も導入してアプリケーションを開発しています。MicroFrameworksに付き物なのが循環依存の問題ですが、MicroViewControllerの型を導入することで、「ViewControllerに対してTypeErasureを実装する」ことが可能になりました。我々はこれをViewControllerRequestと名付けて利用しています。循環依存の問題を解決し、更にはリファクタリングの工数を大幅に縮めた虎の子「ViewControllerRequest」について、お話しします。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "iOS", "Rearchitecture"
+        "iOS",
+        "Rearchitecture"
       ],
       "speakers": [
         {
@@ -371,8 +359,6 @@
       "titleJa": "GO BOLD DAY",
       "outline": "GO BOLD is one of our core values at Mercari.To put it in action, we dedicate special days to drop what we're working on and get out of our comfort zone by experimenting with new ideas and technologies. The results are always fascinating!",
       "outlineJa": "GO BOLD is one of our core values at Mercari.To put it in action, we dedicate special days to drop what we're working on and get out of our comfort zone by experimenting with new ideas and technologies. The results are always fascinating!",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "en",
       "tags": [
         "GoBold"
@@ -403,8 +389,6 @@
       "titleJa": "Learning to think like a Machine: How Machine Learning changes the way that we solve problems",
       "outline": "There are many obvious use-cases of Machine Learning like text and image analysis, but how about subtle AI solutions to everyday issues? At Mercari US, the ML team wants to change the way we solve problems, using a \"bottom-up\" data-driven approach. I would like to showcase our project that uses simple machine learning algorithms in a creative way and share a new paradigm for engineering solutions.",
       "outlineJa": "There are many obvious use-cases of Machine Learning like text and image analysis, but how about subtle AI solutions to everyday issues? At Mercari US, the ML team wants to change the way we solve problems, using a \"bottom-up\" data-driven approach. I would like to showcase our project that uses simple machine learning algorithms in a creative way and share a new paradigm for engineering solutions.",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "en",
       "tags": [
         "MachineLearning"
@@ -435,8 +419,6 @@
       "titleJa": "Listing Service: モノリスからマイクロサービスへ",
       "outline": "One of the areas that Mercari is working to implement microservices in is the item listing feature. In this session, we will discuss how we’re handling the switch from monolithic PHP code to microservices using Go while maintaining as much compatibility as possible.",
       "outlineJa": "メルカリで現在進められているマイクロサービス化の1つとして出品機能のマイクロサービス化があります。PHP & モノリスのコードを可能な限り互換性を保ちながらGo & マイクロサービスに移植するにあたり、どのように開発を進めているのかを紹介します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
         "Microservices"
@@ -467,11 +449,10 @@
       "titleJa": "Customer Experience Improvement",
       "outline": "Mercari places particular importance on Customer Service. The Customer Service team has grown in tandem with the application, and they work every day to improve the user experience. More than half of Mercari’s employees work in Customer Service, and in this session Ichikawa will speak about what systems the team uses, how they monitor the listings and transactions of 10.75 million monthly active users, and how the Customer Service systems will evolve as Mercari shifts to microservices.",
       "outlineJa": "メルカリはCustomer Serviceを特に重視しており、アプリケーションの成長と共にCustomer Serviceチームも大きく成長しお客様の体験向上の為に日々尽力しています。社員数の半数以上にもなるCustomer Serviceチームがどのようなシステムを使用しているのか、MAU:1,075万人から行われる出品や取り引きをどのようにモニタリングしているのか、そしてMicroservice化が進んでいく今Customer Serviceのシステムをどのように進化をさせていくかについて話します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "Microservices", "CRE"
+        "Microservices",
+        "CRE"
       ],
       "speakers": [
         {
@@ -499,11 +480,10 @@
       "titleJa": "Search precision tuning with query rewriting Subtitle: Internship at mercari",
       "outline": "Finding the right balance for precision and recall is necessary in search systems. I’ll introduce our project of tuning search precision with query rewriting.検索では適合率と再現率のバランスが鍵となります。ここでは、メルカリで行っているクエリリライトによる適合率の調整についてご紹介します。",
       "outlineJa": "Finding the right balance for precision and recall is necessary in search systems. I’ll introduce our project of tuning search precision with query rewriting.検索では適合率と再現率のバランスが鍵となります。ここでは、メルカリで行っているクエリリライトによる適合率の調整についてご紹介します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "en",
       "tags": [
-        "Search", "Internship"
+        "Search",
+        "Internship"
       ],
       "speakers": [
         {
@@ -531,8 +511,6 @@
       "titleJa": "量子情報時代の通信技術：量子インターネット",
       "outline": "In this session, Nagayama will discuss telecommunications in the age of quantum information. The quantum internet operates on a different principle—quantum mechanics—from the internet we have today, on the foundation of entanglement created between two random nodes. Naturally, the quantum internet comes with different advantages. For example, it is the foundation for realizing completely secure cryptography. Furthermore, quantum computers utilize entanglement and superposition to simultaneously handle a mass of states. Due to this feature, quantum memory size is crucial. By connecting quantum computers via telecommunications to conduct distributed quantum computing, we can obtain a higher computing ability. Entanglement is the fundamental physical attribute of quantum mechanics, and therefore is also useful for a variety of scientific experiments. Nagayama will also touch on the current progress of research and development of the quantum internet. We hope this session will give you a chance to think a bit about the future of telecommunications.",
       "outlineJa": "量子情報時代の通信について概説する。量子インターネットは今のインターネットとは異なる原理（量子力学）で動き、任意の2ノード間にエンタングルメントを生成する基盤である。当然、利点も異なる。例えば、「完全に安全な暗号通信」を実現するための基盤となる。また、量子コンピュータは、エンタングルメントと重ね合わせを用いて大量の状態を同時に扱う。この特性上、量子メモリサイズが重要である。量子コンピュータ同士を通信で繋げて分散量子計算を行うことで、より大きな計算力を得られる。また、エンタングルメントは量子力学の基本的な物理特性なので、様々な科学実験にも役立つ。この他、現在の量子インターネットの研究開発状況についても触れる。このセッションを通して、将来の通信の姿に少しでも想いを馳せてもらえたら幸いである。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
         "QuantumInternet"
@@ -563,11 +541,10 @@
       "titleJa": "Web Application as a Microservice",
       "outline": "Mercari Web was developed to support Mercari’s growth, and it has grown in tandem with Mercari for approximately two years. The Japan Web Re-architecture Team was created to improve Mercari Web by staying on top of the constantly evolving web-related technology and preparing for a growing frontend team. In this talk, Sugiura will talk about the details of the new architecture the Web Re-architecture Team is implementing, and what’s in store for Mercari Web after the new architecture is in place.",
       "outlineJa": "メルカリWebはメルカリの成長を支える一角として開発され、約2年間メルカリと共に成長してきました。このメルカリWebをWebにまつわる技術の進化や拡大するフロントエンドチームといった変化に強くするためにJP Web Rearchitectチームが誕生しました。このトークではJP Web Rearchitectで実現する新たなアーキテクチャとその詳細、そしてそれを実現した先にある未来についてお話します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "Frontend", "Microservices"
+        "Frontend",
+        "Microservices"
       ],
       "speakers": [
         {
@@ -595,8 +572,6 @@
       "titleJa": "Shifting Security to the Left the Right Way",
       "outline": "As software development evolves, it is vital to shifting security “to the left” earlier in the software development life cycle (SDLC) to make application security move faster with lower cost. This session will discuss on why application security needs to shift left and how to build a modern security engineering organization with a shift-left approach.",
       "outlineJa": "As software development evolves, it is vital to shifting security “to the left” earlier in the software development life cycle (SDLC) to make application security move faster with lower cost. This session will discuss on why application security needs to shift left and how to build a modern security engineering organization with a shift-left approach.",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "en",
       "tags": [
         "Security"
@@ -627,11 +602,10 @@
       "titleJa": "数十億規模のデータと機械学習で描く未来",
       "outline": "With over one billion total listings on the Mercari app to date and with the remarkable advancements observed in recent years in the fields of machine learning and deep learning, there is increasingly greater focus on, and expectations for, data utility. There are a number of projects underway which utilize data on items and user behavior, and several features, including image recognition for listings and automatic detection of fraudulent listings, are already in operation on the service. This session will introduce those algorithms and execution platforms and will also introduce a number of features currently in development.",
       "outlineJa": "累計出品数が10億品を超え、近年の機械学習・ディープラーニング分野の目覚ましい発展と相まって、データ活用への注目と期待がますます高まっている。多様な商品データや行動データを利用した複数のプロジェクトが進行しており、出品時の画像認識や、不正の自動検知といった機能がすでにサービス内で稼働している。本セッションでは、それらのアルゴリズムと実行基盤の紹介、および、一部の開発中の機能について述べる。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-        "MachineLearning", "Kando"
+        "MachineLearning",
+        "Kando"
       ],
       "speakers": [
         {
@@ -659,8 +633,6 @@
       "titleJa": "CSAT Score - 極度改善(しなさい) -",
       "outline": "One year ago, we started conducting CSAT (Customer Satisfaction) Surveys to measure the satisfaction rate of our users for the US version of Mercari. This scoring system has undergone a series of discussions across our offices in San Francisco (now Palo Alto), Portland, and Tokyo. Now, it’s grown to the point of being included in our company OKR, and we consider it an indispensable metric. In this session, I'll be talking about how the implementation of this metric evolved in the last 12 months, and how it has affected decision-making in our product development.",
       "outlineJa": "US版メルカリでは、一年前からお客様のカスタマーサポート満足度を計測するために、CSAT(Customer Satisfaction) Surveyを実施してスコアを算出しはじめました。このスコアリングは、サンフランシスコ(現パロアルト)/ポートランド/東京の3拠点で議論を重ねて育て続けられ、今ではCompany OKRへ組み込まれるようになり、社内で大切にしているモノサシへと進化しました。そんな私たちのモノサシが、この一年でどのように実装内容が変化していったか、プロダクト開発の意思決定に影響を与えていったかご紹介いたします。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
         "CRE"
@@ -691,11 +663,10 @@
       "titleJa": "メルカリにおける検索サービスの現在と未来",
       "outline": "The Search Team develops and improves on features for the Mercari app such as suggestions, related words, and the recommendations tab. In this session, Sugiki will introduce the various features they are developing in their goal to compete on the global stage.",
       "outlineJa": "検索チームでは、昨年からサジェスト・関連ワード・おすすめタブなど、検索機能を開発・改善してきました。世界を目指すチームの紹介と具体的な各機能の開発についてご紹介します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-         "Microservices", "Search"
+        "Microservices",
+        "Search"
       ],
       "speakers": [
         {
@@ -736,11 +707,9 @@
       "titleJa": "海をまたぐ開発チームとTech Lead",
       "outline": "Starting this year, every platform team at Mercari, regularly draws up a technical roadmap, and looks at the initiatives they can take to contribute to our products from a technological perspective. The Android Team for Mercari US drew up a technical roadmap focused on the goal of creating a highly mobile and elastic team. In this session, Imai will discuss how the team formulated and pushed forward with this roadmap and his role in the process as a Tech Lead.",
       "outlineJa": "メルカリでは今年からプラットフォームごとに技術ロードマップを策定し、技術的な観点からもプロダクトへ貢献できるような取り組みをしています。US版Mercari Androidチームはスケールしても機動力の高いしなやかなチームを作ることを目指し、技術ロードマップを策定しました。本セッションではどのように技術ロードマップが策定され推進されてきたのかをテックリードの役割も交えてお話します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-         "Android"
+        "Android"
       ],
       "speakers": [
         {
@@ -768,11 +737,9 @@
       "titleJa": "High 意識 Android - US App : Evolution",
       "outline": "2018 was a year of big changes for the Mercari US Android team. In 2017, the team had only three members spanning the Tokyo and San Francisco offices and was small but efficient; in 2018, the team has doubled in size. As a result, the team has moved from a Public Security Section 9 model, where the strengths of each individual were the focus, to a stage where they are aiming for different strengths across the teams in each country. In this session, the Mercari US team will talk about their unique choice of technologies and approach to teamwork across the Tokyo and Palo Alto offices in their effort to maintain a high level of performance while faced with the challenges of distance and time differences.",
       "outlineJa": "2018年、US Androidチームは大きな変革を遂げました。2017年はTokyo & San Francisco 合わせて3人体制という極少数精鋭チームで走り切りましたが、2018年、ついにメンバーの数が倍になりました。これにより、個々人の能力に重点を置いていた「公安9課モデル」から、チーム x チーム で更なる高みを目指すステージに移ったのです。時差や距離といった制約の中でより高いパフォーマンスを追求し続けながら、Tokyo & Palo Altoの2拠点で開発を進めるMercari USチームならではの技術選定とチームワークについて、お時間の許す限り紹介します。",
-      "slideUrl": "https://speakerdeck.com/mercari/mtc-2018-opening-talk",
-      "movieUrl": "https://www.youtube.com/watch?v=4d0PkwwEtG4",
       "lang": "jp",
       "tags": [
-         "Android"
+        "Android"
       ],
       "speakers": [
         {
@@ -892,6 +859,387 @@
       "title": "Research and development organization \"R4D\"",
       "descriptionJa": "メルカリの研究開発組織「R4D」で進めているプロジェクトをご紹介します。また、量子コンピュータを用いたロボットのデモンストレーション（研究開発中）も行う予定です。",
       "description": "Learn about R4D, Mercari's research and development organization. There will be demonstrations on robotics using quantum computing (currently undergoing research and development)."
+    }
+  ],
+  "slides": [
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mercari-tech-conf-2018-opuningu",
+      "sessionId": 0,
+      "speakerId": "yuki_hamada"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mercari-tech-conf-2018-opening",
+      "sessionId": 0,
+      "speakerId": "yuki_hamada"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mercari-tech-conf-2018-ji-diao-jiang-yan-ming-cun",
+      "sessionId": 1,
+      "speakerId": "suguru_namura"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mercari-tech-conf-2018-keynote-suguru-namura-4d5253ac-b6b0-453f-87da-049307e01054",
+      "sessionId": 1,
+      "speakerId": "suguru_namura"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mercari-tech-conf-2018-keynote-dr-mok-oh",
+      "sessionId": 1,
+      "speakerId": "mok_oh"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mercari-tech-conf-2018-ji-diao-jiang-yan-ceng-chuan-jing-jie",
+      "sessionId": 1,
+      "speakerId": "keisuke_sogawa"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mercari-tech-conf-2018-keynote-keisuke-sogawa-3f95030b-ca4d-46c8-ac4f-fa40fd27deb5",
+      "sessionId": 1,
+      "speakerId": "keisuke_sogawa"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-microservices-platform-at-mercari",
+      "sessionId": 10,
+      "speakerId": "nakashima_taichi"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-mercari-api-from-monolithic-to-microservices",
+      "sessionId": 13,
+      "speakerId": "tonghui_li"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-android-at-scale",
+      "sessionId": 15,
+      "speakerId": "israel_ferrer_comacho"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-viewcontrollerfalsetypeerasurewoshi-zhuang-suru",
+      "sessionId": 17,
+      "speakerId": "nobuo_saito"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-implementing-typeerasure-in-viewcontroller",
+      "sessionId": 17,
+      "speakerId": "nobuo_saito"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-listing-service-mofalserisukaramaikurosabisuhe",
+      "sessionId": 20,
+      "speakerId": "taihei_morikuni"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-listing-service-from-monolith-to-microservices",
+      "sessionId": 20,
+      "speakerId": "taihei_morikuni"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-customer-experience-improvement-b884bed4-3c83-4ed5-87c7-9f8e15656bb8",
+      "sessionId": 21,
+      "speakerId": "shingo_ichikawa"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-customer-experience-improvement",
+      "sessionId": 21,
+      "speakerId": "shingo_ichikawa"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-web-application-as-a-microservice-3a161f5c-07fa-4dca-99e9-bd0e8feeeddf",
+      "sessionId": 24,
+      "speakerId": "sota_sugiura"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-web-application-as-a-microservice",
+      "sessionId": 24,
+      "speakerId": "sota_sugiura"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-shu-shi-yi-gui-mo-falsedetatoji-jie-xue-xi-demiao-kuwei-lai",
+      "sessionId": 26,
+      "speakerId": "takuma_yamaguchi"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-leveraging-billions-of-data-items-and-machine-learning-to-map-the-future",
+      "sessionId": 26,
+      "speakerId": "takuma_yamaguchi"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-merukariniokerujian-suo-sabisufalsexian-zai-towei-lai",
+      "sessionId": 28,
+      "speakerId": "kenji_sugiki"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-mercaris-search-service-now-and-the-future",
+      "sessionId": 28,
+      "speakerId": "kenji_sugiki"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-merukariniokerujian-suo-sabisufalsexian-zai-towei-lai",
+      "sessionId": 28,
+      "speakerId": "yanpeng_lin"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-mercaris-search-service-now-and-the-future",
+      "sessionId": 28,
+      "speakerId": "yanpeng_lin"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-introduction-to-the-corporate-solutions-engineering-7803460f-c3a1-4c7a-8c11-bdb61e177408",
+      "sessionId": 12,
+      "speakerId": "sotaro_karasawa"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-introduction-to-the-corporate-solutions-engineering",
+      "sessionId": 12,
+      "speakerId": "sotaro_karasawa"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-mercari-ml-platform-e77c2a9a-edbf-4e47-b753-d860be56f14a",
+      "sessionId": 14,
+      "speakerId": "hirofumi_nakagawa"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-mercari-ml-platform",
+      "sessionId": 14,
+      "speakerId": "hirofumi_nakagawa"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-dousitepu-rahajue-ji-chu-li-womaikurosabisuhua-siyoutositeirufalseka",
+      "sessionId": 16,
+      "speakerId": "yuichiro_saito"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-why-are-we-trying-to-turn-payment-processing-into-a-microservice",
+      "sessionId": 16,
+      "speakerId": "yuichiro_saito"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-go-bold-day",
+      "sessionId": 18,
+      "speakerId": "dani_arnaout"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-learning-to-think-like-a-machine-how-machine-learning-changes-the-way-that-we-solve-problems",
+      "sessionId": 19,
+      "speakerId": "jeff_hara"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-search-precision-tuning-with-query-rewriting-internship-at-mercari",
+      "sessionId": 22,
+      "speakerId": "yuto_yagi"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-liang-zi-qing-bao-shi-dai-falsetong-xin-ji-shu-liang-zi-intanetuto",
+      "sessionId": 23,
+      "speakerId": "shota_nagayama"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-communication-technologies-in-the-age-of-quantum-information-the-quantum-internet",
+      "sessionId": 23,
+      "speakerId": "shota_nagayama"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-shifting-security-to-the-left-the-right-way",
+      "sessionId": 25,
+      "speakerId": "yannarak_wannasai"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-csat-score-ji-du-gai-shan-sinasai",
+      "sessionId": 27,
+      "speakerId": "takako_ohshima"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-csat-score-super-improvements-just-do-it",
+      "sessionId": 27,
+      "speakerId": "takako_ohshima"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-hai-womatagukai-fa-timutotech-lead",
+      "sessionId": 29,
+      "speakerId": "tomoaki_imai"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-developing-across-the-pacific-the-role-of-tech-lead-in-an-international-team",
+      "sessionId": 29,
+      "speakerId": "tomoaki_imai"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-high-yi-shi-android-us-app-evolution",
+      "sessionId": 30,
+      "speakerId": "matthew_vern"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-high-performance-android-us-app-evolution",
+      "sessionId": 30,
+      "speakerId": "matthew_vern"
+    }
+  ],
+  "movies": [
+    {
+      "url": "https://youtu.be/kpWMphnKawM",
+      "sessionId": 0,
+      "speakerId": "yuki_hamada"
+    },
+    {
+      "url": "https://youtu.be/WLoagD4aVqw",
+      "sessionId": 1,
+      "speakerId": "suguru_namura"
+    },
+    {
+      "url": "https://youtu.be/IYFxkvmjxiE",
+      "sessionId": 1,
+      "speakerId": "mok_oh"
+    },
+    {
+      "url": "https://youtu.be/mfOvRGN6ykM",
+      "sessionId": 1,
+      "speakerId": "keisuke_sogawa"
+    },
+    {
+      "url": "https://youtu.be/6iVT8m56IxU",
+      "sessionId": 10,
+      "speakerId": "nakashima_taichi"
+    },
+    {
+      "url": "https://youtu.be/cXwTzE6SwSM",
+      "sessionId": 13,
+      "speakerId": "tonghui_li"
+    },
+    {
+      "url": "https://youtu.be/zVZJSNAsEfE",
+      "sessionId": 15,
+      "speakerId": "israel_ferrer_comacho"
+    },
+    {
+      "url": "https://youtu.be/XKKJc8oRKdc",
+      "sessionId": 17,
+      "speakerId": "nobuo_saito"
+    },
+    {
+      "url": "https://youtu.be/qGbR14VsT-E",
+      "sessionId": 20,
+      "speakerId": "taihei_morikuni"
+    },
+    {
+      "url": "https://youtu.be/hYnPEh5CiVs",
+      "sessionId": 21,
+      "speakerId": "shingo_ichikawa"
+    },
+    {
+      "url": "https://youtu.be/zYAt569F9qA",
+      "sessionId": 24,
+      "speakerId": "sota_sugiura"
+    },
+    {
+      "url": "https://youtu.be/ldEcD1CUCI4",
+      "sessionId": 26,
+      "speakerId": "takuma_yamaguchi"
+    },
+    {
+      "url": "https://youtu.be/dPUz--2NMWg",
+      "sessionId": 28,
+      "speakerId": "kenji_sugiki"
+    },
+    {
+      "url": "https://youtu.be/_rK5Gix8o6I",
+      "sessionId": 28,
+      "speakerId": "yanpeng_lin"
+    },
+    {
+      "url": "https://youtu.be/G0SqLEqgMKQ",
+      "sessionId": 12,
+      "speakerId": "sotaro_karasawa"
+    },
+    {
+      "url": "https://youtu.be/FjxZtspRpos",
+      "sessionId": 14,
+      "speakerId": "hirofumi_nakagawa"
+    },
+    {
+      "url": "https://youtu.be/2mVi2ZbZ6k4",
+      "sessionId": 16,
+      "speakerId": "yuichiro_saito"
+    },
+    {
+      "url": "https://youtu.be/Xy-50J72sQo",
+      "sessionId": 18,
+      "speakerId": "dani_arnaout"
+    },
+    {
+      "url": "https://youtu.be/ydacOYMqGp8",
+      "sessionId": 19,
+      "speakerId": "jeff_hara"
+    },
+    {
+      "url": "https://youtu.be/fdg09qA8hzA",
+      "sessionId": 22,
+      "speakerId": "yuto_yagi"
+    },
+    {
+      "url": "https://youtu.be/6VDxtEt253M",
+      "sessionId": 23,
+      "speakerId": "shota_nagayama"
+    },
+    {
+      "url": "https://youtu.be/lYKuVbr7_9E",
+      "sessionId": 25,
+      "speakerId": "yannarak_wannasai"
+    },
+    {
+      "url": "https://youtu.be/6k5fFqsL-3E",
+      "sessionId": 27,
+      "speakerId": "takako_ohshima"
+    },
+    {
+      "url": "https://youtu.be/ovgUIZDUvoI",
+      "sessionId": 29,
+      "speakerId": "tomoaki_imai"
+    },
+    {
+      "url": "https://youtu.be/i9r9wKzn6uE",
+      "sessionId": 30,
+      "speakerId": "matthew_vern"
     }
   ]
 }

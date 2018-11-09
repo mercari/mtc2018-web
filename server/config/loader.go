@@ -35,6 +35,8 @@ type Data struct {
 	Sessions    []Session    `json:"sessions"`
 	News        []News       `json:"news"`
 	Exhibitions []Exhibition `json:"exhibitions"`
+	Slides      []Slide      `json:"slides"`
+	Movies      []Movie      `json:"movies"`
 }
 
 // Session information.
@@ -48,8 +50,6 @@ type Session struct {
 	EndTime   string    `json:"endTime"`
 	Outline   string    `json:"outline"`
 	OutlineJa string    `json:"outlineJa"`
-	SlideURL  string    `json:"slideUrl"`
-	MovieURL  string    `json:"movieUrl"`
 	Lang      string    `json:"lang"`
 	Tags      []string  `json:"tags"`
 	Speakers  []Speaker `json:"speakers"`
@@ -87,4 +87,19 @@ type News struct {
 	Message   string `json:"message"`
 	MessageJa string `json:"messageJa"`
 	Link      string `json:"link"`
+}
+
+// Slide information
+type Slide struct {
+	Lang      string `json:"lang"`
+	URL       string `json:"url"`
+	SessionID int    `json:"sessionId"`
+	SpeakerID string `json:"speakerId"`
+}
+
+// Movie information
+type Movie struct {
+	URL       string `json:"url"`
+	SessionID int    `json:"sessionId"`
+	SpeakerID string `json:"speakerId"`
 }

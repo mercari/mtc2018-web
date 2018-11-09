@@ -47,3 +47,29 @@ func (r *sessionResolver) Speakers(ctx context.Context, obj *domains.Session) ([
 
 	return resp, nil
 }
+
+func (r *sessionResolver) Slides(ctx context.Context, obj *domains.Session) ([]domains.Slide, error) {
+	if obj == nil {
+		return nil, nil
+	}
+
+	slides, err := r.slideRepo.ListBySessionID(ctx, obj.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return slides, nil
+}
+
+func (r *sessionResolver) Movies(ctx context.Context, obj *domains.Session) ([]domains.Movie, error) {
+	if obj == nil {
+		return nil, nil
+	}
+
+	movies, err := r.movieRepo.ListByMoviesBySessionID(ctx, obj.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return movies, nil
+}

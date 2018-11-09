@@ -93,11 +93,28 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
-  slideUrl: String!
-  movieUrl: String!
+  slides: [Slide!]!
+  movies: [Movie!]!
 
   liked: Int!
   speakers: [Speaker!]!
+}
+
+type Slide {
+  id: ID!
+  slideId: Int!
+  lang: String!
+  url: String!
+  session: Session!
+  speaker: Speaker!
+}
+
+type Movie {
+  id: ID!
+  movieId: Int!
+  url: String!
+  session: Session!
+  speaker: Speaker!
 }
 
 """

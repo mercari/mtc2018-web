@@ -34,10 +34,12 @@ type Config struct {
 type ResolverRoot interface {
 	Exhibition() ExhibitionResolver
 	Like() LikeResolver
+	Movie() MovieResolver
 	Mutation() MutationResolver
 	News() NewsResolver
 	Query() QueryResolver
 	Session() SessionResolver
+	Slide() SlideResolver
 	Speaker() SpeakerResolver
 	Subscription() SubscriptionResolver
 }
@@ -80,6 +82,14 @@ type ComplexityRoot struct {
 	LikeEvent struct {
 		SessionId func(childComplexity int) int
 		Likes     func(childComplexity int) int
+	}
+
+	Movie struct {
+		Id      func(childComplexity int) int
+		MovieId func(childComplexity int) int
+		Url     func(childComplexity int) int
+		Session func(childComplexity int) int
+		Speaker func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -135,8 +145,8 @@ type ComplexityRoot struct {
 		OutlineJa func(childComplexity int) int
 		Lang      func(childComplexity int) int
 		Tags      func(childComplexity int) int
-		SlideUrl  func(childComplexity int) int
-		MovieUrl  func(childComplexity int) int
+		Slides    func(childComplexity int) int
+		Movies    func(childComplexity int) int
 		Liked     func(childComplexity int) int
 		Speakers  func(childComplexity int) int
 	}
@@ -150,6 +160,15 @@ type ComplexityRoot struct {
 	SessionEdge struct {
 		Cursor func(childComplexity int) int
 		Node   func(childComplexity int) int
+	}
+
+	Slide struct {
+		Id      func(childComplexity int) int
+		SlideId func(childComplexity int) int
+		Lang    func(childComplexity int) int
+		Url     func(childComplexity int) int
+		Session func(childComplexity int) int
+		Speaker func(childComplexity int) int
 	}
 
 	Speaker struct {
@@ -180,6 +199,13 @@ type LikeResolver interface {
 	ID(ctx context.Context, obj *domains.Like) (string, error)
 	Session(ctx context.Context, obj *domains.Like) (domains.Session, error)
 }
+type MovieResolver interface {
+	ID(ctx context.Context, obj *domains.Movie) (string, error)
+	MovieID(ctx context.Context, obj *domains.Movie) (int, error)
+
+	Session(ctx context.Context, obj *domains.Movie) (domains.Session, error)
+	Speaker(ctx context.Context, obj *domains.Movie) (domains.Speaker, error)
+}
 type MutationResolver interface {
 	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
 }
@@ -197,8 +223,17 @@ type QueryResolver interface {
 type SessionResolver interface {
 	ID(ctx context.Context, obj *domains.Session) (string, error)
 
+	Slides(ctx context.Context, obj *domains.Session) ([]domains.Slide, error)
+	Movies(ctx context.Context, obj *domains.Session) ([]domains.Movie, error)
 	Liked(ctx context.Context, obj *domains.Session) (int, error)
 	Speakers(ctx context.Context, obj *domains.Session) ([]domains.Speaker, error)
+}
+type SlideResolver interface {
+	ID(ctx context.Context, obj *domains.Slide) (string, error)
+	SlideID(ctx context.Context, obj *domains.Slide) (int, error)
+
+	Session(ctx context.Context, obj *domains.Slide) (domains.Session, error)
+	Speaker(ctx context.Context, obj *domains.Slide) (domains.Speaker, error)
 }
 type SpeakerResolver interface {
 	ID(ctx context.Context, obj *domains.Speaker) (string, error)
@@ -609,6 +644,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.LikeEvent.Likes(childComplexity), true
 
+	case "Movie.id":
+		if e.complexity.Movie.Id == nil {
+			break
+		}
+
+		return e.complexity.Movie.Id(childComplexity), true
+
+	case "Movie.movieId":
+		if e.complexity.Movie.MovieId == nil {
+			break
+		}
+
+		return e.complexity.Movie.MovieId(childComplexity), true
+
+	case "Movie.url":
+		if e.complexity.Movie.Url == nil {
+			break
+		}
+
+		return e.complexity.Movie.Url(childComplexity), true
+
+	case "Movie.session":
+		if e.complexity.Movie.Session == nil {
+			break
+		}
+
+		return e.complexity.Movie.Session(childComplexity), true
+
+	case "Movie.speaker":
+		if e.complexity.Movie.Speaker == nil {
+			break
+		}
+
+		return e.complexity.Movie.Speaker(childComplexity), true
+
 	case "Mutation.createLike":
 		if e.complexity.Mutation.CreateLike == nil {
 			break
@@ -882,19 +952,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Session.Tags(childComplexity), true
 
-	case "Session.slideUrl":
-		if e.complexity.Session.SlideUrl == nil {
+	case "Session.slides":
+		if e.complexity.Session.Slides == nil {
 			break
 		}
 
-		return e.complexity.Session.SlideUrl(childComplexity), true
+		return e.complexity.Session.Slides(childComplexity), true
 
-	case "Session.movieUrl":
-		if e.complexity.Session.MovieUrl == nil {
+	case "Session.movies":
+		if e.complexity.Session.Movies == nil {
 			break
 		}
 
-		return e.complexity.Session.MovieUrl(childComplexity), true
+		return e.complexity.Session.Movies(childComplexity), true
 
 	case "Session.liked":
 		if e.complexity.Session.Liked == nil {
@@ -944,6 +1014,48 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.SessionEdge.Node(childComplexity), true
+
+	case "Slide.id":
+		if e.complexity.Slide.Id == nil {
+			break
+		}
+
+		return e.complexity.Slide.Id(childComplexity), true
+
+	case "Slide.slideId":
+		if e.complexity.Slide.SlideId == nil {
+			break
+		}
+
+		return e.complexity.Slide.SlideId(childComplexity), true
+
+	case "Slide.lang":
+		if e.complexity.Slide.Lang == nil {
+			break
+		}
+
+		return e.complexity.Slide.Lang(childComplexity), true
+
+	case "Slide.url":
+		if e.complexity.Slide.Url == nil {
+			break
+		}
+
+		return e.complexity.Slide.Url(childComplexity), true
+
+	case "Slide.session":
+		if e.complexity.Slide.Session == nil {
+			break
+		}
+
+		return e.complexity.Slide.Session(childComplexity), true
+
+	case "Slide.speaker":
+		if e.complexity.Slide.Speaker == nil {
+			break
+		}
+
+		return e.complexity.Slide.Speaker(childComplexity), true
 
 	case "Speaker.id":
 		if e.complexity.Speaker.Id == nil {
@@ -1927,6 +2039,210 @@ func (ec *executionContext) _LikeEvent_likes(ctx context.Context, field graphql.
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return graphql.MarshalInt(res)
+}
+
+var movieImplementors = []string{"Movie"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _Movie(ctx context.Context, sel ast.SelectionSet, obj *domains.Movie) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, movieImplementors)
+
+	var wg sync.WaitGroup
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Movie")
+		case "id":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Movie_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "movieId":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Movie_movieId(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "url":
+			out.Values[i] = ec._Movie_url(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "session":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Movie_session(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "speaker":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Movie_speaker(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	wg.Wait()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Movie_id(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Movie",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Movie().ID(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Movie_movieId(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Movie",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Movie().MovieID(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalInt(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Movie_url(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Movie",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.URL, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Movie_session(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Movie",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Movie().Session(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(domains.Session)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+
+	return ec._Session(ctx, field.Selections, &res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Movie_speaker(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Movie",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Movie().Speaker(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(domains.Speaker)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+
+	return ec._Speaker(ctx, field.Selections, &res)
 }
 
 var mutationImplementors = []string{"Mutation"}
@@ -3103,16 +3419,24 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "slideUrl":
-			out.Values[i] = ec._Session_slideUrl(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
-		case "movieUrl":
-			out.Values[i] = ec._Session_movieUrl(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+		case "slides":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_slides(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "movies":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_movies(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
 		case "liked":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
@@ -3476,7 +3800,7 @@ func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_slideUrl(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+func (ec *executionContext) _Session_slides(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer ec.Tracer.EndFieldExecution(ctx)
 	rctx := &graphql.ResolverContext{
@@ -3488,7 +3812,7 @@ func (ec *executionContext) _Session_slideUrl(ctx context.Context, field graphql
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.SlideURL, nil
+		return ec.resolvers.Session().Slides(rctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -3496,14 +3820,47 @@ func (ec *executionContext) _Session_slideUrl(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.([]domains.Slide)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return graphql.MarshalString(res)
+
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._Slide(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_movieUrl(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+func (ec *executionContext) _Session_movies(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer ec.Tracer.EndFieldExecution(ctx)
 	rctx := &graphql.ResolverContext{
@@ -3515,7 +3872,7 @@ func (ec *executionContext) _Session_movieUrl(ctx context.Context, field graphql
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.MovieURL, nil
+		return ec.resolvers.Session().Movies(rctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -3523,10 +3880,43 @@ func (ec *executionContext) _Session_movieUrl(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.([]domains.Movie)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return graphql.MarshalString(res)
+
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._Movie(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
 }
 
 // nolint: vetshadow
@@ -3890,6 +4280,242 @@ func (ec *executionContext) _SessionEdge_node(ctx context.Context, field graphql
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 
 	return ec._Session(ctx, field.Selections, &res)
+}
+
+var slideImplementors = []string{"Slide"}
+
+// nolint: gocyclo, errcheck, gas, goconst
+func (ec *executionContext) _Slide(ctx context.Context, sel ast.SelectionSet, obj *domains.Slide) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, slideImplementors)
+
+	var wg sync.WaitGroup
+	out := graphql.NewOrderedMap(len(fields))
+	invalid := false
+	for i, field := range fields {
+		out.Keys[i] = field.Alias
+
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Slide")
+		case "id":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Slide_id(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "slideId":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Slide_slideId(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "lang":
+			out.Values[i] = ec._Slide_lang(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "url":
+			out.Values[i] = ec._Slide_url(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "session":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Slide_session(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "speaker":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Slide_speaker(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	wg.Wait()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Slide_id(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Slide",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Slide().ID(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalID(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Slide_slideId(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Slide",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Slide().SlideID(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalInt(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Slide_lang(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Slide",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Lang, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Slide_url(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Slide",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.URL, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalString(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Slide_session(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Slide",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Slide().Session(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(domains.Session)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+
+	return ec._Session(ctx, field.Selections, &res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Slide_speaker(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer ec.Tracer.EndFieldExecution(ctx)
+	rctx := &graphql.ResolverContext{
+		Object: "Slide",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Slide().Speaker(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(domains.Speaker)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+
+	return ec._Speaker(ctx, field.Selections, &res)
 }
 
 var speakerImplementors = []string{"Speaker", "Node"}
@@ -6077,11 +6703,28 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
-  slideUrl: String!
-  movieUrl: String!
+  slides: [Slide!]!
+  movies: [Movie!]!
 
   liked: Int!
   speakers: [Speaker!]!
+}
+
+type Slide {
+  id: ID!
+  slideId: Int!
+  lang: String!
+  url: String!
+  session: Session!
+  speaker: Speaker!
+}
+
+type Movie {
+  id: ID!
+  movieId: Int!
+  url: String!
+  session: Session!
+  speaker: Speaker!
 }
 
 """
