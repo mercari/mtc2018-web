@@ -30,7 +30,7 @@ func NewSlideRepo() (SlideRepo, error) {
 		return nil, err
 	}
 
-	repo := &slideRepo{list: []Slide{}}
+	repo := &slideRepo{}
 
 	for index, slideData := range data.Slides {
 		slide := Slide{
@@ -52,7 +52,7 @@ type slideRepo struct {
 }
 
 func (repo *slideRepo) ListBySessionID(ctx context.Context, sessionID int) ([]Slide, error) {
-	slides := []Slide{}
+	var slides []Slide
 
 	for _, s := range repo.list {
 		if s.SessionID == sessionID {

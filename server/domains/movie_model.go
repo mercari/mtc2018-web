@@ -29,7 +29,7 @@ func NewMovieRepo() (MovieRepo, error) {
 		return nil, err
 	}
 
-	repo := &movieRepo{list: []Movie{}}
+	repo := &movieRepo{}
 
 	for index, movieData := range data.Movies {
 		movie := Movie{
@@ -49,7 +49,7 @@ type movieRepo struct {
 }
 
 func (repo *movieRepo) ListByMoviesBySessionID(ctx context.Context, sessionID int) ([]Movie, error) {
-	movies := []Movie{}
+	var movies []Movie
 
 	for _, s := range repo.list {
 		if s.SessionID == sessionID {
