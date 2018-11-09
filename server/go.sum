@@ -14,6 +14,8 @@ github.com/99designs/gqlgen v0.4.5-0.20181031091424-fd4f55877352 h1:Aqw6H6Vxnw5o
 github.com/99designs/gqlgen v0.4.5-0.20181031091424-fd4f55877352/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
 github.com/99designs/gqlgen v0.4.5-0.20181103041143-4bda3bc1291b h1:GLnsmEWv9ItvQgnF5dp4PZAn7pbjMEuyEviwRY1ZrFI=
 github.com/99designs/gqlgen v0.4.5-0.20181103041143-4bda3bc1291b/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
+github.com/99designs/gqlgen v0.4.5-0.20181109112832-5c28d0116ee1 h1:Mb7XKnHjxtBpDCoXqlgrlxu6F3xChp7k2wN0hYixRMU=
+github.com/99designs/gqlgen v0.4.5-0.20181109112832-5c28d0116ee1/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
 github.com/99designs/gqlgen-contrib v0.0.0-20181109092810-8e77b02b5048 h1:xztWXOIdq3WOi8vIOwm0XCPgMZ1bh0sm5tIZggKaBtQ=
 github.com/99designs/gqlgen-contrib v0.0.0-20181109092810-8e77b02b5048/go.mod h1:YBpBdxshfUEBRQzGDvYsWGKUnbnh+aYyOKwtzJajAq4=
 github.com/99designs/gqlgen-contrib v0.0.0-20181109094913-853307535d8b h1:4TqoREVQAIVvLNUvUkrX4cW25Cc2+3wf+qe8mGVJpfw=
@@ -115,6 +117,7 @@ golang.org/x/tools v0.0.0-20181013182035-5e66757b835f h1:rUshVq0fjlLKvS31sAnzn67
 golang.org/x/tools v0.0.0-20181013182035-5e66757b835f/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20181030221726-6c7e314b6563 h1:NIou6eNFigscvKJmsbyez16S2cIS6idossORlFtSt2E=
 golang.org/x/tools v0.0.0-20181102050050-92b943e6bff7 h1:BdbtPv/+DFTRA5+9560n/FamYyleF+XonScH/3H1+Tk=
+golang.org/x/tools v0.0.0-20181108221941-77439c55185e h1:K3U/qqeqsdRDia5JvOjLYpul2ZdYJgMmYm6ykH0rbAM=
 google.golang.org/api v0.0.0-20180910000450-7ca32eb868bf/go.mod h1:4mhQ8q/RsB7i+udVvVy5NUi08OU8ZlA0gRVgrF7VFY0=
 google.golang.org/api v0.0.0-20181015000436-6873a707eace h1:MzwdtqkCGXLc7IvQ2LB/+W+U+jlwqu+iTDMOQhQXZp0=
 google.golang.org/api v0.0.0-20181015000436-6873a707eace/go.mod h1:4mhQ8q/RsB7i+udVvVy5NUi08OU8ZlA0gRVgrF7VFY0=
