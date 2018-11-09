@@ -12,6 +12,10 @@ github.com/99designs/gqlgen v0.4.5-0.20181031063622-a905efa88e85 h1:tXC5Ky5OQKco
 github.com/99designs/gqlgen v0.4.5-0.20181031063622-a905efa88e85/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
 github.com/99designs/gqlgen v0.4.5-0.20181031091424-fd4f55877352 h1:Aqw6H6Vxnw5oovLuPlRauzm9hboq8MhqPeRbncH0aHU=
 github.com/99designs/gqlgen v0.4.5-0.20181031091424-fd4f55877352/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
+github.com/99designs/gqlgen v0.4.5-0.20181103041143-4bda3bc1291b h1:GLnsmEWv9ItvQgnF5dp4PZAn7pbjMEuyEviwRY1ZrFI=
+github.com/99designs/gqlgen v0.4.5-0.20181103041143-4bda3bc1291b/go.mod h1:KSQDfLlTTGmzlRgLGm6HeKKKo598l5E2svEM6Nz2Jnw=
+github.com/99designs/gqlgen-contrib v0.0.0-20181109092810-8e77b02b5048 h1:xztWXOIdq3WOi8vIOwm0XCPgMZ1bh0sm5tIZggKaBtQ=
+github.com/99designs/gqlgen-contrib v0.0.0-20181109092810-8e77b02b5048/go.mod h1:YBpBdxshfUEBRQzGDvYsWGKUnbnh+aYyOKwtzJajAq4=
 github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895 h1:dmc/C8bpE5VkQn65PNbbyACDC8xw8Hpp/NEurdPmQDQ=
 github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/DataDog/opencensus-go-exporter-datadog v0.0.0-20180917103902-e6c7f767dc57 h1:V1H8VVVxLALfaPLvAFCPoa0AN5nVPAqEu2UvH+QP3Vc=
