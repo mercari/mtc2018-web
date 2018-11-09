@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"cloud.google.com/go/spanner"
-	"github.com/99designs/gqlgen/gqlapollotracing"
-	"github.com/99designs/gqlgen/gqlopencensus"
+	"github.com/99designs/gqlgen-contrib/gqlapollotracing"
+	"github.com/99designs/gqlgen-contrib/gqlopencensus"
 	"github.com/99designs/gqlgen/handler"
 	"github.com/DataDog/opencensus-go-exporter-datadog"
 	"github.com/gorilla/websocket"
