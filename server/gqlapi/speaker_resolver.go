@@ -32,3 +32,29 @@ func (r *speakerResolver) Sessions(ctx context.Context, obj *domains.Speaker) ([
 
 	return sessions, nil
 }
+
+func (r *speakerResolver) Slides(ctx context.Context, obj *domains.Speaker) ([]domains.Slide, error) {
+	if obj == nil {
+		return nil, nil
+	}
+
+	slides, err := r.slideRepo.ListBySpeakerID(ctx, obj.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return slides, nil
+}
+
+func (r *speakerResolver) Movies(ctx context.Context, obj *domains.Speaker) ([]domains.Movie, error) {
+	if obj == nil {
+		return nil, nil
+	}
+
+	movies, err := r.movieRepo.ListByMoviesBySpeakerID(ctx, obj.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return movies, nil
+}

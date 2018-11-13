@@ -21,6 +21,7 @@ func (*Slide) IsNode() {}
 // SlideRepo is basic operation unit for Slide.
 type SlideRepo interface {
 	ListBySessionID(ctx context.Context, sessionID int) ([]Slide, error)
+	ListBySpeakerID(ctx context.Context, speakerID string) ([]Slide, error)
 }
 
 // NewSlideRepo returns new SlideRepo.
@@ -56,6 +57,18 @@ func (repo *slideRepo) ListBySessionID(ctx context.Context, sessionID int) ([]Sl
 
 	for _, s := range repo.list {
 		if s.SessionID == sessionID {
+			slides = append(slides, s)
+		}
+	}
+
+	return slides, nil
+}
+
+func (repo *slideRepo) ListBySpeakerID(ctx context.Context, speakerID string) ([]Slide, error) {
+	var slides []Slide
+
+	for _, s := range repo.list {
+		if s.SpeakerID == speakerID {
 			slides = append(slides, s)
 		}
 	}

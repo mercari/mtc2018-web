@@ -135,6 +135,8 @@ type Speaker implements Node {
   githubId: String!
 
   sessions: [Session!]
+  slides: [Slide!]!
+  movies: [Movie!]!
 }
 
 type ExhibitionConnection {

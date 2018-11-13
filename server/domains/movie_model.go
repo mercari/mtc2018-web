@@ -20,6 +20,7 @@ func (*Movie) IsNode() {}
 // MovieRepo is basic operation unit for Movie.
 type MovieRepo interface {
 	ListByMoviesBySessionID(ctx context.Context, sessionID int) ([]Movie, error)
+	ListByMoviesBySpeakerID(ctx context.Context, speakerID string) ([]Movie, error)
 }
 
 // NewMovieRepo returns new MovieRepo
@@ -53,6 +54,17 @@ func (repo *movieRepo) ListByMoviesBySessionID(ctx context.Context, sessionID in
 
 	for _, s := range repo.list {
 		if s.SessionID == sessionID {
+			movies = append(movies, s)
+		}
+	}
+	return movies, nil
+}
+
+func (repo *movieRepo) ListByMoviesBySpeakerID(ctx context.Context, speakerID string) ([]Movie, error) {
+	var movies []Movie
+
+	for _, s := range repo.list {
+		if s.SpeakerID == speakerID {
 			movies = append(movies, s)
 		}
 	}
