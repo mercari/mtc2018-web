@@ -52,7 +52,7 @@ fragment SessionFragment on Session {
     lang
     slideId
     url
-    speaker {
+    speakers {
       name
     }
   }
@@ -60,7 +60,7 @@ fragment SessionFragment on Session {
     id
     movieId
     url
-    speaker {
+    speakers {
       name
     }
   }

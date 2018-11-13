@@ -39,15 +39,15 @@ func (r *slideResolver) Session(ctx context.Context, obj *domains.Slide) (domain
 	return *sessions[0], nil
 }
 
-func (r *slideResolver) Speaker(ctx context.Context, obj *domains.Slide) (domains.Speaker, error) {
+func (r *slideResolver) Speakers(ctx context.Context, obj *domains.Slide) ([]domains.Speaker, error) {
 	if obj == nil {
-		return domains.Speaker{}, nil
+		return []domains.Speaker{}, nil
 	}
 
 	speakers, err := r.speakerRepo.Get(ctx, obj.SpeakerID)
 	if err != nil || len(speakers) < 1 {
-		return domains.Speaker{}, nil
+		return []domains.Speaker{}, nil
 	}
 
-	return *speakers[0], nil
+	return speakers, nil
 }

@@ -37,15 +37,15 @@ func (r *movieResolver) Session(ctx context.Context, obj *domains.Movie) (domain
 
 	return *sessions[0], nil
 }
-func (r *movieResolver) Speaker(ctx context.Context, obj *domains.Movie) (domains.Speaker, error) {
+func (r *movieResolver) Speakers(ctx context.Context, obj *domains.Movie) ([]domains.Speaker, error) {
 	if obj == nil {
-		return domains.Speaker{}, nil
+		return []domains.Speaker{}, nil
 	}
 
 	speakers, err := r.speakerRepo.Get(ctx, obj.SpeakerID)
 	if err != nil || len(speakers) < 1 {
-		return domains.Speaker{}, nil
+		return []domains.Speaker{}, nil
 	}
 
-	return *speakers[0], nil
+	return speakers, nil
 }

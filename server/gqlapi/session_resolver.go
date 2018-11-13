@@ -42,7 +42,7 @@ func (r *sessionResolver) Speakers(ctx context.Context, obj *domains.Session) ([
 
 	var resp []domains.Speaker
 	for _, session := range sessionList {
-		resp = append(resp, *session)
+		resp = append(resp, session)
 	}
 
 	return resp, nil

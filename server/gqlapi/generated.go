@@ -85,11 +85,11 @@ type ComplexityRoot struct {
 	}
 
 	Movie struct {
-		Id      func(childComplexity int) int
-		MovieId func(childComplexity int) int
-		Url     func(childComplexity int) int
-		Session func(childComplexity int) int
-		Speaker func(childComplexity int) int
+		Id       func(childComplexity int) int
+		MovieId  func(childComplexity int) int
+		Url      func(childComplexity int) int
+		Session  func(childComplexity int) int
+		Speakers func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -163,12 +163,12 @@ type ComplexityRoot struct {
 	}
 
 	Slide struct {
-		Id      func(childComplexity int) int
-		SlideId func(childComplexity int) int
-		Lang    func(childComplexity int) int
-		Url     func(childComplexity int) int
-		Session func(childComplexity int) int
-		Speaker func(childComplexity int) int
+		Id       func(childComplexity int) int
+		SlideId  func(childComplexity int) int
+		Lang     func(childComplexity int) int
+		Url      func(childComplexity int) int
+		Session  func(childComplexity int) int
+		Speakers func(childComplexity int) int
 	}
 
 	Speaker struct {
@@ -204,7 +204,7 @@ type MovieResolver interface {
 	MovieID(ctx context.Context, obj *domains.Movie) (int, error)
 
 	Session(ctx context.Context, obj *domains.Movie) (domains.Session, error)
-	Speaker(ctx context.Context, obj *domains.Movie) (domains.Speaker, error)
+	Speakers(ctx context.Context, obj *domains.Movie) ([]domains.Speaker, error)
 }
 type MutationResolver interface {
 	CreateLike(ctx context.Context, input CreateLikeInput) (*CreateLikePayload, error)
@@ -233,7 +233,7 @@ type SlideResolver interface {
 	SlideID(ctx context.Context, obj *domains.Slide) (int, error)
 
 	Session(ctx context.Context, obj *domains.Slide) (domains.Session, error)
-	Speaker(ctx context.Context, obj *domains.Slide) (domains.Speaker, error)
+	Speakers(ctx context.Context, obj *domains.Slide) ([]domains.Speaker, error)
 }
 type SpeakerResolver interface {
 	ID(ctx context.Context, obj *domains.Speaker) (string, error)
@@ -672,12 +672,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Movie.Session(childComplexity), true
 
-	case "Movie.speaker":
-		if e.complexity.Movie.Speaker == nil {
+	case "Movie.speakers":
+		if e.complexity.Movie.Speakers == nil {
 			break
 		}
 
-		return e.complexity.Movie.Speaker(childComplexity), true
+		return e.complexity.Movie.Speakers(childComplexity), true
 
 	case "Mutation.createLike":
 		if e.complexity.Mutation.CreateLike == nil {
@@ -1050,12 +1050,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Slide.Session(childComplexity), true
 
-	case "Slide.speaker":
-		if e.complexity.Slide.Speaker == nil {
+	case "Slide.speakers":
+		if e.complexity.Slide.Speakers == nil {
 			break
 		}
 
-		return e.complexity.Slide.Speaker(childComplexity), true
+		return e.complexity.Slide.Speakers(childComplexity), true
 
 	case "Speaker.id":
 		if e.complexity.Speaker.Id == nil {
@@ -2088,10 +2088,10 @@ func (ec *executionContext) _Movie(ctx context.Context, sel ast.SelectionSet, ob
 				}
 				wg.Done()
 			}(i, field)
-		case "speaker":
+		case "speakers":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Movie_speaker(ctx, field, obj)
+				out.Values[i] = ec._Movie_speakers(ctx, field, obj)
 				if out.Values[i] == graphql.Null {
 					invalid = true
 				}
@@ -2218,7 +2218,7 @@ func (ec *executionContext) _Movie_session(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Movie_speaker(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
+func (ec *executionContext) _Movie_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer ec.Tracer.EndFieldExecution(ctx)
 	rctx := &graphql.ResolverContext{
@@ -2230,7 +2230,7 @@ func (ec *executionContext) _Movie_speaker(ctx context.Context, field graphql.Co
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Movie().Speaker(rctx, obj)
+		return ec.resolvers.Movie().Speakers(rctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2238,11 +2238,43 @@ func (ec *executionContext) _Movie_speaker(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(domains.Speaker)
+	res := resTmp.([]domains.Speaker)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 
-	return ec._Speaker(ctx, field.Selections, &res)
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._Speaker(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
 }
 
 var mutationImplementors = []string{"Mutation"}
@@ -4334,10 +4366,10 @@ func (ec *executionContext) _Slide(ctx context.Context, sel ast.SelectionSet, ob
 				}
 				wg.Done()
 			}(i, field)
-		case "speaker":
+		case "speakers":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Slide_speaker(ctx, field, obj)
+				out.Values[i] = ec._Slide_speakers(ctx, field, obj)
 				if out.Values[i] == graphql.Null {
 					invalid = true
 				}
@@ -4491,7 +4523,7 @@ func (ec *executionContext) _Slide_session(ctx context.Context, field graphql.Co
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Slide_speaker(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
+func (ec *executionContext) _Slide_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer ec.Tracer.EndFieldExecution(ctx)
 	rctx := &graphql.ResolverContext{
@@ -4503,7 +4535,7 @@ func (ec *executionContext) _Slide_speaker(ctx context.Context, field graphql.Co
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Slide().Speaker(rctx, obj)
+		return ec.resolvers.Slide().Speakers(rctx, obj)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -4511,11 +4543,43 @@ func (ec *executionContext) _Slide_speaker(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(domains.Speaker)
+	res := resTmp.([]domains.Speaker)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 
-	return ec._Speaker(ctx, field.Selections, &res)
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._Speaker(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
 }
 
 var speakerImplementors = []string{"Speaker", "Node"}
@@ -6716,7 +6780,7 @@ type Slide {
   lang: String!
   url: String!
   session: Session!
-  speaker: Speaker!
+  speakers: [Speaker!]!
 }
 
 type Movie {
@@ -6724,7 +6788,7 @@ type Movie {
   movieId: Int!
   url: String!
   session: Session!
-  speaker: Speaker!
+  speakers: [Speaker!]!
 }
 
 """

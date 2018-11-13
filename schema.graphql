@@ -106,7 +106,7 @@ type Slide {
   lang: String!
   url: String!
   session: Session!
-  speaker: Speaker!
+  speakers: [Speaker!]!
 }
 
 type Movie {
@@ -114,7 +114,7 @@ type Movie {
   movieId: Int!
   url: String!
   session: Session!
-  speaker: Speaker!
+  speakers: [Speaker!]!
 }
 
 """

@@ -1113,6 +1113,18 @@
       "url": "https://speakerdeck.com/mercari/mtc2018-high-performance-android-us-app-evolution",
       "sessionId": 30,
       "speakerId": "matthew_vern"
+    },
+    {
+      "lang": "jp",
+      "url": "https://speakerdeck.com/mercari/mtc2018-high-yi-shi-android-us-app-evolution",
+      "sessionId": 30,
+      "speakerId": "atsuko_fukui"
+    },
+    {
+      "lang": "en",
+      "url": "https://speakerdeck.com/mercari/mtc2018-high-performance-android-us-app-evolution",
+      "sessionId": 30,
+      "speakerId": "atsuko_fukui"
     }
   ],
   "movies": [
@@ -1240,6 +1252,16 @@
       "url": "https://youtu.be/i9r9wKzn6uE",
       "sessionId": 30,
       "speakerId": "matthew_vern"
+    },
+    {
+      "url": "https://youtu.be/i9r9wKzn6uE",
+      "sessionId": 30,
+      "speakerId": "atsuko_fukui"
+    },
+    {
+      "url": "https://youtu.be/037a79dCuaY",
+      "sessionId": 0,
+      "speakerId": "yuki_hamada"
     }
   ]
 }
