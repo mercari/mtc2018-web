@@ -2,8 +2,8 @@ module github.com/mercari/mtc2018-web/server
 
 require (
 	cloud.google.com/go v0.30.0
-	github.com/99designs/gqlgen v0.4.5-0.20181103041143-4bda3bc1291b
-	github.com/99designs/gqlgen-contrib v0.0.0-20181109094913-853307535d8b
+	github.com/99designs/gqlgen v0.4.5-0.20181109112832-5c28d0116ee1
+	github.com/99designs/gqlgen-contrib v0.0.0-20181109114937-d2fb1b6eb13d
 	github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895 // indirect
 	github.com/DataDog/opencensus-go-exporter-datadog v0.0.0-20180917103902-e6c7f767dc57
 	github.com/agnivade/levenshtein v1.0.1 // indirect

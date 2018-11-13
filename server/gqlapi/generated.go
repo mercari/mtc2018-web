@@ -145,10 +145,10 @@ type ComplexityRoot struct {
 		OutlineJa func(childComplexity int) int
 		Lang      func(childComplexity int) int
 		Tags      func(childComplexity int) int
-		Liked     func(childComplexity int) int
-		Speakers  func(childComplexity int) int
 		Slides    func(childComplexity int) int
 		Movies    func(childComplexity int) int
+		Liked     func(childComplexity int) int
+		Speakers  func(childComplexity int) int
 	}
 
 	SessionConnection struct {
@@ -225,10 +225,10 @@ type QueryResolver interface {
 type SessionResolver interface {
 	ID(ctx context.Context, obj *domains.Session) (string, error)
 
-	Liked(ctx context.Context, obj *domains.Session) (int, error)
-	Speakers(ctx context.Context, obj *domains.Session) ([]domains.Speaker, error)
 	Slides(ctx context.Context, obj *domains.Session) ([]domains.Slide, error)
 	Movies(ctx context.Context, obj *domains.Session) ([]domains.Movie, error)
+	Liked(ctx context.Context, obj *domains.Session) (int, error)
+	Speakers(ctx context.Context, obj *domains.Session) ([]domains.Speaker, error)
 }
 type SlideResolver interface {
 	ID(ctx context.Context, obj *domains.Slide) (string, error)
@@ -956,20 +956,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Session.Tags(childComplexity), true
 
-	case "Session.liked":
-		if e.complexity.Session.Liked == nil {
-			break
-		}
-
-		return e.complexity.Session.Liked(childComplexity), true
-
-	case "Session.speakers":
-		if e.complexity.Session.Speakers == nil {
-			break
-		}
-
-		return e.complexity.Session.Speakers(childComplexity), true
-
 	case "Session.slides":
 		if e.complexity.Session.Slides == nil {
 			break
@@ -983,6 +969,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Session.Movies(childComplexity), true
+
+	case "Session.liked":
+		if e.complexity.Session.Liked == nil {
+			break
+		}
+
+		return e.complexity.Session.Liked(childComplexity), true
+
+	case "Session.speakers":
+		if e.complexity.Session.Speakers == nil {
+			break
+		}
+
+		return e.complexity.Session.Speakers(childComplexity), true
 
 	case "SessionConnection.pageInfo":
 		if e.complexity.SessionConnection.PageInfo == nil {
@@ -1288,7 +1288,7 @@ func (ec *executionContext) _CreateLikePayload(ctx context.Context, sel ast.Sele
 // nolint: vetshadow
 func (ec *executionContext) _CreateLikePayload_clientMutationId(ctx context.Context, field graphql.CollectedField, obj *CreateLikePayload) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "CreateLikePayload",
 		Args:   nil,
@@ -1316,7 +1316,7 @@ func (ec *executionContext) _CreateLikePayload_clientMutationId(ctx context.Cont
 // nolint: vetshadow
 func (ec *executionContext) _CreateLikePayload_like(ctx context.Context, field graphql.CollectedField, obj *CreateLikePayload) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "CreateLikePayload",
 		Args:   nil,
@@ -1409,7 +1409,7 @@ func (ec *executionContext) _Exhibition(ctx context.Context, sel ast.SelectionSe
 // nolint: vetshadow
 func (ec *executionContext) _Exhibition_id(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Exhibition",
 		Args:   nil,
@@ -1436,7 +1436,7 @@ func (ec *executionContext) _Exhibition_id(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Exhibition_exhibitionId(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Exhibition",
 		Args:   nil,
@@ -1463,7 +1463,7 @@ func (ec *executionContext) _Exhibition_exhibitionId(ctx context.Context, field 
 // nolint: vetshadow
 func (ec *executionContext) _Exhibition_place(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Exhibition",
 		Args:   nil,
@@ -1490,7 +1490,7 @@ func (ec *executionContext) _Exhibition_place(ctx context.Context, field graphql
 // nolint: vetshadow
 func (ec *executionContext) _Exhibition_title(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Exhibition",
 		Args:   nil,
@@ -1517,7 +1517,7 @@ func (ec *executionContext) _Exhibition_title(ctx context.Context, field graphql
 // nolint: vetshadow
 func (ec *executionContext) _Exhibition_titleJa(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Exhibition",
 		Args:   nil,
@@ -1544,7 +1544,7 @@ func (ec *executionContext) _Exhibition_titleJa(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) _Exhibition_description(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Exhibition",
 		Args:   nil,
@@ -1571,7 +1571,7 @@ func (ec *executionContext) _Exhibition_description(ctx context.Context, field g
 // nolint: vetshadow
 func (ec *executionContext) _Exhibition_descriptionJa(ctx context.Context, field graphql.CollectedField, obj *domains.Exhibition) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Exhibition",
 		Args:   nil,
@@ -1638,7 +1638,7 @@ func (ec *executionContext) _ExhibitionConnection(ctx context.Context, sel ast.S
 // nolint: vetshadow
 func (ec *executionContext) _ExhibitionConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *ExhibitionConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "ExhibitionConnection",
 		Args:   nil,
@@ -1666,7 +1666,7 @@ func (ec *executionContext) _ExhibitionConnection_pageInfo(ctx context.Context, 
 // nolint: vetshadow
 func (ec *executionContext) _ExhibitionConnection_edges(ctx context.Context, field graphql.CollectedField, obj *ExhibitionConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "ExhibitionConnection",
 		Args:   nil,
@@ -1726,7 +1726,7 @@ func (ec *executionContext) _ExhibitionConnection_edges(ctx context.Context, fie
 // nolint: vetshadow
 func (ec *executionContext) _ExhibitionConnection_nodes(ctx context.Context, field graphql.CollectedField, obj *ExhibitionConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "ExhibitionConnection",
 		Args:   nil,
@@ -1818,7 +1818,7 @@ func (ec *executionContext) _ExhibitionEdge(ctx context.Context, sel ast.Selecti
 // nolint: vetshadow
 func (ec *executionContext) _ExhibitionEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *ExhibitionEdge) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "ExhibitionEdge",
 		Args:   nil,
@@ -1846,7 +1846,7 @@ func (ec *executionContext) _ExhibitionEdge_cursor(ctx context.Context, field gr
 // nolint: vetshadow
 func (ec *executionContext) _ExhibitionEdge_node(ctx context.Context, field graphql.CollectedField, obj *ExhibitionEdge) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "ExhibitionEdge",
 		Args:   nil,
@@ -1918,7 +1918,7 @@ func (ec *executionContext) _Like(ctx context.Context, sel ast.SelectionSet, obj
 // nolint: vetshadow
 func (ec *executionContext) _Like_id(ctx context.Context, field graphql.CollectedField, obj *domains.Like) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
 		Args:   nil,
@@ -1945,7 +1945,7 @@ func (ec *executionContext) _Like_id(ctx context.Context, field graphql.Collecte
 // nolint: vetshadow
 func (ec *executionContext) _Like_session(ctx context.Context, field graphql.CollectedField, obj *domains.Like) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Like",
 		Args:   nil,
@@ -2008,7 +2008,7 @@ func (ec *executionContext) _LikeEvent(ctx context.Context, sel ast.SelectionSet
 // nolint: vetshadow
 func (ec *executionContext) _LikeEvent_sessionId(ctx context.Context, field graphql.CollectedField, obj *LikeEvent) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "LikeEvent",
 		Args:   nil,
@@ -2035,7 +2035,7 @@ func (ec *executionContext) _LikeEvent_sessionId(ctx context.Context, field grap
 // nolint: vetshadow
 func (ec *executionContext) _LikeEvent_likes(ctx context.Context, field graphql.CollectedField, obj *LikeEvent) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "LikeEvent",
 		Args:   nil,
@@ -2129,7 +2129,7 @@ func (ec *executionContext) _Movie(ctx context.Context, sel ast.SelectionSet, ob
 // nolint: vetshadow
 func (ec *executionContext) _Movie_id(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Movie",
 		Args:   nil,
@@ -2156,7 +2156,7 @@ func (ec *executionContext) _Movie_id(ctx context.Context, field graphql.Collect
 // nolint: vetshadow
 func (ec *executionContext) _Movie_movieId(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Movie",
 		Args:   nil,
@@ -2183,7 +2183,7 @@ func (ec *executionContext) _Movie_movieId(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Movie_url(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Movie",
 		Args:   nil,
@@ -2210,7 +2210,7 @@ func (ec *executionContext) _Movie_url(ctx context.Context, field graphql.Collec
 // nolint: vetshadow
 func (ec *executionContext) _Movie_session(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Movie",
 		Args:   nil,
@@ -2238,7 +2238,7 @@ func (ec *executionContext) _Movie_session(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Movie_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Movie) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Movie",
 		Args:   nil,
@@ -2329,7 +2329,7 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 // nolint: vetshadow
 func (ec *executionContext) _Mutation_createLike(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Mutation_createLike_args(rawArgs)
 	if err != nil {
@@ -2421,7 +2421,7 @@ func (ec *executionContext) _News(ctx context.Context, sel ast.SelectionSet, obj
 // nolint: vetshadow
 func (ec *executionContext) _News_id(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -2448,7 +2448,7 @@ func (ec *executionContext) _News_id(ctx context.Context, field graphql.Collecte
 // nolint: vetshadow
 func (ec *executionContext) _News_newsId(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -2475,7 +2475,7 @@ func (ec *executionContext) _News_newsId(ctx context.Context, field graphql.Coll
 // nolint: vetshadow
 func (ec *executionContext) _News_date(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -2502,7 +2502,7 @@ func (ec *executionContext) _News_date(ctx context.Context, field graphql.Collec
 // nolint: vetshadow
 func (ec *executionContext) _News_message(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -2529,7 +2529,7 @@ func (ec *executionContext) _News_message(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -2556,7 +2556,7 @@ func (ec *executionContext) _News_messageJa(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) _News_link(ctx context.Context, field graphql.CollectedField, obj *domains.News) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "News",
 		Args:   nil,
@@ -2624,7 +2624,7 @@ func (ec *executionContext) _NewsConnection(ctx context.Context, sel ast.Selecti
 // nolint: vetshadow
 func (ec *executionContext) _NewsConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *NewsConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "NewsConnection",
 		Args:   nil,
@@ -2652,7 +2652,7 @@ func (ec *executionContext) _NewsConnection_pageInfo(ctx context.Context, field 
 // nolint: vetshadow
 func (ec *executionContext) _NewsConnection_edges(ctx context.Context, field graphql.CollectedField, obj *NewsConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "NewsConnection",
 		Args:   nil,
@@ -2712,7 +2712,7 @@ func (ec *executionContext) _NewsConnection_edges(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) _NewsConnection_nodes(ctx context.Context, field graphql.CollectedField, obj *NewsConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "NewsConnection",
 		Args:   nil,
@@ -2804,7 +2804,7 @@ func (ec *executionContext) _NewsEdge(ctx context.Context, sel ast.SelectionSet,
 // nolint: vetshadow
 func (ec *executionContext) _NewsEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *NewsEdge) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "NewsEdge",
 		Args:   nil,
@@ -2832,7 +2832,7 @@ func (ec *executionContext) _NewsEdge_cursor(ctx context.Context, field graphql.
 // nolint: vetshadow
 func (ec *executionContext) _NewsEdge_node(ctx context.Context, field graphql.CollectedField, obj *NewsEdge) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "NewsEdge",
 		Args:   nil,
@@ -2899,7 +2899,7 @@ func (ec *executionContext) _PageInfo(ctx context.Context, sel ast.SelectionSet,
 // nolint: vetshadow
 func (ec *executionContext) _PageInfo_startCursor(ctx context.Context, field graphql.CollectedField, obj *PageInfo) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "PageInfo",
 		Args:   nil,
@@ -2927,7 +2927,7 @@ func (ec *executionContext) _PageInfo_startCursor(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) _PageInfo_endCursor(ctx context.Context, field graphql.CollectedField, obj *PageInfo) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "PageInfo",
 		Args:   nil,
@@ -2955,7 +2955,7 @@ func (ec *executionContext) _PageInfo_endCursor(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) _PageInfo_hasNextPage(ctx context.Context, field graphql.CollectedField, obj *PageInfo) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "PageInfo",
 		Args:   nil,
@@ -2982,7 +2982,7 @@ func (ec *executionContext) _PageInfo_hasNextPage(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) _PageInfo_hasPreviousPage(ctx context.Context, field graphql.CollectedField, obj *PageInfo) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "PageInfo",
 		Args:   nil,
@@ -3091,7 +3091,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 // nolint: vetshadow
 func (ec *executionContext) _Query_node(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Query_node_args(rawArgs)
 	if err != nil {
@@ -3122,7 +3122,7 @@ func (ec *executionContext) _Query_node(ctx context.Context, field graphql.Colle
 // nolint: vetshadow
 func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Query_nodes_args(rawArgs)
 	if err != nil {
@@ -3192,7 +3192,7 @@ func (ec *executionContext) _Query_nodes(ctx context.Context, field graphql.Coll
 // nolint: vetshadow
 func (ec *executionContext) _Query_sessionList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Query_sessionList_args(rawArgs)
 	if err != nil {
@@ -3226,7 +3226,7 @@ func (ec *executionContext) _Query_sessionList(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Query_session(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Query_session_args(rawArgs)
 	if err != nil {
@@ -3261,7 +3261,7 @@ func (ec *executionContext) _Query_session(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Query_exhibisionList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Query_exhibisionList_args(rawArgs)
 	if err != nil {
@@ -3295,7 +3295,7 @@ func (ec *executionContext) _Query_exhibisionList(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) _Query_newsList(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Query_newsList_args(rawArgs)
 	if err != nil {
@@ -3329,7 +3329,7 @@ func (ec *executionContext) _Query_newsList(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field_Query___type_args(rawArgs)
 	if err != nil {
@@ -3364,7 +3364,7 @@ func (ec *executionContext) _Query___type(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) _Query___schema(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Query",
 		Args:   nil,
@@ -3469,24 +3469,6 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "liked":
-			wg.Add(1)
-			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Session_liked(ctx, field, obj)
-				if out.Values[i] == graphql.Null {
-					invalid = true
-				}
-				wg.Done()
-			}(i, field)
-		case "speakers":
-			wg.Add(1)
-			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Session_speakers(ctx, field, obj)
-				if out.Values[i] == graphql.Null {
-					invalid = true
-				}
-				wg.Done()
-			}(i, field)
 		case "slides":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
@@ -3500,6 +3482,24 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
 				out.Values[i] = ec._Session_movies(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "liked":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_liked(ctx, field, obj)
+				if out.Values[i] == graphql.Null {
+					invalid = true
+				}
+				wg.Done()
+			}(i, field)
+		case "speakers":
+			wg.Add(1)
+			go func(i int, field graphql.CollectedField) {
+				out.Values[i] = ec._Session_speakers(ctx, field, obj)
 				if out.Values[i] == graphql.Null {
 					invalid = true
 				}
@@ -3519,7 +3519,7 @@ func (ec *executionContext) _Session(ctx context.Context, sel ast.SelectionSet, 
 // nolint: vetshadow
 func (ec *executionContext) _Session_id(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3546,7 +3546,7 @@ func (ec *executionContext) _Session_id(ctx context.Context, field graphql.Colle
 // nolint: vetshadow
 func (ec *executionContext) _Session_sessionId(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3573,7 +3573,7 @@ func (ec *executionContext) _Session_sessionId(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Session_type(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3600,7 +3600,7 @@ func (ec *executionContext) _Session_type(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) _Session_place(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3627,7 +3627,7 @@ func (ec *executionContext) _Session_place(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Session_title(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3654,7 +3654,7 @@ func (ec *executionContext) _Session_title(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3681,7 +3681,7 @@ func (ec *executionContext) _Session_titleJa(ctx context.Context, field graphql.
 // nolint: vetshadow
 func (ec *executionContext) _Session_startTime(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3708,7 +3708,7 @@ func (ec *executionContext) _Session_startTime(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3735,7 +3735,7 @@ func (ec *executionContext) _Session_endTime(ctx context.Context, field graphql.
 // nolint: vetshadow
 func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3762,7 +3762,7 @@ func (ec *executionContext) _Session_outline(ctx context.Context, field graphql.
 // nolint: vetshadow
 func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3789,7 +3789,7 @@ func (ec *executionContext) _Session_outlineJa(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3816,7 +3816,7 @@ func (ec *executionContext) _Session_lang(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3850,96 +3850,9 @@ func (ec *executionContext) _Session_tags(ctx context.Context, field graphql.Col
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
-	rctx := &graphql.ResolverContext{
-		Object: "Session",
-		Args:   nil,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Session().Liked(rctx, obj)
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return graphql.MarshalInt(res)
-}
-
-// nolint: vetshadow
-func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
-	rctx := &graphql.ResolverContext{
-		Object: "Session",
-		Args:   nil,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Session().Speakers(rctx, obj)
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]domains.Speaker)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-
-	arr1 := make(graphql.Array, len(res))
-	var wg sync.WaitGroup
-
-	isLen1 := len(res) == 1
-	if !isLen1 {
-		wg.Add(len(res))
-	}
-
-	for idx1 := range res {
-		idx1 := idx1
-		rctx := &graphql.ResolverContext{
-			Index:  &idx1,
-			Result: &res[idx1],
-		}
-		ctx := graphql.WithResolverContext(ctx, rctx)
-		f := func(idx1 int) {
-			if !isLen1 {
-				defer wg.Done()
-			}
-			arr1[idx1] = func() graphql.Marshaler {
-
-				return ec._Speaker(ctx, field.Selections, &res[idx1])
-			}()
-		}
-		if isLen1 {
-			f(idx1)
-		} else {
-			go f(idx1)
-		}
-
-	}
-	wg.Wait()
-	return arr1
-}
-
-// nolint: vetshadow
 func (ec *executionContext) _Session_slides(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -3999,7 +3912,7 @@ func (ec *executionContext) _Session_slides(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) _Session_movies(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Session",
 		Args:   nil,
@@ -4056,6 +3969,93 @@ func (ec *executionContext) _Session_movies(ctx context.Context, field graphql.C
 	return arr1
 }
 
+// nolint: vetshadow
+func (ec *executionContext) _Session_liked(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Session().Liked(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return graphql.MarshalInt(res)
+}
+
+// nolint: vetshadow
+func (ec *executionContext) _Session_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Session) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "Session",
+		Args:   nil,
+		Field:  field,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Session().Speakers(rctx, obj)
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]domains.Speaker)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+
+	arr1 := make(graphql.Array, len(res))
+	var wg sync.WaitGroup
+
+	isLen1 := len(res) == 1
+	if !isLen1 {
+		wg.Add(len(res))
+	}
+
+	for idx1 := range res {
+		idx1 := idx1
+		rctx := &graphql.ResolverContext{
+			Index:  &idx1,
+			Result: &res[idx1],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(idx1 int) {
+			if !isLen1 {
+				defer wg.Done()
+			}
+			arr1[idx1] = func() graphql.Marshaler {
+
+				return ec._Speaker(ctx, field.Selections, &res[idx1])
+			}()
+		}
+		if isLen1 {
+			f(idx1)
+		} else {
+			go f(idx1)
+		}
+
+	}
+	wg.Wait()
+	return arr1
+}
+
 var sessionConnectionImplementors = []string{"SessionConnection"}
 
 // nolint: gocyclo, errcheck, gas, goconst
@@ -4099,7 +4099,7 @@ func (ec *executionContext) _SessionConnection(ctx context.Context, sel ast.Sele
 // nolint: vetshadow
 func (ec *executionContext) _SessionConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *SessionConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "SessionConnection",
 		Args:   nil,
@@ -4127,7 +4127,7 @@ func (ec *executionContext) _SessionConnection_pageInfo(ctx context.Context, fie
 // nolint: vetshadow
 func (ec *executionContext) _SessionConnection_edges(ctx context.Context, field graphql.CollectedField, obj *SessionConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "SessionConnection",
 		Args:   nil,
@@ -4187,7 +4187,7 @@ func (ec *executionContext) _SessionConnection_edges(ctx context.Context, field 
 // nolint: vetshadow
 func (ec *executionContext) _SessionConnection_nodes(ctx context.Context, field graphql.CollectedField, obj *SessionConnection) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "SessionConnection",
 		Args:   nil,
@@ -4279,7 +4279,7 @@ func (ec *executionContext) _SessionEdge(ctx context.Context, sel ast.SelectionS
 // nolint: vetshadow
 func (ec *executionContext) _SessionEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *SessionEdge) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "SessionEdge",
 		Args:   nil,
@@ -4307,7 +4307,7 @@ func (ec *executionContext) _SessionEdge_cursor(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) _SessionEdge_node(ctx context.Context, field graphql.CollectedField, obj *SessionEdge) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "SessionEdge",
 		Args:   nil,
@@ -4407,7 +4407,7 @@ func (ec *executionContext) _Slide(ctx context.Context, sel ast.SelectionSet, ob
 // nolint: vetshadow
 func (ec *executionContext) _Slide_id(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Slide",
 		Args:   nil,
@@ -4434,7 +4434,7 @@ func (ec *executionContext) _Slide_id(ctx context.Context, field graphql.Collect
 // nolint: vetshadow
 func (ec *executionContext) _Slide_slideId(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Slide",
 		Args:   nil,
@@ -4461,7 +4461,7 @@ func (ec *executionContext) _Slide_slideId(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Slide_lang(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Slide",
 		Args:   nil,
@@ -4488,7 +4488,7 @@ func (ec *executionContext) _Slide_lang(ctx context.Context, field graphql.Colle
 // nolint: vetshadow
 func (ec *executionContext) _Slide_url(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Slide",
 		Args:   nil,
@@ -4515,7 +4515,7 @@ func (ec *executionContext) _Slide_url(ctx context.Context, field graphql.Collec
 // nolint: vetshadow
 func (ec *executionContext) _Slide_session(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Slide",
 		Args:   nil,
@@ -4543,7 +4543,7 @@ func (ec *executionContext) _Slide_session(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) _Slide_speakers(ctx context.Context, field graphql.CollectedField, obj *domains.Slide) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Slide",
 		Args:   nil,
@@ -4717,7 +4717,7 @@ func (ec *executionContext) _Speaker(ctx context.Context, sel ast.SelectionSet, 
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4744,7 +4744,7 @@ func (ec *executionContext) _Speaker_id(ctx context.Context, field graphql.Colle
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_speakerId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4771,7 +4771,7 @@ func (ec *executionContext) _Speaker_speakerId(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4798,7 +4798,7 @@ func (ec *executionContext) _Speaker_name(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4825,7 +4825,7 @@ func (ec *executionContext) _Speaker_nameJa(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4852,7 +4852,7 @@ func (ec *executionContext) _Speaker_company(ctx context.Context, field graphql.
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4879,7 +4879,7 @@ func (ec *executionContext) _Speaker_position(ctx context.Context, field graphql
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4906,7 +4906,7 @@ func (ec *executionContext) _Speaker_positionJa(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4933,7 +4933,7 @@ func (ec *executionContext) _Speaker_profile(ctx context.Context, field graphql.
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4960,7 +4960,7 @@ func (ec *executionContext) _Speaker_profileJa(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -4987,7 +4987,7 @@ func (ec *executionContext) _Speaker_iconUrl(ctx context.Context, field graphql.
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -5014,7 +5014,7 @@ func (ec *executionContext) _Speaker_twitterId(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -5041,7 +5041,7 @@ func (ec *executionContext) _Speaker_githubId(ctx context.Context, field graphql
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -5098,7 +5098,7 @@ func (ec *executionContext) _Speaker_sessions(ctx context.Context, field graphql
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_slides(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -5158,7 +5158,7 @@ func (ec *executionContext) _Speaker_slides(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) _Speaker_movies(ctx context.Context, field graphql.CollectedField, obj *domains.Speaker) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "Speaker",
 		Args:   nil,
@@ -5312,7 +5312,7 @@ func (ec *executionContext) ___Directive(ctx context.Context, sel ast.SelectionS
 // nolint: vetshadow
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Directive",
 		Args:   nil,
@@ -5339,7 +5339,7 @@ func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql
 // nolint: vetshadow
 func (ec *executionContext) ___Directive_description(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Directive",
 		Args:   nil,
@@ -5363,7 +5363,7 @@ func (ec *executionContext) ___Directive_description(ctx context.Context, field 
 // nolint: vetshadow
 func (ec *executionContext) ___Directive_locations(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Directive",
 		Args:   nil,
@@ -5399,7 +5399,7 @@ func (ec *executionContext) ___Directive_locations(ctx context.Context, field gr
 // nolint: vetshadow
 func (ec *executionContext) ___Directive_args(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Directive",
 		Args:   nil,
@@ -5498,7 +5498,7 @@ func (ec *executionContext) ___EnumValue(ctx context.Context, sel ast.SelectionS
 // nolint: vetshadow
 func (ec *executionContext) ___EnumValue_name(ctx context.Context, field graphql.CollectedField, obj *introspection.EnumValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__EnumValue",
 		Args:   nil,
@@ -5525,7 +5525,7 @@ func (ec *executionContext) ___EnumValue_name(ctx context.Context, field graphql
 // nolint: vetshadow
 func (ec *executionContext) ___EnumValue_description(ctx context.Context, field graphql.CollectedField, obj *introspection.EnumValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__EnumValue",
 		Args:   nil,
@@ -5549,7 +5549,7 @@ func (ec *executionContext) ___EnumValue_description(ctx context.Context, field 
 // nolint: vetshadow
 func (ec *executionContext) ___EnumValue_isDeprecated(ctx context.Context, field graphql.CollectedField, obj *introspection.EnumValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__EnumValue",
 		Args:   nil,
@@ -5576,7 +5576,7 @@ func (ec *executionContext) ___EnumValue_isDeprecated(ctx context.Context, field
 // nolint: vetshadow
 func (ec *executionContext) ___EnumValue_deprecationReason(ctx context.Context, field graphql.CollectedField, obj *introspection.EnumValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__EnumValue",
 		Args:   nil,
@@ -5649,7 +5649,7 @@ func (ec *executionContext) ___Field(ctx context.Context, sel ast.SelectionSet, 
 // nolint: vetshadow
 func (ec *executionContext) ___Field_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Field) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Field",
 		Args:   nil,
@@ -5676,7 +5676,7 @@ func (ec *executionContext) ___Field_name(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) ___Field_description(ctx context.Context, field graphql.CollectedField, obj *introspection.Field) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Field",
 		Args:   nil,
@@ -5700,7 +5700,7 @@ func (ec *executionContext) ___Field_description(ctx context.Context, field grap
 // nolint: vetshadow
 func (ec *executionContext) ___Field_args(ctx context.Context, field graphql.CollectedField, obj *introspection.Field) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Field",
 		Args:   nil,
@@ -5760,7 +5760,7 @@ func (ec *executionContext) ___Field_args(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) ___Field_type(ctx context.Context, field graphql.CollectedField, obj *introspection.Field) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Field",
 		Args:   nil,
@@ -5795,7 +5795,7 @@ func (ec *executionContext) ___Field_type(ctx context.Context, field graphql.Col
 // nolint: vetshadow
 func (ec *executionContext) ___Field_isDeprecated(ctx context.Context, field graphql.CollectedField, obj *introspection.Field) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Field",
 		Args:   nil,
@@ -5822,7 +5822,7 @@ func (ec *executionContext) ___Field_isDeprecated(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) ___Field_deprecationReason(ctx context.Context, field graphql.CollectedField, obj *introspection.Field) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Field",
 		Args:   nil,
@@ -5885,7 +5885,7 @@ func (ec *executionContext) ___InputValue(ctx context.Context, sel ast.Selection
 // nolint: vetshadow
 func (ec *executionContext) ___InputValue_name(ctx context.Context, field graphql.CollectedField, obj *introspection.InputValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__InputValue",
 		Args:   nil,
@@ -5912,7 +5912,7 @@ func (ec *executionContext) ___InputValue_name(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) ___InputValue_description(ctx context.Context, field graphql.CollectedField, obj *introspection.InputValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__InputValue",
 		Args:   nil,
@@ -5936,7 +5936,7 @@ func (ec *executionContext) ___InputValue_description(ctx context.Context, field
 // nolint: vetshadow
 func (ec *executionContext) ___InputValue_type(ctx context.Context, field graphql.CollectedField, obj *introspection.InputValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__InputValue",
 		Args:   nil,
@@ -5971,7 +5971,7 @@ func (ec *executionContext) ___InputValue_type(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) ___InputValue_defaultValue(ctx context.Context, field graphql.CollectedField, obj *introspection.InputValue) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__InputValue",
 		Args:   nil,
@@ -6043,7 +6043,7 @@ func (ec *executionContext) ___Schema(ctx context.Context, sel ast.SelectionSet,
 // nolint: vetshadow
 func (ec *executionContext) ___Schema_types(ctx context.Context, field graphql.CollectedField, obj *introspection.Schema) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Schema",
 		Args:   nil,
@@ -6103,7 +6103,7 @@ func (ec *executionContext) ___Schema_types(ctx context.Context, field graphql.C
 // nolint: vetshadow
 func (ec *executionContext) ___Schema_queryType(ctx context.Context, field graphql.CollectedField, obj *introspection.Schema) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Schema",
 		Args:   nil,
@@ -6138,7 +6138,7 @@ func (ec *executionContext) ___Schema_queryType(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) ___Schema_mutationType(ctx context.Context, field graphql.CollectedField, obj *introspection.Schema) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Schema",
 		Args:   nil,
@@ -6167,7 +6167,7 @@ func (ec *executionContext) ___Schema_mutationType(ctx context.Context, field gr
 // nolint: vetshadow
 func (ec *executionContext) ___Schema_subscriptionType(ctx context.Context, field graphql.CollectedField, obj *introspection.Schema) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Schema",
 		Args:   nil,
@@ -6196,7 +6196,7 @@ func (ec *executionContext) ___Schema_subscriptionType(ctx context.Context, fiel
 // nolint: vetshadow
 func (ec *executionContext) ___Schema_directives(ctx context.Context, field graphql.CollectedField, obj *introspection.Schema) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Schema",
 		Args:   nil,
@@ -6302,7 +6302,7 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 // nolint: vetshadow
 func (ec *executionContext) ___Type_kind(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   nil,
@@ -6329,7 +6329,7 @@ func (ec *executionContext) ___Type_kind(ctx context.Context, field graphql.Coll
 // nolint: vetshadow
 func (ec *executionContext) ___Type_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   nil,
@@ -6357,7 +6357,7 @@ func (ec *executionContext) ___Type_name(ctx context.Context, field graphql.Coll
 // nolint: vetshadow
 func (ec *executionContext) ___Type_description(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   nil,
@@ -6381,7 +6381,7 @@ func (ec *executionContext) ___Type_description(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) ___Type_fields(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field___Type_fields_args(rawArgs)
 	if err != nil {
@@ -6444,7 +6444,7 @@ func (ec *executionContext) ___Type_fields(ctx context.Context, field graphql.Co
 // nolint: vetshadow
 func (ec *executionContext) ___Type_interfaces(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   nil,
@@ -6501,7 +6501,7 @@ func (ec *executionContext) ___Type_interfaces(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) ___Type_possibleTypes(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   nil,
@@ -6558,7 +6558,7 @@ func (ec *executionContext) ___Type_possibleTypes(ctx context.Context, field gra
 // nolint: vetshadow
 func (ec *executionContext) ___Type_enumValues(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
 	args, err := field___Type_enumValues_args(rawArgs)
 	if err != nil {
@@ -6621,7 +6621,7 @@ func (ec *executionContext) ___Type_enumValues(ctx context.Context, field graphq
 // nolint: vetshadow
 func (ec *executionContext) ___Type_inputFields(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   nil,
@@ -6678,7 +6678,7 @@ func (ec *executionContext) ___Type_inputFields(ctx context.Context, field graph
 // nolint: vetshadow
 func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.CollectedField, obj *introspection.Type) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer ec.Tracer.EndFieldExecution(ctx)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
 		Object: "__Type",
 		Args:   nil,
@@ -6923,11 +6923,28 @@ type Session implements Node {
   outlineJa: String!
   lang: String!
   tags: [String!]!
+  slides: [Slide!]!
+  movies: [Movie!]!
 
   liked: Int!
   speakers: [Speaker!]!
-  slides: [Slide!]!
-  movies: [Movie!]!
+}
+
+type Slide {
+  id: ID!
+  slideId: Int!
+  lang: String!
+  url: String!
+  session: Session!
+  speakers: [Speaker!]!
+}
+
+type Movie {
+  id: ID!
+  movieId: Int!
+  url: String!
+  session: Session!
+  speakers: [Speaker!]!
 }
 
 """
@@ -6950,23 +6967,6 @@ type Speaker implements Node {
   sessions: [Session!]
   slides: [Slide!]!
   movies: [Movie!]!
-}
-
-type Slide {
-  id: ID!
-  slideId: Int!
-  lang: String!
-  url: String!
-  session: Session!
-  speakers: [Speaker!]!
-}
-
-type Movie {
-  id: ID!
-  movieId: Int!
-  url: String!
-  session: Session!
-  speakers: [Speaker!]!
 }
 
 type ExhibitionConnection {
