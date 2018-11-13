@@ -182,11 +182,10 @@ const Links = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 8px;
+  margin: 8px 0;
 
   > * {
     margin-right: 8px;
-    margin-bottom: 8px;
 
     &:last-child {
       margin-right: 0;
