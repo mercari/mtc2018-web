@@ -1,10 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Text } from '../../../components';
-import { getTextStyle, borderRadius } from '../../../components/styles';
+import { Text, Button } from '../../../components';
+import { getTextStyle, borderRadius, colors } from '../../../components/styles';
 
 import gql from 'graphql-tag';
-import { ContentCardSpeakerFragment } from '../../../graphql/generated/ContentCardSpeakerFragment';
+import {
+  ContentCardSpeakerFragment,
+  ContentCardSpeakerFragment_slides,
+  ContentCardSpeakerFragment_movies
+} from '../../../graphql/generated/ContentCardSpeakerFragment';
 
 export const CONTENT_CARD_SPEAKER_FRAGMENT = gql`
   fragment ContentCardSpeakerFragment on Speaker {
@@ -16,36 +20,109 @@ export const CONTENT_CARD_SPEAKER_FRAGMENT = gql`
     positionJa
     profile
     profileJa
+    slides {
+      id
+      lang
+      url
+      session {
+        sessionId
+      }
+    }
+    movies {
+      id
+      url
+      session {
+        sessionId
+      }
+    }
   }
 `;
 
 interface Props {
   speaker: ContentCardSpeakerFragment;
+  // spaker.{slides,movies}はspeakerに紐づくものをすべて持っているが、sessionに紐づくものだけ表示したい
+  // GraphQL的にそれをスッとやるのが難しいのでProps経由でsessionIdを渡してもらってフィルタする
+  sessionId: number;
   isJa: boolean;
 }
 
-const ContentCardSpeaker: React.SFC<Props> = ({ speaker, isJa, ...props }) => (
-  <Wrapper {...props}>
-    <Photo>
-      <source
-        type="image/webp"
-        srcSet={`/2018/static/images/speakers/${speaker.speakerId}.webp`}
-      />
-      <img src={`/2018/static/images/speakers/${speaker.speakerId}.png`} />
-    </Photo>
-    <Profile>
-      <Header>
-        <div>
-          <Name>{isJa ? speaker.nameJa : speaker.name}</Name>
-          <Text level="body">
-            {isJa ? speaker.positionJa : speaker.position}
-          </Text>
-        </div>
-      </Header>
-      <Body>{isJa ? speaker.profileJa : speaker.profile}</Body>
-    </Profile>
-  </Wrapper>
-);
+const ContentCardSpeaker: React.SFC<Props> = ({
+  speaker,
+  sessionId,
+  isJa,
+  ...props
+}) => {
+  const lang = isJa ? 'jp' : 'en';
+  const slide = findSlide(speaker, sessionId, lang);
+  const movie = findMovie(speaker, sessionId);
+  return (
+    <Wrapper {...props}>
+      <Photo>
+        <source
+          type="image/webp"
+          srcSet={`/2018/static/images/speakers/${speaker.speakerId}.webp`}
+        />
+        <img src={`/2018/static/images/speakers/${speaker.speakerId}.png`} />
+      </Photo>
+      <Profile>
+        <Header>
+          <div>
+            <Name>{isJa ? speaker.nameJa : speaker.name}</Name>
+            <Text level="body">
+              {isJa ? speaker.positionJa : speaker.position}
+            </Text>
+          </div>
+        </Header>
+        <Body>{isJa ? speaker.profileJa : speaker.profile}</Body>
+        <Links>
+          {slide ? (
+            <LinkButton
+              type="primary"
+              size="small"
+              href={slide.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkIcon src="/2018/static/images/icn_slide.svg" alt="slide" />
+              <Text level="display1">Slide</Text>
+            </LinkButton>
+          ) : null}
+          {movie ? (
+            <LinkButton
+              type="primary"
+              size="small"
+              href={movie.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkIcon src="/2018/static/images/icn_movie.svg" alt="movie" />
+              <Text level="display1">Movie</Text>
+            </LinkButton>
+          ) : null}
+        </Links>
+      </Profile>
+    </Wrapper>
+  );
+};
+
+function findSlide(
+  speaker: ContentCardSpeakerFragment,
+  sessionId: number,
+  lang: 'jp' | 'en'
+): ContentCardSpeakerFragment_slides | undefined {
+  return (
+    speaker.slides.find(
+      slide => slide.session.sessionId === sessionId && slide.lang === lang
+    ) || speaker.slides[0]
+  );
+}
+
+function findMovie(
+  speaker: ContentCardSpeakerFragment,
+  sessionId: number
+): ContentCardSpeakerFragment_movies | undefined {
+  return speaker.movies.find(movie => movie.session.sessionId === sessionId);
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -99,6 +176,43 @@ const Name = styled(Text).attrs({
 
 const Body = styled(Text)`
   ${getTextStyle('body')};
+`;
+
+const Links = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+
+  > * {
+    margin-right: 8px;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
+const ButtonLink = Button.withComponent('a');
+const LinkButton = styled(ButtonLink)`
+  text-decoration: none;
+
+  justify-content: center;
+  padding: 12px 16px;
+  border: solid 1px ${colors.primary};
+  background-color: ${colors.yuki};
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 10px;
+  }
+`;
+
+const LinkIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-left: 0px;
+  margin-right: 8px;
 `;
 
 export default ContentCardSpeaker;
