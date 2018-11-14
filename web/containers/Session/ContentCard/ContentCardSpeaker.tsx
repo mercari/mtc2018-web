@@ -182,7 +182,7 @@ const Links = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin: 8px 0;
+  margin: 16px 0;
 
   > * {
     margin-right: 8px;
