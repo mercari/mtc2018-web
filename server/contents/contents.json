@@ -21,14 +21,14 @@
   "news": [
     {
       "id": "4",
-      "date": "2018-11-12",
+      "date": "2018-11-15",
       "message": "Videos of the sessions are now available.",
       "messageJa": "セッションの動画を公開しました",
       "link": "https://www.youtube.com/playlist?list=PL5y9uEm8_ypUSnD4TbKKH_7935GxkbgGv"
     },
     {
       "id": "3",
-      "date": "2018-11-12",
+      "date": "2018-11-15",
       "message": "Slides from the sessions are now available.",
       "messageJa": "セッションのスライドを公開しました",
       "link": "https://speakerdeck.com/mercari"
