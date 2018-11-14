@@ -19,8 +19,6 @@ type Session struct {
 	EndTime    string
 	Outline    string
 	OutlineJa  string
-	SlideURL   string
-	MovieURL   string
 	Lang       string
 	Tags       []string
 	Liked      int
@@ -72,8 +70,6 @@ func NewSessionRepo() (SessionRepo, error) {
 			EndTime:   sessionData.EndTime,
 			Outline:   sessionData.Outline,
 			OutlineJa: sessionData.OutlineJa,
-			SlideURL:  sessionData.SlideURL,
-			MovieURL:  sessionData.MovieURL,
 			Lang:      sessionData.Lang,
 			Tags:      sessionData.Tags,
 		}

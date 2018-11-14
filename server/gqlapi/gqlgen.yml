@@ -51,3 +51,15 @@ models:
         resolver: true
       likeId:
         fieldName: ID
+
+  Slide:
+    model: github.com/mercari/mtc2018-web/server/domains.Slide
+    fields:
+      id:
+        resolver: true
+
+  Movie:
+    model: github.com/mercari/mtc2018-web/server/domains.Movie
+    fields:
+      id:
+        resolver: true
