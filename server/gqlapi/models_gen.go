@@ -3,7 +3,7 @@
 package gqlapi
 
 import (
-	domains "github.com/mercari/mtc2018-web/server/domains"
+	"github.com/mercari/mtc2018-web/server/domains"
 )
 
 // セッションに対していいね！する時の引数です。
