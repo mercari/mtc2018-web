@@ -59,7 +59,7 @@ export const loadFont = () => {
   link.href = 'https://fonts.googleapis.com/css?family=Montserrat:400,700';
   link.rel = 'stylesheet';
 
-  document.head.appendChild(link);
+  document.head!.appendChild(link);
 
   const monstserrat = new FontFaceObserver('Montserrat');
   monstserrat.load();

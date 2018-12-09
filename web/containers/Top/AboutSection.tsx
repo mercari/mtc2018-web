@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { I18n } from 'react-i18next';
+import { NamespacesConsumer } from 'react-i18next';
 import styled from 'styled-components';
 import { Text, Card, Section } from '../../components';
 import { getTextStyle } from '../../components/styles';
@@ -7,7 +7,7 @@ import { getTextStyle } from '../../components/styles';
 const AboutSection: React.SFC<{}> = props => (
   <Section title="ABOUT" id="about" {...props}>
     <StyledCard>
-      <I18n>
+      <NamespacesConsumer ns={['common']}>
         {t => (
           <Message>
             <p>{t('about.p1')}</p>
@@ -16,7 +16,7 @@ const AboutSection: React.SFC<{}> = props => (
             <p>{t('about.p4')}</p>
           </Message>
         )}
-      </I18n>
+      </NamespacesConsumer>
     </StyledCard>
   </Section>
 );

@@ -47,6 +47,23 @@ fragment SessionFragment on Session {
   endTime
   outline
   outlineJa
+  slides {
+    id
+    lang
+    slideId
+    url
+    speakers {
+      name
+    }
+  }
+  movies {
+    id
+    movieId
+    url
+    speakers {
+      name
+    }
+  }
   lang
   tags
   speakers {

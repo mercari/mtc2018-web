@@ -1,13 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { I18n } from 'react-i18next';
+import { NamespacesConsumer } from 'react-i18next';
 import { Button } from '../../../components';
 import { isJapan } from '../../../utils';
 
 class LanguageToggleButton extends React.PureComponent {
   public render() {
     return (
-      <I18n>
+      <NamespacesConsumer ns={['common']}>
         {(_, { i18n }) => {
           const isJa = isJapan(i18n.language);
           const onClick = () => i18n.changeLanguage(isJa ? 'en-US' : 'ja-JP');
@@ -16,12 +16,12 @@ class LanguageToggleButton extends React.PureComponent {
           return (
             <Wrapper onClick={onClick} size="small" {...this.props}>
               {from}
-              <img src="/static/images/icn_arrow.svg" />
+              <img src="/2018/static/images/icn_arrow.svg" />
               {to}
             </Wrapper>
           );
         }}
-      </I18n>
+      </NamespacesConsumer>
     );
   }
 }

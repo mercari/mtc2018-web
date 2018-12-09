@@ -8,12 +8,14 @@ import (
 	"strings"
 
 	"cloud.google.com/go/spanner"
+	"github.com/99designs/gqlgen-contrib/gqlapollotracing"
+	"github.com/99designs/gqlgen-contrib/gqlopencensus"
 	"github.com/99designs/gqlgen/handler"
 	"github.com/DataDog/opencensus-go-exporter-datadog"
 	"github.com/gorilla/websocket"
 	"github.com/mercari/mtc2018-web/server/config"
+	_ "github.com/mercari/mtc2018-web/server/config/statik"
 	"github.com/mercari/mtc2018-web/server/gqlapi"
-	"github.com/mercari/mtc2018-web/server/gqlapi/gqlopencensus"
 	"github.com/pkg/errors"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/trace"
@@ -64,6 +66,9 @@ func main() {
 		Service:   config.ServiceName,
 		TraceAddr: fmt.Sprintf("%s:8126", env.DDAgentHostname),
 		Tags:      []string{"env", env.Env},
+		GlobalTags: map[string]interface{}{
+			"env": env.Env,
+		},
 	})
 	defer dd.Stop()
 
@@ -112,11 +117,14 @@ func runServer(port int, env *config.Env, logger *zap.Logger, spannerClient *spa
 	mux.Handle("/2018/api/query", handler.GraphQL(
 		gqlapi.NewExecutableSchema(
 			gqlapi.Config{
-				Resolvers: resolver,
+				Resolvers:  resolver,
+				Complexity: gqlapi.NewComplexityRoot(),
 			},
 		),
-		handler.RequestMiddleware(gqlopencensus.RequestMiddleware()),
-		handler.ResolverMiddleware(gqlopencensus.ResolverMiddleware()),
+		handler.ComplexityLimit(10000), // 値は適当(動作テストしたいだけなので)
+		handler.Tracer(gqlapollotracing.NewTracer()),
+		handler.RequestMiddleware(gqlapollotracing.RequestMiddleware()),
+		handler.Tracer(gqlopencensus.New(gqlopencensus.WithDataDog())),
 		handler.WebsocketUpgrader(websocket.Upgrader{}),
 	))
 

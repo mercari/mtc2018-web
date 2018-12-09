@@ -41,25 +41,31 @@ i18n.getInitialProps = (req, namespaces) => {
 
   req.i18n.toJSON = () => null // do not serialize i18next instance and send to client
 
-  const initialI18nStore = {}
-  req.i18n.languages.forEach((l) => {
-    initialI18nStore[l] = {}
-    namespaces.forEach((ns) => {
-      initialI18nStore[l][ns] = (req.i18n.services.resourceStore.data[l] || {})[ns] || {}
-    })
-  })
+  const ret = {
+    i18n: req ? req.i18n : i18n, // use the instance on req - fixed language on request (avoid issues in race conditions with lngs of different users)
+  };
 
-  const initialLanguage = req.i18n.language === 'ja'
-    ? 'ja-JP'
-    : req.i18n.language === 'en'
-      ? 'en-US'
-      : req.i18n.language;
+  // for serverside pass down initial translations
+  if (req && req.i18n) {
+    const initialI18nStore = {};
+    req.i18n.languages.forEach(l => {
+      initialI18nStore[l] = {};
+      namespaces.forEach(ns => {
+        initialI18nStore[l][ns] = (req.i18n.services.resourceStore.data[l] || {})[ns] || {};
+      });
+    });
 
-  return {
-    i18n: req.i18n, // use the instance on req - fixed language on request (avoid issues in race conditions with lngs of different users)
-    initialI18nStore,
-    initialLanguage
+    const initialLanguage = req.i18n.language === 'ja'
+      ? 'ja-JP'
+      : req.i18n.language === 'en'
+        ? 'en-US'
+        : req.i18n.language;
+
+    ret.initialI18nStore = initialI18nStore;
+    ret.initialLanguage = initialLanguage;
   }
+
+  return ret;
 }
 
 module.exports = i18n

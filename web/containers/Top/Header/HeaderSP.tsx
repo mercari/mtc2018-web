@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Router from 'next/router';
 import styled from 'styled-components';
-import { I18n } from 'react-i18next';
+import { NamespacesConsumer } from 'react-i18next';
 import { colors, getTextStyle } from '../../../components/styles';
 import { HamburgerMenu } from '../../../components';
 import TwitterShareButton from './TwitterShareButton';
@@ -32,7 +32,7 @@ class Header extends React.Component<Props, State> {
       <Wrapper show={isTopY || showMenu} {...props}>
         <img
           onClick={this.onClickLogo}
-          src="../../static/images/header_logo.svg"
+          src="/2018/static/images/header_logo.svg"
           alt="mercari tech conf 2018"
         />
         <EmptySpace />
@@ -57,7 +57,7 @@ class Header extends React.Component<Props, State> {
             <TwitterShareButton />
             <FacebookShareButton />
           </SNS>
-          <I18n>
+          <NamespacesConsumer ns={['common']}>
             {(_, { i18n }) => {
               const isJa = isJapan(i18n.language);
               const onClick = () => {
@@ -70,7 +70,7 @@ class Header extends React.Component<Props, State> {
                 </NavButton>
               );
             }}
-          </I18n>
+          </NamespacesConsumer>
         </Menu>
       </Wrapper>
     );

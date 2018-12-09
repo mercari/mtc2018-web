@@ -5,6 +5,31 @@
 // GraphQL query operation: Session
 // ====================================================
 
+export interface Session_session_speakers_slides_session {
+  __typename: "Session";
+  sessionId: number;
+}
+
+export interface Session_session_speakers_slides {
+  __typename: "Slide";
+  id: string;
+  lang: string;
+  url: string;
+  session: Session_session_speakers_slides_session;
+}
+
+export interface Session_session_speakers_movies_session {
+  __typename: "Session";
+  sessionId: number;
+}
+
+export interface Session_session_speakers_movies {
+  __typename: "Movie";
+  id: string;
+  url: string;
+  session: Session_session_speakers_movies_session;
+}
+
 export interface Session_session_speakers {
   __typename: "Speaker";
   id: string;
@@ -15,12 +40,15 @@ export interface Session_session_speakers {
   positionJa: string;
   profile: string;
   profileJa: string;
+  slides: Session_session_speakers_slides[];
+  movies: Session_session_speakers_movies[];
 }
 
 export interface Session_session {
   __typename: "Session";
   title: string;
   titleJa: string;
+  sessionId: number;
   startTime: string;
   endTime: string;
   type: string;

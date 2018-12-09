@@ -8,6 +8,9 @@ import (
 	"github.com/google/uuid"
 )
 
+// IsNode is marker for gqlgen.
+func (*Like) IsNode() {}
+
 // LikeRepo is basic operation unit for Like.
 type LikeRepo interface {
 	Insert(ctx context.Context, like *Like) (*Like, error)

@@ -33,6 +33,8 @@ export interface Content {
   speakers: Speaker[];
   startTime: string;
   endTime: string;
+  slideUrl: string;
+  movieUrl: string;
 }
 
 export type Row = ContentRow | OtherRow;

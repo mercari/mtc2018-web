@@ -32,6 +32,16 @@ func NewResolver(logger *zap.Logger, spannerClient *spanner.Client) (ResolverRoo
 		return nil, err
 	}
 
+	slideRepo, err := domains.NewSlideRepo()
+	if err != nil {
+		return nil, err
+	}
+
+	movieRepo, err := domains.NewMovieRepo()
+	if err != nil {
+		return nil, err
+	}
+
 	var (
 		likeRepo    domains.LikeRepo
 		likeSumRepo domains.LikeSummaryRepo
@@ -76,6 +86,8 @@ func NewResolver(logger *zap.Logger, spannerClient *spanner.Client) (ResolverRoo
 		likeRepo:       likeRepo,
 		newsRepo:       newsRepo,
 		likeSumRepo:    likeSumRepo,
+		slideRepo:      slideRepo,
+		movieRepo:      movieRepo,
 
 		Logger:   logger,
 		storer:   storer,
@@ -93,6 +105,8 @@ type rootResolver struct {
 	likeRepo       domains.LikeRepo
 	newsRepo       domains.NewsRepo
 	likeSumRepo    domains.LikeSummaryRepo
+	slideRepo      domains.SlideRepo
+	movieRepo      domains.MovieRepo
 
 	Logger *zap.Logger
 	mu     sync.Mutex
@@ -132,4 +146,12 @@ func (r *rootResolver) Like() LikeResolver {
 
 func (r *rootResolver) News() NewsResolver {
 	return &newsResolver{r}
+}
+
+func (r *rootResolver) Slide() SlideResolver {
+	return &slideResolver{r}
+}
+
+func (r *rootResolver) Movie() MovieResolver {
+	return &movieResolver{r}
 }

@@ -13,6 +13,7 @@ import { ContentCardFragment } from '../../../graphql/generated/ContentCardFragm
 
 export const CONTENT_CARD_FRAGMENT = gql`
   fragment ContentCardFragment on Session {
+    sessionId
     startTime
     endTime
     type
@@ -75,7 +76,12 @@ class ContentCard extends React.PureComponent<Props> {
         </ContentInfo>
         <div>
           {session.speakers!.map(speaker => (
-            <Speaker key={speaker.id} speaker={speaker} isJa={isJa} />
+            <Speaker
+              key={speaker.id}
+              speaker={speaker}
+              isJa={isJa}
+              sessionId={session.sessionId}
+            />
           ))}
         </div>
       </Wrapper>
@@ -147,6 +153,7 @@ const Body = styled(Text)`
   @media screen and (max-width: 767px) {
     ${getTextStyle('body')};
   }
+  margin-bottom: 16px;
 `;
 
 const Title = styled(Text).attrs({

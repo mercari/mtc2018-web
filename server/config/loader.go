@@ -5,9 +5,6 @@ package config
 import (
 	"encoding/json"
 
-	// link asset data
-	_ "github.com/mercari/mtc2018-web/server/config/statik"
-
 	"github.com/rakyll/statik/fs"
 )
 
@@ -38,6 +35,8 @@ type Data struct {
 	Sessions    []Session    `json:"sessions"`
 	News        []News       `json:"news"`
 	Exhibitions []Exhibition `json:"exhibitions"`
+	Slides      []Slide      `json:"slides"`
+	Movies      []Movie      `json:"movies"`
 }
 
 // Session information.
@@ -88,4 +87,19 @@ type News struct {
 	Message   string `json:"message"`
 	MessageJa string `json:"messageJa"`
 	Link      string `json:"link"`
+}
+
+// Slide information
+type Slide struct {
+	Lang      string `json:"lang"`
+	URL       string `json:"url"`
+	SessionID int    `json:"sessionId"`
+	SpeakerID string `json:"speakerId"`
+}
+
+// Movie information
+type Movie struct {
+	URL       string `json:"url"`
+	SessionID int    `json:"sessionId"`
+	SpeakerID string `json:"speakerId"`
 }

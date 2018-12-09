@@ -43,11 +43,17 @@ i18n
         // mercari tech conf 2017
         server.use('/2017', express.static(path.join(__dirname+'/static/2017')));
 
+        // static resources
+        server.use('/2018/static', express.static(path.join(__dirname+'/static/2018')));
+
         // enable middleware for i18next
         server.use(i18nextMiddleware.handle(i18n))
 
         // serve locales for client
         server.use('/locales', express.static(path.join(__dirname, '/locales')))
+        // FIXME: fix request to /locales/{ja,en} to /locales/{ja-JP, en-US}
+        server.use('/locales/ja', express.static(path.join(__dirname, '/locales/ja-JP')))
+        server.use('/locales/en', express.static(path.join(__dirname, '/locales/en-US')))
 
         // missing keys
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))

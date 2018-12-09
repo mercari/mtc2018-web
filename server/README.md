@@ -105,3 +105,11 @@ curlで叩く
 $ curl http://localhost:8080/2018/api/query -X POST -H "Content-Type: application/json" -d '{"query":"{sessionList(first: 100) { nodes { id title } } }"}'
 ...
 ```
+
+## GraphQL Schemaを変更したときのテストのやり方
+
+1. `gqlapi/testdata/queries` にスキーマ変更を反映したクエリを置く
+2. `gqlapi/testdata/expected` フォルダを削除する
+3. `test.sh` を実行する
+4. `gqlapi/testdata/expected` にクエリの実行結果が保存される
+5. 4.の差分を確認してOKなら `git commit` する

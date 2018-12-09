@@ -21,9 +21,12 @@ type Speaker struct {
 	GithubID   string
 }
 
+// IsNode is marker for gqlgen.
+func (*Speaker) IsNode() {}
+
 // SpeakerRepo is basic operation unit for Speaker.
 type SpeakerRepo interface {
-	Get(ctx context.Context, ids ...string) ([]*Speaker, error)
+	Get(ctx context.Context, ids ...string) ([]Speaker, error)
 }
 
 // NewSpeakerRepo returns new SpeakerRepo.
@@ -62,12 +65,12 @@ type speakerRepo struct {
 	data map[string]*Speaker
 }
 
-func (repo *speakerRepo) Get(ctx context.Context, ids ...string) ([]*Speaker, error) {
-	list := make([]*Speaker, 0, len(ids))
+func (repo *speakerRepo) Get(ctx context.Context, ids ...string) ([]Speaker, error) {
+	list := make([]Speaker, 0, len(ids))
 
 	for _, id := range ids {
 		speaker := repo.data[id]
-		list = append(list, speaker)
+		list = append(list, *speaker)
 	}
 
 	return list, nil
