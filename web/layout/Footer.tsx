@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { colors, getTextStyle } from '../components/styles';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 
 const Footer = () => (
   <Wrapper>
@@ -11,7 +11,7 @@ const Footer = () => (
       <Link href="/2017" target="_blank" rel="noopener noreferrer">
         Mercari Tech Conf 2017
       </Link>
-      <NamespacesConsumer ns={['common']}>
+      <Translation ns={['common']}>
         {t => (
           <Link
             href={t('overview.url')}
@@ -21,7 +21,7 @@ const Footer = () => (
             {t('overview.title')}
           </Link>
         )}
-      </NamespacesConsumer>
+      </Translation>
     </Body>
   </Wrapper>
 );

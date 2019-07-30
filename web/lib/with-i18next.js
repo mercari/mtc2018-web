@@ -1,5 +1,5 @@
 import React from 'react';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import i18nInstance from '../i18n';
 
 export const withI18next = (namespaces = ['common']) => ComposedComponent => {
@@ -15,7 +15,7 @@ export const withI18next = (namespaces = ['common']) => ComposedComponent => {
     const finalI18n = i18n || i18nInstance;
 
     return (
-      <NamespacesConsumer
+      <Translation
         i18n={finalI18n}
         reportNS={addReportedNamespace}
         ns={namespaces}
@@ -23,7 +23,7 @@ export const withI18next = (namespaces = ['common']) => ComposedComponent => {
         wait={process.browser}
       >
         {t => <ComposedComponent t={t} {...rest} />}
-      </NamespacesConsumer>
+      </Translation>
     );
   };
 

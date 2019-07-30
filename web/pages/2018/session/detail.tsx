@@ -9,7 +9,7 @@ import ContentCard, {
 import Header from '../../../containers/Session/Header';
 import { Button, Section } from '../../../components';
 import { withI18next } from '../../../lib/with-i18next';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { isJapan } from '../../../utils';
 
 import gql from 'graphql-tag';
@@ -50,7 +50,7 @@ class Session extends React.Component<WithRouterProps> {
             }
 
             return (
-              <NamespacesConsumer ns={['common']}>
+              <Translation ns={['common']}>
                 {(_, { i18n }) => {
                   const isJa = isJapan(i18n.language);
                   const session: SessionFragment = data.session!;
@@ -67,7 +67,7 @@ class Session extends React.Component<WithRouterProps> {
                         <Section title="SESSION">
                           <ContentCard session={data.session!} isJa={isJa} />
                           <BackButton
-                            type="primary"
+                            priority="primary"
                             size="large"
                             onClick={this.onClickBackButton}
                           >
@@ -78,7 +78,7 @@ class Session extends React.Component<WithRouterProps> {
                     </>
                   );
                 }}
-              </NamespacesConsumer>
+              </Translation>
             );
           }}
         </SessionQueryComponent>

@@ -2,12 +2,12 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Text, Card, Section } from '../../components';
 import { colors, getTextStyle } from '../../components/styles';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { joinWithBr } from '../../utils';
 
 const AccessSection: React.SFC<{}> = props => (
   <Section title="ACCESS" id="access" {...props}>
-    <NamespacesConsumer ns={['common']}>
+    <Translation ns={['common']}>
       {t => (
         <StyledCard>
           <div>
@@ -52,7 +52,7 @@ const AccessSection: React.SFC<{}> = props => (
           </Link>
         </StyledCard>
       )}
-    </NamespacesConsumer>
+    </Translation>
   </Section>
 );
 

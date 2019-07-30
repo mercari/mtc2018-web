@@ -77,7 +77,7 @@ const ContentCardSpeaker: React.SFC<Props> = ({
         <Links>
           {slide ? (
             <LinkButton
-              type="primary"
+              priority="primary"
               size="small"
               href={slide.url}
               target="_blank"
@@ -89,7 +89,7 @@ const ContentCardSpeaker: React.SFC<Props> = ({
           ) : null}
           {movie ? (
             <LinkButton
-              type="primary"
+              priority="primary"
               size="small"
               href={movie.url}
               target="_blank"

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Text, Card, Section } from '../../../components';
 import { getTextStyle } from '../../../components/styles';
 import ContentsList from './ContentsList';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { Exhibition } from '../../../types';
 import CafeMap from './CafeMap';
 import StudioMap from './StudioMap';
@@ -19,7 +19,7 @@ class ExhibitionSection extends React.Component<{}, State> {
 
   public render() {
     return (
-      <NamespacesConsumer ns={['common']}>
+      <Translation ns={['common']}>
         {t => {
           const { currentNo } = this.state;
 
@@ -101,7 +101,7 @@ class ExhibitionSection extends React.Component<{}, State> {
             </Section>
           );
         }}
-      </NamespacesConsumer>
+      </Translation>
     );
   }
 

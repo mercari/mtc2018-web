@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { isJapan } from '../../../utils';
 import styled, { css } from 'styled-components';
 import { Text } from '../../../components';
@@ -28,7 +28,7 @@ export const NEWS_LIST_FRAGMENT = gql`
 
 const NewsList: React.SFC<Props> = ({ gqlData, ...props }) => (
   <Wrapper {...props}>
-    <NamespacesConsumer ns={['common']}>
+    <Translation ns={['common']}>
       {(_, { i18n }) => {
         return gqlData.newsList.nodes.map(newsItem => {
           const message = isJapan(i18n.language)
@@ -52,7 +52,7 @@ const NewsList: React.SFC<Props> = ({ gqlData, ...props }) => (
           );
         });
       }}
-    </NamespacesConsumer>
+    </Translation>
   </Wrapper>
 );
 

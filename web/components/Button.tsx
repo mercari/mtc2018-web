@@ -2,13 +2,13 @@ import styled, { css, InterpolationValue } from 'styled-components';
 import { colors, getTextStyle } from './styles';
 
 interface Props {
-  type?: 'primary' | 'secondary' | 'tertiary';
+  priority?: 'primary' | 'secondary' | 'tertiary';
   size?: 'large' | 'medium' | 'small';
 }
 
-const getStyle = (type?: Props['type'], size?: Props['size']) => {
+const getStyle = (priority?: Props['priority'], size?: Props['size']) => {
   let typeStyle: InterpolationValue[];
-  switch (type) {
+  switch (priority) {
     case 'primary':
       typeStyle = css`
         background-color: ${colors.secondary};
@@ -65,7 +65,7 @@ const getStyle = (type?: Props['type'], size?: Props['size']) => {
 };
 
 const Button = styled.button`
-  ${({ type, size }: Props) => getStyle(type, size)} padding: 0 32px;
+  ${({ priority, size }: Props) => getStyle(priority, size)} padding: 0 32px;
   box-sizing: border-box;
   cursor: pointer;
   transition: 0.3s;

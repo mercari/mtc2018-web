@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Router from 'next/router';
 import styled from 'styled-components';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { colors, getTextStyle } from '../../../components/styles';
 import { HamburgerMenu } from '../../../components';
 import TwitterShareButton from './TwitterShareButton';
@@ -57,7 +57,7 @@ class Header extends React.Component<Props, State> {
             <TwitterShareButton />
             <FacebookShareButton />
           </SNS>
-          <NamespacesConsumer ns={['common']}>
+          <Translation ns={['common']}>
             {(_, { i18n }) => {
               const isJa = isJapan(i18n.language);
               const onClick = () => {
@@ -70,7 +70,7 @@ class Header extends React.Component<Props, State> {
                 </NavButton>
               );
             }}
-          </NamespacesConsumer>
+          </Translation>
         </Menu>
       </Wrapper>
     );

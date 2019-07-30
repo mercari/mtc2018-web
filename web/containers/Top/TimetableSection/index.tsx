@@ -6,7 +6,7 @@ import { Section } from '../../../components';
 import { rows } from '../../../store/timetable';
 import { Row } from '../../../types';
 import TimetableRow, { TIMETABLE_ROW_FRAGMENT } from './TimetableRow';
-import { NamespacesConsumer } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { isJapan } from '../../../utils';
 
 import gql from 'graphql-tag';
@@ -28,7 +28,7 @@ interface Props {
 
 const TimetableSection: React.SFC<Props> = ({ gqlData, ...props }) => {
   return (
-    <NamespacesConsumer ns={['common']}>
+    <Translation ns={['common']}>
       {(t, { i18n }) => {
         const isJa = isJapan(i18n.language);
         return (
@@ -61,7 +61,7 @@ const TimetableSection: React.SFC<Props> = ({ gqlData, ...props }) => {
           </Section>
         );
       }}
-    </NamespacesConsumer>
+    </Translation>
   );
 };
 
