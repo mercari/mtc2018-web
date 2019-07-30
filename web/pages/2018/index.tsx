@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
+import { WithTranslation } from 'next-i18next';
 import Default from '../../layout/Default';
 import Header from '../../containers/Top/Header';
 import MainVisual from '../../containers/Top/MainVisual';
@@ -12,7 +13,7 @@ import TimetableSection, {
   TIMETABLE_SECTION_FRAGMENT
 } from '../../containers/Top/TimetableSection';
 import AccessSection from '../../containers/Top/AccessSection';
-import { withI18next } from '../../lib/with-i18next';
+import { withTranslation } from '../../i18n'
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -33,7 +34,14 @@ export const TOP_QUERY = gql`
 
 class TopQueryComponent extends Query<TopQuery> {}
 
-class Top extends React.PureComponent {
+interface Props extends WithTranslation {
+}
+
+class Top extends React.PureComponent<Props> {
+  getInitialProps() {
+    return { namespacesRequired: ['common'] }
+  }
+
   public render() {
     return (
       <Default>
@@ -123,4 +131,4 @@ const StyledTimetableSection = styled(TimetableSection)`
   }
 `;
 
-export default withI18next()(Top);
+export default withTranslation('common')(Top);

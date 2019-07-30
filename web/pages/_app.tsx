@@ -3,14 +3,9 @@ import App, { Container } from 'next/app';
 import Head from 'next/head';
 import { ApolloProvider } from 'react-apollo';
 import { withApolloClient } from '../graphql/with-apollo-client';
+import { appWithTranslation } from '../i18n'
 
 class MyApp extends App {
-  public static async getInitialProps({ ctx }: { ctx: any }) {
-    return {
-      initialLanguage: ctx.req && ctx.req.language ? ctx.req.language : 'en-US'
-    } as any;
-  }
-
   public render() {
     const { Component, pageProps, apolloClient } = this.props as any;
     return (
@@ -26,4 +21,4 @@ class MyApp extends App {
   }
 }
 
-export default withApolloClient(MyApp);
+export default appWithTranslation(withApolloClient(MyApp));

@@ -36,6 +36,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "moment": "^2.22.2",
     "next": "^7.0.2",
+    "next-i18next": "^0.52.1",
     "next-routes": "^1.4.2",
     "react": "^16.8.6",
     "react-apollo": "^2.2.4",
