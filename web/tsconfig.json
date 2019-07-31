@@ -14,8 +14,24 @@
     "removeComments": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "types": [
-      "types/*.d.ts"
-    ]
-  }
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "exclude": [
+    "node_modules",
+    "./graphql/generated/globalTypes.ts"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

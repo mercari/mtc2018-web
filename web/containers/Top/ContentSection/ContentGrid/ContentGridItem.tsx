@@ -89,12 +89,8 @@ class ContentGridItem extends React.PureComponent<Props> {
                   {session.speakers!.map(speaker => (
                     <SpeakerInfo key={speaker.id}>
                       <Icon
-                        src={`/2018/static/images/speakers/${
-                          speaker.speakerId
-                        }_thumb.png`}
-                        webpSrc={`/2018/static/images/speakers/${
-                          speaker.speakerId
-                        }_thumb.webp`}
+                        src={`/2018/static/images/speakers/${speaker.speakerId}_thumb.png`}
+                        webpSrc={`/2018/static/images/speakers/${speaker.speakerId}_thumb.webp`}
                         alt={isJa ? speaker.nameJa : speaker.name}
                       />
                       <div>

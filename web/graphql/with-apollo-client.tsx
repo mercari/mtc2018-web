@@ -2,13 +2,12 @@ import React from 'react';
 import { initApollo } from './init-apollo';
 import Head from 'next/head';
 import { getDataFromTree } from 'react-apollo';
-import { AppComponentContext } from 'next/app';
 import { ApolloClient } from 'apollo-boost';
 
 export const withApolloClient = (App: any) => {
   return class Apollo extends React.Component {
     public static displayName = 'withApollo(App)';
-    public static async getInitialProps(ctx: AppComponentContext) {
+    public static async getInitialProps(ctx: any) {
       const { Component, router } = ctx;
 
       let appProps = {};

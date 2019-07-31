@@ -3,7 +3,7 @@ import App, { Container } from 'next/app';
 import Head from 'next/head';
 import { ApolloProvider } from 'react-apollo';
 import { withApolloClient } from '../graphql/with-apollo-client';
-import { appWithTranslation } from '../i18n'
+import { appWithTranslation } from '../i18n';
 
 class MyApp extends App {
   public render() {

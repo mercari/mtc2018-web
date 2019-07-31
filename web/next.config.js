@@ -1,7 +1,6 @@
-const withTypescript = require('@zeit/next-typescript');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-module.exports = withTypescript({
+module.exports = {
   webpack(config, options) {
     if (options.isServer) {
       config.plugins.push(new ForkTsCheckerWebpackPlugin());
@@ -28,4 +27,4 @@ module.exports = withTypescript({
   publicRuntimeConfig: {
     GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
   }
-});
+};

@@ -13,7 +13,7 @@ import TimetableSection, {
   TIMETABLE_SECTION_FRAGMENT
 } from '../../containers/Top/TimetableSection';
 import AccessSection from '../../containers/Top/AccessSection';
-import { withTranslation } from '../../i18n'
+import { withTranslation } from '../../i18n';
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -34,12 +34,11 @@ export const TOP_QUERY = gql`
 
 class TopQueryComponent extends Query<TopQuery> {}
 
-interface Props extends WithTranslation {
-}
+type Props = WithTranslation;
 
 class Top extends React.PureComponent<Props> {
-  getInitialProps() {
-    return { namespacesRequired: ['common'] }
+  public getInitialProps() {
+    return { namespacesRequired: ['common'] };
   }
 
   public render() {

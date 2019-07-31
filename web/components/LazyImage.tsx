@@ -32,10 +32,12 @@ class LazyImage extends React.Component<Props> {
     entries: IntersectionObserverEntry[],
     observer: IntersectionObserver
   ) => {
-    entries.filter(e => e.isIntersecting).forEach(entry => {
-      this.setState({ show: true });
-      observer.unobserve(entry.target);
-    });
+    entries
+      .filter(e => e.isIntersecting)
+      .forEach(entry => {
+        this.setState({ show: true });
+        observer.unobserve(entry.target);
+      });
   };
 
   public render() {
