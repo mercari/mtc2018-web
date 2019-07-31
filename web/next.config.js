@@ -1,4 +1,5 @@
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const contents = require('../server/contents/contents.json');
 
 module.exports = {
   webpack(config, options) {
@@ -26,5 +27,22 @@ module.exports = {
   },
   publicRuntimeConfig: {
     GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
+  },
+  async exportPathMap(defaultPathMap, { dev }) {
+    if (dev) {
+      return defaultPathMap
+    }
+
+    const pathMap = { ...defaultPathMap };
+    delete pathMap['/2018/session/[id]'];
+    console.log(pathMap);
+    contents.sessions.forEach(session => {
+      pathMap[`/2018/session/${session.id}`] = {
+        page: `/2018/session/${session.id}`,
+        // query: { id: session.id },
+      };
+    });
+
+    return pathMap;
   }
 };

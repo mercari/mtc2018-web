@@ -1,4 +1,5 @@
 const NextI18Next = require('next-i18next').default
+const { initReactI18next } = require('react-i18next')
 
 module.exports = new NextI18Next({
   defaultLanguage: 'en-US',
@@ -19,5 +20,6 @@ module.exports = new NextI18Next({
       if (format === 'uppercase') { return value.toUpperCase() }
       return value
     }
-  }
+  },
+  use: [initReactI18next],
 })

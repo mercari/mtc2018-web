@@ -37,7 +37,7 @@ class TopQueryComponent extends Query<TopQuery> {}
 type Props = WithTranslation;
 
 class Top extends React.PureComponent<Props> {
-  public getInitialProps() {
+  static getInitialProps() {
     return { namespacesRequired: ['common'] };
   }
 
@@ -130,4 +130,4 @@ const StyledTimetableSection = styled(TimetableSection)`
   }
 `;
 
-export default withTranslation('common')(Top);
+export default withTranslation()(Top);

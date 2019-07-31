@@ -42,8 +42,12 @@ class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
 type Props = WithTranslation & WithRouterProps;
 
 class Session extends React.Component<Props> {
+  static getInitialProps() {
+    return { namespacesRequired: ['common'] };
+  }
+
   public render() {
-    const sessionId = parseInt(this.props.router!.query!.id as string, 10);
+    const sessionId = parseInt(this.props.router.query.id as string, 10);
     return (
       <Default>
         <SessionQueryComponent query={SESSION_QUERY} variables={{ sessionId }}>
@@ -132,4 +136,4 @@ const BackButton = styled(Button)`
   margin-top: 60px;
 `;
 
-export default withTranslation('common')(withRouter(Session));
+export default withTranslation()(withRouter(Session));
