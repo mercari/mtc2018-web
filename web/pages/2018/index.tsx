@@ -37,7 +37,7 @@ class TopQueryComponent extends Query<TopQuery> {}
 type Props = WithTranslation;
 
 class Top extends React.PureComponent<Props> {
-  static getInitialProps() {
+  public static getInitialProps() {
     return { namespacesRequired: ['common'] };
   }
 

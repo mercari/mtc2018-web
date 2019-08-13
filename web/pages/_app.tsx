@@ -6,14 +6,14 @@ import { withApolloClient } from '../graphql/with-apollo-client';
 import { appWithTranslation } from '../i18n';
 
 class MyApp extends App {
-  static async getInitialProps({ Component, ctx }: any) {
-    let pageProps = {}
-  
+  public static async getInitialProps({ Component, ctx }: any) {
+    let pageProps = {};
+
     if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
+      pageProps = await Component.getInitialProps(ctx);
     }
-  
-    return { pageProps }
+
+    return { pageProps };
   }
   public render() {
     const { Component, pageProps, apolloClient } = this.props as any;

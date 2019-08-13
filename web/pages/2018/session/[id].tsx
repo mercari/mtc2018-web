@@ -42,7 +42,7 @@ class SessionQueryComponent extends Query<SessionQuery, SessionVariables> {}
 type Props = WithTranslation & WithRouterProps;
 
 class Session extends React.Component<Props> {
-  static getInitialProps() {
+  public static getInitialProps() {
     return { namespacesRequired: ['common'] };
   }
 
