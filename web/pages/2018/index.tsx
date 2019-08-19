@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
-import { WithTranslation } from 'next-i18next';
+import { WithTranslation } from 'react-i18next';
 import Default from '../../layout/Default';
 import Header from '../../containers/Top/Header';
 import MainVisual from '../../containers/Top/MainVisual';
@@ -34,7 +34,7 @@ export const TOP_QUERY = gql`
 
 class TopQueryComponent extends Query<TopQuery> {}
 
-type Props = WithTranslation;
+interface Props extends WithTranslation {}
 
 class Top extends React.PureComponent<Props> {
   public static getInitialProps() {

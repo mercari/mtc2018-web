@@ -14,7 +14,7 @@ import { isJapan } from '../../../utils';
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { WithTranslation } from 'next-i18next';
+import { WithTranslation } from 'react-i18next';
 import { withTranslation } from '../../../i18n';
 import {
   Session as SessionQuery,

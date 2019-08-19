@@ -33,16 +33,19 @@ module.exports = {
       return defaultPathMap
     }
 
-    const pathMap = { ...defaultPathMap };
-    delete pathMap['/2018/session/[id]'];
-    console.log(pathMap);
-    contents.sessions.forEach(session => {
-      pathMap[`/2018/session/${session.id}`] = {
-        page: `/2018/session/${session.id}`,
-        // query: { id: session.id },
-      };
-    });
+    console.log(defaultPathMap);
+    return defaultPathMap;
 
-    return pathMap;
+    // const pathMap = { ...defaultPathMap };
+    // delete pathMap['/2018/session/[id]'];
+    // console.log(pathMap);
+    // contents.sessions.forEach(session => {
+    //   pathMap[`/2018/session/${session.id}`] = {
+    //     page: `/2018/session/${session.id}`,
+    //     // query: { id: session.id },
+    //   };
+    // });
+
+    // return pathMap;
   }
 };
